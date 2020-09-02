@@ -1,5 +1,6 @@
-import React from "react";
-import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
+import React from 'react';
+import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
+
 import App from './app/App';
 
 export default function Root() {

@@ -1,8 +1,9 @@
 import React from 'react';
-import logo from '../../resources/logo.svg';
-import './App.css';
 
+import logo from '../../resources/logo.svg';
 import { add } from '../../add.rs';
+
+import './App.css';
 
 function App() {
   return (
