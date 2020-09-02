@@ -2,8 +2,8 @@
 
 ## Must have
 
-[ ] Display PDF files
-[ ] 
+- [ ] Display PDF files
+- [ ] 
 
 
 
