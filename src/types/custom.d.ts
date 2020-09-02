@@ -4,6 +4,5 @@ declare module "*.svg" {
 }
 
 declare module "*.rs" {
-    const content: object;
-    export default content;
+    export function add(a: number, b: number): number;
 }
