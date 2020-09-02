@@ -4,6 +4,8 @@ This repository contains the main frontend for the 'NoteSum' project.
 ## First run
 To run this project locally you need to have [Git](https://git-scm.com/) and [NodeJS](https://nodejs.org/) installed. Please see their respective websites for install instructions.
 
+Currently but probably temporarily this project also has a dependency on Rust. You should make sure `rustup` is installed for `Parcel` to function properly.
+
 As package manager we use Yarn which can be installed (after having installed NodeJS) with the following command:
 ```bash
 $ npm install --global yarn
