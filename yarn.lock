@@ -5574,6 +5574,11 @@ terser@^4.8.0:
     source-map "~0.6.1"
     source-map-support "~0.5.12"
 
+text-selection-react@^1.1.8:
+  version "1.1.8"
+  resolved "https://registry.yarnpkg.com/text-selection-react/-/text-selection-react-1.1.8.tgz#1af647feccddcb76696006abf82cead03c4fde5f"
+  integrity sha512-BSl528YU/Ct2cWbj5kdfchrw8RLTakkd8coxJXr6TQI6gBKkyO+IxgwwX9yF1LFVzhwaJ4CVAQ4rxMLaW+vpaA==
+
 through2@^2.0.0, through2@~2.0.3:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/through2/-/through2-2.0.5.tgz#01c1e39eb31d07cb7d03a96a70823260b23132cd"

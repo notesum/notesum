@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Document, Page } from 'react-pdf/dist/esm/entry.parcel';
 import sample from '../../resources/sample.pdf'
+import TextSelector from 'text-selection-react'
 
 
 // Some options for the PDF library
@@ -14,22 +15,24 @@ const options = {
 export default function Pdf() {
     const [numPages, setNumPages] = useState(null);
     const [pageNumber, setPageNumber] = useState(1);
+    const [selected, setSelected] = useState(null)
 
     function onDocumentLoadSuccess({ numPages }) {
         setNumPages(numPages);
         setPageNumber(1)
+        setSelected("Nothing selected yet")
     }
 
     // Hack for alligning the text and the image
     function removeTextLayerOffset() {
         const textLayers = document.querySelectorAll(".react-pdf__Page__textContent");
-          textLayers.forEach(layer => {
+        textLayers.forEach(layer => {
             const { style } = layer;
             style.top = "0";
             style.left = "0";
             style.transform = "";
         });
-      }
+    }
 
     function changePage(offset) {
         setPageNumber(prevPageNumber => prevPageNumber + offset);
@@ -46,10 +49,21 @@ export default function Pdf() {
     return (
         // Amazing parent element
         <>
+            <TextSelector
+                events={[
+                    {
+                        text: 'Submit',
+                        handler: (html, text) => {setSelected(text)}
+                    }
+                ]}
+                color={'yellow'}
+                colorText={false}
+            />
             <h1>PDF Demo</h1>
+            <h2>Selected : {selected}</h2>
             <div>
 
-            <button
+                <button
                     type="button"
                     disabled={pageNumber <= 1}
                     onClick={previousPage}
