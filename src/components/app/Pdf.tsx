@@ -38,6 +38,11 @@ export default function Pdf() {
         setPageNumber(prevPageNumber => prevPageNumber + offset);
     }
 
+    function high(t) {
+
+        setSelected(selected + '\n\n' + t);
+    }
+
     function previousPage() {
         changePage(-1);
     }
@@ -48,21 +53,21 @@ export default function Pdf() {
 
     return (
         // Amazing parent element
-        <>
+        <table>
+            <tr>
+            <th>
             <TextSelector
                 events={[
                     {
                         text: 'Submit',
-                        handler: (html, text) => {setSelected(text)}
+                        handler: (html, text) => {high(text)}
                     }
                 ]}
                 color={'yellow'}
                 colorText={false}
             />
             <h1>PDF Demo</h1>
-            <h2>Selected : {selected}</h2>
             <div>
-
                 <button
                     type="button"
                     disabled={pageNumber <= 1}
@@ -85,7 +90,12 @@ export default function Pdf() {
             >
                 <Page pageNumber={pageNumber} onLoadSuccess={removeTextLayerOffset} />
             </Document>
+        </th>
+        <th>
+            <text>{selected}</text>
 
-        </>
+        </th>
+        </tr>
+        </table>
     );
 }
