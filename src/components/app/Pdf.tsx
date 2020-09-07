@@ -15,13 +15,12 @@ export default function Pdf() {
     const [numPages, setNumPages] = useState(null);
     const [pageNumber, setPageNumber] = useState(1);
 
-    // Will need for navigation
     function onDocumentLoadSuccess({ numPages }) {
         setNumPages(numPages);
         setPageNumber(1)
     }
 
-    // Best hack I can find that fixes the text allignment issue
+    // Hack for alligning the text and the image
     function removeTextLayerOffset() {
         const textLayers = document.querySelectorAll(".react-pdf__Page__textContent");
           textLayers.forEach(layer => {
@@ -47,11 +46,9 @@ export default function Pdf() {
     return (
         // Amazing parent element
         <>
-            <h1>Hey</h1>
+            <h1>PDF Demo</h1>
             <div>
-                <p>
-                    Page {pageNumber || (numPages ? 1 : '--')} of {numPages || '--'}
-                </p>
+
             <button
                     type="button"
                     disabled={pageNumber <= 1}
