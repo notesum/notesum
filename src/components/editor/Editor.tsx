@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Editor, EditorState, ContentState, Modifier } from 'draft-js';
+import { Editor, EditorState, ContentState, Modifier, RichUtils } from 'draft-js';
 import 'draft-js/dist/Draft.css';
-import TextSelector from 'text-selection-react';
+import Highlight from './Highlight'
 
 export default function TextEditor() {
   const [contentState, setContentState] = useState(ContentState.createFromText(''));
@@ -39,21 +39,12 @@ export default function TextEditor() {
     setEditorState(newState);
 
   }
-
-
-
+  
   return (
-    <>
-      <TextSelector
-        events={[
-          {
-            text: 'Add',
-            handler: (html, text) => addNewEntity(text)
-          }
-        ]}
-        color={'yellow'}
-        colorText={false}
-      />
+    <div>
+      {/* The highlighter */}
+      <Highlight call={addNewEntity}/>
+
       <div className="editorContainer" onClick={focusEditor}>
         <Editor
           ref={editor}
@@ -61,6 +52,6 @@ export default function TextEditor() {
           onChange={newEditorState => setEditorState(newEditorState)}
         />
       </div>
-    </>
+    </div>
   );
 }

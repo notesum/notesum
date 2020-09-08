@@ -1,27 +1,18 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
+import SplitPane from "react-split-pane"
 
 import Pdf from '../pdf/Pdf';
 
-import TextEditor from './Editor';
+import TextEditor from '../editor/Editor';
 
 export default function MainView() {
 
     return (
-        <>
-            <div className="container-fluid">
-                <div className="row">
-                    <div className="col-sm-5 col-md-6 col-lg-4" style={{
-                        overflowY: 'hidden',
-                        overflowX: 'scroll'
-                    }}>
-                        <Pdf />
-                    </div>
-                    <div className="col-sm-10 col-md-6 col-lg-8">
-                        <TextEditor />
-                    </div>
-                </div>
-            </div>
-        </>
-    );
+        <div>
+            <SplitPane split="vertical" defaultSize={900} primary="second" >
+                <Pdf />
+                <TextEditor />
+            </SplitPane>
+        </div>
+
 }

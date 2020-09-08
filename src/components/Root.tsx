@@ -29,7 +29,9 @@ export default function Root() {
                         <h1>About</h1>
                     </Route>
                     <Route path="/pdf">
+                        <div className="App">
                         <MainView />
+                        </div>
                     </Route>
                 </Switch>
             </div>
