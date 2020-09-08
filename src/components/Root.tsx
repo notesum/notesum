@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import {Button, ButtonGroup } from '@material-ui/core'
+import {Button, ButtonGroup, Container } from '@material-ui/core';
 
 import App from './app/App';
 import MainView from './app/MainView';
@@ -9,7 +9,7 @@ export default function Root() {
     return (
         <BrowserRouter>
             <div>
-                <ButtonGroup>
+                <ButtonGroup variant="text">
                     <Button href="/">Home</Button>
                     <Button href="/about">About</Button>
                     <Button href="/pdf">PDF</Button>

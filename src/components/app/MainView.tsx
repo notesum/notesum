@@ -1,5 +1,5 @@
 import React from 'react';
-import SplitPane from 'react-split-pane';
+import { Grid, Box } from '@material-ui/core';
 
 import Pdf from '../pdf/Pdf';
 import TextEditor from '../editor/Editor';
@@ -8,10 +8,15 @@ export default function MainView() {
     // I put a scroll here for now but the pdf component should handle this better
     return (
         <div>
-            <SplitPane split="vertical" minSize="50%" defaultSize="50%" style={{ overflowY: 'scroll' }}>
-                <Pdf />
-                <TextEditor />
-            </SplitPane>
+            <Grid container spacing={3}>
+                <Grid item xs={6}>
+                        <Pdf />
+                </Grid>
+                <Grid item xs={6}>
+                    <TextEditor />
+                </Grid>
+
+            </Grid>
         </div>
     );
 

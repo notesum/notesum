@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Editor, EditorState, ContentState, Modifier, RichUtils } from 'draft-js';
 import 'draft-js/dist/Draft.css';
-import Button from '@material-ui/core/Button';
+import { Button, ButtonGroup } from '@material-ui/core';
 
 import Highlight from './Highlight';
 
@@ -58,8 +58,10 @@ export default function TextEditor() {
     <div className="Editor">
       <Highlight callback={highlightCallback} />
       <div className="editorContainer" onClick={focusEditor}>
-        <Button onMouseDown={() => bold()}>Bold</Button>
-        <Button onMouseDown={() => italic()}>Italic</Button>
+        <ButtonGroup variant="text">
+          <Button onMouseDown={() => bold()}>Bold</Button>
+          <Button onMouseDown={() => italic()}>Italic</Button>
+        </ButtonGroup>
         <Editor
           ref={editor}
           editorState={editorState}
