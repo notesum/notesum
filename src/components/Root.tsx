@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 
 import App from './app/App';
+import MainView from './app/MainView';
 
 export default function Root() {
     return (
@@ -15,7 +16,7 @@ export default function Root() {
                         <Link to="/about">About</Link>
                     </li>
                     <li>
-                        <Link to="/dashboard">Dashboard</Link>
+                        <Link to="/pdf">Pdf</Link>
                     </li>
                 </ul>
 
@@ -27,8 +28,8 @@ export default function Root() {
                     <Route path="/about">
                         <h1>About</h1>
                     </Route>
-                    <Route path="/dashboard">
-                        <h1>Dashboard</h1>
+                    <Route path="/pdf">
+                        <MainView />
                     </Route>
                 </Switch>
             </div>
