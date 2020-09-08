@@ -1,6 +1,6 @@
 import React from 'react';
 import Pdf from './PdfViewer'
-import Editor from './Editor'
+import TextEditor from './Editor'
 import 'bootstrap/dist/css/bootstrap.css';
 
 
@@ -14,10 +14,11 @@ export default function MainView() {
                         <Pdf />
                     </div>
                     <div className="col-sm-10 col-md-6 col-lg-8">
-                        <Editor />
+                        <TextEditor />
                     </div>
                 </div>
             </div>
         </>
+        
     );
 }
