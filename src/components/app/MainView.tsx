@@ -1,5 +1,5 @@
 import React from 'react';
-import Pdf from './PdfViewer'
+import Pdf from '../pdf/Pdf'
 import TextEditor from './Editor'
 import 'bootstrap/dist/css/bootstrap.css';
 
