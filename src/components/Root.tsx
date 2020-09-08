@@ -1,5 +1,6 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import {Button, ButtonGroup } from '@material-ui/core'
 
 import App from './app/App';
 import MainView from './app/MainView';
@@ -8,19 +9,12 @@ export default function Root() {
     return (
         <BrowserRouter>
             <div>
-                <ul>
-                    <li>
-                        <Link to="/">Home</Link>
-                    </li>
-                    <li>
-                        <Link to="/about">About</Link>
-                    </li>
-                    <li>
-                        <Link to="/pdf">Pdf</Link>
-                    </li>
-                </ul>
+                <ButtonGroup>
+                    <Button href="/">Home</Button>
+                    <Button href="/about">About</Button>
+                    <Button href="/pdf">PDF</Button>
+                </ButtonGroup>
 
-                <hr />
                 <Switch>
                     <Route exact path="/">
                         <App />
@@ -30,7 +24,7 @@ export default function Root() {
                     </Route>
                     <Route path="/pdf">
                         <div className="App">
-                        <MainView />
+                            <MainView />
                         </div>
                     </Route>
                 </Switch>
