@@ -6,19 +6,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 export default function MainView() {
 
-
     return (
         <>
-            {/* <div className="split left">
-                <div className="centered">
-                </div>
-            </div>
-
-            <div className="split right">
-                <div className="centered">
-                </div>
-            </div> */}
-
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-sm-5 col-md-6 col-lg-4">
@@ -31,11 +20,4 @@ export default function MainView() {
             </div>
         </>
     );
-
-
-
-
-
-
-
 }
