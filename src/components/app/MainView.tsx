@@ -9,15 +9,24 @@ export default function MainView() {
 
     return (
         <>
-            <div className="split left">
+            {/* <div className="split left">
                 <div className="centered">
-                    <Pdf/>
                 </div>
             </div>
 
             <div className="split right">
                 <div className="centered">
-                    <Editor />
+                </div>
+            </div> */}
+
+            <div className="container-fluid">
+                <div className="row">
+                    <div className="col-sm-5 col-md-6 col-lg-4">
+                        <Pdf />
+                    </div>
+                    <div className="col-sm-10 col-md-6 col-lg-8">
+                        <Editor />
+                    </div>
                 </div>
             </div>
         </>

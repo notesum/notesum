@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Document, Page } from 'react-pdf/dist/esm/entry.parcel';
 import sample from '../../resources/sample.pdf'
-import TextSelector from 'text-selection-react'
-import Button from 'react-bootstrap/Button';
 
 // Some options for the PDF library
 const options = {
@@ -54,17 +52,6 @@ export default function Pdf() {
     return (
         // Amazing parent element
         <>
-            <TextSelector
-                events={[
-                    {
-                        text: 'Submit',
-                        handler: (html, text) => {high(text)}
-                    }
-                ]}
-                color={'yellow'}
-                colorText={false}
-            />
-            <h1>PDF Demo</h1>
             <div>
                 <button
                     type="button"
