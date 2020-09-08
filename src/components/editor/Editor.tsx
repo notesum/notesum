@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Editor, EditorState, ContentState, Modifier, RichUtils } from 'draft-js';
 import 'draft-js/dist/Draft.css';
-import Highlight from './Highlight'
+
+import Highlight from './Highlight';
 
 export default function TextEditor() {
   const [contentState, setContentState] = useState(ContentState.createFromText(''));
@@ -18,8 +19,7 @@ export default function TextEditor() {
   }, []);
 
 
-  function addNewEntity(t) {
-
+  function highlightCallback(t) {
 
     const content = editorState.getCurrentContent();
     const targetRange = editorState.getSelection();
@@ -27,7 +27,7 @@ export default function TextEditor() {
     const newContentState = Modifier.insertText(
       content,
       targetRange,
-      (t + '\n')
+      (t + '\n\n')
     );
     setContentState(newContentState);
 
@@ -37,15 +37,28 @@ export default function TextEditor() {
     );
 
     setEditorState(newState);
-
   }
-  
-  return (
-    <div>
-      {/* The highlighter */}
-      <Highlight call={addNewEntity}/>
 
+  function bold() {
+
+    event.preventDefault();
+    const nextState = RichUtils.toggleInlineStyle(editorState, 'BOLD');
+    setEditorState(nextState);
+  }
+
+  function italic() {
+
+    event.preventDefault();
+    const nextState = RichUtils.toggleInlineStyle(editorState, 'ITALIC');
+    setEditorState(nextState);
+  }
+
+  return (
+    <div className="Editor">
+      <Highlight callback={highlightCallback} />
       <div className="editorContainer" onClick={focusEditor}>
+        <button onMouseDown={() => bold()}>Bold</button>
+        <button onMouseDown={() => italic()}>Italic</button>
         <Editor
           ref={editor}
           editorState={editorState}
