@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 
 import App from './app/App';
-import Pdf from './app/Pdf'
+import MainView from './app/MainView'
 
 export default function Root() {
     return (
@@ -36,7 +36,7 @@ export default function Root() {
                         <h1>Dashboard</h1>
                     </Route>
                     <Route path="/pdf">
-                        <Pdf />
+                        <MainView />
                     </Route>
                 </Switch>
             </div>

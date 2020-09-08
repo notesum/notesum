@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Document, Page } from 'react-pdf/dist/esm/entry.parcel';
 import sample from '../../resources/sample.pdf'
 import TextSelector from 'text-selection-react'
-
+import Button from 'react-bootstrap/Button';
 
 // Some options for the PDF library
 const options = {
@@ -53,9 +53,7 @@ export default function Pdf() {
 
     return (
         // Amazing parent element
-        <table>
-            <tr>
-            <th>
+        <>
             <TextSelector
                 events={[
                     {
@@ -90,12 +88,6 @@ export default function Pdf() {
             >
                 <Page pageNumber={pageNumber} onLoadSuccess={removeTextLayerOffset} />
             </Document>
-        </th>
-        <th>
-            <text>{selected}</text>
-
-        </th>
-        </tr>
-        </table>
+            </>
     );
 }
