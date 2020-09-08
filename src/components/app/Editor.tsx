@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { Editor, EditorState, ContentState, Modifier } from 'draft-js';
 import 'draft-js/dist/Draft.css';
-import TextSelector from 'text-selection-react'
-
-
+import TextSelector from 'text-selection-react';
 
 export default function TextEditor() {
-  const [contentState, setContentState] = useState(ContentState.createFromText(""));
+  const [contentState, setContentState] = useState(ContentState.createFromText(''));
   const [editorState, setEditorState] = useState(EditorState.createWithContent(contentState));
 
   const editor = React.useRef(null);
@@ -16,29 +14,29 @@ export default function TextEditor() {
   }
 
   React.useEffect(() => {
-    focusEditor()
+    focusEditor();
   }, []);
 
 
   function addNewEntity(t) {
 
 
-    let content = editorState.getCurrentContent()
-    let targetRange = editorState.getSelection();
+    const content = editorState.getCurrentContent();
+    const targetRange = editorState.getSelection();
 
-    let newContentState = Modifier.insertText(
+    const newContentState = Modifier.insertText(
       content,
       targetRange,
       (t + '\n')
     );
-    setContentState(newContentState)
+    setContentState(newContentState);
 
-    let newState = EditorState.push(
+    const newState = EditorState.push(
       editorState,
       newContentState
     );
 
-    setEditorState(newState)
+    setEditorState(newState);
 
   }
 
@@ -50,7 +48,7 @@ export default function TextEditor() {
         events={[
           {
             text: 'Add',
-            handler: (html, text) => { addNewEntity(text) }
+            handler: (html, text) => addNewEntity(text)
           }
         ]}
         color={'yellow'}
@@ -60,7 +58,7 @@ export default function TextEditor() {
         <Editor
           ref={editor}
           editorState={editorState}
-          onChange={editorState => setEditorState(editorState)}
+          onChange={newEditorState => setEditorState(newEditorState)}
         />
       </div>
     </>

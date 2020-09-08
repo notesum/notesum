@@ -21,7 +21,7 @@ export default function Page({ page, scale }: PageProps) {
         setViewport(updatedViewport);
 
         // Empty text layer when changed
-        textLayerRef.current.innerHTML = "";
+        textLayerRef.current.innerHTML = '';
 
         // Render Canvas
         page.render({

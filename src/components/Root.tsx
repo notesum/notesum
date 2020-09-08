@@ -2,12 +2,10 @@ import React from 'react';
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 
 import App from './app/App';
-import MainView from './app/MainView'
+import MainView from './app/MainView';
 
 export default function Root() {
     return (
-        
-        
         <BrowserRouter>
             <div>
                 <ul>

@@ -1,8 +1,9 @@
 import React from 'react';
-import Pdf from '../pdf/Pdf'
-import TextEditor from './Editor'
 import 'bootstrap/dist/css/bootstrap.css';
 
+import Pdf from '../pdf/Pdf';
+
+import TextEditor from './Editor';
 
 export default function MainView() {
 
@@ -11,8 +12,8 @@ export default function MainView() {
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-sm-5 col-md-6 col-lg-4" style={{
-                        overflowY: "hidden",
-                        overflowX: "scroll"
+                        overflowY: 'hidden',
+                        overflowX: 'scroll'
                     }}>
                         <Pdf />
                     </div>
@@ -22,6 +23,5 @@ export default function MainView() {
                 </div>
             </div>
         </>
-        
     );
 }
