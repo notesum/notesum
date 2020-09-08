@@ -17,7 +17,7 @@ export default function Editor() {
             <TextSelector
                 events={[
                     {
-                        text: 'Submit',
+                        text: 'Add',
                         handler: (html, text) => { high(text) }
                     }
                 ]}
