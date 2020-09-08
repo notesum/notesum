@@ -10,7 +10,10 @@ export default function MainView() {
         <>
             <div className="container-fluid">
                 <div className="row">
-                    <div className="col-sm-5 col-md-6 col-lg-4">
+                    <div className="col-sm-5 col-md-6 col-lg-4" style={{
+                        overflowY: "hidden",
+                        overflowX: "scroll"
+                    }}>
                         <Pdf />
                     </div>
                     <div className="col-sm-10 col-md-6 col-lg-8">
