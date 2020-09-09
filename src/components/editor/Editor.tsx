@@ -71,6 +71,8 @@ export default function TextEditor() {
     setEditorState(nextState);
   }
 
+
+
   return (
     <div className="Editor">
       <Highlight callback={highlightCallback} />
@@ -80,6 +82,7 @@ export default function TextEditor() {
           <Button onMouseDown={() => italic()}>Italic</Button>
           <Button onMouseDown={() => strikethrough()}>Strikethrough</Button>
           <Button onMouseDown={() => underline()}>Underline</Button>
+
         </ButtonGroup>
         <Editor
           ref={editor}
