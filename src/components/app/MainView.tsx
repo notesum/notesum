@@ -1,27 +1,23 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
+import { Grid, Box } from '@material-ui/core';
 
 import Pdf from '../pdf/Pdf';
-
-import TextEditor from './Editor';
+import TextEditor from '../editor/Editor';
 
 export default function MainView() {
-
+    // I put a scroll here for now but the pdf component should handle this better
     return (
-        <>
-            <div className="container-fluid">
-                <div className="row">
-                    <div className="col-sm-5 col-md-6 col-lg-4" style={{
-                        overflowY: 'hidden',
-                        overflowX: 'scroll'
-                    }}>
-                        <Pdf />
-                    </div>
-                    <div className="col-sm-10 col-md-6 col-lg-8">
-                        <TextEditor />
-                    </div>
-                </div>
-            </div>
-        </>
+        <div>
+            <Grid container spacing={3}>
+                <Grid item xs={6}>
+                    <Pdf />
+                </Grid>
+                <Grid item xs={6}>
+                    <TextEditor />
+                </Grid>
+
+            </Grid>
+        </div>
     );
+
 }

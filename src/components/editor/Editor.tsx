@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { Editor, EditorState, ContentState, Modifier } from 'draft-js';
+import { Editor, EditorState, ContentState, Modifier, RichUtils } from 'draft-js';
 import 'draft-js/dist/Draft.css';
-import TextSelector from 'text-selection-react';
+import { Button, ButtonGroup } from '@material-ui/core';
+
+import Highlight from './Highlight';
 
 export default function TextEditor() {
   const [contentState, setContentState] = useState(ContentState.createFromText(''));
@@ -18,8 +20,7 @@ export default function TextEditor() {
   }, []);
 
 
-  function addNewEntity(t) {
-
+  function highlightCallback(t) {
 
     const content = editorState.getCurrentContent();
     const targetRange = editorState.getSelection();
@@ -27,7 +28,7 @@ export default function TextEditor() {
     const newContentState = Modifier.insertText(
       content,
       targetRange,
-      (t + '\n')
+      (t + '\n\n')
     );
     setContentState(newContentState);
 
@@ -37,30 +38,34 @@ export default function TextEditor() {
     );
 
     setEditorState(newState);
+  }
 
+  function formatText(f) {
+
+    event.preventDefault();
+    const nextState = RichUtils.toggleInlineStyle(editorState, f);
+    setEditorState(nextState);
   }
 
 
 
   return (
-    <>
-      <TextSelector
-        events={[
-          {
-            text: 'Add',
-            handler: (html, text) => addNewEntity(text)
-          }
-        ]}
-        color={'yellow'}
-        colorText={false}
-      />
+    <div className="Editor">
+      <Highlight callback={highlightCallback} />
       <div className="editorContainer" onClick={focusEditor}>
+        <ButtonGroup variant="text">
+          <Button onMouseDown={() => formatText('BOLD')}>Bold</Button>
+          <Button onMouseDown={() => formatText('ITALIC')}>Italic</Button>
+          <Button onMouseDown={() => formatText('STRIKETHROUGH')}>Strikethrough</Button>
+          <Button onMouseDown={() => formatText('UNDERLINE')}>Underline</Button>
+
+        </ButtonGroup>
         <Editor
           ref={editor}
           editorState={editorState}
           onChange={newEditorState => setEditorState(newEditorState)}
         />
       </div>
-    </>
+    </div>
   );
 }
