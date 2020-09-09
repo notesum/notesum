@@ -1,0 +1,15 @@
+div.DraftEditor-root {
+  
+    height: 1000px;
+    width: 100%;
+    padding-right: 3%;
+    padding-left: 3%;
+    padding-top: 5%;
+  }
+  
+  div.DraftEditor-editorContainer1,
+  div.public-DraftEditor-content {
+    height: 100%;
+    font-family: "sans-serif";
+  }
+  

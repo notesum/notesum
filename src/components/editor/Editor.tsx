@@ -4,6 +4,8 @@ import 'draft-js/dist/Draft.css';
 import { Button, ButtonGroup, Paper, Grid } from '@material-ui/core';
 
 import Highlight from './Highlight';
+import "./Editor.css";
+
 
 export default function TextEditor() {
   const [contentState, setContentState] = useState(ContentState.createFromText(''));
@@ -64,7 +66,7 @@ export default function TextEditor() {
           </ButtonGroup>
         </Grid>
         <Grid item xs={12}>
-          <Paper onClick={focusEditor} elevation={3}>
+          <Paper onClick={focusEditor} elevation={4}>
             <Editor
               ref={editor}
               editorState={editorState}

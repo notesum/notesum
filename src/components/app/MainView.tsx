@@ -15,7 +15,6 @@ export default function MainView() {
                 <Grid item xs={6}>
                     <TextEditor />
                 </Grid>
-
             </Grid>
         </div>
     );
