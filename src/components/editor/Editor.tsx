@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Editor, EditorState, ContentState, Modifier, RichUtils } from 'draft-js';
 import 'draft-js/dist/Draft.css';
-import { Button, ButtonGroup, Paper, Grid } from '@material-ui/core';
+import { Button, ButtonGroup, Paper, Grid, Box } from '@material-ui/core';
 
 import Highlight from './Highlight';
 import "./Editor.css";
@@ -55,24 +55,29 @@ export default function TextEditor() {
     <div>
       <Highlight callback={highlightCallback} />
 
-      <Grid container spacing={1}>
+      <Grid container spacing={0}>
         <Grid item xs={12}>
-          <ButtonGroup variant="text">
-            <Button onMouseDown={() => formatText('BOLD')}>Bold</Button>
-            <Button onMouseDown={() => formatText('ITALIC')}>Italic</Button>
-            <Button onMouseDown={() => formatText('STRIKETHROUGH')}>Strikethrough</Button>
-            <Button onMouseDown={() => formatText('UNDERLINE')}>Underline</Button>
-
-          </ButtonGroup>
+          <Box mx={1}>
+            <Paper>
+              <ButtonGroup variant="text">
+                <Button onMouseDown={() => formatText('BOLD')}>Bold</Button>
+                <Button onMouseDown={() => formatText('ITALIC')}>Italic</Button>
+                <Button onMouseDown={() => formatText('STRIKETHROUGH')}>Strikethrough</Button>
+                <Button onMouseDown={() => formatText('UNDERLINE')}>Underline</Button>
+              </ButtonGroup>
+            </Paper>
+          </Box>
         </Grid>
         <Grid item xs={12}>
-          <Paper onClick={focusEditor} elevation={4}>
-            <Editor
-              ref={editor}
-              editorState={editorState}
-              onChange={newEditorState => setEditorState(newEditorState)}
-            />
-          </Paper>
+          <Box m={1}>
+            <Paper onClick={focusEditor} elevation={4}>
+              <Editor
+                ref={editor}
+                editorState={editorState}
+                onChange={newEditorState => setEditorState(newEditorState)}
+              />
+            </Paper>
+          </Box>
         </Grid>
       </Grid>
     </div >

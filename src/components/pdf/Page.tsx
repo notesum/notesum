@@ -3,7 +3,6 @@ import React, { useRef, useEffect, useState } from 'react';
 import { renderTextLayer } from 'pdfjs-dist';
 import { PDFPageProxy } from 'pdfjs-dist/types/display/api';
 import { PageViewport } from 'pdfjs-dist/types/display/display_utils';
-import 'pdfjs-dist/web/pdf_viewer.css';
 
 type PageProps = {
     page: PDFPageProxy

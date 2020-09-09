@@ -49,7 +49,7 @@ export default function Pdf() {
             <Box>
                 <div className="pdfViewer">
                     {pages.map((page, id) => {
-                        return (<Page key={id} scale={scale} page={page} />);
+                        return (<Page key={id} scale={scale} page={page}/>);
                     })}
                 </div>
             </Box>

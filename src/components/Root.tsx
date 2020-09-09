@@ -7,15 +7,15 @@ import MainView from './app/MainView';
 
 export default function Root() {
     return (
-        <BrowserRouter>
-            <div>
+        <BrowserRouter >
+            <div style={{overflowY:'hidden'}}>
                 <ButtonGroup variant="text">
                     <Button href="/">Home</Button>
                     <Button href="/about">About</Button>
                     <Button href="/pdf">PDF</Button>
                 </ButtonGroup>
 
-                <Switch>
+                <Switch >
                     <Route exact path="/">
                         <App />
                     </Route>
