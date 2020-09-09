@@ -40,10 +40,27 @@ export default function TextEditor() {
     setEditorState(newState);
   }
 
+  // Underline, STRIKETHROUGH
+
+
   function bold() {
 
     event.preventDefault();
     const nextState = RichUtils.toggleInlineStyle(editorState, 'BOLD');
+    setEditorState(nextState);
+  }
+
+  function underline() {
+
+    event.preventDefault();
+    const nextState = RichUtils.toggleInlineStyle(editorState, 'UNDERLINE');
+    setEditorState(nextState);
+  }
+
+  function strikethrough() {
+
+    event.preventDefault();
+    const nextState = RichUtils.toggleInlineStyle(editorState, 'STRIKETHROUGH');
     setEditorState(nextState);
   }
 
@@ -61,6 +78,8 @@ export default function TextEditor() {
         <ButtonGroup variant="text">
           <Button onMouseDown={() => bold()}>Bold</Button>
           <Button onMouseDown={() => italic()}>Italic</Button>
+          <Button onMouseDown={() => strikethrough()}>Strikethrough</Button>
+          <Button onMouseDown={() => underline()}>Underline</Button>
         </ButtonGroup>
         <Editor
           ref={editor}

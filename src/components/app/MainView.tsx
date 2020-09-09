@@ -10,7 +10,7 @@ export default function MainView() {
         <div>
             <Grid container spacing={3}>
                 <Grid item xs={6}>
-                        <Pdf />
+                    <Pdf />
                 </Grid>
                 <Grid item xs={6}>
                     <TextEditor />
