@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import {Button, ButtonGroup, Container } from '@material-ui/core';
+import { Button, ButtonGroup } from '@material-ui/core';
 
 import App from './app/App';
 import MainView from './app/MainView';
