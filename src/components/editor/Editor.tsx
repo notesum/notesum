@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Editor, EditorState, ContentState, Modifier, RichUtils } from 'draft-js';
 import 'draft-js/dist/Draft.css';
-import { Button, ButtonGroup } from '@material-ui/core';
+import { Button, ButtonGroup, Paper, Grid } from '@material-ui/core';
 
 import Highlight from './Highlight';
 
@@ -50,22 +50,29 @@ export default function TextEditor() {
 
 
   return (
-    <div className="Editor">
+    <div>
       <Highlight callback={highlightCallback} />
-      <div className="editorContainer" onClick={focusEditor}>
-        <ButtonGroup variant="text">
-          <Button onMouseDown={() => formatText('BOLD')}>Bold</Button>
-          <Button onMouseDown={() => formatText('ITALIC')}>Italic</Button>
-          <Button onMouseDown={() => formatText('STRIKETHROUGH')}>Strikethrough</Button>
-          <Button onMouseDown={() => formatText('UNDERLINE')}>Underline</Button>
 
-        </ButtonGroup>
-        <Editor
-          ref={editor}
-          editorState={editorState}
-          onChange={newEditorState => setEditorState(newEditorState)}
-        />
-      </div>
-    </div>
+      <Grid container spacing={1}>
+        <Grid item xs={12}>
+          <ButtonGroup variant="text">
+            <Button onMouseDown={() => formatText('BOLD')}>Bold</Button>
+            <Button onMouseDown={() => formatText('ITALIC')}>Italic</Button>
+            <Button onMouseDown={() => formatText('STRIKETHROUGH')}>Strikethrough</Button>
+            <Button onMouseDown={() => formatText('UNDERLINE')}>Underline</Button>
+
+          </ButtonGroup>
+        </Grid>
+        <Grid item xs={12}>
+          <Paper onClick={focusEditor} elevation={3}>
+            <Editor
+              ref={editor}
+              editorState={editorState}
+              onChange={newEditorState => setEditorState(newEditorState)}
+            />
+          </Paper>
+        </Grid>
+      </Grid>
+    </div >
   );
 }
