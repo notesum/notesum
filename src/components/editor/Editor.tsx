@@ -40,34 +40,10 @@ export default function TextEditor() {
     setEditorState(newState);
   }
 
-  // Underline, STRIKETHROUGH
-
-
-  function bold() {
+  function formatText(f) {
 
     event.preventDefault();
-    const nextState = RichUtils.toggleInlineStyle(editorState, 'BOLD');
-    setEditorState(nextState);
-  }
-
-  function underline() {
-
-    event.preventDefault();
-    const nextState = RichUtils.toggleInlineStyle(editorState, 'UNDERLINE');
-    setEditorState(nextState);
-  }
-
-  function strikethrough() {
-
-    event.preventDefault();
-    const nextState = RichUtils.toggleInlineStyle(editorState, 'STRIKETHROUGH');
-    setEditorState(nextState);
-  }
-
-  function italic() {
-
-    event.preventDefault();
-    const nextState = RichUtils.toggleInlineStyle(editorState, 'ITALIC');
+    const nextState = RichUtils.toggleInlineStyle(editorState, f);
     setEditorState(nextState);
   }
 
@@ -78,10 +54,10 @@ export default function TextEditor() {
       <Highlight callback={highlightCallback} />
       <div className="editorContainer" onClick={focusEditor}>
         <ButtonGroup variant="text">
-          <Button onMouseDown={() => bold()}>Bold</Button>
-          <Button onMouseDown={() => italic()}>Italic</Button>
-          <Button onMouseDown={() => strikethrough()}>Strikethrough</Button>
-          <Button onMouseDown={() => underline()}>Underline</Button>
+          <Button onMouseDown={() => formatText('BOLD')}>Bold</Button>
+          <Button onMouseDown={() => formatText('ITALIC')}>Italic</Button>
+          <Button onMouseDown={() => formatText('STRIKETHROUGH')}>Strikethrough</Button>
+          <Button onMouseDown={() => formatText('UNDERLINE')}>Underline</Button>
 
         </ButtonGroup>
         <Editor
