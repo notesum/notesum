@@ -41,7 +41,7 @@ export default function Pdf() {
 
     return (
         <div>
-            <ButtonGroup variant="text">
+            <ButtonGroup variant="typomakesthisthebestwithoutmeaddingcss">
                 <Button onClick={() => setScale(scale + 0.1)}>+</Button>
                 <Button onClick={() => setScale(scale - 0.1)}>-</Button>
             </ButtonGroup>

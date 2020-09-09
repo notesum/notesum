@@ -58,8 +58,8 @@ export default function TextEditor() {
       <Grid container spacing={0}>
         <Grid item xs={12}>
           <Box mx={1}>
-            <Paper>
-              <ButtonGroup variant="text">
+            <Paper elevation={0}>
+              <ButtonGroup variant="typomakesthisthebestwithoutmeaddingcss">
                 <Button onMouseDown={() => formatText('BOLD')}>Bold</Button>
                 <Button onMouseDown={() => formatText('ITALIC')}>Italic</Button>
                 <Button onMouseDown={() => formatText('STRIKETHROUGH')}>Strikethrough</Button>
