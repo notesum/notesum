@@ -8,7 +8,7 @@ export default function MainView() {
     // I put a scroll here for now but the pdf component should handle this better
     return (
         <div>
-            <Grid container spacing={1}>
+            <Grid container spacing={1} alignContent={'stretch'}>
                 <Grid item xs={6}>
                     <Pdf />
                 </Grid>

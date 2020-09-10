@@ -7,6 +7,7 @@ import FormatItalicIcon from '@material-ui/icons/FormatItalic';
 import FormatUnderlinedIcon from '@material-ui/icons/FormatUnderlined';
 import FormatStrikethroughIcon from '@material-ui/icons/FormatStrikethrough';
 import CodeIcon from '@material-ui/icons/Code';
+import {convertFromRaw, convertToRaw} from 'draft-js';
 
 
 import Highlight from './Highlight';
@@ -31,13 +32,13 @@ export default function TextEditor() {
   // TODO find a way to put in css
   const styleMap = {
     'H1': {
-      'font-size': '2.2em'
+      fontSize: '2.2em'
     },
     'H2': {
-      'font-size': '1.8em'
+      fontSize: '1.8em'
     },
     'H3': {
-      'font-size': '1.3em'
+      fontSize: '1.3em'
     },
   };
 
@@ -76,7 +77,12 @@ export default function TextEditor() {
     setEditorState(nextState);
   }
 
+  function saveState() {
+    event.preventDefault();
+    const save = convertToRaw(editorState.getCurrentContent());
+    console.log(save);
 
+  }
 
 
   return (
@@ -85,7 +91,7 @@ export default function TextEditor() {
 
       <Grid container spacing={0}>
         <Grid item xs={12}>
-          <Box mx={1}>
+          <Box mx={1} overflow="hidden">
             <Paper elevation={0}>
               <ButtonGroup className="ButtonGroup">
                 <Button className="Button" onMouseDown={() => formatText('BOLD')}><FormatBoldIcon /></Button>
@@ -96,6 +102,7 @@ export default function TextEditor() {
                 <Button onMouseDown={() => formatText('H1')}>H1</Button>
                 <Button onMouseDown={() => formatText('H2')}>H2</Button>
                 <Button onMouseDown={() => formatText('H3')}>H3</Button>
+                <Button onMouseDown={() => saveState()}>S</Button>
 
               </ButtonGroup>
             </Paper>
