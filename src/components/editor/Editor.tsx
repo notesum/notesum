@@ -94,7 +94,7 @@ export default function TextEditor() {
           <Box mx={1} overflow="hidden">
             <Paper elevation={0}>
               <ButtonGroup className="ButtonGroup">
-                <Button className="Button" onMouseDown={() => formatText('BOLD')}><FormatBoldIcon /></Button>
+                <Button onMouseDown={() => formatText('BOLD')}><FormatBoldIcon /></Button>
                 <Button onMouseDown={() => formatText('ITALIC')}><FormatItalicIcon /></Button>
                 <Button onMouseDown={() => formatText('STRIKETHROUGH')}><FormatStrikethroughIcon /></Button>
                 <Button onMouseDown={() => formatText('UNDERLINE')}><FormatUnderlinedIcon /></Button>
