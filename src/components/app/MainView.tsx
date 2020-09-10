@@ -7,8 +7,8 @@ import TextEditor from '../editor/Editor';
 export default function MainView() {
     return (
         <Box flexDirection="row" display="flex" height="100%">
-            <Box flexGrow={1} style={{
-                minWidth: '200px', // Later on this size will be more dynamic and 'draggable' by the user.
+            <Box style={{
+                width: '50%', // Later on this size will be more dynamic and 'draggable' by the user.
                 overflow: 'auto',
                 maxHeight: '100%'
             }}>
