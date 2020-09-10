@@ -8,16 +8,16 @@ export default function MainView() {
     return (
         <Box flexDirection="row" display="flex" height="100%">
             <Box style={{
-                width: '50%', // Later on this size will be more dynamic and 'draggable' by the user.
+                minWidth: '50%', // Later on this size will be more dynamic and 'draggable' by the user.
                 overflow: 'auto',
-                maxHeight: '100%'
+                height: '100%'
             }}>
                 <Pdf />
             </Box>
             <Box flexGrow={1} style={{
                 minWidth: '200px',
                 overflow: 'auto',
-                maxHeight: '100%'
+                height: '100%'
             }}>
                 <TextEditor />
             </Box>
