@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { Button, Grid, Box } from '@material-ui/core';
+import { Button, Box } from '@material-ui/core';
 import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 import HomeIcon from '@material-ui/icons/Home';
 import InfoIcon from '@material-ui/icons/Info';
@@ -10,16 +10,18 @@ import MainView from './app/MainView';
 
 export default function Root() {
     return (
-        <BrowserRouter >
-            <Grid container spacing={0}>
-                <Grid item xs={12}>
-                    <Box m={1}>
-                        <Button href="/"><HomeIcon /></Button>
-                        <Button href="/about"><InfoIcon /></Button>
-                        <Button href="/pdf"><PictureAsPdfIcon /></Button>
-                    </Box>
-                </Grid >
-                <Grid item xs={12}>
+        <BrowserRouter>
+            <Box flexDirection="column" display="flex" height="100%">
+                <Box m={1}>
+                    <Button href="/"><HomeIcon /></Button>
+                    <Button href="/about"><InfoIcon /></Button>
+                    <Button href="/pdf"><PictureAsPdfIcon /></Button>
+                </Box>
+
+                {/* This sizes the main content area to fill up the remaining space */}
+                <Box flexGrow={1} style={{
+                    minHeight: '0'
+                }}>
                     <Switch >
                         <Route exact path="/">
                             <App />
@@ -28,14 +30,11 @@ export default function Root() {
                             <h1>About</h1>
                         </Route>
                         <Route path="/pdf">
-                            <div className="App">
-                                <MainView />
-                            </div>
+                            <MainView />
                         </Route>
                     </Switch>
-                </Grid >
-
-            </Grid>
+                </Box>
+            </Box>
         </BrowserRouter>
     );
 }
