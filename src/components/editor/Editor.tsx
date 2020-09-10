@@ -6,6 +6,7 @@ import FormatBoldIcon from '@material-ui/icons/FormatBold';
 import FormatItalicIcon from '@material-ui/icons/FormatItalic';
 import FormatUnderlinedIcon from '@material-ui/icons/FormatUnderlined';
 import FormatStrikethroughIcon from '@material-ui/icons/FormatStrikethrough';
+import CodeIcon from '@material-ui/icons/Code';
 
 
 import Highlight from './Highlight';
@@ -25,6 +26,18 @@ export default function TextEditor() {
   React.useEffect(() => {
     focusEditor();
   }, []);
+
+  const styleMap = {
+    'H1': {
+      'font-size': '33px'
+    },
+    'H2': {
+      'font-size': '28px'
+    },
+    'H3': {
+      'font-size': '23px'
+    },
+  };
 
 
   function highlightCallback(t) {
@@ -77,6 +90,11 @@ export default function TextEditor() {
                 <Button onMouseDown={() => formatText('ITALIC')}><FormatItalicIcon /></Button>
                 <Button onMouseDown={() => formatText('STRIKETHROUGH')}><FormatStrikethroughIcon /></Button>
                 <Button onMouseDown={() => formatText('UNDERLINE')}><FormatUnderlinedIcon /></Button>
+                <Button onMouseDown={() => code()}><CodeIcon /></Button>
+                <Button onMouseDown={() => formatText('H1')}>H1</Button>
+                <Button onMouseDown={() => formatText('H2')}>H2</Button>
+                <Button onMouseDown={() => formatText('H3')}>H3</Button>
+
               </ButtonGroup>
             </Paper>
           </Box>
@@ -86,6 +104,7 @@ export default function TextEditor() {
             <Paper onClick={focusEditor} elevation={4}>
               <Editor
                 ref={editor}
+                customStyleMap={styleMap}
                 editorState={editorState}
                 onChange={newEditorState => setEditorState(newEditorState)}
               />

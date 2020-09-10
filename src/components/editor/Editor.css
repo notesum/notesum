@@ -20,3 +20,12 @@ div.DraftEditor-root {
   .ButtonGroup {
     font-family: monospace;
   }
+
+
+  .fancy {
+
+    font-family: 'Hoefler Text', Georgia, serif;
+    font-style: italic;
+    text-align: center;
+
+  }
