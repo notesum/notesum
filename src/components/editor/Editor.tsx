@@ -27,15 +27,17 @@ export default function TextEditor() {
     focusEditor();
   }, []);
 
+
+  // TODO find a way to put in css
   const styleMap = {
     'H1': {
-      'font-size': '33px'
+      'font-size': '2.2em'
     },
     'H2': {
-      'font-size': '28px'
+      'font-size': '1.8em'
     },
     'H3': {
-      'font-size': '23px'
+      'font-size': '1.3em'
     },
   };
 
