@@ -8,13 +8,11 @@ import ZoomInIcon from '@material-ui/icons/ZoomIn';
 import ZoomOutIcon from '@material-ui/icons/ZoomOut';
 
 
-import pdf from '../../resources/sample2.pdf';
-
 import Page from './Page';
 
 GlobalWorkerOptions.workerSrc = pdfjsWorker;
 
-export default function Pdf() {
+export default function Pdf({ file }: { file: string }) {
 
     const [document, setDocument] = useState<undefined | PDFDocumentProxy>(undefined);
     const [pages, setPages] = useState<PDFPageProxy[]>([]);
@@ -23,7 +21,7 @@ export default function Pdf() {
     // Load document
     useEffect(() => {
         (async () => {
-            setDocument(await getDocument({ url: pdf }).promise);
+            setDocument(await getDocument({ url: file }).promise);
         })();
     }, []);
 

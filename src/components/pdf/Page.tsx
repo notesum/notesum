@@ -11,8 +11,8 @@ type PageProps = {
 
 export default function Page({ page, scale }: PageProps) {
 
-    const canvasRef = useRef(null);
-    const textLayerRef = useRef(null);
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+    const textLayerRef = useRef<HTMLDivElement>(null);
     const [viewport, setViewport] = useState<PageViewport | undefined>(undefined);
 
     useEffect(() => {
@@ -25,7 +25,7 @@ export default function Page({ page, scale }: PageProps) {
         // Render Canvas
         page.render({
             canvasContext: canvasRef.current.getContext('2d'),
-            viewport: updatedViewport,
+            viewport: updatedViewport
         });
 
         // Render text content
