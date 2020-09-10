@@ -4,6 +4,8 @@ import { PDFDocumentProxy, PDFPageProxy } from 'pdfjs-dist/types/display/api';
 import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.entry';
 import 'pdfjs-dist/web/pdf_viewer.css';
 import { Button, Box, ButtonGroup } from '@material-ui/core';
+import ZoomInIcon from '@material-ui/icons/ZoomIn';
+import ZoomOutIcon from '@material-ui/icons/ZoomOut';
 
 
 import pdf from '../../resources/sample2.pdf';
@@ -41,9 +43,9 @@ export default function Pdf() {
 
     return (
         <div>
-            <ButtonGroup variant="typomakesthisthebestwithoutmeaddingcss">
-                <Button onClick={() => setScale(scale + 0.1)}>+</Button>
-                <Button onClick={() => setScale(scale - 0.1)}>-</Button>
+            <ButtonGroup >
+                <Button onClick={() => setScale(scale + 0.1)}><ZoomInIcon /></Button>
+                <Button onClick={() => setScale(scale - 0.1)}><ZoomOutIcon /></Button>
             </ButtonGroup>
 
             <Box>
