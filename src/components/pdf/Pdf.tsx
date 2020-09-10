@@ -43,15 +43,17 @@ export default function Pdf() {
 
     return (
         <div>
-            <ButtonGroup >
-                <Button onClick={() => setScale(scale + 0.1)}><ZoomInIcon /></Button>
-                <Button onClick={() => setScale(scale - 0.1)}><ZoomOutIcon /></Button>
-            </ButtonGroup>
+            <Box mx={2}>
+                <ButtonGroup>
+                    <Button onClick={() => setScale(scale + 0.1)}><ZoomInIcon /></Button>
+                    <Button onClick={() => setScale(scale - 0.1)}><ZoomOutIcon /></Button>
+                </ButtonGroup>
+            </Box>
 
             <Box>
                 <div className="pdfViewer">
                     {pages.map((page, id) => {
-                        return (<Page key={id} scale={scale} page={page}/>);
+                        return (<Page key={id} scale={scale} page={page} />);
                     })}
                 </div>
             </Box>

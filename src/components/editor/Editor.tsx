@@ -32,13 +32,13 @@ export default function TextEditor() {
   // TODO find a way to put in css
   const styleMap = {
     'H1': {
-      fontSize: '1.5em'
+      fontSize: '1.8em'
     },
     'H2': {
-      fontSize: '1.3em'
+      fontSize: '1.4em'
     },
     'H3': {
-      fontSize: '1.3em'
+      fontSize: '1.2em'
     },
   };
 

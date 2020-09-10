@@ -1,6 +1,6 @@
 div.DraftEditor-root {
   
-    height: 770px;
+    height: 83vh;
     width: 99%;
     padding-top: 5%;
     overflow-y: scroll;
@@ -20,12 +20,4 @@ div.DraftEditor-root {
   
   .ButtonGroup {
     font-family: monospace;
-  }
-
-  .fancy {
-
-    font-family: 'Hoefler Text', Georgia, serif;
-    font-style: italic;
-    text-align: center;
-
   }
