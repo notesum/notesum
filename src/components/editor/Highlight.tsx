@@ -1,20 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import TextSelector from 'text-selection-react';
 
 
 const Highlight = ({ callback }) => {
 
+
+    function func(event) {
+        if (window.getSelection().toString().length) {
+            const exactText = window.getSelection().toString();
+            callback(exactText)
+        }
+    }
+
+    document.addEventListener('mouseup', func);
+
+
+
     return (
-        <TextSelector
-            events={[
-                {
-                    text: 'Add',
-                    handler: (html, text) => callback(text)
-                }
-            ]}
-            color={'yellow'}
-            colorText={false}
-        />
+        <></>
     );
 };
 export default Highlight;

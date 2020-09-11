@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Editor, EditorState, ContentState, Modifier, RichUtils } from 'draft-js';
+import { Editor, EditorState, ContentState, Modifier, RichUtils, SelectionState } from 'draft-js';
 import 'draft-js/dist/Draft.css';
 import { Button, ButtonGroup, Paper, Grid, Box } from '@material-ui/core';
 import FormatBoldIcon from '@material-ui/icons/FormatBold';
@@ -7,10 +7,9 @@ import FormatItalicIcon from '@material-ui/icons/FormatItalic';
 import FormatUnderlinedIcon from '@material-ui/icons/FormatUnderlined';
 import FormatStrikethroughIcon from '@material-ui/icons/FormatStrikethrough';
 import CodeIcon from '@material-ui/icons/Code';
-import {convertFromRaw, convertToRaw} from 'draft-js';
+import { convertFromRaw, convertToRaw } from 'draft-js';
 
 
-import Highlight from './Highlight';
 import './Editor.css';
 
 
@@ -19,6 +18,8 @@ export default function TextEditor() {
   const [editorState, setEditorState] = useState(EditorState.createWithContent(contentState));
 
   const editor = React.useRef(null);
+  document.addEventListener('mouseup', func);
+
 
   function focusEditor() {
     editor.current.focus();
@@ -29,7 +30,6 @@ export default function TextEditor() {
   }, []);
 
 
-  // TODO find a way to put in css
   const styleMap = {
     'H1': {
       fontSize: '1.8em'
@@ -43,51 +43,55 @@ export default function TextEditor() {
   };
 
 
-  function highlightCallback(t) {
 
-    const content = editorState.getCurrentContent();
-    const targetRange = editorState.getSelection();
+  function insertCharacter(characterToInsert, editorState) {
+    const currentContent = editorState.getCurrentContent();
+    const offse = editorState.getSelection().getEndKey();
+    console.log("here1")
+    const currentSelection = SelectionState.createEmpty(offse);
+    // console.log("here2")
 
-    const newContentState = Modifier.insertText(
-      content,
-      targetRange,
-      (t + '\n\n')
-    );
-    setContentState(newContentState);
 
-    const newState = EditorState.push(
-      editorState,
-      newContentState
+    const newContent = Modifier.replaceText(
+      currentContent,
+      currentSelection,
+      '\n' + characterToInsert + '\n'
     );
 
-    setEditorState(newState);
+    const newEditorState = EditorState.push(editorState, newContent);
+
+    return newEditorState;
   }
 
   function formatText(f) {
-
-    event.preventDefault();
     const nextState = RichUtils.toggleInlineStyle(editorState, f);
     setEditorState(nextState);
   }
 
   function code() {
-
-    event.preventDefault();
     const nextState = RichUtils.toggleCode(editorState);
     setEditorState(nextState);
   }
 
   function saveState() {
-    event.preventDefault();
     const save = convertToRaw(editorState.getCurrentContent());
     console.log(save);
-
   }
+
+  function func(event) {
+    if (window.getSelection().toString().length) {
+      const exactText = window.getSelection().toString();
+      const newEditorState = insertCharacter(exactText, editorState);
+      setEditorState(newEditorState);
+    }
+  }
+
+
 
 
   return (
     <div>
-      <Highlight callback={highlightCallback} />
+      {/* <Highlight callback={highlightCallback} /> */}
 
       <Grid container spacing={0}>
         <Grid item xs={12}>
