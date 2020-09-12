@@ -11,6 +11,7 @@ import { convertFromRaw, convertToRaw } from 'draft-js';
 
 
 import './Editor.css';
+import Highlight from './Highlight'
 
 
 export default function TextEditor() {
@@ -26,7 +27,6 @@ export default function TextEditor() {
 
   React.useEffect(() => {
     focusEditor();
-    document.addEventListener('mouseup', func);
 
   }, []);
 
@@ -45,21 +45,19 @@ export default function TextEditor() {
 
 
 
-  function insertCharacter(characterToInsert, editorState) {
+  function addText(toInsert) {
     const currentContent = editorState.getCurrentContent();
-    const offse = editorState.getSelection().getEndKey();
-    const currentSelection = SelectionState.createEmpty(offse);
+    const currentSelection = editorState.getSelection();
 
 
     const newContent = Modifier.replaceText(
       currentContent,
       currentSelection,
-      '\n' + characterToInsert + '\n'
+      '\n' + toInsert + '\n'
     );
 
-    const newEditorState = EditorState.push(editorState, newContent);
+    setEditorState(EditorState.push(editorState, newContent));
 
-    return newEditorState;
   }
 
   function formatText(f) {
@@ -77,23 +75,9 @@ export default function TextEditor() {
     console.log(save);
   }
 
-  function func(event) {
-    event.preventDefault()
-    event.stopPropagation()
-    console.log("func");
-    if (window.getSelection().toString().length) {
-      const exactText = window.getSelection().toString();
-      const newEditorState = insertCharacter(exactText, editorState);
-      setEditorState(newEditorState);
-    }
-  }
-
-
-
-
   return (
     <div>
-      {/* <Highlight callback={highlightCallback} /> */}
+      <Highlight callback={addText} />
 
       <Grid container spacing={0}>
         <Grid item xs={12}>
