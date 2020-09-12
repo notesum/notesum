@@ -18,7 +18,6 @@ export default function TextEditor() {
   const [editorState, setEditorState] = useState(EditorState.createWithContent(contentState));
 
   const editor = React.useRef(null);
-  document.addEventListener('mouseup', func);
 
 
   function focusEditor() {
@@ -27,6 +26,8 @@ export default function TextEditor() {
 
   React.useEffect(() => {
     focusEditor();
+    document.addEventListener('mouseup', func);
+
   }, []);
 
 
@@ -47,9 +48,7 @@ export default function TextEditor() {
   function insertCharacter(characterToInsert, editorState) {
     const currentContent = editorState.getCurrentContent();
     const offse = editorState.getSelection().getEndKey();
-    console.log("here1")
     const currentSelection = SelectionState.createEmpty(offse);
-    // console.log("here2")
 
 
     const newContent = Modifier.replaceText(
@@ -79,6 +78,9 @@ export default function TextEditor() {
   }
 
   function func(event) {
+    event.preventDefault()
+    event.stopPropagation()
+    console.log("func");
     if (window.getSelection().toString().length) {
       const exactText = window.getSelection().toString();
       const newEditorState = insertCharacter(exactText, editorState);
