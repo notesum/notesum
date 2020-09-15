@@ -18,6 +18,7 @@ export default function TextEditor() {
   const [editorState, setEditor] = useState(EditorState.createWithContent(ContentState.createFromText('')));
 
   // The callback function for the highlight event handler
+  // TODO find a way to abstract this to another file so Highligh can have more functions
   const handleEditor = useCallback(event => {
     event.preventDefault();
     if (window.getSelection().toString().length && getSelectionParentElement().className === 'textLayer') {
