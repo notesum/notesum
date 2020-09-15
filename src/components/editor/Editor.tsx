@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Editor, EditorState, ContentState, Modifier, RichUtils } from 'draft-js';
 import 'draft-js/dist/Draft.css';
 import { Button, ButtonGroup, Paper, Grid, Box } from '@material-ui/core';
@@ -15,35 +15,57 @@ import './Editor.css';
 
 export default function TextEditor() {
 
-  var editorState = EditorState.createWithContent(ContentState.createFromText(''));
+  const [editorState, setEditor] = useState(EditorState.createWithContent(ContentState.createFromText('')));
 
-  const [eState, setEState] = useState(EditorState.createWithContent(ContentState.createFromText('sdfgsdfg')));
+  // The callback function for the highlight event handler
+  const handleEditor = useCallback(event => {
+    event.preventDefault();
+    if (window.getSelection().toString().length && getSelectionParentElement().className === 'textLayer') {
+      const exactText = window.getSelection().toString();
 
-  function getEditor(): EditorState { 
-    return editorState;
-  }
-
-  function setEditor(es: EditorState) {
-    console.log('here')
-     editorState = es; 
-     setEState(es);
+      setEditor(prevEditor => EditorState.push(prevEditor,
+        Modifier.replaceText(
+          prevEditor.getCurrentContent(),
+          prevEditor.getSelection(),
+          '\n' + exactText + '\n'
+        )));
     }
+  }, []);
 
-  function updateEditor(){
-    editorState = eState;
+  useEffect(() => {
+    focusEditor();
+    // Listen to mouseup for highlight behaviour
+    window.addEventListener('mouseup', handleEditor);
+
+    return () => {
+      window.removeEventListener('mouseup', handleEditor);
+    };
+  }, [handleEditor]);
+
+  // Get the parent element of the selection by also grouping all the parent elements
+  // TODO not use copy pasta from the internet
+  function getSelectionParentElement() {
+    let parentEl = null;
+    let sel = null;
+    if (window.getSelection) {
+      sel = window.getSelection();
+      if (sel.rangeCount) {
+        parentEl = sel.getRangeAt(0).commonAncestorContainer;
+        if (parentEl.nodeType !== 1) {
+          parentEl = parentEl.parentNode;
+        }
+      }
+    } else if ((sel === document.getSelection()) && sel.type !== 'Control') {
+      parentEl = sel.createRange().parentElement();
+    }
+    return parentEl;
   }
-    
 
-  const editor = React.useRef(null);
+  const editor = useRef(null);
 
   function focusEditor() {
     editor.current.focus();
   }
-
-  React.useEffect(() => {
-    focusEditor();
-    document.addEventListener('mouseup', hlight);
-  }, [getEditor()]);
 
   const styleMap = {
     'H1': {
@@ -57,39 +79,18 @@ export default function TextEditor() {
     },
   };
 
-  function hlight() {
-    if (window.getSelection().toString().length) {
-      const exactText = window.getSelection().toString();
-      addText(exactText);
-    }
-  }
-
-  function addText(toInsert) {
-    const currentContent = getEditor().getCurrentContent();
-    const currentSelection = getEditor().getSelection();
-
-    const newContent = Modifier.replaceText(
-      currentContent,
-      currentSelection,
-      '\n' + toInsert + '\n'
-    );
-
-    setEditor(EditorState.push(getEditor(), newContent));
-
-  }
-
   function formatText(f) {
-    const nextState = RichUtils.toggleInlineStyle(getEditor(), f);
+    const nextState = RichUtils.toggleInlineStyle(editorState, f);
     setEditor(nextState);
   }
 
   function code() {
-    const nextState = RichUtils.toggleCode(getEditor());
+    const nextState = RichUtils.toggleCode(editorState);
     setEditor(nextState);
   }
 
   function saveState() {
-    const save = convertToRaw(getEditor().getCurrentContent());
+    const save = convertToRaw(editorState.getCurrentContent());
     console.log(save);
   }
 
@@ -120,7 +121,7 @@ export default function TextEditor() {
               <Editor
                 ref={editor}
                 customStyleMap={styleMap}
-                editorState={eState}
+                editorState={editorState}
                 onChange={setEditor}
               />
             </Paper>
