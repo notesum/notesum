@@ -49,6 +49,7 @@ export default function TextEditor() {
 
   // Get the parent element of the selection by also grouping all the parent elements
   // TODO not use copy pasta from the internet
+  // Source: https://stackoverflow.com/questions/7215479/get-parent-element-of-a-selected-text
   function getSelectionParentElement() {
     let parentEl = null;
     let sel = null;
