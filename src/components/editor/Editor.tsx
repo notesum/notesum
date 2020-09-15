@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Editor, EditorState, ContentState, Modifier, RichUtils } from 'draft-js';
 import 'draft-js/dist/Draft.css';
 import { Button, ButtonGroup, Paper, Grid, Box } from '@material-ui/core';
@@ -7,29 +7,72 @@ import FormatItalicIcon from '@material-ui/icons/FormatItalic';
 import FormatUnderlinedIcon from '@material-ui/icons/FormatUnderlined';
 import FormatStrikethroughIcon from '@material-ui/icons/FormatStrikethrough';
 import CodeIcon from '@material-ui/icons/Code';
-import {convertFromRaw, convertToRaw} from 'draft-js';
+import { convertToRaw } from 'draft-js';
 
 
-import Highlight from './Highlight';
 import './Editor.css';
 
 
 export default function TextEditor() {
-  const [contentState, setContentState] = useState(ContentState.createFromText(''));
-  const [editorState, setEditorState] = useState(EditorState.createWithContent(contentState));
 
-  const editor = React.useRef(null);
+  const [editorState, setEditor] = useState(EditorState.createWithContent(ContentState.createFromText('')));
+
+  // The callback function for the highlight event handler
+  // TODO find a way to abstract this to another file so Highligh can have more functions
+  const handleEditor = useCallback(event => {
+    event.preventDefault();
+    if (window.getSelection().toString().length && getSelectionParentElement().className === 'textLayer') {
+      const exactText = window.getSelection();
+
+      // TODO parse style from the selection, put it in this array matching the text
+      const styles = ['NORMAL'];
+
+      setEditor(prevEditor => EditorState.push(prevEditor,
+        Modifier.replaceText(
+          prevEditor.getCurrentContent(),
+          prevEditor.getSelection(),
+          '\n' + exactText + '\n',
+          styles
+          )));
+    }
+  }, []);
+
+  useEffect(() => {
+    focusEditor();
+    // Listen to mouseup for highlight behaviour
+    window.addEventListener('mouseup', handleEditor);
+
+    return () => {
+      window.removeEventListener('mouseup', handleEditor);
+    };
+  }, [handleEditor]);
+
+  // Get the parent element of the selection by also grouping all the parent elements
+  // TODO not use copy pasta from the internet
+  // Source: https://stackoverflow.com/questions/7215479/get-parent-element-of-a-selected-text
+  function getSelectionParentElement() {
+    let parentEl = null;
+    let sel = null;
+    if (window.getSelection) {
+      sel = window.getSelection();
+      if (sel.rangeCount) {
+        parentEl = sel.getRangeAt(0).commonAncestorContainer;
+        if (parentEl.nodeType !== 1) {
+          parentEl = parentEl.parentNode;
+        }
+      }
+    } else if ((sel === document.getSelection()) && sel.type !== 'Control') {
+      parentEl = sel.createRange().parentElement();
+    }
+    return parentEl;
+  }
+
+  const editor = useRef(null);
 
   function focusEditor() {
     editor.current.focus();
   }
 
-  React.useEffect(() => {
-    focusEditor();
-  }, []);
-
-
-  // TODO find a way to put in css
   const styleMap = {
     'H1': {
       fontSize: '1.8em'
@@ -42,53 +85,23 @@ export default function TextEditor() {
     },
   };
 
-
-  function highlightCallback(t) {
-
-    const content = editorState.getCurrentContent();
-    const targetRange = editorState.getSelection();
-
-    const newContentState = Modifier.insertText(
-      content,
-      targetRange,
-      (t + '\n\n')
-    );
-    setContentState(newContentState);
-
-    const newState = EditorState.push(
-      editorState,
-      newContentState
-    );
-
-    setEditorState(newState);
-  }
-
   function formatText(f) {
-
-    event.preventDefault();
     const nextState = RichUtils.toggleInlineStyle(editorState, f);
-    setEditorState(nextState);
+    setEditor(nextState);
   }
 
   function code() {
-
-    event.preventDefault();
     const nextState = RichUtils.toggleCode(editorState);
-    setEditorState(nextState);
+    setEditor(nextState);
   }
 
   function saveState() {
-    event.preventDefault();
     const save = convertToRaw(editorState.getCurrentContent());
     console.log(save);
-
   }
-
 
   return (
     <div>
-      <Highlight callback={highlightCallback} />
-
       <Grid container spacing={0}>
         <Grid item xs={12}>
           <Box mx={1} overflow="hidden">
@@ -115,7 +128,7 @@ export default function TextEditor() {
                 ref={editor}
                 customStyleMap={styleMap}
                 editorState={editorState}
-                onChange={newEditorState => setEditorState(newEditorState)}
+                onChange={setEditor}
               />
             </Paper>
           </Box>
