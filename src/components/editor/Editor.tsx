@@ -25,7 +25,7 @@ export default function TextEditor() {
       const exactText = window.getSelection();
 
       // TODO parse style from the selection, put it in this array matching the text
-      const styles = ['NORMAL']
+      const styles = ['NORMAL'];
 
       setEditor(prevEditor => EditorState.push(prevEditor,
         Modifier.replaceText(
