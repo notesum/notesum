@@ -42,11 +42,9 @@ export default function Pdf({ file }: { file: string }) {
     return (
         <div>
             <Box mx={2}>
-                <ButtonGroup className="ButtonGroup">
+                <ButtonGroup>
                     <Button onClick={() => setScale(scale + 0.1)}><ZoomInIcon /></Button>
                     <Button onClick={() => setScale(scale - 0.1)}><ZoomOutIcon /></Button>
-                    <Button onClick={() => setScale(scale - 0.1)}>Upload</Button>
-
                 </ButtonGroup>
             </Box>
 
