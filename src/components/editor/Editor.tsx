@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Editor, EditorState, ContentState, Modifier, RichUtils, SelectionState } from 'draft-js';
+import { Editor, EditorState, ContentState, Modifier, RichUtils } from 'draft-js';
 import 'draft-js/dist/Draft.css';
 import { Button, ButtonGroup, Paper, Grid, Box } from '@material-ui/core';
 import FormatBoldIcon from '@material-ui/icons/FormatBold';
@@ -7,19 +7,29 @@ import FormatItalicIcon from '@material-ui/icons/FormatItalic';
 import FormatUnderlinedIcon from '@material-ui/icons/FormatUnderlined';
 import FormatStrikethroughIcon from '@material-ui/icons/FormatStrikethrough';
 import CodeIcon from '@material-ui/icons/Code';
-import { convertFromRaw, convertToRaw } from 'draft-js';
+import { convertToRaw } from 'draft-js';
 
 
 import './Editor.css';
-import Highlight from './Highlight'
 
 
 export default function TextEditor() {
-  const [contentState, setContentState] = useState(ContentState.createFromText(''));
-  const [editorState, setEditorState] = useState(EditorState.createWithContent(contentState));
+
+  var editorState = EditorState.createWithContent(ContentState.createFromText(''));
+
+  const [eState, setEState] = useState(EditorState.createWithContent(ContentState.createFromText('')));
+
+  function getEditor(): EditorState { 
+    return editorState;
+  }
+
+  function setEditor(es: EditorState) {
+     editorState = es; 
+     setEState(es);
+    }
+    
 
   const editor = React.useRef(null);
-
 
   function focusEditor() {
     editor.current.focus();
@@ -27,9 +37,8 @@ export default function TextEditor() {
 
   React.useEffect(() => {
     focusEditor();
-
+    document.addEventListener('mouseup', hlight);
   }, []);
-
 
   const styleMap = {
     'H1': {
@@ -43,12 +52,16 @@ export default function TextEditor() {
     },
   };
 
-
+  function hlight() {
+    if (window.getSelection().toString().length) {
+      const exactText = window.getSelection().toString();
+      addText(exactText);
+    }
+  }
 
   function addText(toInsert) {
-    const currentContent = editorState.getCurrentContent();
-    const currentSelection = editorState.getSelection();
-
+    const currentContent = getEditor().getCurrentContent();
+    const currentSelection = getEditor().getSelection();
 
     const newContent = Modifier.replaceText(
       currentContent,
@@ -56,29 +69,27 @@ export default function TextEditor() {
       '\n' + toInsert + '\n'
     );
 
-    setEditorState(EditorState.push(editorState, newContent));
+    setEditor(EditorState.push(getEditor(), newContent));
 
   }
 
   function formatText(f) {
-    const nextState = RichUtils.toggleInlineStyle(editorState, f);
-    setEditorState(nextState);
+    const nextState = RichUtils.toggleInlineStyle(getEditor(), f);
+    setEditor(nextState);
   }
 
   function code() {
-    const nextState = RichUtils.toggleCode(editorState);
-    setEditorState(nextState);
+    const nextState = RichUtils.toggleCode(getEditor());
+    setEditor(nextState);
   }
 
   function saveState() {
-    const save = convertToRaw(editorState.getCurrentContent());
+    const save = convertToRaw(getEditor().getCurrentContent());
     console.log(save);
   }
 
   return (
     <div>
-      <Highlight callback={addText} />
-
       <Grid container spacing={0}>
         <Grid item xs={12}>
           <Box mx={1} overflow="hidden">
@@ -104,8 +115,8 @@ export default function TextEditor() {
               <Editor
                 ref={editor}
                 customStyleMap={styleMap}
-                editorState={editorState}
-                onChange={newEditorState => setEditorState(newEditorState)}
+                editorState={eState}
+                onChange={newEditorState => setEditor(newEditorState)}
               />
             </Paper>
           </Box>
