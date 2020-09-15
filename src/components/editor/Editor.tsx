@@ -24,6 +24,7 @@ export default function TextEditor() {
   }
 
   function setEditor(es: EditorState) {
+    console.log('here')
      editorState = es; 
      setEState(es);
     }
