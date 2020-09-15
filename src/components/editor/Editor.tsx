@@ -22,14 +22,18 @@ export default function TextEditor() {
   const handleEditor = useCallback(event => {
     event.preventDefault();
     if (window.getSelection().toString().length && getSelectionParentElement().className === 'textLayer') {
-      const exactText = window.getSelection().toString();
+      const exactText = window.getSelection();
+
+      // TODO parse style from the selection, put it in this array matching the text
+      const styles = ['NORMAL']
 
       setEditor(prevEditor => EditorState.push(prevEditor,
         Modifier.replaceText(
           prevEditor.getCurrentContent(),
           prevEditor.getSelection(),
-          '\n' + exactText + '\n'
-        )));
+          '\n' + exactText + '\n',
+          styles
+          )));
     }
   }, []);
 
