@@ -17,7 +17,7 @@ export default function TextEditor() {
 
   var editorState = EditorState.createWithContent(ContentState.createFromText(''));
 
-  const [eState, setEState] = useState(EditorState.createWithContent(ContentState.createFromText('')));
+  const [eState, setEState] = useState(EditorState.createWithContent(ContentState.createFromText('sdfgsdfg')));
 
   function getEditor(): EditorState { 
     return editorState;
@@ -28,6 +28,10 @@ export default function TextEditor() {
      editorState = es; 
      setEState(es);
     }
+
+  function updateEditor(){
+    editorState = eState;
+  }
     
 
   const editor = React.useRef(null);
@@ -39,7 +43,7 @@ export default function TextEditor() {
   React.useEffect(() => {
     focusEditor();
     document.addEventListener('mouseup', hlight);
-  }, []);
+  }, [getEditor()]);
 
   const styleMap = {
     'H1': {
@@ -117,7 +121,7 @@ export default function TextEditor() {
                 ref={editor}
                 customStyleMap={styleMap}
                 editorState={eState}
-                onChange={newEditorState => setEditor(newEditorState)}
+                onChange={setEditor}
               />
             </Paper>
           </Box>
