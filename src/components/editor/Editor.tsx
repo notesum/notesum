@@ -20,20 +20,15 @@ export default function TextEditor() {
   // The callback function for the highlight event handler
   // TODO find a way to abstract this to another file so Highligh can have more functions
   const handleEditor = useCallback(event => {
-    event.preventDefault();
     if (window.getSelection().toString().length && getSelectionParentElement().className === 'textLayer') {
       const exactText = window.getSelection();
-
-      // TODO parse style from the selection, put it in this array matching the text
-      const styles = ['NORMAL'];
 
       setEditor(prevEditor => EditorState.push(prevEditor,
         Modifier.replaceText(
           prevEditor.getCurrentContent(),
           prevEditor.getSelection(),
-          '\n' + exactText + '\n',
-          styles
-          )));
+          '\n' + exactText + '\n'
+        )));
     }
   }, []);
 
@@ -88,6 +83,7 @@ export default function TextEditor() {
   function formatText(f) {
     const nextState = RichUtils.toggleInlineStyle(editorState, f);
     setEditor(nextState);
+
   }
 
   function code() {
