@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { Editor, EditorState, ContentState, Modifier, RichUtils } from 'draft-js';
+import { Editor, EditorState, ContentState, Modifier, RichUtils, ContentBlock, genKey } from 'draft-js';
 import 'draft-js/dist/Draft.css';
 import { Button, ButtonGroup, Paper, Grid, Box } from '@material-ui/core';
 import FormatBoldIcon from '@material-ui/icons/FormatBold';
@@ -7,11 +7,11 @@ import FormatItalicIcon from '@material-ui/icons/FormatItalic';
 import FormatUnderlinedIcon from '@material-ui/icons/FormatUnderlined';
 import FormatStrikethroughIcon from '@material-ui/icons/FormatStrikethrough';
 import CodeIcon from '@material-ui/icons/Code';
+import Immutable from 'immutable';
 import { convertToRaw } from 'draft-js';
 
 
 import './Editor.css';
-
 
 export default function TextEditor() {
 
@@ -68,6 +68,7 @@ export default function TextEditor() {
     editor.current.focus();
   }
 
+
   const styleMap = {
     'H1': {
       fontSize: '1.8em'
@@ -79,6 +80,19 @@ export default function TextEditor() {
       fontSize: '1.2em'
     },
   };
+
+
+  const blockRenderMap = Immutable.Map({
+    'header-two': {
+      element: 'h2'
+    },
+    'unstyled': {
+      element: 'h2'
+    },
+    'testing':{
+      element: 'unordered-list-item'
+    }
+  });
 
   function formatText(f) {
     const nextState = RichUtils.toggleInlineStyle(editorState, f);
@@ -92,9 +106,36 @@ export default function TextEditor() {
   }
 
   function saveState() {
-    const save = convertToRaw(editorState.getCurrentContent());
-    console.log(save);
+    // const save = convertToRaw(editorState.getCurrentContent());
+    // console.log(save);
+    setEditor(inserNewBlock());
   }
+
+  function inserNewBlock() {
+    // New block
+    const newBlock = new ContentBlock({
+        key: genKey(),
+        text: 'This is a new block',
+        type: 'testing',
+    });
+
+    const contentState = editorState.getCurrentContent()
+    const newBlockMap = contentState.getBlockMap().set(newBlock.key, newBlock)
+  
+    return EditorState.push(
+      editorState,
+      ContentState
+        .createFromBlockArray(newBlockMap.toArray())
+        .set('selectionBefore', contentState.getSelectionBefore())
+        .set('selectionAfter', contentState.getSelectionAfter())
+    )
+}
+
+
+
+
+
+
 
   return (
     <div>
@@ -125,6 +166,7 @@ export default function TextEditor() {
                 customStyleMap={styleMap}
                 editorState={editorState}
                 onChange={setEditor}
+                blockRenderMap={blockRenderMap}
               />
             </Paper>
           </Box>
