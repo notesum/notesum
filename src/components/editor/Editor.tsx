@@ -25,8 +25,10 @@ export default function TextEditor() {
 
             const exactText = window.getSelection().toString();
             setEditor(prevEditor => inserNewBlock(prevEditor, exactText, 'styled'));
+            
         }
     }, []);
+
 
     useEffect(() => {
         focusEditor();
@@ -37,6 +39,7 @@ export default function TextEditor() {
             window.removeEventListener('mouseup', handleEditor);
         };
     }, [handleEditor]);
+
 
     // Get the parent element of the selection by also grouping all the parent elements
     // TODO not use copy pasta from the internet
@@ -112,9 +115,12 @@ export default function TextEditor() {
 
         // @ts-ignore
         const newBlock = new ContentBlock({ key: genKey(), text: textToAdd, type: s });
-
+        console.log(newBlock.getKey());
         const fragment = BlockMapBuilder.createFromArray([newBlock]);
+        console.log(fragment);
         const contentState = eState.getCurrentContent();
+        
+        // console.log(contentState.getBlockMap().length);
 
         return EditorState.push(
             eState,
@@ -125,9 +131,10 @@ export default function TextEditor() {
 
 
     function testButton() {
-        setEditor(inserNewBlock(editorState, 'oy', 'header-two'));
+        setEditor(inserNewBlock(editorState, 'This button will break things in the editor it is only here for testing', 'header-two'));
 
     }
+    
     return (
         <div>
             <Grid container spacing={0}>
@@ -156,7 +163,6 @@ export default function TextEditor() {
                         <Paper onClick={focusEditor} elevation={4}>
                             <Editor
                                 ref={editor}
-                                customStyleMap={styleMap}
                                 editorState={editorState}
                                 onChange={setEditor}
                                 blockRenderMap={blockRenderMap}
