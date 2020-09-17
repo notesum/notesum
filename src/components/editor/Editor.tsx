@@ -20,9 +20,11 @@ export default function TextEditor() {
     // The callback function for the highlight event handler
     // TODO find a way to abstract this to another file so Highligh can have more functions
     const handleEditor = useCallback(event => {
-        if (window.getSelection().toString().length && (getSelectionParentElement().className == "page" || getSelectionParentElement().className == "textLayer") {
+        if (window.getSelection().toString().length &&
+            (getSelectionParentElement().className === 'page' || getSelectionParentElement().className === 'textLayer')) {
+
             const exactText = window.getSelection().toString();
-            setEditor(prevEditor => inserNewBlock(prevEditor, exactText, "styled"));
+            setEditor(prevEditor => inserNewBlock(prevEditor, exactText, 'styled'));
         }
     }, []);
 
@@ -97,7 +99,6 @@ export default function TextEditor() {
     function code() {
         const nextState = RichUtils.toggleCode(editorState);
         setEditor(nextState);
-
     }
 
     function saveState() {
@@ -105,10 +106,13 @@ export default function TextEditor() {
         console.log(save);
     }
 
-    // Returns new editor state with a block pushed with 
+    // Returns new editor state with a block pushed with
     function inserNewBlock(eState, t, s) {
         const textToAdd = '\n' + t + '\n';
+
+        // @ts-ignore
         const newBlock = new ContentBlock({ key: genKey(), text: textToAdd, type: s });
+
         const fragment = BlockMapBuilder.createFromArray([newBlock]);
         const contentState = eState.getCurrentContent();
 
@@ -121,7 +125,7 @@ export default function TextEditor() {
 
 
     function testButton() {
-        setEditor(inserNewBlock(editorState, "oyoyoy", "unstlyed"));
+        setEditor(inserNewBlock(editorState, 'oy', 'header-two'));
 
     }
     return (
