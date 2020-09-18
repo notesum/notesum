@@ -16,15 +16,16 @@ import './Editor.css';
 export default function TextEditor() {
 
     const [editorState, setEditor] = useState(EditorState.createWithContent(ContentState.createFromText('')));
+    let prevSelection = null;
 
     // The callback function for the highlight event handler
     // TODO find a way to abstract this to another file so Highligh can have more functions
     const handleEditor = useCallback(event => {
-        if (window.getSelection().toString().length &&
+        if (window.getSelection().toString().length && window.getSelection().toString() !== prevSelection &&
             (getSelectionParentElement().className === 'page' || getSelectionParentElement().className === 'textLayer')) {
-
             const exactText = window.getSelection().toString();
-            setEditor(prevEditor => inserNewBlock(prevEditor, exactText, 'styled'));
+            prevSelection = exactText;
+            setEditor(prevEditor => insertNewBlock(prevEditor, exactText, 'unstlyed'));
 
         }
     }, []);
@@ -110,29 +111,34 @@ export default function TextEditor() {
     }
 
     // Returns new editor state with a block pushed with
-    function inserNewBlock(eState, t, s) {
-        const textToAdd = '\n' + t + '\n';
+    function insertNewBlock(eState, t, s) {
+        const selection = eState.getSelection();
+        const contentState = eState.getCurrentContent();
+        const currentBlock = contentState.getBlockForKey(selection.getEndKey());
+        const blockMap = contentState.getBlockMap();
+
+        // Split the blocks
+        const blocksBefore = blockMap.toSeq().takeUntil((v) => { return v === currentBlock; });
+        const blocksAfter = blockMap.toSeq().skipUntil((v) => { return v === currentBlock; }).rest();
+
+        const newBlockKey = genKey();
 
         // @ts-ignore
-        const newBlock = new ContentBlock({ key: genKey(), text: textToAdd, type: s });
-        // console.log(newBlock.getKey());
-        // console.log(fragment);
+        const newBlocks = [[newBlockKey, new ContentBlock({ key: newBlockKey, type: s, text: '\n' + t + '\n' })],
+         [currentBlock.getKey(), currentBlock]];
 
-        const contentState = eState.getCurrentContent();
-        const newBlockMap = contentState.getBlockMap().toSeq().concat([[newBlock.getKey(), newBlock]]).toOrderedMap();
-
-        const merged = contentState.merge({blockMap: newBlockMap});
-
-        return EditorState.push(
-            eState,
-            merged,
-            null
-        );
+        // Insert the new block
+        const newBlockMap = blocksBefore.concat(newBlocks, blocksAfter).toOrderedMap();
+        const newContentState = contentState.merge({
+            blockMap: newBlockMap,
+            selectionBefore: selection,
+            selectionAfter: selection,
+        });
+        return EditorState.push(eState, newContentState, 'insert-fragment');
     }
 
-
     function testButton() {
-        setEditor(inserNewBlock(editorState, 'This button will break things in the editor it is only here for testing', 'header-two'));
+        setEditor(insertNewBlock(editorState, 'This button will break things in the editor it is only here for testing', 'unstyled'));
 
     }
 
