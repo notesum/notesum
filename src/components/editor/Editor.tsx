@@ -152,11 +152,11 @@ export default function TextEditor() {
         const contentStateWithEntity = contentState.createEntity(
             'IMAGE',
             'IMMUTABLE',
-            { src: url })
+            { src: url });
         const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
         const newEditorState = EditorState.set(editorState, { currentContent: contentStateWithEntity });
         return AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, '');
-    };
+    }
 
     return (
         <div>
