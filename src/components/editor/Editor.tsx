@@ -25,7 +25,9 @@ export default function TextEditor() {
             (getSelectionParentElement().className === 'page' || getSelectionParentElement().className === 'textLayer')) {
             const exactText = window.getSelection().toString();
             prevSelection = exactText;
-            setEditor(prevEditor => insertNewBlock(prevEditor, exactText, 'unstlyed'));
+            // TODO parse from PDF
+            const textStyle = 'unstyled';
+            setEditor(prevEditor => insertNewBlock(prevEditor, exactText, textStyle));
 
         }
     }, []);
@@ -95,6 +97,7 @@ export default function TextEditor() {
     });
 
     function formatText(f) {
+        // const nextState = RichUtils.toggleBlockType(editorState, f);
         const nextState = RichUtils.toggleInlineStyle(editorState, f);
         setEditor(nextState);
 
@@ -155,7 +158,7 @@ export default function TextEditor() {
                                 <Button onMouseDown={() => formatText('STRIKETHROUGH')}><FormatStrikethroughIcon /></Button>
                                 <Button onMouseDown={() => formatText('UNDERLINE')}><FormatUnderlinedIcon /></Button>
                                 <Button onMouseDown={() => code()}><CodeIcon /></Button>
-                                <Button onMouseDown={() => formatText('header-one')}>H1</Button>
+                                <Button onMouseDown={() => formatText('H1')}>H1</Button>
                                 <Button onMouseDown={() => formatText('H2')}>H2</Button>
                                 <Button onMouseDown={() => formatText('H3')}>H3</Button>
                                 <Button onMouseDown={() => saveState()}>S</Button>
@@ -173,7 +176,7 @@ export default function TextEditor() {
                                 ref={editor}
                                 editorState={editorState}
                                 onChange={setEditor}
-                                blockRenderMap={blockRenderMap}
+                                // blockRenderMap={blockRenderMap}
                             />
                         </Paper>
                     </Box>
