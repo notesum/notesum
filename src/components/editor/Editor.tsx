@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { Editor, EditorState, ContentState, Modifier, RichUtils, ContentBlock, genKey, BlockMapBuilder } from 'draft-js';
+import { Editor, EditorState, ContentState, Modifier, RichUtils, ContentBlock, genKey, AtomicBlockUtils } from 'draft-js';
 import 'draft-js/dist/Draft.css';
 import { Button, ButtonGroup, Paper, Grid, Box } from '@material-ui/core';
 import FormatBoldIcon from '@material-ui/icons/FormatBold';
@@ -128,7 +128,7 @@ export default function TextEditor() {
 
         // @ts-ignore
         const newBlocks = [[newBlockKey, new ContentBlock({ key: newBlockKey, type: s, text: '\n' + t + '\n' })],
-         [currentBlock.getKey(), currentBlock]];
+        [currentBlock.getKey(), currentBlock]];
 
         // Insert the new block
         const newBlockMap = blocksBefore.concat(newBlocks, blocksAfter).toOrderedMap();
@@ -143,8 +143,20 @@ export default function TextEditor() {
     function testButton() {
         // setEditor(insertNewBlock(editorState, 'This button will break things in the editor it is only here for testing', 'unstyled'));
         console.log(editorState.getCurrentContent().getBlockMap().size);
+        // setEditor(insertImage('../../resources/img.jpeg'));
 
     }
+
+    function insertImage(url) {
+        const contentState = editorState.getCurrentContent();
+        const contentStateWithEntity = contentState.createEntity(
+            'IMAGE',
+            'IMMUTABLE',
+            { src: url })
+        const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+        const newEditorState = EditorState.set(editorState, { currentContent: contentStateWithEntity });
+        return AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, '');
+    };
 
     return (
         <div>
@@ -177,7 +189,7 @@ export default function TextEditor() {
                                 editorState={editorState}
                                 onChange={setEditor}
                                 customStyleMap={styleMap}
-                                // blockRenderMap={blockRenderMap}
+                            // blockRenderMap={blockRenderMap}
                             />
                         </Paper>
                     </Box>
