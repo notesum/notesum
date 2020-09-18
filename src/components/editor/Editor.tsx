@@ -176,6 +176,7 @@ export default function TextEditor() {
                                 ref={editor}
                                 editorState={editorState}
                                 onChange={setEditor}
+                                customStyleMap={styleMap}
                                 // blockRenderMap={blockRenderMap}
                             />
                         </Paper>
