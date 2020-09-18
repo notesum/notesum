@@ -25,7 +25,7 @@ export default function TextEditor() {
 
             const exactText = window.getSelection().toString();
             setEditor(prevEditor => inserNewBlock(prevEditor, exactText, 'styled'));
-            
+
         }
     }, []);
 
@@ -115,16 +115,17 @@ export default function TextEditor() {
 
         // @ts-ignore
         const newBlock = new ContentBlock({ key: genKey(), text: textToAdd, type: s });
-        console.log(newBlock.getKey());
-        const fragment = BlockMapBuilder.createFromArray([newBlock]);
-        console.log(fragment);
+        // console.log(newBlock.getKey());
+        // console.log(fragment);
+
         const contentState = eState.getCurrentContent();
-        
-        // console.log(contentState.getBlockMap().length);
+        const newBlockMap = contentState.getBlockMap().toSeq().concat([[newBlock.getKey(), newBlock]]).toOrderedMap();
+
+        const merged = contentState.merge({blockMap: newBlockMap});
 
         return EditorState.push(
             eState,
-            Modifier.replaceWithFragment(contentState, eState.getSelection(), fragment),
+            merged,
             null
         );
     }
@@ -134,7 +135,7 @@ export default function TextEditor() {
         setEditor(inserNewBlock(editorState, 'This button will break things in the editor it is only here for testing', 'header-two'));
 
     }
-    
+
     return (
         <div>
             <Grid container spacing={0}>
