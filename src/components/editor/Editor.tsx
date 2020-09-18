@@ -138,7 +138,8 @@ export default function TextEditor() {
     }
 
     function testButton() {
-        setEditor(insertNewBlock(editorState, 'This button will break things in the editor it is only here for testing', 'unstyled'));
+        // setEditor(insertNewBlock(editorState, 'This button will break things in the editor it is only here for testing', 'unstyled'));
+        console.log(editorState.getCurrentContent().getBlockMap().size);
 
     }
 
@@ -154,7 +155,7 @@ export default function TextEditor() {
                                 <Button onMouseDown={() => formatText('STRIKETHROUGH')}><FormatStrikethroughIcon /></Button>
                                 <Button onMouseDown={() => formatText('UNDERLINE')}><FormatUnderlinedIcon /></Button>
                                 <Button onMouseDown={() => code()}><CodeIcon /></Button>
-                                <Button onMouseDown={() => formatText('H1')}>H1</Button>
+                                <Button onMouseDown={() => formatText('header-one')}>H1</Button>
                                 <Button onMouseDown={() => formatText('H2')}>H2</Button>
                                 <Button onMouseDown={() => formatText('H3')}>H3</Button>
                                 <Button onMouseDown={() => saveState()}>S</Button>
