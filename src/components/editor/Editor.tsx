@@ -2,20 +2,23 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Editor, EditorState, ContentState, Modifier, RichUtils, ContentBlock, genKey, AtomicBlockUtils } from 'draft-js';
 import 'draft-js/dist/Draft.css';
 import { Button, ButtonGroup, Paper, Grid, Box } from '@material-ui/core';
+import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import FormatBoldIcon from '@material-ui/icons/FormatBold';
 import FormatItalicIcon from '@material-ui/icons/FormatItalic';
 import FormatUnderlinedIcon from '@material-ui/icons/FormatUnderlined';
 import FormatStrikethroughIcon from '@material-ui/icons/FormatStrikethrough';
 import CodeIcon from '@material-ui/icons/Code';
+import TextFieldsIcon from '@material-ui/icons/TextFields';
+import TextFormatIcon from '@material-ui/icons/TextFormat';
 import Immutable from 'immutable';
 import { convertToRaw } from 'draft-js';
-
 
 import './Editor.css';
 
 export default function TextEditor() {
 
     const [editorState, setEditor] = useState(EditorState.createWithContent(ContentState.createFromText('')));
+    const [style, setStyle] = useState('unstyled');
     let prevSelection = null;
 
     // The callback function for the highlight event handler
@@ -26,11 +29,11 @@ export default function TextEditor() {
             const exactText = window.getSelection().toString();
             prevSelection = exactText;
             // TODO parse from PDF
-            const textStyle = 'unstyled';
-            setEditor(prevEditor => insertNewBlock(prevEditor, exactText, textStyle));
+            // const textStyle = 'header-one';
+            setEditor(prevEditor => insertNewBlock(prevEditor, exactText, style));
 
         }
-    }, []);
+    }, [style]);
 
 
     useEffect(() => {
@@ -41,7 +44,7 @@ export default function TextEditor() {
         return () => {
             window.removeEventListener('mouseup', handleEditor);
         };
-    }, [handleEditor]);
+    }, [handleEditor, style]);
 
 
     // Get the parent element of the selection by also grouping all the parent elements
@@ -127,7 +130,7 @@ export default function TextEditor() {
         const newBlockKey = genKey();
 
         // @ts-ignore
-        const newBlocks = [[newBlockKey, new ContentBlock({ key: newBlockKey, type: s, text: '\n' + t + '\n' })],
+        const newBlocks = [[newBlockKey, new ContentBlock({ key: newBlockKey, type: s, text: t + '\n' })],
         [currentBlock.getKey(), currentBlock]];
 
         // Insert the new block
@@ -140,11 +143,10 @@ export default function TextEditor() {
         return EditorState.push(eState, newContentState, 'insert-fragment');
     }
 
-    function testButton() {
-        // setEditor(insertNewBlock(editorState, 'This button will break things in the editor it is only here for testing', 'unstyled'));
-        console.log(editorState.getCurrentContent().getBlockMap().size);
-        // setEditor(insertImage('../../resources/img.jpeg'));
-
+    function testButton(event, newStyle) {
+        event.preventDefault();
+        setStyle(newStyle);
+        console.log(style);
     }
 
     function insertImage(url) {
@@ -160,29 +162,31 @@ export default function TextEditor() {
 
     return (
         <div>
-            <Grid container spacing={0}>
-                <Grid item xs={12}>
-                    <Box mx={1} overflow="hidden">
-                        <Paper elevation={0}>
-                            <ButtonGroup className="ButtonGroup">
-                                <Button onMouseDown={() => formatText('BOLD')}><FormatBoldIcon /></Button>
-                                <Button onMouseDown={() => formatText('ITALIC')}><FormatItalicIcon /></Button>
-                                <Button onMouseDown={() => formatText('STRIKETHROUGH')}><FormatStrikethroughIcon /></Button>
-                                <Button onMouseDown={() => formatText('UNDERLINE')}><FormatUnderlinedIcon /></Button>
-                                <Button onMouseDown={() => code()}><CodeIcon /></Button>
-                                <Button onMouseDown={() => formatText('H1')}>H1</Button>
-                                <Button onMouseDown={() => formatText('H2')}>H2</Button>
-                                <Button onMouseDown={() => formatText('H3')}>H3</Button>
-                                <Button onMouseDown={() => saveState()}>S</Button>
-                                <Button onMouseDown={() => testButton()}>TestButton</Button>
-
-
-                            </ButtonGroup>
-                        </Paper>
+            <Grid container>
+                <Grid item xs={2}>
+                    <Box mx={1}>
+                        <ToggleButtonGroup exclusive value={style} onChange={testButton} size="small">
+                            <ToggleButton value="header-two"> <TextFieldsIcon /> </ToggleButton>
+                            <ToggleButton value="header-three"> <TextFieldsIcon fontSize="small" /> </ToggleButton>
+                            <ToggleButton value="unstyled"> <TextFormatIcon /> </ToggleButton>
+                        </ToggleButtonGroup>
+                    </Box>
+                </Grid>
+                <Grid item xs={10}>
+                    <Box mx={1}>
+                        <ButtonGroup>
+                            <Button onMouseDown={() => formatText('BOLD')}><FormatBoldIcon /></Button>
+                            <Button onMouseDown={() => formatText('ITALIC')}><FormatItalicIcon /></Button>
+                            <Button onMouseDown={() => formatText('STRIKETHROUGH')}><FormatStrikethroughIcon /></Button>
+                            <Button onMouseDown={() => formatText('UNDERLINE')}><FormatUnderlinedIcon /></Button>
+                            <Button onMouseDown={() => code()}><CodeIcon /></Button>
+                            <Button onMouseDown={() => saveState()}>S</Button>
+                        </ButtonGroup>
                     </Box>
                 </Grid>
                 <Grid item xs={12}>
                     <Box m={1}>
+
                         <Paper onClick={focusEditor} elevation={4}>
                             <Editor
                                 ref={editor}
@@ -193,6 +197,7 @@ export default function TextEditor() {
                             />
                         </Paper>
                     </Box>
+
                 </Grid>
             </Grid>
         </div >
