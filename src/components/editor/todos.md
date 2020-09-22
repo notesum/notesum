@@ -8,3 +8,4 @@
 - [ ] List items and other fancy styling
 - [ ] Hotkeys
 - [ ] Remember where the text was selected from
+- [ ] Account for the characters that dont give spaces and tabs in the copy paste

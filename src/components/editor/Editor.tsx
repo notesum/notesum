@@ -3,7 +3,6 @@ import { Editor, EditorState, ContentState, Modifier, RichUtils, ContentBlock, g
 import 'draft-js/dist/Draft.css';
 import { Button, ButtonGroup, Paper, Grid, Box } from '@material-ui/core';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
-
 import FormatBoldIcon from '@material-ui/icons/FormatBold';
 import FormatItalicIcon from '@material-ui/icons/FormatItalic';
 import FormatUnderlinedIcon from '@material-ui/icons/FormatUnderlined';
@@ -11,10 +10,8 @@ import FormatStrikethroughIcon from '@material-ui/icons/FormatStrikethrough';
 import CodeIcon from '@material-ui/icons/Code';
 import TextFieldsIcon from '@material-ui/icons/TextFields';
 import TextFormatIcon from '@material-ui/icons/TextFormat';
-
 import Immutable from 'immutable';
 import { convertToRaw } from 'draft-js';
-
 
 import './Editor.css';
 
