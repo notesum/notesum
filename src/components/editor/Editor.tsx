@@ -10,10 +10,14 @@ import FormatStrikethroughIcon from '@material-ui/icons/FormatStrikethrough';
 import CodeIcon from '@material-ui/icons/Code';
 import TextFieldsIcon from '@material-ui/icons/TextFields';
 import TextFormatIcon from '@material-ui/icons/TextFormat';
+import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import Immutable from 'immutable';
 import { convertToRaw } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
+
 
 import './Editor.css';
+import { TramOutlined } from '@material-ui/icons';
 
 export default function TextEditor() {
 
@@ -112,8 +116,18 @@ export default function TextEditor() {
     }
 
     function saveState() {
-        const save = convertToRaw(editorState.getCurrentContent());
-        console.log(save);
+        const contents = convertToRaw(editorState.getCurrentContent());
+        const markup = draftToHtml(contents, true);
+        console.log(markup);
+
+        const element = document.createElement("a");
+        const file = new Blob([markup.toString()]);
+        element.href = URL.createObjectURL(file);
+        element.download = "myFile.html";
+        document.body.appendChild(element); // Required for this to work in FireFox
+        element.click();
+
+
     }
 
     // Returns new editor state with a block pushed with
@@ -146,7 +160,6 @@ export default function TextEditor() {
     function testButton(event, newStyle) {
         event.preventDefault();
         setStyle(newStyle);
-        console.log(style);
     }
 
     function insertImage(url) {
@@ -163,8 +176,8 @@ export default function TextEditor() {
     return (
         <div>
             <Grid container>
-                <Grid item xs={2}>
-                    <Box mx={1}>
+                <Grid item xs={3}>
+                    <Box mx={1} overflow="hidden">
                         <ToggleButtonGroup exclusive value={style} onChange={testButton} size="small">
                             <ToggleButton value="header-two"> <TextFieldsIcon /> </ToggleButton>
                             <ToggleButton value="header-three"> <TextFieldsIcon fontSize="small" /> </ToggleButton>
@@ -172,15 +185,15 @@ export default function TextEditor() {
                         </ToggleButtonGroup>
                     </Box>
                 </Grid>
-                <Grid item xs={10}>
-                    <Box mx={1}>
+                <Grid item xs={9}>
+                    <Box mx={1} overflow="hidden">
                         <ButtonGroup>
                             <Button onMouseDown={() => formatText('BOLD')}><FormatBoldIcon /></Button>
                             <Button onMouseDown={() => formatText('ITALIC')}><FormatItalicIcon /></Button>
                             <Button onMouseDown={() => formatText('STRIKETHROUGH')}><FormatStrikethroughIcon /></Button>
                             <Button onMouseDown={() => formatText('UNDERLINE')}><FormatUnderlinedIcon /></Button>
                             <Button onMouseDown={() => code()}><CodeIcon /></Button>
-                            <Button onMouseDown={() => saveState()}>S</Button>
+                            <Button onMouseDown={() => saveState()}><SaveAltIcon /></Button>
                         </ButtonGroup>
                     </Box>
                 </Grid>
