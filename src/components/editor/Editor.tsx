@@ -174,7 +174,7 @@ export default function TextEditor() {
                 </Grid>
                 <Grid item xs={10}>
                     <Box mx={1}>
-                        <ButtonGroup className="Buttons">
+                        <ButtonGroup>
                             <Button onMouseDown={() => formatText('BOLD')}><FormatBoldIcon /></Button>
                             <Button onMouseDown={() => formatText('ITALIC')}><FormatItalicIcon /></Button>
                             <Button onMouseDown={() => formatText('STRIKETHROUGH')}><FormatStrikethroughIcon /></Button>

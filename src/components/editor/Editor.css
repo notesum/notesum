@@ -15,11 +15,6 @@ div.public-DraftEditor-content {
     padding-left: 5%;
 }
 
-.Buttons {
-    height: 50;
-    font-family: monospace;
-}
-
 .superFancyBlockquote {
     color: #999;
     font-family: 'Hoefler Text', Georgia, serif;
