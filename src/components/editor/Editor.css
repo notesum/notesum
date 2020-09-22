@@ -15,7 +15,8 @@ div.public-DraftEditor-content {
     padding-left: 5%;
 }
 
-.ButtonGroup {
+.Buttons {
+    height: 50;
     font-family: monospace;
 }
 
