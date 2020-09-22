@@ -174,20 +174,16 @@ export default function TextEditor() {
                 </Grid>
                 <Grid item xs={10}>
                     <Box mx={1}>
-
                         <ButtonGroup className="Buttons">
                             <Button onMouseDown={() => formatText('BOLD')}><FormatBoldIcon /></Button>
                             <Button onMouseDown={() => formatText('ITALIC')}><FormatItalicIcon /></Button>
                             <Button onMouseDown={() => formatText('STRIKETHROUGH')}><FormatStrikethroughIcon /></Button>
                             <Button onMouseDown={() => formatText('UNDERLINE')}><FormatUnderlinedIcon /></Button>
                             <Button onMouseDown={() => code()}><CodeIcon /></Button>
-
                             <Button onMouseDown={() => saveState()}>S</Button>
                         </ButtonGroup>
                     </Box>
-
                 </Grid>
-
                 <Grid item xs={12}>
                     <Box m={1}>
 
