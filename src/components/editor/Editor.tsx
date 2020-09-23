@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { Editor, EditorState, ContentState, RichUtils, ContentBlock, genKey, AtomicBlockUtils } from 'draft-js';
+import { Editor, EditorState, ContentState, RichUtils } from 'draft-js';
 import 'draft-js/dist/Draft.css';
 import { Button, ButtonGroup, Paper, Grid, Box } from '@material-ui/core';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
@@ -11,11 +11,10 @@ import CodeIcon from '@material-ui/icons/Code';
 import TextFieldsIcon from '@material-ui/icons/TextFields';
 import TextFormatIcon from '@material-ui/icons/TextFormat';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
-import { convertToRaw } from 'draft-js';
-import draftToHtml from 'draftjs-to-html';
-
 
 import './Editor.css';
+import { insertNewBlock, getSelectionParentElement } from './EditorUtils';
+import saveState from './Saver';
 
 export default function TextEditor() {
 
@@ -23,20 +22,14 @@ export default function TextEditor() {
     const [style, setStyle] = useState('unstyled');
     let prevSelection = null;
 
-    // The callback function for the highlight event handler
-    // TODO find a way to abstract this to another file so Highligh can have more functions
     const handleEditor = useCallback(() => {
         if (window.getSelection().toString().length && window.getSelection().toString() !== prevSelection &&
             (getSelectionParentElement().className === 'page' || getSelectionParentElement().className === 'textLayer')) {
             const exactText = window.getSelection().toString();
             prevSelection = exactText;
-            // TODO parse from PDF
-            // const textStyle = 'header-one';
             setEditor(prevEditor => insertNewBlock(prevEditor, exactText, style));
-
         }
     }, [style]);
-
 
     useEffect(() => {
         focusEditor();
@@ -48,27 +41,6 @@ export default function TextEditor() {
         };
     }, [handleEditor, style]);
 
-
-    // Get the parent element of the selection by also grouping all the parent elements
-    // TODO not use copy pasta from the internet
-    // Source: https://stackoverflow.com/questions/7215479/get-parent-element-of-a-selected-text
-    function getSelectionParentElement() {
-        let parentEl = null;
-        let sel = null;
-        if (window.getSelection) {
-            sel = window.getSelection();
-            if (sel.rangeCount) {
-                parentEl = sel.getRangeAt(0).commonAncestorContainer;
-                if (parentEl.nodeType !== 1) {
-                    parentEl = parentEl.parentNode;
-                }
-            }
-        } else if ((sel === document.getSelection()) && sel.type !== 'Control') {
-            parentEl = sel.createRange().parentElement();
-        }
-        return parentEl.parentNode;
-    }
-
     const editor = useRef(null);
 
     function focusEditor() {
@@ -76,10 +48,8 @@ export default function TextEditor() {
     }
 
     function formatText(f) {
-        // const nextState = RichUtils.toggleBlockType(editorState, f);
         const nextState = RichUtils.toggleInlineStyle(editorState, f);
         setEditor(nextState);
-
     }
 
     function code() {
@@ -87,64 +57,13 @@ export default function TextEditor() {
         setEditor(nextState);
     }
 
-    function saveState() {
-        const contents = convertToRaw(editorState.getCurrentContent());
-        const markup = draftToHtml(contents, true);
-        console.log(markup);
-
-
-        const element = document.createElement('a');
-        const file = new Blob([markup.toString()]);
-        element.href = URL.createObjectURL(file);
-        element.download = 'myFile.html';
-        document.body.appendChild(element); // Required for this to work in FireFox
-        element.click();
-
-
+    function testButton() {
+        setEditor(insertNewBlock(editorState, 'djklhsgkjsdf', 'unordered-list-item'));
     }
 
-    // Returns new editor state with a block pushed with
-    function insertNewBlock(eState, t, s) {
-        const selection = eState.getSelection();
-        const contentState = eState.getCurrentContent();
-        const currentBlock = contentState.getBlockForKey(selection.getEndKey());
-        const blockMap = contentState.getBlockMap();
-
-        // Split the blocks
-        const blocksBefore = blockMap.toSeq().takeUntil((v) => { return v === currentBlock; });
-        const blocksAfter = blockMap.toSeq().skipUntil((v) => { return v === currentBlock; }).rest();
-
-        const newBlockKey = genKey();
-
-        // @ts-ignore
-        const newBlocks = [[newBlockKey, new ContentBlock({ key: newBlockKey, type: s, text: t + '\n' })],
-        [currentBlock.getKey(), currentBlock]];
-
-        // Insert the new block
-        const newBlockMap = blocksBefore.concat(newBlocks, blocksAfter).toOrderedMap();
-        const newContentState = contentState.merge({
-            blockMap: newBlockMap,
-            selectionBefore: selection,
-            selectionAfter: selection,
-        });
-        return EditorState.push(eState, newContentState, 'insert-fragment');
-    }
-
-    function testButton(event, newStyle) {
+    function toggleStyle(event, newStyle) {
         event.preventDefault();
         setStyle(newStyle);
-        insertImage('test');
-    }
-
-    function insertImage(url) {
-        const contentState = editorState.getCurrentContent();
-        const contentStateWithEntity = contentState.createEntity(
-            'IMAGE',
-            'IMMUTABLE',
-            { src: url });
-        const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
-        const newEditorState = EditorState.set(editorState, { currentContent: contentStateWithEntity });
-        return AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, '');
     }
 
     return (
@@ -152,7 +71,7 @@ export default function TextEditor() {
             <Grid container>
                 <Grid item xs={3}>
                     <Box mx={1} overflow="hidden">
-                        <ToggleButtonGroup exclusive value={style} onChange={testButton} size="small">
+                        <ToggleButtonGroup exclusive value={style} onChange={toggleStyle} size="small">
                             <ToggleButton value="header-two"> <TextFieldsIcon /> </ToggleButton>
                             <ToggleButton value="header-three"> <TextFieldsIcon fontSize="small" /> </ToggleButton>
                             <ToggleButton value="unstyled"> <TextFormatIcon /> </ToggleButton>
@@ -167,7 +86,9 @@ export default function TextEditor() {
                             <Button onMouseDown={() => formatText('STRIKETHROUGH')}><FormatStrikethroughIcon /></Button>
                             <Button onMouseDown={() => formatText('UNDERLINE')}><FormatUnderlinedIcon /></Button>
                             <Button onMouseDown={() => code()}><CodeIcon /></Button>
-                            <Button onMouseDown={() => saveState()}><SaveAltIcon /></Button>
+                            <Button onMouseDown={() => saveState(editorState, 'html')}><SaveAltIcon /></Button>
+                            {/* <Button onMouseDown={() => testButton()}>Test</Button> */}
+
                         </ButtonGroup>
                     </Box>
                 </Grid>
