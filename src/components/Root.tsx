@@ -4,9 +4,12 @@ import { Button, Box } from '@material-ui/core';
 import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 import HomeIcon from '@material-ui/icons/Home';
 import InfoIcon from '@material-ui/icons/Info';
+import { Box } from '@material-ui/core';
 
 import App from './app/App';
 import MainView from './app/MainView';
+import Pdf from './pdf/Pdf';
+import designProp from '../resources/designProp.pdf'
 
 export default function Root() {
     return (
@@ -27,7 +30,11 @@ export default function Root() {
                             <App />
                         </Route>
                         <Route path="/about">
-                            <h1>About</h1>
+                            <Box height="100%">
+                                <Box style={{ overflow: 'auto', height: '100%' }}>
+                                    <Pdf file={designProp} />
+                                </Box>
+                            </Box>
                         </Route>
                         <Route path="/pdf">
                             <MainView />
