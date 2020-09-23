@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { Editor, EditorState, ContentState, Modifier, RichUtils, ContentBlock, genKey, AtomicBlockUtils } from 'draft-js';
+import { Editor, EditorState, ContentState, RichUtils, ContentBlock, genKey, AtomicBlockUtils } from 'draft-js';
 import 'draft-js/dist/Draft.css';
 import { Button, ButtonGroup, Paper, Grid, Box } from '@material-ui/core';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
@@ -11,13 +11,11 @@ import CodeIcon from '@material-ui/icons/Code';
 import TextFieldsIcon from '@material-ui/icons/TextFields';
 import TextFormatIcon from '@material-ui/icons/TextFormat';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
-import Immutable from 'immutable';
 import { convertToRaw } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 
 
 import './Editor.css';
-import { TramOutlined } from '@material-ui/icons';
 
 export default function TextEditor() {
 
@@ -27,7 +25,7 @@ export default function TextEditor() {
 
     // The callback function for the highlight event handler
     // TODO find a way to abstract this to another file so Highligh can have more functions
-    const handleEditor = useCallback(event => {
+    const handleEditor = useCallback(() => {
         if (window.getSelection().toString().length && window.getSelection().toString() !== prevSelection &&
             (getSelectionParentElement().className === 'page' || getSelectionParentElement().className === 'textLayer')) {
             const exactText = window.getSelection().toString();
@@ -77,32 +75,6 @@ export default function TextEditor() {
         editor.current.focus();
     }
 
-
-    const styleMap = {
-        'H1': {
-            fontSize: '1.8em'
-        },
-        'H2': {
-            fontSize: '1.4em'
-        },
-        'H3': {
-            fontSize: '1.2em'
-        },
-    };
-
-
-    const blockRenderMap = Immutable.Map({
-        'header-two': {
-            element: 'h2'
-        },
-        'unstyled': {
-            element: 'div'
-        },
-        'testing': {
-            element: 'unordered-list-item'
-        }
-    });
-
     function formatText(f) {
         // const nextState = RichUtils.toggleBlockType(editorState, f);
         const nextState = RichUtils.toggleInlineStyle(editorState, f);
@@ -120,10 +92,11 @@ export default function TextEditor() {
         const markup = draftToHtml(contents, true);
         console.log(markup);
 
-        const element = document.createElement("a");
+
+        const element = document.createElement('a');
         const file = new Blob([markup.toString()]);
         element.href = URL.createObjectURL(file);
-        element.download = "myFile.html";
+        element.download = 'myFile.html';
         document.body.appendChild(element); // Required for this to work in FireFox
         element.click();
 
@@ -160,6 +133,7 @@ export default function TextEditor() {
     function testButton(event, newStyle) {
         event.preventDefault();
         setStyle(newStyle);
+        insertImage('test');
     }
 
     function insertImage(url) {
@@ -199,14 +173,11 @@ export default function TextEditor() {
                 </Grid>
                 <Grid item xs={12}>
                     <Box m={1}>
-
                         <Paper onClick={focusEditor} elevation={4}>
                             <Editor
                                 ref={editor}
                                 editorState={editorState}
                                 onChange={setEditor}
-                                customStyleMap={styleMap}
-                            // blockRenderMap={blockRenderMap}
                             />
                         </Paper>
                     </Box>
