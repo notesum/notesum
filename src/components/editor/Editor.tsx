@@ -11,6 +11,7 @@ import CodeIcon from '@material-ui/icons/Code';
 import TextFieldsIcon from '@material-ui/icons/TextFields';
 import TextFormatIcon from '@material-ui/icons/TextFormat';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
+import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 
 import './Editor.css';
 import { insertNewBlock, getSelectionParentElement } from './EditorUtils';
@@ -60,9 +61,11 @@ export default function TextEditor() {
     function testButton() {
         const blocks = editorState.getCurrentContent().getBlockMap();
         // console.log(blocks);
-        for(const block of blocks) {
-            const entry = block[1]
-            console.log(entry.getText(), entry.getType());
+        for (const block of blocks) {
+            const entry = block[1];
+            if (entry.getText().length > 0) {
+                console.log(entry.getType(), entry.getText());
+            }
         }
     }
 
@@ -73,19 +76,21 @@ export default function TextEditor() {
 
     return (
         <div>
-            <Grid container>
-                <Grid item xs={3}>
+            <Grid container wrap='wrap'>
+                <Grid item xs>
                     <Box mx={1} overflow="hidden">
                         <ToggleButtonGroup exclusive value={style} onChange={toggleStyle} size="small">
                             <ToggleButton value="header-two"> <TextFieldsIcon /> </ToggleButton>
                             <ToggleButton value="header-three"> <TextFieldsIcon fontSize="small" /> </ToggleButton>
                             <ToggleButton value="unstyled"> <TextFormatIcon /> </ToggleButton>
+                            <ToggleButton value="unordered-list-item"> <FormatListBulletedIcon /> </ToggleButton>
+
                         </ToggleButtonGroup>
                     </Box>
                 </Grid>
-                <Grid item xs={9}>
+                <Grid item xs>
                     <Box mx={1} overflow="hidden">
-                        <ButtonGroup>
+                        <ButtonGroup >
                             <Button onMouseDown={() => formatText('BOLD')}><FormatBoldIcon /></Button>
                             <Button onMouseDown={() => formatText('ITALIC')}><FormatItalicIcon /></Button>
                             <Button onMouseDown={() => formatText('STRIKETHROUGH')}><FormatStrikethroughIcon /></Button>

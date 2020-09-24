@@ -11,3 +11,4 @@
 - [ ] Account for the characters that dont give spaces and tabs in the copy paste
 - [ ] Font size input
 - [ ] Stay highlighted when selected on the pdf
+- [ ] Add tooltips to buttons
