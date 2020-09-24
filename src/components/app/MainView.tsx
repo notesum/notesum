@@ -3,7 +3,7 @@ import { Box } from '@material-ui/core';
 
 import Pdf from '../pdf/Pdf';
 import TextEditor from '../editor/Editor';
-import file from '../../resources/sample3.pdf';
+import file from '../../resources/sample4.pdf';
 
 export default function MainView() {
     return (

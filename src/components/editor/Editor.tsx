@@ -58,7 +58,12 @@ export default function TextEditor() {
     }
 
     function testButton() {
-        setEditor(insertNewBlock(editorState, 'djklhsgkjsdf', 'unordered-list-item'));
+        const blocks = editorState.getCurrentContent().getBlockMap();
+        // console.log(blocks);
+        for(const block of blocks) {
+            const entry = block[1]
+            console.log(entry.getText(), entry.getType());
+        }
     }
 
     function toggleStyle(event, newStyle) {
@@ -87,7 +92,7 @@ export default function TextEditor() {
                             <Button onMouseDown={() => formatText('UNDERLINE')}><FormatUnderlinedIcon /></Button>
                             <Button onMouseDown={() => code()}><CodeIcon /></Button>
                             <Button onMouseDown={() => saveState(editorState, 'html')}><SaveAltIcon /></Button>
-                            {/* <Button onMouseDown={() => testButton()}>Test</Button> */}
+                            <Button onMouseDown={() => testButton()}>Test</Button>
 
                         </ButtonGroup>
                     </Box>
