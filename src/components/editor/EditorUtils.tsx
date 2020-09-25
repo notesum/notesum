@@ -12,17 +12,22 @@ export function insertNewBlock(eState, t, s) {
     const blocksBefore = blockMap.toSeq().takeUntil((v) => { return v === currentBlock; });
     const blocksAfter = blockMap.toSeq().skipUntil((v) => { return v === currentBlock; }).rest();
 
+    let newBlocks = null;
     if (s === 'unordered-list-item') {
-        // TODO handle list items better
-    }
+        const key1 = genKey();
 
-    const key1 = genKey();
-    const key2 = genKey();
-    // @ts-ignore
-    const newBlocks = [[key1, new ContentBlock({ key: key1, type: s, text: t })],
-    // @ts-ignore
-    [key2, new ContentBlock({ key: key2, type: 'unstyled', text: '' })],
-    [currentBlock.getKey(), currentBlock]];
+        // @ts-ignore
+        newBlocks = [[key1, new ContentBlock({ key: key1, type: s, text: t })],
+        [currentBlock.getKey(), currentBlock]];
+    } else {
+        const key1 = genKey();
+        const key2 = genKey();
+        // @ts-ignore
+        newBlocks = [[key1, new ContentBlock({ key: key1, type: s, text: t })],
+        // @ts-ignore
+        [key2, new ContentBlock({ key: key2, type: 'unstyled', text: '' })],
+        [currentBlock.getKey(), currentBlock]];
+    }
 
     // Insert the new block
     const newBlockMap = blocksBefore.concat(newBlocks, blocksAfter).toOrderedMap();
