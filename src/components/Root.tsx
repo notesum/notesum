@@ -32,8 +32,8 @@ export default function Root() {
                         </Route>
                         <Route path="/about">
                             <Box height="100%">
-                                <Box style={{ overflow: 'auto', height: '100%' }}>
-                                    <Pdf file={designProp} />
+                                <Box flexGrow={1} style={{ overflow: 'auto', height: '100%' }}>
+                                    <Pdf file={designProp} hidden={false} fitToWidth={false} />
                                 </Box>
                             </Box>
                         </Route>
