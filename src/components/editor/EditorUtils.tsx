@@ -12,16 +12,15 @@ export function insertNewBlock(eState, t, s) {
     const blocksBefore = blockMap.toSeq().takeUntil((v) => { return v === currentBlock; });
     const blocksAfter = blockMap.toSeq().skipUntil((v) => { return v === currentBlock; }).rest();
 
+    const key1 = genKey();
+    const key2 = genKey();
     let newBlocks = null;
+    
     if (s === 'unordered-list-item') {
-        const key1 = genKey();
-
         // @ts-ignore
         newBlocks = [[key1, new ContentBlock({ key: key1, type: s, text: t })],
         [currentBlock.getKey(), currentBlock]];
     } else {
-        const key1 = genKey();
-        const key2 = genKey();
         // @ts-ignore
         newBlocks = [[key1, new ContentBlock({ key: key1, type: s, text: t })],
         // @ts-ignore
