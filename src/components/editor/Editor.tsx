@@ -76,7 +76,7 @@ export default function TextEditor() {
 
     return (
         <div>
-            <Grid container wrap='wrap'>
+            <Grid container wrap="wrap">
                 <Grid item xs>
                     <Box mx={1} overflow="hidden">
                         <ToggleButtonGroup exclusive value={style} onChange={toggleStyle} size="small">

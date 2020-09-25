@@ -15,7 +15,7 @@ export function insertNewBlock(eState, t, s) {
     const key1 = genKey();
     const key2 = genKey();
     let newBlocks = null;
-    
+
     if (s === 'unordered-list-item') {
         // @ts-ignore
         newBlocks = [[key1, new ContentBlock({ key: key1, type: s, text: t })],
