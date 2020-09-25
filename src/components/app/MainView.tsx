@@ -8,12 +8,12 @@ import file from '../../resources/sample2.pdf';
 export default function MainView() {
     return (
         <Box flexDirection="row" display="flex" height="100%">
-            <Box style={{
+            <Box flexGrow={1} style={{
                 minWidth: '50%', // Later on this size will be more dynamic and 'draggable' by the user.
                 overflow: 'auto',
                 height: '100%'
             }}>
-                <Pdf file={file}/>
+                <Pdf file={file} hidden={false} fitToWidth={false}/>
             </Box>
             <Box flexGrow={1} style={{
                 minWidth: '200px',
