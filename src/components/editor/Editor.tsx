@@ -21,6 +21,7 @@ export default function TextEditor() {
 
     const [editorState, setEditor] = useState(EditorState.createWithContent(ContentState.createFromText('')));
     const [style, setStyle] = useState('unstyled');
+    const [name, setName] = useState('Unnamed'); // TODO set this properly
     let prevSelection = null;
 
     const handleEditor = useCallback(() => {
@@ -96,7 +97,7 @@ export default function TextEditor() {
                             <Button onMouseDown={() => formatText('STRIKETHROUGH')}><FormatStrikethroughIcon /></Button>
                             <Button onMouseDown={() => formatText('UNDERLINE')}><FormatUnderlinedIcon /></Button>
                             <Button onMouseDown={() => code()}><CodeIcon /></Button>
-                            <Button onMouseDown={() => saveState(editorState, 'html')}><SaveAltIcon /></Button>
+                            <Button onMouseDown={() => saveState(editorState, 'docx', name)}><SaveAltIcon /></Button>
                             <Button onMouseDown={() => testButton()}>Test</Button>
 
                         </ButtonGroup>

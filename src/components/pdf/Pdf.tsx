@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef, useMemo, createRef, RefObject } fro
 import { GlobalWorkerOptions, getDocument, version } from 'pdfjs-dist';
 import { PDFDocumentProxy, PDFPageProxy } from 'pdfjs-dist/types/display/api';
 import 'pdfjs-dist/web/pdf_viewer.css';
-import { Paper, Box, AppBar, Toolbar, IconButton, makeStyles, InputBase } from '@material-ui/core';
+import { Paper, Box, AppBar, Toolbar, IconButton, makeStyles, InputBase, Button } from '@material-ui/core';
 import ZoomInIcon from '@material-ui/icons/ZoomIn';
 import ZoomOutIcon from '@material-ui/icons/ZoomOut';
 
@@ -156,6 +156,10 @@ export default function Pdf({ file, fitToWidth, hidden }: PdfProps) {
                         <IconButton onClick={() => setScale(scale - 0.1)} edge="start" color="inherit" aria-label="menu">
                             <ZoomOutIcon />
                         </IconButton>
+
+                        <Button onClick={() => setScale(1.5)} style={{color : 'white'}}>
+                            Reset
+                        </Button>
                     </>}
                     <div className={classes.grow} />
                     {outline &&

@@ -1,13 +1,15 @@
 import { convertToRaw } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 
+import generateWordDoc from './Word'
+
 // Save the editor state with the given extension type ex
-export default function saveState(eState, extension) {
+export default function saveState(eState, extension, name) {
     const contents = convertToRaw(eState.getCurrentContent());
     const markup = draftToHtml(contents, true);
 
     if (extension === 'html' || extension === 'txt') { htmlOrtxt(markup, extension); }
-    else if (extension === 'docx') {docx(markup);}
+    else if (extension === 'docx') {generateWordDoc(contents, name);}
 }
 
 function htmlOrtxt(markup, ex) {
@@ -19,7 +21,3 @@ function htmlOrtxt(markup, ex) {
     element.click();
 }
 
-
-function docx(markup) {
-    console.log('Sadness');
-}
