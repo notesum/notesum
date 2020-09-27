@@ -1,8 +1,6 @@
 import * as docx from 'docx';
+import { HeadingLevel } from 'docx';
 import { saveAs } from "file-saver";
-import ContentState from 'draft-js';
-import { url } from 'inspector';
-
 
 
 export default function generateWordDoc(contentState, name) {
@@ -16,7 +14,7 @@ export default function generateWordDoc(contentState, name) {
     const filled = fillWithData(doc, contentState);
     download(filled, name);
 
-      
+
 }
 
 function fillWithData(doc, contentState) {
@@ -26,13 +24,8 @@ function fillWithData(doc, contentState) {
 
     for (const block of blocks) {
         const entry = block[1]; // Every entry is sort of a paragraph
-        if (entry.getText().length > 0) {
-            pars = addSection(pars, entry)
-        } else {
-            // TODO make a space
-        }
+        pars = addBlock(pars, entry)
     }
-
     doc.addSection({
         children: pars
     })
@@ -40,29 +33,59 @@ function fillWithData(doc, contentState) {
 }
 
 // Makes a paragraph
-function addSection(pars, entry){
-    let lines = null;
+function addBlock(pars, entry) {
+    console.log(entry);
+    let lines = [];
+    lines = addLines(lines, entry);
 
-    // TODO loop for styles
-    lines = new docx.TextRun({
-        text: entry.getText()
-    })
-    const p = new docx.Paragraph({
-        children: [lines]
-    })
+    
+
+
+    let p = null;
+
+    // TODO add bullet point block type
+    if (entry.getType() !== 'unstyled') {
+        p = new docx.Paragraph({
+            children: lines,
+            heading: getBlockType(entry.getType())
+        })
+    } else {
+        p = new docx.Paragraph({
+            children: lines,
+        })
+    }
 
     pars.push(p);
-
     return pars;
 }
 
-function download(doc, name){
+function addLines(lines, entry) {
+    let l = null;
+
+    l = new docx.TextRun({
+        text: entry.getText()
+    })
+
+    lines.push(l);
+    return lines;
+}
+
+function download(doc, name) {
 
     console.log('Downloading');
     docx.Packer.toBlob(doc).then(blob => {
-        saveAs(blob, name+'.docx');
-      });
+        saveAs(blob, name + '.docx');
+    });
     console.log('Downloaded');
 
 
+}
+
+
+function getBlockType(s) {
+    if (s === 'header-two') {
+        return HeadingLevel.HEADING_2;
+    } else if (s === 'header-three') {
+        return HeadingLevel.HEADING_3;
+    }
 }
