@@ -9,7 +9,7 @@ export default function saveState(eState, extension, name) {
     const markup = draftToHtml(contents, true);
 
     if (extension === 'html' || extension === 'txt') { htmlOrtxt(markup, extension); }
-    else if (extension === 'docx') {generateWordDoc(contents, name);}
+    else if (extension === 'docx') {generateWordDoc(eState.getCurrentContent(), name);}
 }
 
 function htmlOrtxt(markup, ex) {
