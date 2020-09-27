@@ -10,7 +10,7 @@ import 'regenerator-runtime/runtime';
 import App from './app/App';
 import About from './app/About';
 import MainView from './app/MainView';
-
+import Project from './project/Project';
 
 export default function Root() {
     return (
@@ -38,6 +38,10 @@ export default function Root() {
                         </Route>
                         <Route path="/pdf">
                             <MainView />
+                        </Route>
+
+                        <Route exact path="/project">
+                            <Project />
                         </Route>
                     </Switch>
                 </Box>
