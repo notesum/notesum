@@ -3,7 +3,7 @@
 
 - [x] Header buttons both copy over and style
 - [ ] Insert image
-- [ ] Save state and export to some format
+- [x] Save state and export to some format
 - [ ] Load state
 - [x] List items and other fancy styling
 - [ ] Hotkeys

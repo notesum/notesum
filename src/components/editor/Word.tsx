@@ -1,5 +1,4 @@
 import * as docx from 'docx';
-import { HeadingLevel } from 'docx';
 import { saveAs } from "file-saver";
 
 
@@ -24,6 +23,7 @@ function fillWithData(doc, contentState) {
 
     for (const block of blocks) {
         const entry = block[1]; // Every entry is sort of a paragraph
+
         pars = addBlock(pars, entry)
     }
     doc.addSection({
@@ -34,21 +34,31 @@ function fillWithData(doc, contentState) {
 
 // Makes a paragraph
 function addBlock(pars, entry) {
-    console.log(entry);
+    // console.log(entry);
     let lines = [];
     lines = addLines(lines, entry);
 
-    
+
 
 
     let p = null;
 
     // TODO add bullet point block type
-    if (entry.getType() !== 'unstyled') {
+    // Headers
+    if (entry.getType().substring(0, 6) === 'header') {
         p = new docx.Paragraph({
             children: lines,
             heading: getBlockType(entry.getType())
         })
+
+        // Bullet points (each entry is a new block)
+    } else if (entry.getType().substring(0, 7) === 'unorder') {
+        p = new docx.Paragraph({
+            children: lines,
+            bullet: { level: 0 }
+        })
+
+        // Regular text
     } else {
         p = new docx.Paragraph({
             children: lines,
@@ -84,8 +94,8 @@ function download(doc, name) {
 
 function getBlockType(s) {
     if (s === 'header-two') {
-        return HeadingLevel.HEADING_2;
+        return docx.HeadingLevel.HEADING_2;
     } else if (s === 'header-three') {
-        return HeadingLevel.HEADING_3;
+        return docx.HeadingLevel.HEADING_3;
     }
 }
