@@ -1,0 +1,18 @@
+.projectUploadScreen {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.projectUploadDialog {
+    width: 300px;
+    padding-bottom: 20px;
+    text-align: center;
+    background-color: #f0f0f0 !important;
+}
+
+.projectUploadDialog:hover {
+    cursor: pointer;
+}

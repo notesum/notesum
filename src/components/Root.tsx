@@ -11,10 +11,8 @@ import App from './app/App';
 import About from './app/About';
 import MainView from './app/MainView';
 import AuthIcon from './auth/AuthIcon';
-import SignUp from './auth/SignUp';
-import Login from './auth/Login';
 import Test from './Test';
-
+import Project from './project/Project';
 
 export default function Root() {
     return (
@@ -48,6 +46,9 @@ export default function Root() {
                         </Route>
                         <Route path="/test">
                             <Test />
+                        </Route>
+                        <Route exact path="/project">
+                            <Project />
                         </Route>
                     </Switch>
                 </Box>
