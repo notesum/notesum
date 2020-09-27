@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Editor, EditorState, ContentState, RichUtils } from 'draft-js';
 import 'draft-js/dist/Draft.css';
-import { Button, ButtonGroup, Paper, Grid, Box } from '@material-ui/core';
+import { Button, ButtonGroup, Paper, Grid, Box, Dialog, AppBar } from '@material-ui/core';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import FormatBoldIcon from '@material-ui/icons/FormatBold';
 import FormatItalicIcon from '@material-ui/icons/FormatItalic';
@@ -12,6 +12,7 @@ import TextFieldsIcon from '@material-ui/icons/TextFields';
 import TextFormatIcon from '@material-ui/icons/TextFormat';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
+import FullscreenIcon from '@material-ui/icons/Fullscreen';
 
 import './Editor.css';
 import { insertNewBlock, getSelectionParentElement } from './EditorUtils';
@@ -19,9 +20,12 @@ import saveState from './Saver';
 
 export default function TextEditor() {
 
+
     const [editorState, setEditor] = useState(EditorState.createWithContent(ContentState.createFromText('')));
+
     const [style, setStyle] = useState('unstyled');
-    const [name, setName] = useState('Unnamed'); // TODO set this properly
+    const [name] = useState('Unnamed');
+    const [open, setOpen] = React.useState(false);
     let prevSelection = null;
 
     const handleEditor = useCallback(() => {
@@ -75,6 +79,14 @@ export default function TextEditor() {
         setStyle(newStyle);
     }
 
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
     return (
         <div>
             <Grid container wrap="wrap">
@@ -89,6 +101,7 @@ export default function TextEditor() {
                         </ToggleButtonGroup>
                     </Box>
                 </Grid>
+
                 <Grid item xs>
                     <Box mx={1} overflow="hidden">
                         <ButtonGroup >
@@ -103,6 +116,22 @@ export default function TextEditor() {
                         </ButtonGroup>
                     </Box>
                 </Grid>
+                <div>
+                    <Button onClick={handleClickOpen}>
+                        <FullscreenIcon />
+                    </Button>
+                    <Dialog fullScreen open={open} onClose={handleClose}>
+                        <AppBar>
+                        <Paper onClick={focusEditor} elevation={4}>
+                            <Editor
+                                ref={editor}
+                                editorState={editorState}
+                                onChange={setEditor}
+                            />
+                        </Paper>
+                        </AppBar>
+                    </Dialog>
+                </div>
                 <Grid item xs={12}>
                     <Box m={1}>
                         <Paper onClick={focusEditor} elevation={4}>

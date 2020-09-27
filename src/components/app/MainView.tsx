@@ -3,7 +3,7 @@ import { Box } from '@material-ui/core';
 
 import Pdf from '../pdf/Pdf';
 import TextEditor from '../editor/Editor';
-import file from '../../resources/sample4.pdf';
+import file from '../../resources/sample2.pdf';
 
 export default function MainView() {
     return (
@@ -20,7 +20,7 @@ export default function MainView() {
                 overflow: 'auto',
                 height: '100%'
             }}>
-                <TextEditor />
+                <TextEditor/>
             </Box>
         </Box>
     );

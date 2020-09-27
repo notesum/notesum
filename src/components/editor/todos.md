@@ -12,3 +12,4 @@
 - [ ] Font size input
 - [ ] Stay highlighted when selected on the pdf
 - [ ] Add tooltips to buttons
+- [ ] Set document name properly for save

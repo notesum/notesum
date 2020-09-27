@@ -12,10 +12,7 @@ export default function generateWordDoc(contentState, name) {
 
     const filled = fillWithData(doc, contentState);
     download(filled, name);
-
-
 }
-
 function fillWithData(doc, contentState) {
 
     const blocks = contentState.getBlockMap();
@@ -37,9 +34,6 @@ function addBlock(pars, entry) {
     // console.log(entry);
     let lines = [];
     lines = addLines(lines, entry);
-
-
-
 
     let p = null;
 
