@@ -16,11 +16,11 @@ export default function MainView() {
                 <Pdf file={file} hidden={false} fitToWidth={false}/>
             </Box>
             <Box flexGrow={1} style={{
-                minWidth: '200px',
+                minWidth: '50%',
                 overflow: 'auto',
                 height: '100%'
             }}>
-                <TextEditor />
+                <TextEditor/>
             </Box>
         </Box>
     );
