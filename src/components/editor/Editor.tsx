@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback, Dispatch } from 'react';
 import { Editor, EditorState, ContentState, RichUtils } from 'draft-js';
 import 'draft-js/dist/Draft.css';
 import { Button, ButtonGroup, Paper, Grid, Box, Dialog, AppBar, TextField, IconButton, Toolbar } from '@material-ui/core';
@@ -18,10 +18,17 @@ import './Editor.css';
 import { insertNewBlock, getSelectionParentElement } from './EditorUtils';
 import saveState from './Saver';
 
+import { connect, Provider, useDispatch, useSelector } from 'react-redux';
+import { AppState } from './../redux/reducers';
+import { SummaryActions } from './../redux/actions/summaryActions';
+import store from '../redux/store';
+
 export default function TextEditor() {
 
+    const { editorState } = useSelector((state: AppState)=> state.summary);
+    const summaryDispatch = useDispatch<Dispatch<SummaryActions>>();
 
-    const [editorState, setEditor] = useState(EditorState.createWithContent(ContentState.createFromText('')));
+    // const [editorState, setEditor] = useState(EditorState.createWithContent(ContentState.createFromText('')));
 
     const [style, setStyle] = useState('unstyled');
     // File name in the editor
@@ -35,7 +42,8 @@ export default function TextEditor() {
             (getSelectionParentElement().className === 'page' || getSelectionParentElement().className === 'textLayer')) {
             const exactText = window.getSelection().toString();
             prevSelection = exactText;
-            setEditor(prevEditor => insertNewBlock(prevEditor, exactText, style));
+            const newLocal: any = prevEditor => insertNewBlock(prevEditor, exactText, style);
+            summaryDispatch({type: 'SET_SUMMARY', payload: newLocal});
         }
     }, [style]);
 
@@ -57,32 +65,56 @@ export default function TextEditor() {
 
     function formatText(f) {
         const nextState = RichUtils.toggleInlineStyle(editorState, f);
-        setEditor(nextState);
+        summaryDispatch({type: 'SET_SUMMARY', payload: nextState});
     }
 
     function code() {
         const nextState = RichUtils.toggleCode(editorState);
-        setEditor(nextState);
+        summaryDispatch({type: 'SET_SUMMARY', payload: nextState});
     }
 
-    function testButton() {
-        const blocks = editorState.getCurrentContent().getBlockMap();
-        // console.log(blocks);
-        for (const block of blocks) {
-            const entry = block[1];
-            if (entry.getText().length > 0) {
-                console.log(entry.getType(), entry.getText());
-            }
-        }
-    }
+    // function testButton() {
+    //     const blocks = editorState.getCurrentContent().getBlockMap();
+    //     // console.log(blocks);
+    //     for (const block of blocks) {
+    //         const entry = block[1];
+    //         if (entry.getText().length > 0) {
+    //             console.log(entry.getType(), entry.getText());
+    //         }
+    //     }
+    // }
 
     function toggleStyle(event, newStyle) {
         event.preventDefault();
         setStyle(newStyle);
     }
 
+    const AppEditor = ({ editor,editorState, onSaveEditorState}) => (
+        <Editor 
+            ref={editor}
+            editorState={editorState}
+            onChange={onSaveEditorState}
+        />
+    );
+    
+    const mapStateToProps = ( {editorState} ) => ({editorState});
+    
+    const mapDispatchToProps = (dispatch) => ({
+        onSaveEditorState: (editorState) => {
+            dispatch({
+                type:'SET_SUMMARY',
+                payload: editorState,
+            })
+        }
+    });
+    
+    const ConnectedEditor = connect(
+        mapStateToProps,
+        mapDispatchToProps(summaryDispatch),
+    )(AppEditor);
+
     return (
-        <div>
+        <Provider store={store}>
             <Grid container wrap="wrap">
                 <Toolbar variant="dense">
                     <Box overflow="hidden">
@@ -137,11 +169,15 @@ export default function TextEditor() {
                         <Dialog fullScreen open={fullscreenOpen} onClose={() => { setFullscreenOpen(false); }}>
                             <AppBar>
                                 <Paper onClick={focusEditor} elevation={4}>
-                                    <Editor
+                                    {/* <Editor
                                         ref={editor}
                                         editorState={editorState}
-                                        onChange={setEditor}
+                                        onChange={handleSetEditor}
+                                    /> */}
+                                    <ConnectedEditor 
+                                        editor={editor}
                                     />
+
                                 </Paper>
                             </AppBar>
                         </Dialog>
@@ -150,16 +186,17 @@ export default function TextEditor() {
                 <Grid item xs={12}>
                     <Box m={1}>
                         <Paper onClick={focusEditor} elevation={4}>
-                            <Editor
+                            {/* <Editor
                                 ref={editor}
                                 editorState={editorState}
-                                onChange={setEditor}
-                            />
+                                onChange={handleSetEditor}
+                            /> */}
+                            <ConnectedEditor editor={editor}/>
                         </Paper>
                     </Box>
 
                 </Grid>
             </Grid>
-        </div >
+        </Provider >
     );
 }

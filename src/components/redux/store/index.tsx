@@ -6,6 +6,6 @@ import { persistReducer } from 'redux-persist';
 
 const persisted = persistReducer(rootConfig, rootReducer);
 
-const store = createStore(persisted, devToolsEnhancer({}));
+const store = createStore(rootReducer, devToolsEnhancer({}));
 
 export default store;

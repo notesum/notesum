@@ -10,6 +10,7 @@ import designProp from '../resources/designProp.pdf';
 import App from './app/App';
 import MainView from './app/MainView';
 import Pdf from './pdf/Pdf';
+import Test from './app/Test';
 
 
 export default function Root() {
@@ -39,6 +40,9 @@ export default function Root() {
                         </Route>
                         <Route path="/pdf">
                             <MainView />
+                        </Route>
+                        <Route path="/test">
+                            <Test />
                         </Route>
                     </Switch>
                 </Box>
