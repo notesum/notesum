@@ -97,11 +97,10 @@ export default function Pdf({ file, fitToWidth, hidden }: PdfProps) {
                 // @ts-ignore: manual says: too lazy to cast to HTMLDivElement
                 return { ...oldVisible, ...Object.fromEntries(entries.map((entry) => [entry.target.dataset.id, {
                     visible: entry.isIntersecting,
-                    ratio: entry.intersectionRatio
                 }])) };
             });
 
-        }, { threshold: [0, 0.5, 0.8] });
+        }, { threshold: [0] });
 
         pageRefs.forEach((ref) => {
             observer.observe(ref.current);
@@ -110,9 +109,14 @@ export default function Pdf({ file, fitToWidth, hidden }: PdfProps) {
         return observer.disconnect;
     }, [pageRefs]);
 
-    const onNavigate = async (loc: { num: number, gen: number }) => {
+    const onNavigate = async (loc: [{ num: number, gen: number }] | string) => {
+        if (typeof loc === 'string') {
+            // @ts-ignore: mistake in types of PDF.js
+            loc = await document.getDestination(loc);
+        }
+
         // @ts-ignore: mistake in types of PDF.js
-        scrollToPage(await document.getPageIndex(loc));
+        scrollToPage(await document.getPageIndex(loc[0]));
     };
 
     const scrollToPage = (page: number) => {
@@ -124,7 +128,7 @@ export default function Pdf({ file, fitToWidth, hidden }: PdfProps) {
     const [pageBoxValue, setPageBoxValue] = useState('');
     const setPageBox = () => {
         if (pageBoxValue === '') return;
-        scrollToPage(parseInt(pageBoxValue, 10));
+        scrollToPage(parseInt(pageBoxValue, 10) - 1);
         setPageBoxValue('');
     };
 
@@ -135,7 +139,7 @@ export default function Pdf({ file, fitToWidth, hidden }: PdfProps) {
             <AppBar position="static">
                 <Toolbar variant="dense">
                     {document && <Paper elevation={2} className={classes.pageBox}>
-                        <InputBase ref={pageBoxRef} value={pageBoxValue} className={classes.pageNumber} placeholder={`${currentPage}`} inputProps={{ 'aria-label': 'search' }}
+                        <InputBase ref={pageBoxRef} value={pageBoxValue} className={classes.pageNumber} placeholder={`${currentPage+1}`} inputProps={{ 'aria-label': 'search' }}
                             onKeyPress={(e) => {
                                 if (!['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].includes(e.key)) {
                                     e.preventDefault();

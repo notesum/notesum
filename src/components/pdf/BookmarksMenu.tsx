@@ -6,7 +6,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 type BookmarkMenuProps = {
     outline: any,
-    onNavigate: (loc: { num: number, gen: number }) => Promise<void>,
+    onNavigate: (loc: [{ num: number, gen: number }] | string) => Promise<void>,
     anchor?: Element,
     isOpen?: boolean
 };
@@ -35,7 +35,7 @@ export default function BookmarksMenu({ outline, onNavigate }: BookmarkMenuProps
 
 type BookmarkMenuListProps = {
     outline: any,
-    onNavigate: (loc: { num: number, gen: number }) => Promise<void>,
+    onNavigate: (loc: [{ num: number, gen: number }] | string) => Promise<void>,
     level: number
 };
 
@@ -52,7 +52,7 @@ const BookmarkMenuList = React.forwardRef(({ outline, onNavigate, level }: Bookm
 
 type BookmarkMenuItemProps = {
     bookmark: any,
-    onNavigate: (loc: { num: number, gen: number }) => Promise<void>,
+    onNavigate: (loc: [{ num: number, gen: number }] | string) => Promise<void>,
     level: number
 };
 
@@ -80,7 +80,7 @@ function BookmarkMenuItem({ bookmark, onNavigate, level }: BookmarkMenuItemProps
                 </>}
 
             {bookmark.items.length === 0 &&
-                <ListItem dense button onClick={() => onNavigate(bookmark.dest[0])}>
+                <ListItem dense button onClick={() => onNavigate(bookmark.dest)}>
                     <ListItemText style={{
                         paddingLeft: `${20 * level}px`,
                     }} primary={bookmark.title} />
