@@ -1,5 +1,7 @@
 import { convertToRaw } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
+import { saveAs } from 'file-saver';
+
 
 import generateWordDoc from './Word';
 
@@ -8,16 +10,12 @@ export default function saveState(eState, extension, name) {
     const contents = convertToRaw(eState.getCurrentContent());
     const markup = draftToHtml(contents, true);
 
-    if (extension === 'html' || extension === 'txt') { htmlOrtxt(markup, extension); }
+    if (extension === 'html' || extension === 'txt') { htmlOrtxt(markup, extension, name); }
     else if (extension === 'docx') {generateWordDoc(eState.getCurrentContent(), name);}
 }
 
-function htmlOrtxt(markup, ex) {
-    const element = document.createElement('a');
+function htmlOrtxt(markup, ex, name) {
     const file = new Blob([markup.toString()]);
-    element.href = URL.createObjectURL(file);
-    element.download = 'myFile.' + ex;
-    document.body.appendChild(element); // Required for this to work in FireFox
-    element.click();
+    saveAs(file, name + '.' + ex);
 }
 

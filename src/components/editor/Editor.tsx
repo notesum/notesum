@@ -24,6 +24,7 @@ export default function TextEditor() {
     const [editorState, setEditor] = useState(EditorState.createWithContent(ContentState.createFromText('')));
 
     const [style, setStyle] = useState('unstyled');
+    // File name in the editor
     const [name, setName] = useState('Unnamed');
     const [fullscreenOpen, setFullscreenOpen] = useState(false);
     const [saveToggle, setSaveToggle] = useState(false);
