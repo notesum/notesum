@@ -25,3 +25,6 @@ yarn-error.log*
 # Parcel
 /dist
 /.cache
+
+# Odf example that I am working on
+/src/resources/ODFunpacked/*
