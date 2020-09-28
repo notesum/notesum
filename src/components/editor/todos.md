@@ -12,4 +12,5 @@
 - [ ] Font size input
 - [ ] Stay highlighted when selected on the pdf
 - [ ] Add tooltips to buttons
-- [ ] Set document name properly for save
+- [x] Set document name properly for save
+- [ ] Fix inline styles in docx

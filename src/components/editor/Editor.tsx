@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Editor, EditorState, ContentState, RichUtils } from 'draft-js';
 import 'draft-js/dist/Draft.css';
-import { Button, ButtonGroup, Paper, Grid, Box, Dialog, AppBar } from '@material-ui/core';
+import { Button, ButtonGroup, Paper, Grid, Box, Dialog, AppBar, TextField } from '@material-ui/core';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import FormatBoldIcon from '@material-ui/icons/FormatBold';
 import FormatItalicIcon from '@material-ui/icons/FormatItalic';
@@ -24,8 +24,9 @@ export default function TextEditor() {
     const [editorState, setEditor] = useState(EditorState.createWithContent(ContentState.createFromText('')));
 
     const [style, setStyle] = useState('unstyled');
-    const [name] = useState('Unnamed');
-    const [open, setOpen] = React.useState(false);
+    const [name, setName] = useState('Unnamed');
+    const [fullscreenOpen, setFullscreenOpen] = useState(false);
+    const [saveToggle, setSaveToggle] = useState(false);
     let prevSelection = null;
 
     const handleEditor = useCallback(() => {
@@ -79,14 +80,6 @@ export default function TextEditor() {
         setStyle(newStyle);
     }
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-
     return (
         <div>
             <Grid container wrap="wrap">
@@ -101,7 +94,6 @@ export default function TextEditor() {
                         </ToggleButtonGroup>
                     </Box>
                 </Grid>
-
                 <Grid item xs>
                     <Box mx={1} overflow="hidden">
                         <ButtonGroup >
@@ -110,28 +102,48 @@ export default function TextEditor() {
                             <Button onMouseDown={() => formatText('STRIKETHROUGH')}><FormatStrikethroughIcon /></Button>
                             <Button onMouseDown={() => formatText('UNDERLINE')}><FormatUnderlinedIcon /></Button>
                             <Button onMouseDown={() => code()}><CodeIcon /></Button>
-                            <Button onMouseDown={() => saveState(editorState, 'docx', name)}><SaveAltIcon /></Button>
                             <Button onMouseDown={() => testButton()}>Test</Button>
 
                         </ButtonGroup>
                     </Box>
                 </Grid>
-                <div>
-                    <Button onClick={handleClickOpen}>
+                <Grid item xs>
+                    <Button onClick={() => { setSaveToggle(true); }}>
+                        <SaveAltIcon />
+                    </Button>
+                    <Dialog open={saveToggle} onClose={() => { setSaveToggle(false); }}>
+                        <Box m={2} overflow="hidden">
+                            <Grid container wrap="wrap" direction="column">
+                                <Grid item xs>
+                                    <TextField id="filled-helperText" defaultValue={name} label="File Name" onChange={(event) => { setName(event.target.value); }} />
+                                </Grid>
+                                <Grid item xs>
+                                    <Button onMouseDown={() => saveState(editorState, 'docx', name)}>Save as Word Document</Button>
+                                </Grid>
+                                <Grid item xs>
+                                    <Button onMouseDown={() => saveState(editorState, 'html', name)}>Save as HTML</Button>
+                                </Grid>
+                                <Grid item xs>
+                                    <Button onMouseDown={() => saveState(editorState, 'txt', name)}>Save as Text Document</Button>
+                                </Grid>
+                            </Grid>
+                        </Box>
+                    </Dialog>
+                    <Button onClick={() => { setFullscreenOpen(true); }}>
                         <FullscreenIcon />
                     </Button>
-                    <Dialog fullScreen open={open} onClose={handleClose}>
+                    <Dialog fullScreen open={fullscreenOpen} onClose={() => { setFullscreenOpen(false); }}>
                         <AppBar>
-                        <Paper onClick={focusEditor} elevation={4}>
-                            <Editor
-                                ref={editor}
-                                editorState={editorState}
-                                onChange={setEditor}
-                            />
-                        </Paper>
+                            <Paper onClick={focusEditor} elevation={4}>
+                                <Editor
+                                    ref={editor}
+                                    editorState={editorState}
+                                    onChange={setEditor}
+                                />
+                            </Paper>
                         </AppBar>
                     </Dialog>
-                </div>
+                </Grid>
                 <Grid item xs={12}>
                     <Box m={1}>
                         <Paper onClick={focusEditor} elevation={4}>
