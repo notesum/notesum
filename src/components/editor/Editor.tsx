@@ -115,7 +115,8 @@ export default function TextEditor() {
                         <Box m={2} overflow="hidden">
                             <Grid container wrap="wrap" direction="column">
                                 <Grid item xs>
-                                    <TextField id="filled-helperText" defaultValue={name} label="File Name" onChange={(event) => { setName(event.target.value); }} />
+                                    <TextField id="filled-helperText" defaultValue={name} label="File Name"
+                                        onChange={(event) => { setName(event.target.value); }} />
                                 </Grid>
                                 <Grid item xs>
                                     <Button onMouseDown={() => saveState(editorState, 'docx', name)}>Save as Word Document</Button>

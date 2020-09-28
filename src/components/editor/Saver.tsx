@@ -1,7 +1,7 @@
 import { convertToRaw } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 
-import generateWordDoc from './Word'
+import generateWordDoc from './Word';
 
 // Save the editor state with the given extension type ex
 export default function saveState(eState, extension, name) {
