@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Editor, EditorState, ContentState, RichUtils } from 'draft-js';
 import 'draft-js/dist/Draft.css';
-import { Button, ButtonGroup, Paper, Grid, Box, Dialog, AppBar, TextField } from '@material-ui/core';
+import { Button, ButtonGroup, Paper, Grid, Box, Dialog, AppBar, TextField, IconButton, Toolbar } from '@material-ui/core';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import FormatBoldIcon from '@material-ui/icons/FormatBold';
 import FormatItalicIcon from '@material-ui/icons/FormatItalic';
@@ -83,8 +83,8 @@ export default function TextEditor() {
     return (
         <div>
             <Grid container wrap="wrap">
-                <Grid item xs>
-                    <Box mx={1} overflow="hidden">
+                <Toolbar variant="dense">
+                    <Box overflow="hidden">
                         <ToggleButtonGroup exclusive value={style} onChange={toggleStyle} size="small">
                             <ToggleButton value="header-two"> <TextFieldsIcon /> </ToggleButton>
                             <ToggleButton value="header-three"> <TextFieldsIcon fontSize="small" /> </ToggleButton>
@@ -93,58 +93,59 @@ export default function TextEditor() {
 
                         </ToggleButtonGroup>
                     </Box>
-                </Grid>
-                <Grid item xs>
-                    <Box mx={1} overflow="hidden">
+                    <Box overflow="hidden">
                         <ButtonGroup >
-                            <Button onMouseDown={() => formatText('BOLD')}><FormatBoldIcon /></Button>
-                            <Button onMouseDown={() => formatText('ITALIC')}><FormatItalicIcon /></Button>
-                            <Button onMouseDown={() => formatText('STRIKETHROUGH')}><FormatStrikethroughIcon /></Button>
-                            <Button onMouseDown={() => formatText('UNDERLINE')}><FormatUnderlinedIcon /></Button>
-                            <Button onMouseDown={() => code()}><CodeIcon /></Button>
-                            <Button onMouseDown={() => testButton()}>Test</Button>
+                            <IconButton onMouseDown={() => formatText('BOLD')}><FormatBoldIcon fontSize="small" /></IconButton>
+                            <IconButton onMouseDown={() => formatText('ITALIC')}><FormatItalicIcon fontSize="small" /></IconButton>
+                            <IconButton onMouseDown={() => formatText('STRIKETHROUGH')}><FormatStrikethroughIcon fontSize="small" /></IconButton>
+                            <IconButton onMouseDown={() => formatText('UNDERLINE')}><FormatUnderlinedIcon fontSize="small" /></IconButton>
+                            <IconButton onMouseDown={() => code()}><CodeIcon fontSize="small" /></IconButton>
 
                         </ButtonGroup>
                     </Box>
-                </Grid>
-                <Grid item xs>
-                    <Button onClick={() => { setSaveToggle(true); }}>
-                        <SaveAltIcon />
-                    </Button>
-                    <Dialog open={saveToggle} onClose={() => { setSaveToggle(false); }}>
-                        <Box m={2} overflow="hidden">
-                            <Grid container wrap="wrap" direction="column">
-                                <Grid item xs>
-                                    <TextField id="filled-helperText" defaultValue={name} label="File Name"
-                                        onChange={(event) => { setName(event.target.value); }} />
+                    <Box overflow="hidden">
+                        <IconButton onClick={() => { setSaveToggle(true); }}>
+                            <SaveAltIcon fontSize="small" />
+                        </IconButton>
+                    </Box>
+                    <Box overflow="hidden">
+                        <Dialog open={saveToggle} onClose={() => { setSaveToggle(false); }}>
+                            <Box m={2} overflow="hidden">
+                                <Grid container wrap="wrap" direction="column">
+                                    <Grid item xs>
+                                        <TextField id="filled-helperText" defaultValue={name} label="File Name"
+                                            onChange={(event) => { setName(event.target.value); }} />
+                                    </Grid>
+                                    <Grid item xs>
+                                        <Button onMouseDown={() => saveState(editorState, 'docx', name)}>Save as Word Document</Button>
+                                    </Grid>
+                                    <Grid item xs>
+                                        <Button onMouseDown={() => saveState(editorState, 'html', name)}>Save as HTML</Button>
+                                    </Grid>
+                                    <Grid item xs>
+                                        <Button onMouseDown={() => saveState(editorState, 'txt', name)}>Save as Text Document</Button>
+                                    </Grid>
                                 </Grid>
-                                <Grid item xs>
-                                    <Button onMouseDown={() => saveState(editorState, 'docx', name)}>Save as Word Document</Button>
-                                </Grid>
-                                <Grid item xs>
-                                    <Button onMouseDown={() => saveState(editorState, 'html', name)}>Save as HTML</Button>
-                                </Grid>
-                                <Grid item xs>
-                                    <Button onMouseDown={() => saveState(editorState, 'txt', name)}>Save as Text Document</Button>
-                                </Grid>
-                            </Grid>
-                        </Box>
-                    </Dialog>
-                    <Button onClick={() => { setFullscreenOpen(true); }}>
-                        <FullscreenIcon />
-                    </Button>
-                    <Dialog fullScreen open={fullscreenOpen} onClose={() => { setFullscreenOpen(false); }}>
-                        <AppBar>
-                            <Paper onClick={focusEditor} elevation={4}>
-                                <Editor
-                                    ref={editor}
-                                    editorState={editorState}
-                                    onChange={setEditor}
-                                />
-                            </Paper>
-                        </AppBar>
-                    </Dialog>
-                </Grid>
+                            </Box>
+                        </Dialog>
+                    </Box>
+                    <Box overflow="hidden">
+                        <IconButton onClick={() => { setFullscreenOpen(true); }}>
+                            <FullscreenIcon fontSize="small" />
+                        </IconButton>
+                        <Dialog fullScreen open={fullscreenOpen} onClose={() => { setFullscreenOpen(false); }}>
+                            <AppBar>
+                                <Paper onClick={focusEditor} elevation={4}>
+                                    <Editor
+                                        ref={editor}
+                                        editorState={editorState}
+                                        onChange={setEditor}
+                                    />
+                                </Paper>
+                            </AppBar>
+                        </Dialog>
+                    </Box>
+                </Toolbar>
                 <Grid item xs={12}>
                     <Box m={1}>
                         <Paper onClick={focusEditor} elevation={4}>
