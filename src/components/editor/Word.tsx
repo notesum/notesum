@@ -40,7 +40,7 @@ function addBlock(pars, entry) {
     if (entry.getType().substring(0, 6) === 'header') {
         p = new docx.Paragraph({
             children: lines,
-            heading: getBlockType(entry.getType());
+            heading: getBlockType(entry.getType())
         });
         // Bullet points (each entry is a new block)
     } else if (entry.getType().substring(0, 7) === 'unorder') {
