@@ -3,15 +3,16 @@ div.DraftEditor-root {
     width: 99%;
     padding-top: 5%;
     overflow-y: scroll;
-    font-family: 'calibri', sans-serif;
+    font-family: sans-serif;
     font-size: small;
 }
 
 div.DraftEditor-editorContainer1,
 div.public-DraftEditor-content {
     height: 100%;
-    font-family: "sans-serif";
-    padding-right: 3%;
+    font-family: verdana;
+    font-size: 14px;
+    line-height: 1.4em;
     padding-left: 5%;
 }
 
