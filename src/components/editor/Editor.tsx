@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Editor, EditorState, ContentState, RichUtils } from 'draft-js';
 import 'draft-js/dist/Draft.css';
-import { Button, ButtonGroup, Paper, Grid, Box, Dialog, AppBar, TextField, IconButton, Toolbar } from '@material-ui/core';
+import { Button, ButtonGroup, Paper, Grid, Box, Dialog, AppBar, TextField, IconButton, Toolbar, Switch } from '@material-ui/core';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import FormatBoldIcon from '@material-ui/icons/FormatBold';
 import FormatItalicIcon from '@material-ui/icons/FormatItalic';
@@ -28,16 +28,17 @@ export default function TextEditor() {
     const [name, setName] = useState('Unnamed');
     const [fullscreenOpen, setFullscreenOpen] = useState(false);
     const [saveToggle, setSaveToggle] = useState(false);
+    const [highlightToggle, setHighlightToggle] = useState(true);
     let prevSelection = null;
 
     const handleEditor = useCallback(() => {
-        if (window.getSelection().toString().length && window.getSelection().toString() !== prevSelection &&
+        if (window.getSelection().toString().length && window.getSelection().toString() !== prevSelection && highlightToggle &&
             (getSelectionParentElement().className === 'page' || getSelectionParentElement().className === 'textLayer')) {
             const exactText = window.getSelection().toString();
             prevSelection = exactText;
             setEditor(prevEditor => insertNewBlock(prevEditor, exactText, style));
         }
-    }, [style]);
+    }, [style, highlightToggle]);
 
     useEffect(() => {
         focusEditor();
@@ -145,6 +146,15 @@ export default function TextEditor() {
                                 </Paper>
                             </AppBar>
                         </Dialog>
+                    </Box>
+                    <Box>
+                        <Switch
+                            checked={highlightToggle}
+                            onChange={() => { setHighlightToggle(!highlightToggle); }}
+                            name="Highlight"
+                            color="default"
+                            inputProps={{ 'aria-label': 'secondary checkbox' }}
+                        />
                     </Box>
                 </Toolbar>
                 <Grid item xs={12}>

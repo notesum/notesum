@@ -14,3 +14,4 @@
 - [ ] Add tooltips to buttons
 - [x] Set document name properly for save
 - [ ] Fix inline styles in docx
+- [ ] Add toggle for selecting
