@@ -18,10 +18,13 @@ import './Editor.css';
 import { insertNewBlock, getSelectionParentElement } from './EditorUtils';
 import saveState from './Saver';
 
-export default function TextEditor() {
+type EditorProps = {
+    es: EditorState
+}
 
+export default function TextEditor({es} : EditorProps) {
 
-    const [editorState, setEditor] = useState(EditorState.createWithContent(ContentState.createFromText('')));
+    const [editorState, setEditor] = useState(es);
 
     const [style, setStyle] = useState('unstyled');
     // File name in the editor

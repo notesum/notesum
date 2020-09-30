@@ -4,6 +4,7 @@ import { Box } from '@material-ui/core';
 import Pdf from '../pdf/Pdf';
 import TextEditor from '../editor/Editor';
 import file from '../../resources/sample2.pdf';
+import { ContentState, EditorState } from 'draft-js';
 
 export default function MainView() {
     return (
@@ -20,7 +21,7 @@ export default function MainView() {
                 overflow: 'auto',
                 height: '100%'
             }}>
-                <TextEditor/>
+                <TextEditor es ={EditorState.createWithContent(ContentState.createFromText('Some text from the outside\n'))}/>
             </Box>
         </Box>
     );
