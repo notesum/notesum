@@ -17,7 +17,7 @@ export default function MainView() {
     function clearSelection() { if (window.getSelection) { window.getSelection().removeAllRanges(); } }
 
     function calcPers(pixels) {
-        const screenWidth = window.screen.width;
+        const screenWidth = window.innerWidth;
         return (pixels / screenWidth)*100;
     }
 
