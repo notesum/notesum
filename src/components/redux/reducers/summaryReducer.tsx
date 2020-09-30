@@ -12,7 +12,8 @@ const initialState: SummaryState = {
 
 const summaryReducer = ( state: SummaryState = initialState, action: SummaryActions) => {
     switch(action.type) {
-        case 'SET_SUMMARY':
+        case 'UPDATE_EDITOR_STATE':
+            console.log('Saving state in summary: ', action.payload.getCurrentContent().getPlainText());
             return {
                 ...state,
                 editorState: action.payload,

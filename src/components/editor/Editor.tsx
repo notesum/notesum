@@ -17,14 +17,19 @@ import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import './Editor.css';
 import { insertNewBlock, getSelectionParentElement } from './EditorUtils';
 import saveState from './Saver';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppState } from './../redux/reducers';
+import { SummaryActions } from '../redux/actions/summaryActions';
 
-    es: EditorState
 type EditorProps = {
+    es: EditorState
 }
 
 export default function TextEditor({es} : EditorProps) {
 
-    const [editorState, setEditor] = useState(es);
+    const { editorState } = useSelector((state: AppState) => state.summary);
+    const editorDispatch = useDispatch<Dispatch<SummaryActions>>();
+    // const [editorState, setEditor] = useState(es);
 
     const [style, setStyle] = useState('unstyled');
     // File name in the editor
@@ -39,8 +44,7 @@ export default function TextEditor({es} : EditorProps) {
             (getSelectionParentElement().className === 'page' || getSelectionParentElement().className === 'textLayer')) {
             const exactText = window.getSelection().toString();
             prevSelection = exactText;
-            const newLocal: any = prevEditor => insertNewBlock(prevEditor, exactText, style);
-            summaryDispatch({type: 'SET_SUMMARY', payload: newLocal});
+            setEditor(prevEditor => insertNewBlock(prevEditor, exactText, style));
         }
     }, [style, highlightToggle]);
 
@@ -62,56 +66,32 @@ export default function TextEditor({es} : EditorProps) {
 
     function formatText(f) {
         const nextState = RichUtils.toggleInlineStyle(editorState, f);
-        summaryDispatch({type: 'SET_SUMMARY', payload: nextState});
+        setEditor(nextState);
     }
 
     function code() {
         const nextState = RichUtils.toggleCode(editorState);
-        summaryDispatch({type: 'SET_SUMMARY', payload: nextState});
+        setEditor(nextState);
     }
 
-    // function testButton() {
-    //     const blocks = editorState.getCurrentContent().getBlockMap();
-    //     // console.log(blocks);
-    //     for (const block of blocks) {
-    //         const entry = block[1];
-    //         if (entry.getText().length > 0) {
-    //             console.log(entry.getType(), entry.getText());
-    //         }
-    //     }
-    // }
+    function testButton() {
+        const blocks = editorState.getCurrentContent().getBlockMap();
+        // console.log(blocks);
+        for (const block of blocks) {
+            const entry = block[1];
+            if (entry.getText().length > 0) {
+                console.log(entry.getType(), entry.getText());
+            }
+        }
+    }
 
     function toggleStyle(event, newStyle) {
         event.preventDefault();
         setStyle(newStyle);
     }
 
-    const AppEditor = ({ editor,editorState, onSaveEditorState}) => (
-        <Editor 
-            ref={editor}
-            editorState={editorState}
-            onChange={onSaveEditorState}
-        />
-    );
-    
-    const mapStateToProps = ( {editorState} ) => ({editorState});
-    
-    const mapDispatchToProps = (dispatch) => ({
-        onSaveEditorState: (editorState) => {
-            dispatch({
-                type:'SET_SUMMARY',
-                payload: editorState,
-            })
-        }
-    });
-    
-    const ConnectedEditor = connect(
-        mapStateToProps,
-        mapDispatchToProps(summaryDispatch),
-    )(AppEditor);
-
     return (
-        <Provider store={store}>
+        <div>
             <Grid container wrap="wrap">
                 <Toolbar variant="dense">
                     <Box overflow="hidden">
@@ -166,15 +146,11 @@ export default function TextEditor({es} : EditorProps) {
                         <Dialog fullScreen open={fullscreenOpen} onClose={() => { setFullscreenOpen(false); }}>
                             <AppBar>
                                 <Paper onClick={focusEditor} elevation={4}>
-                                    {/* <Editor
+                                    <Editor
                                         ref={editor}
                                         editorState={editorState}
-                                        onChange={handleSetEditor}
-                                    /> */}
-                                    <ConnectedEditor 
-                                        editor={editor}
+                                        onChange={setEditor}
                                     />
-
                                 </Paper>
                             </AppBar>
                         </Dialog>
@@ -192,17 +168,16 @@ export default function TextEditor({es} : EditorProps) {
                 <Grid item xs={12}>
                     <Box m={1}>
                         <Paper onClick={focusEditor} elevation={4}>
-                            {/* <Editor
+                            <Editor
                                 ref={editor}
                                 editorState={editorState}
-                                onChange={handleSetEditor}
-                            /> */}
-                            <ConnectedEditor editor={editor}/>
+                                onChange={setEditor}
+                            />
                         </Paper>
                     </Box>
 
                 </Grid>
             </Grid>
-        </Provider >
+        </div >
     );
 }

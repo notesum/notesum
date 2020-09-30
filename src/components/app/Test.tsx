@@ -1,43 +1,20 @@
-import React, { Component } from 'react';
-import { EditorState, Editor } from 'draft-js';
-import { Provider, connect } from 'react-redux';
-import store from './../redux/store';
-import {createStore} from 'redux';
-import testReducer from './../redux/reducers/testReducer';
+import React, { Dispatch } from 'react';
+import { useSelector, useDispatch } from 'react-redux'
+import { AppState } from './../redux/reducers';
+import { SummaryActions } from './../redux/actions/summaryActions';
+import { Editor, EditorState } from 'draft-js';
 
-// const store = createStore(testReducer);
+const App = () => {
+  const {editorState} = useSelector((state: AppState) => state.summary);
+  const editorDispatch = useDispatch<Dispatch<SummaryActions>>();
 
-const AppEditor = ({ editorState, onSaveEditorState }) => (
-  <Editor
-    editorState={editorState}
-    onChange={onSaveEditorState}
-  />
-);
+  const save = (state: EditorState) => editorDispatch({ type: "UPDATE_EDITOR_STATE", payload: state });
 
-const mapStateToProps = ({ editorState }) => ({ editorState });
-
-const mapDispatchToProps = (dispatch) => ({
-  onSaveEditorState: (editorState) => {
-    dispatch({
-      type: 'UPDATE_EDITOR_STATE',
-      payload: editorState,
-    })
-  }
-});
-
-const ConnectedEditor = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(AppEditor);
-
-class App extends Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <ConnectedEditor/>
-      </Provider>
-    );
-  }
-}
+  return (
+    <div>
+      <Editor editorState={editorState} onChange={save} />
+    </div>
+  );
+};
 
 export default App;
