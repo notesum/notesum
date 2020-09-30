@@ -17,7 +17,7 @@ export default function MainView() {
             </Box>
             <Box flexGrow={1} style={{
                 minWidth: '50%',
-                overflow: 'auto',
+                overflow: 'hidden',
                 height: '100%'
             }}>
                 <TextEditor/>

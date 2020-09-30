@@ -151,11 +151,11 @@ export default function Pdf({ file, fitToWidth, hidden }: PdfProps) {
                     </Paper>}
 
                     {!fitToWidth && <>
-                        <IconButton onClick={() => setScale(scale + 0.1)} edge="start" color="inherit" aria-label="menu">
+                        <IconButton onClick={() => setScale(scale + 0.1)} edge="start" aria-label="menu">
                             <ZoomInIcon />
                         </IconButton>
 
-                        <IconButton onClick={() => setScale(scale - 0.1)} edge="start" color="inherit" aria-label="menu">
+                        <IconButton onClick={() => setScale(scale - 0.1)} edge="start" aria-label="menu">
                             <ZoomOutIcon />
                         </IconButton>
                     </>}
