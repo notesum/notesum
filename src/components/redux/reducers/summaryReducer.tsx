@@ -1,22 +1,21 @@
-import { EditorState } from "draft-js";
 import { SummaryActions } from "../actions/summaryActions";
-import { ContentState } from 'draft-js';
+import { ContentState, convertToRaw, RawDraftContentState } from 'draft-js';
 
 type SummaryState = {
-    editorState: EditorState;
+    content: RawDraftContentState;
 }
 
 const initialState: SummaryState = {
-    editorState: EditorState.createWithContent(ContentState.createFromText('')),
+    content: convertToRaw(ContentState.createFromText('')),
 }
 
 const summaryReducer = ( state: SummaryState = initialState, action: SummaryActions) => {
     switch(action.type) {
         case 'UPDATE_EDITOR_STATE':
-            console.log('Saving state in summary: ', action.payload.getCurrentContent().getPlainText());
+            // console.log('Saving state in summary: ', action.payload.getCurrentContent().getPlainText());
             return {
                 ...state,
-                editorState: action.payload,
+                content: action.payload,
             };
         default:
             return state;

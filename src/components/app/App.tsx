@@ -11,7 +11,7 @@ import { add } from '../../add.rs';
 import './App.css';
 
 function App() {
-  const { count } = useSelector((state: AppState) => state.count);
+  const { count } = useSelector((state: AppState) => state.counter);
   const { name } = useSelector((state: AppState) => state.name);
   const countDispatch = useDispatch<Dispatch<CountActions>>();
   const nameDispatch = useDispatch<Dispatch<NameActions>>();    

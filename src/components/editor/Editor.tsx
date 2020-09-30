@@ -17,9 +17,6 @@ import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import './Editor.css';
 import { insertNewBlock, getSelectionParentElement } from './EditorUtils';
 import saveState from './Saver';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppState } from './../redux/reducers';
-import { SummaryActions } from '../redux/actions/summaryActions';
 
 type EditorProps = {
     es: EditorState
@@ -27,9 +24,7 @@ type EditorProps = {
 
 export default function TextEditor({es} : EditorProps) {
 
-    const { editorState } = useSelector((state: AppState) => state.summary);
-    const editorDispatch = useDispatch<Dispatch<SummaryActions>>();
-    // const [editorState, setEditor] = useState(es);
+    const [editorState, setEditor] = useState(es);
 
     const [style, setStyle] = useState('unstyled');
     // File name in the editor

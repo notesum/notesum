@@ -1,11 +1,29 @@
 import { createStore } from 'redux';
-import rootReducer, { rootConfig } from '../reducers';
+import rootReducer from '../reducers';
 import { devToolsEnhancer } from 'redux-devtools-extension';
-import { persistReducer } from 'redux-persist';
+import { persistReducer, persistStore } from 'redux-persist';
+import storage from "redux-persist/lib/storage";
+import autoMergeLevel1 from 'redux-persist/es/stateReconciler/autoMergeLevel2';
+// import immutableTransform from 'redux-persist-transform-immutable'
 
 
-// const persisted = persistReducer(rootConfig, rootReducer);
+ const config = {
+    // transforms: [immutableTransform()],
+    key: 'root',
+    storage: storage,
+    stateReconciler: autoMergeLevel1,
+}
+const persisted = persistReducer(config, rootReducer);
 
-const store = createStore(rootReducer, devToolsEnhancer({}));
+// const store = createStore(persisted, devToolsEnhancer({}));
+// export const persistor = persistStore(store);
 
-export default store;
+// const store = createStore(rootReducer,devToolsEnhancer({}));
+
+// export default store;
+
+export default () => {
+    const store = createStore(persisted,devToolsEnhancer({}));
+    const persistor = persistStore(store);
+    return{store,persistor};
+}
