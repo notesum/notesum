@@ -4,6 +4,7 @@ import { Box } from '@material-ui/core';
 import Pdf from '../pdf/Pdf';
 import TextEditor from '../editor/Editor';
 import file from '../../resources/sample2.pdf';
+
 import './MainView.css';
 
 export default function MainView() {
@@ -11,8 +12,8 @@ export default function MainView() {
     const [pdfPercentage, setPdfPercentage] = React.useState(50);
     const [dragging, setDragging] = React.useState(false);
 
-    function getPdf() { return pdfPercentage.toString() + '%' }
-    function getEditor() { return (99 - pdfPercentage).toString() + '%' }
+    function getPdf() { return pdfPercentage.toString() + '%'; }
+    function getEditor() { return (99 - pdfPercentage).toString() + '%'; }
     function clearSelection() { if (window.getSelection) { window.getSelection().removeAllRanges(); } }
 
     function calcPers(pixels) {
@@ -20,8 +21,7 @@ export default function MainView() {
         return (pixels / screenWidth)*100;
     }
 
-    function startDrag(event) {
-        console.log('start')
+    function startDrag() {
         clearSelection();
         setDragging(true);
     }
@@ -65,9 +65,8 @@ export default function MainView() {
             </Box>
 
             <div
-                onMouseDown={(e) => startDrag(e)}
-                className="resizer">
-            </div>
+                onMouseDown={() => startDrag()}
+                className="resizer"/>
 
             <Box flexGrow={1} style={{
                 // width: 'calc(${pers}%)',
