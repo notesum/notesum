@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback, Dispatch } from 'react';
 import { Editor, EditorState, ContentState, RichUtils } from 'draft-js';
 import 'draft-js/dist/Draft.css';
-import { Button, ButtonGroup, Paper, Grid, Box, Dialog, AppBar, TextField, IconButton, Toolbar } from '@material-ui/core';
+import { Button, ButtonGroup, Paper, Grid, Box, Dialog, AppBar, TextField, IconButton, Toolbar, Switch } from '@material-ui/core';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import FormatBoldIcon from '@material-ui/icons/FormatBold';
 import FormatItalicIcon from '@material-ui/icons/FormatItalic';
@@ -18,34 +18,31 @@ import './Editor.css';
 import { insertNewBlock, getSelectionParentElement } from './EditorUtils';
 import saveState from './Saver';
 
-import { connect, Provider, useDispatch, useSelector } from 'react-redux';
-import { AppState } from './../redux/reducers';
-import { SummaryActions } from './../redux/actions/summaryActions';
-import store from '../redux/store';
+    es: EditorState
+type EditorProps = {
+}
 
-export default function TextEditor() {
+export default function TextEditor({es} : EditorProps) {
 
-    const { editorState } = useSelector((state: AppState)=> state.summary);
-    const summaryDispatch = useDispatch<Dispatch<SummaryActions>>();
-
-    // const [editorState, setEditor] = useState(EditorState.createWithContent(ContentState.createFromText('')));
+    const [editorState, setEditor] = useState(es);
 
     const [style, setStyle] = useState('unstyled');
     // File name in the editor
     const [name, setName] = useState('Unnamed');
     const [fullscreenOpen, setFullscreenOpen] = useState(false);
     const [saveToggle, setSaveToggle] = useState(false);
+    const [highlightToggle, setHighlightToggle] = useState(true);
     let prevSelection = null;
 
     const handleEditor = useCallback(() => {
-        if (window.getSelection().toString().length && window.getSelection().toString() !== prevSelection &&
+        if (window.getSelection().toString().length && window.getSelection().toString() !== prevSelection && highlightToggle &&
             (getSelectionParentElement().className === 'page' || getSelectionParentElement().className === 'textLayer')) {
             const exactText = window.getSelection().toString();
             prevSelection = exactText;
             const newLocal: any = prevEditor => insertNewBlock(prevEditor, exactText, style);
             summaryDispatch({type: 'SET_SUMMARY', payload: newLocal});
         }
-    }, [style]);
+    }, [style, highlightToggle]);
 
     useEffect(() => {
         focusEditor();
@@ -181,6 +178,15 @@ export default function TextEditor() {
                                 </Paper>
                             </AppBar>
                         </Dialog>
+                    </Box>
+                    <Box>
+                        <Switch
+                            checked={highlightToggle}
+                            onChange={() => { setHighlightToggle(!highlightToggle); }}
+                            name="Highlight"
+                            color="default"
+                            inputProps={{ 'aria-label': 'secondary checkbox' }}
+                        />
                     </Box>
                 </Toolbar>
                 <Grid item xs={12}>
