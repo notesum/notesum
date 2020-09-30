@@ -14,11 +14,12 @@ export default function MainView() {
 
     function getPdf() { return pdfPercentage.toString() + '%'; }
     function getEditor() { return (99 - pdfPercentage).toString() + '%'; }
-    function clearSelection() { if (window.getSelection) { window.getSelection().removeAllRanges(); } }
+    function calcPers(pixels) { return (pixels / window.innerWidth) * 100; }
 
-    function calcPers(pixels) {
-        const screenWidth = window.innerWidth;
-        return (pixels / screenWidth)*100;
+    function clearSelection() {
+        if (window.getSelection) {
+            window.getSelection().removeAllRanges();
+        }
     }
 
     function startDrag() {
@@ -28,7 +29,7 @@ export default function MainView() {
 
     const stopResize = (event) => {
         if (dragging) {
-            setDragging(()=>false);
+            setDragging(() => false);
             setPdfPercentage(() => calcPers(event.clientX));
             return dragging;
         }
@@ -65,10 +66,9 @@ export default function MainView() {
 
             <div
                 onMouseDown={() => startDrag()}
-                className="resizer"/>
+                className="resizer" />
 
             <Box flexGrow={1} style={{
-                // width: 'calc(${pers}%)',
                 width: getEditor(),
                 overflow: 'hidden',
                 height: '100%',
