@@ -185,7 +185,7 @@ export default function Pdf({ file, fitToWidth, hidden }: PdfProps) {
                     height: '100%',
                     overflow: 'auto',
                     overflowY: 'scroll',
-                    backgroundColor: 'white'
+                    backgroundColor: '#eee'
                 }} />
             </Box>
         </Box>

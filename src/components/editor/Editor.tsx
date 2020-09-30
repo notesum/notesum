@@ -86,7 +86,7 @@ export default function TextEditor() {
         <div>
             <Grid container wrap="wrap">
                 <AppBar color="transparent" position="static">
-                    <Toolbar variant="dense" >
+                    <Toolbar variant="dense"  style={{ backgroundColor: '#fff' }}>
                         <Box>
                             <Tooltip title="Highlight to Editor" placement="top">
                                 <Switch
@@ -162,7 +162,7 @@ export default function TextEditor() {
 
                     </Toolbar>
                 </AppBar>
-                <Grid item xs={12} style={{ backgroundColor: '#eee' }}>
+                <Grid item xs={12} >
                     <Box my={1} mx={2} >
                         <Paper onClick={focusEditor} elevation={4}>
                             <Editor

@@ -72,7 +72,8 @@ export default function MainView() {
                 // width: 'calc(${pers}%)',
                 width: getEditor(),
                 overflow: 'hidden',
-                height: '100%'
+                height: '100%',
+                backgroundColor: '#eee'
             }}>
                 <TextEditor />
             </Box>
