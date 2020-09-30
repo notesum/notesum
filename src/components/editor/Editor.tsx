@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Editor, EditorState, ContentState, RichUtils } from 'draft-js';
 import 'draft-js/dist/Draft.css';
-import { Button, ButtonGroup, Paper, Grid, Box, Dialog, AppBar, TextField, IconButton, Toolbar, Switch } from '@material-ui/core';
+import { Button, ButtonGroup, Paper, Grid, Box, Dialog, AppBar, TextField, IconButton, Toolbar, Switch, Tooltip } from '@material-ui/core';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import FormatBoldIcon from '@material-ui/icons/FormatBold';
 import FormatItalicIcon from '@material-ui/icons/FormatItalic';
@@ -84,16 +84,18 @@ export default function TextEditor() {
 
     return (
         <div>
-            <Grid container wrap="wrap">
-                <Toolbar variant="dense">
+            <Grid container wrap="wrap" color="primary">
+                <Toolbar variant="dense" >
                     <Box overflow="hidden">
-                        <ToggleButtonGroup exclusive value={style} onChange={toggleStyle} size="small">
-                            <ToggleButton value="header-two"> <TextFieldsIcon /> </ToggleButton>
-                            <ToggleButton value="header-three"> <TextFieldsIcon fontSize="small" /> </ToggleButton>
-                            <ToggleButton value="unstyled"> <TextFormatIcon /> </ToggleButton>
-                            <ToggleButton value="unordered-list-item"> <FormatListBulletedIcon /> </ToggleButton>
+                        <Tooltip title="Highlight Text Types" placement="top">
+                            <ToggleButtonGroup exclusive value={style} onChange={toggleStyle} size="small">
+                                <ToggleButton value="header-two"> <TextFieldsIcon /> </ToggleButton>
+                                <ToggleButton value="header-three"> <TextFieldsIcon fontSize="small" /> </ToggleButton>
+                                <ToggleButton value="unstyled"> <TextFormatIcon /> </ToggleButton>
+                                <ToggleButton value="unordered-list-item"> <FormatListBulletedIcon /> </ToggleButton>
 
-                        </ToggleButtonGroup>
+                            </ToggleButtonGroup>
+                        </Tooltip>
                     </Box>
                     <Box overflow="hidden">
                         <ButtonGroup >
@@ -136,25 +138,25 @@ export default function TextEditor() {
                             <FullscreenIcon fontSize="small" />
                         </IconButton>
                         <Dialog fullScreen open={fullscreenOpen} onClose={() => { setFullscreenOpen(false); }}>
-                            <AppBar>
-                                <Paper onClick={focusEditor} elevation={4}>
-                                    <Editor
-                                        ref={editor}
-                                        editorState={editorState}
-                                        onChange={setEditor}
-                                    />
-                                </Paper>
-                            </AppBar>
+                            <Paper onClick={focusEditor} elevation={4}>
+                                <Editor
+                                    ref={editor}
+                                    editorState={editorState}
+                                    onChange={setEditor}
+                                />
+                            </Paper>
                         </Dialog>
                     </Box>
                     <Box>
-                        <Switch
-                            checked={highlightToggle}
-                            onChange={() => { setHighlightToggle(!highlightToggle); }}
-                            name="Highlight"
-                            color="default"
-                            inputProps={{ 'aria-label': 'secondary checkbox' }}
-                        />
+                        <Tooltip title="Highlight to Editor" placement="top">
+                            <Switch
+                                checked={highlightToggle}
+                                onChange={() => { setHighlightToggle(!highlightToggle); }}
+                                name="Highlight"
+                                color="primary"
+                                inputProps={{ 'aria-label': 'secondary checkbox' }}
+                            />
+                        </Tooltip>
                     </Box>
                 </Toolbar>
                 <Grid item xs={12}>
