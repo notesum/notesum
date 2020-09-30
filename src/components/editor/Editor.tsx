@@ -87,6 +87,17 @@ export default function TextEditor() {
             <Grid container wrap="wrap">
                 <AppBar color="transparent" position="static">
                     <Toolbar variant="dense" >
+                        <Box>
+                            <Tooltip title="Highlight to Editor" placement="top">
+                                <Switch
+                                    checked={highlightToggle}
+                                    onChange={() => { setHighlightToggle(!highlightToggle); }}
+                                    name="Highlight"
+                                    color="primary"
+                                    inputProps={{ 'aria-label': 'secondary checkbox' }}
+                                />
+                            </Tooltip>
+                        </Box>
                         <Box overflow="hidden">
                             <Tooltip title="Highlight Text Types" placement="top">
                                 <ToggleButtonGroup exclusive value={style} onChange={toggleStyle} size="small">
@@ -100,7 +111,7 @@ export default function TextEditor() {
                         </Box>
                         <Box overflow="hidden">
                             <ButtonGroup >
-                                <IconButton  onMouseDown={() => formatText('BOLD')}><FormatBoldIcon fontSize="small" /></IconButton>
+                                <IconButton onMouseDown={() => formatText('BOLD')}><FormatBoldIcon fontSize="small" /></IconButton>
                                 <IconButton onMouseDown={() => formatText('ITALIC')}><FormatItalicIcon fontSize="small" /></IconButton>
                                 <IconButton onMouseDown={() => formatText('STRIKETHROUGH')}><FormatStrikethroughIcon fontSize="small" /></IconButton>
                                 <IconButton onMouseDown={() => formatText('UNDERLINE')}><FormatUnderlinedIcon fontSize="small" /></IconButton>
@@ -148,17 +159,7 @@ export default function TextEditor() {
                                 </Paper>
                             </Dialog>
                         </Box>
-                        <Box>
-                            <Tooltip title="Highlight to Editor" placement="top">
-                                <Switch
-                                    checked={highlightToggle}
-                                    onChange={() => { setHighlightToggle(!highlightToggle); }}
-                                    name="Highlight"
-                                    color="primary"
-                                    inputProps={{ 'aria-label': 'secondary checkbox' }}
-                                />
-                            </Tooltip>
-                        </Box>
+
                     </Toolbar>
                 </AppBar>
                 <Grid item xs={12} style={{ backgroundColor: '#eee' }}>

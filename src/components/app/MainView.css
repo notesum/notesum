@@ -17,7 +17,7 @@
 .resizer::after,
 .resizer::before {
     content: "";
-    border-left: 1px solid #333;
+    border-left: 1px solid rgb(63, 81, 181);
     position: absolute;
     top: 50%;
     transform: translateY(-100%);

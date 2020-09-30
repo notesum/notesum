@@ -12,18 +12,18 @@ export default function MainView() {
     const [dragging, setDragging] = React.useState(false);
     const [dragStart, setDragStart] = React.useState(null);
 
-
     function getPdf() { return pdfPercentage.toString() + '%' }
     function getEditor() { return (99 - pdfPercentage).toString() + '%' }
     function clearSelection() { if (window.getSelection) { window.getSelection().removeAllRanges(); } }
 
     function calcPers(pixels) {
         const screenWidth = window.screen.width;
-        console.log((screenWidth - pixels) / screenWidth);
+        // console.log((screenWidth - pixels) / screenWidth);
         return (screenWidth - pixels) / screenWidth;
     }
 
     function startDrag(event) {
+        console.log('start')
         clearSelection();
         setDragging(true);
         setDragStart(event.clientX);
@@ -31,7 +31,8 @@ export default function MainView() {
 
     const stopResize = React.useCallback((event) => {
         if (dragging) {
-            setDragging(() => false);
+            setDragging(false);
+            console.log(dragging);
             setPdfPercentage(oldPers => oldPers - calcPers(event.clientX - dragStart));
         }
     }, [dragging, dragStart, pdfPercentage, calcPers]);
@@ -39,12 +40,11 @@ export default function MainView() {
 
     React.useEffect(() => {
         window.addEventListener('mouseup', stopResize);
-    }, [stopResize, dragging]);
+    }, [stopResize, dragging, startDrag]);
 
     return (
         <Box flexDirection="row" display="flex" height="100%">
             <Box flexGrow={1} style={{
-                // width: ('calc(100% - ${pers}%)'),
                 width: getPdf(),
                 overflow: 'auto',
                 height: '100%'
