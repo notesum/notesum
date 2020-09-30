@@ -29,7 +29,6 @@ export default function MainView() {
     const stopResize = (event) => {
         if (dragging) {
             setDragging(()=>false);
-            console.log(dragging);
             setPdfPercentage(() => calcPers(event.clientX));
             return dragging;
         }
