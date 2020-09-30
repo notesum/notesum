@@ -10,7 +10,6 @@ export default function MainView() {
 
     const [pdfPercentage, setPdfPercentage] = React.useState(50);
     const [dragging, setDragging] = React.useState(false);
-    const [dragStart, setDragStart] = React.useState(null);
 
     function getPdf() { return pdfPercentage.toString() + '%' }
     function getEditor() { return (99 - pdfPercentage).toString() + '%' }
@@ -18,28 +17,41 @@ export default function MainView() {
 
     function calcPers(pixels) {
         const screenWidth = window.screen.width;
-        // console.log((screenWidth - pixels) / screenWidth);
-        return (screenWidth - pixels) / screenWidth;
+        return (pixels / screenWidth)*100;
     }
 
     function startDrag(event) {
         console.log('start')
         clearSelection();
         setDragging(true);
-        setDragStart(event.clientX);
     }
 
-    const stopResize = React.useCallback((event) => {
+    const stopResize = (event) => {
         if (dragging) {
-            setDragging(false);
+            setDragging(()=>false);
             console.log(dragging);
-            setPdfPercentage(oldPers => oldPers - calcPers(event.clientX - dragStart));
+            setPdfPercentage(() => calcPers(event.clientX));
+            return dragging;
         }
-    }, [dragging, dragStart, pdfPercentage, calcPers]);
+    };
+
+    const animateResize = (event) => {
+        if (dragging) {
+            setPdfPercentage(() => calcPers(event.clientX));
+        }
+    };
 
 
     React.useEffect(() => {
         window.addEventListener('mouseup', stopResize);
+        window.addEventListener('mousemove', animateResize);
+
+
+        return () => {
+            window.removeEventListener('mouseup', stopResize);
+            window.removeEventListener('mousemove', animateResize);
+
+        };
     }, [stopResize, dragging, startDrag]);
 
     return (
@@ -49,7 +61,7 @@ export default function MainView() {
                 overflow: 'auto',
                 height: '100%'
             }}>
-                <Pdf file={file} hidden={false} fitToWidth={false} />
+                <Pdf file={file} hidden={dragging} fitToWidth={true} />
             </Box>
 
             <div
