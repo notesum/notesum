@@ -15,8 +15,8 @@ import Pdf from './pdf/Pdf';
 export default function Root() {
     return (
         <BrowserRouter>
-            <Box flexDirection="column" display="flex" height="100%">
-                <Box m={1}>
+            <Box flexDirection="column" display="flex" height="100%" >
+                <Box m={0} bgcolor="primary.main">
                     <Button href="/"><HomeIcon /></Button>
                     <Button href="/about"><InfoIcon /></Button>
                     <Button href="/pdf"><PictureAsPdfIcon /></Button>

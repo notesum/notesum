@@ -84,83 +84,85 @@ export default function TextEditor() {
 
     return (
         <div>
-            <Grid container wrap="wrap" color="primary">
-                <Toolbar variant="dense" >
-                    <Box overflow="hidden">
-                        <Tooltip title="Highlight Text Types" placement="top">
-                            <ToggleButtonGroup exclusive value={style} onChange={toggleStyle} size="small">
-                                <ToggleButton value="header-two"> <TextFieldsIcon /> </ToggleButton>
-                                <ToggleButton value="header-three"> <TextFieldsIcon fontSize="small" /> </ToggleButton>
-                                <ToggleButton value="unstyled"> <TextFormatIcon /> </ToggleButton>
-                                <ToggleButton value="unordered-list-item"> <FormatListBulletedIcon /> </ToggleButton>
+            <Grid container wrap="wrap">
+                <AppBar color="transparent" position="static">
+                    <Toolbar variant="dense" >
+                        <Box overflow="hidden">
+                            <Tooltip title="Highlight Text Types" placement="top">
+                                <ToggleButtonGroup exclusive value={style} onChange={toggleStyle} size="small">
+                                    <ToggleButton value="header-two"> <TextFieldsIcon /> </ToggleButton>
+                                    <ToggleButton value="header-three"> <TextFieldsIcon fontSize="small" /> </ToggleButton>
+                                    <ToggleButton value="unstyled"> <TextFormatIcon /> </ToggleButton>
+                                    <ToggleButton value="unordered-list-item"> <FormatListBulletedIcon /> </ToggleButton>
 
-                            </ToggleButtonGroup>
-                        </Tooltip>
-                    </Box>
-                    <Box overflow="hidden">
-                        <ButtonGroup >
-                            <IconButton onMouseDown={() => formatText('BOLD')}><FormatBoldIcon fontSize="small" /></IconButton>
-                            <IconButton onMouseDown={() => formatText('ITALIC')}><FormatItalicIcon fontSize="small" /></IconButton>
-                            <IconButton onMouseDown={() => formatText('STRIKETHROUGH')}><FormatStrikethroughIcon fontSize="small" /></IconButton>
-                            <IconButton onMouseDown={() => formatText('UNDERLINE')}><FormatUnderlinedIcon fontSize="small" /></IconButton>
-                            <IconButton onMouseDown={() => code()}><CodeIcon fontSize="small" /></IconButton>
+                                </ToggleButtonGroup>
+                            </Tooltip>
+                        </Box>
+                        <Box overflow="hidden">
+                            <ButtonGroup >
+                                <IconButton onMouseDown={() => formatText('BOLD')}><FormatBoldIcon fontSize="small" /></IconButton>
+                                <IconButton onMouseDown={() => formatText('ITALIC')}><FormatItalicIcon fontSize="small" /></IconButton>
+                                <IconButton onMouseDown={() => formatText('STRIKETHROUGH')}><FormatStrikethroughIcon fontSize="small" /></IconButton>
+                                <IconButton onMouseDown={() => formatText('UNDERLINE')}><FormatUnderlinedIcon fontSize="small" /></IconButton>
+                                <IconButton onMouseDown={() => code()}><CodeIcon fontSize="small" /></IconButton>
 
-                        </ButtonGroup>
-                    </Box>
-                    <Box overflow="hidden">
-                        <IconButton onClick={() => { setSaveToggle(true); }}>
-                            <SaveAltIcon fontSize="small" />
-                        </IconButton>
-                    </Box>
-                    <Box overflow="hidden">
-                        <Dialog open={saveToggle} onClose={() => { setSaveToggle(false); }}>
-                            <Box m={2} overflow="hidden">
-                                <Grid container wrap="wrap" direction="column">
-                                    <Grid item xs>
-                                        <TextField id="filled-helperText" defaultValue={name} label="File Name"
-                                            onChange={(event) => { setName(event.target.value); }} />
+                            </ButtonGroup>
+                        </Box>
+                        <Box overflow="hidden">
+                            <IconButton onClick={() => { setSaveToggle(true); }}>
+                                <SaveAltIcon fontSize="small" />
+                            </IconButton>
+                        </Box>
+                        <Box overflow="hidden">
+                            <Dialog open={saveToggle} onClose={() => { setSaveToggle(false); }}>
+                                <Box m={2} overflow="hidden">
+                                    <Grid container wrap="wrap" direction="column">
+                                        <Grid item xs>
+                                            <TextField id="filled-helperText" defaultValue={name} label="File Name"
+                                                onChange={(event) => { setName(event.target.value); }} />
+                                        </Grid>
+                                        <Grid item xs>
+                                            <Button onMouseDown={() => saveState(editorState, 'docx', name)}>Save as Word Document</Button>
+                                        </Grid>
+                                        <Grid item xs>
+                                            <Button onMouseDown={() => saveState(editorState, 'html', name)}>Save as HTML</Button>
+                                        </Grid>
+                                        <Grid item xs>
+                                            <Button onMouseDown={() => saveState(editorState, 'txt', name)}>Save as Text Document</Button>
+                                        </Grid>
                                     </Grid>
-                                    <Grid item xs>
-                                        <Button onMouseDown={() => saveState(editorState, 'docx', name)}>Save as Word Document</Button>
-                                    </Grid>
-                                    <Grid item xs>
-                                        <Button onMouseDown={() => saveState(editorState, 'html', name)}>Save as HTML</Button>
-                                    </Grid>
-                                    <Grid item xs>
-                                        <Button onMouseDown={() => saveState(editorState, 'txt', name)}>Save as Text Document</Button>
-                                    </Grid>
-                                </Grid>
-                            </Box>
-                        </Dialog>
-                    </Box>
-                    <Box overflow="hidden">
-                        <IconButton onClick={() => { setFullscreenOpen(true); }}>
-                            <FullscreenIcon fontSize="small" />
-                        </IconButton>
-                        <Dialog fullScreen open={fullscreenOpen} onClose={() => { setFullscreenOpen(false); }}>
-                            <Paper onClick={focusEditor} elevation={4}>
-                                <Editor
-                                    ref={editor}
-                                    editorState={editorState}
-                                    onChange={setEditor}
+                                </Box>
+                            </Dialog>
+                        </Box>
+                        <Box overflow="hidden">
+                            <IconButton onClick={() => { setFullscreenOpen(true); }}>
+                                <FullscreenIcon fontSize="small" />
+                            </IconButton>
+                            <Dialog fullScreen open={fullscreenOpen} onClose={() => { setFullscreenOpen(false); }}>
+                                <Paper onClick={focusEditor} elevation={4}>
+                                    <Editor
+                                        ref={editor}
+                                        editorState={editorState}
+                                        onChange={setEditor}
+                                    />
+                                </Paper>
+                            </Dialog>
+                        </Box>
+                        <Box>
+                            <Tooltip title="Highlight to Editor" placement="top">
+                                <Switch
+                                    checked={highlightToggle}
+                                    onChange={() => { setHighlightToggle(!highlightToggle); }}
+                                    name="Highlight"
+                                    color="primary"
+                                    inputProps={{ 'aria-label': 'secondary checkbox' }}
                                 />
-                            </Paper>
-                        </Dialog>
-                    </Box>
-                    <Box>
-                        <Tooltip title="Highlight to Editor" placement="top">
-                            <Switch
-                                checked={highlightToggle}
-                                onChange={() => { setHighlightToggle(!highlightToggle); }}
-                                name="Highlight"
-                                color="primary"
-                                inputProps={{ 'aria-label': 'secondary checkbox' }}
-                            />
-                        </Tooltip>
-                    </Box>
-                </Toolbar>
-                <Grid item xs={12}>
-                    <Box m={1}>
+                            </Tooltip>
+                        </Box>
+                    </Toolbar>
+                </AppBar>
+                <Grid item xs={12} style={{ backgroundColor: '#eee' }}>
+                    <Box my={1} mx={2} >
                         <Paper onClick={focusEditor} elevation={4}>
                             <Editor
                                 ref={editor}
