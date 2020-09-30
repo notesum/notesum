@@ -15,6 +15,8 @@ export default function MainView() {
             }}>
                 <Pdf file={file} hidden={false} fitToWidth={false}/>
             </Box>
+            <Box >..</Box>
+
             <Box flexGrow={1} style={{
                 minWidth: '50%',
                 overflow: 'hidden',
