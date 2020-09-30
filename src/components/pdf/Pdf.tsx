@@ -136,7 +136,7 @@ export default function Pdf({ file, fitToWidth, hidden }: PdfProps) {
         <Box flexDirection="column" display="flex" width="100%" height="100%" >
             <AppBar position="static" color="transparent">
                 <Toolbar variant="dense">
-                    {document && <Paper elevation={2} className={classes.pageBox}>
+                    {document && <Paper elevation={2} className={classes.pageBox} style={{backgroundColor: '#eee'}}>
                         <InputBase ref={pageBoxRef} value={pageBoxValue} className={classes.pageNumber} placeholder={`${currentPage+1}`} inputProps={{ 'aria-label': 'search' }}
                             onKeyPress={(e) => {
                                 if (!['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].includes(e.key)) {
