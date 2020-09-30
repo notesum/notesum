@@ -5,24 +5,41 @@ import Pdf from '../pdf/Pdf';
 import TextEditor from '../editor/Editor';
 import file from '../../resources/sample2.pdf';
 import './MainView.css';
-import React from 'react';
 
 export default function MainView() {
 
-    const [pers, setPers] = React.useState(50);
+    const [pdfPercentage, setPdfPercentage] = React.useState(50);
     const [dragging, setDragging] = React.useState(false);
     const [dragStart, setDragStart] = React.useState(null);
 
 
-    function getPdf() { return pers.toString() + '%' }
-    function getEditor() { return (99 - pers).toString() + '%' }
+    function getPdf() { return pdfPercentage.toString() + '%' }
+    function getEditor() { return (99 - pdfPercentage).toString() + '%' }
     function clearSelection() { if (window.getSelection) { window.getSelection().removeAllRanges(); } }
+
+    function calcPers(pixels) {
+        const screenWidth = window.screen.width;
+        console.log((screenWidth - pixels) / screenWidth);
+        return (screenWidth - pixels) / screenWidth;
+    }
 
     function startDrag(event) {
         clearSelection();
         setDragging(true);
         setDragStart(event.clientX);
     }
+
+    const stopResize = React.useCallback((event) => {
+        if (dragging) {
+            setDragging(() => false);
+            setPdfPercentage(oldPers => oldPers - calcPers(event.clientX - dragStart));
+        }
+    }, [dragging, dragStart, pdfPercentage, calcPers]);
+
+
+    React.useEffect(() => {
+        window.addEventListener('mouseup', stopResize);
+    }, [stopResize, dragging]);
 
     return (
         <Box flexDirection="row" display="flex" height="100%">
@@ -37,8 +54,8 @@ export default function MainView() {
 
             <div
                 onMouseDown={(e) => startDrag(e)}
-
-                className="resizer"></div>
+                className="resizer">
+            </div>
 
             <Box flexGrow={1} style={{
                 // width: 'calc(${pers}%)',
