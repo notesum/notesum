@@ -43,18 +43,15 @@ export default function MainView() {
         }
     };
 
-
     useEffect(() => {
         window.addEventListener('mouseup', stopResize);
         window.addEventListener('mousemove', animateResize);
 
-
         return () => {
             window.removeEventListener('mouseup', stopResize);
             window.removeEventListener('mousemove', animateResize);
-
         };
-    }, [stopResize, dragging, startDrag]);
+    }, [dragging]);
 
     return (
         <Box flexDirection="row" display="flex" height="100%" {...{ ref: mainViewRef }}>
