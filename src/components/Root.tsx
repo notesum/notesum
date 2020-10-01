@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { Button, Box } from '@material-ui/core';
+import { IconButton, Box } from '@material-ui/core';
 import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 import HomeIcon from '@material-ui/icons/Home';
 import InfoIcon from '@material-ui/icons/Info';
@@ -15,11 +15,11 @@ import Pdf from './pdf/Pdf';
 export default function Root() {
     return (
         <BrowserRouter>
-            <Box flexDirection="column" display="flex" height="100%">
-                <Box m={1}>
-                    <Button href="/"><HomeIcon /></Button>
-                    <Button href="/about"><InfoIcon /></Button>
-                    <Button href="/pdf"><PictureAsPdfIcon /></Button>
+            <Box flexDirection="column" display="flex" height="100%" >
+                <Box m={0} bgcolor="primary.main">
+                    <IconButton href="/"><HomeIcon style={{color: '#fff'}} fontSize="small"/></IconButton >
+                    <IconButton href="/about"><InfoIcon style={{color: '#fff'}} fontSize="small"/></IconButton>
+                    <IconButton href="/pdf"><PictureAsPdfIcon style={{color: '#fff'}} fontSize="small"/></IconButton>
                 </Box>
 
                 {/* This sizes the main content area to fill up the remaining space */}
