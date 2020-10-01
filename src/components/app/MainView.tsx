@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Box } from '@material-ui/core';
 
 import Pdf from '../pdf/Pdf';
@@ -8,6 +8,18 @@ import file from '../../resources/sample2.pdf';
 import './MainView.css';
 
 export default function MainView() {
+
+    const [screenshot, setScreenshot] = useState(false);
+    const [image, setImage] = useState('');
+
+
+    const setCallback = (img) => {
+        setImage(img);
+    };
+
+    const setSS = (b) => {
+        setScreenshot(b);
+    };
 
     const [pdfPercentage, setPdfPercentage] = React.useState(50);
     const [dragging, setDragging] = React.useState(false);
@@ -60,7 +72,7 @@ export default function MainView() {
                 overflow: 'auto',
                 height: '100%'
             }}>
-                <Pdf file={file} hidden={dragging} fitToWidth={true} />
+                <Pdf file={file} screenshot={screenshot} screenshotCallback={setCallback} hidden={dragging} fitToWidth={true} />
             </Box>
 
             <div
@@ -73,7 +85,7 @@ export default function MainView() {
                 height: '100%',
                 backgroundColor: '#eee'
             }}>
-                <TextEditor />
+                <TextEditor screenshotCallback={setSS} img={image} />
             </Box>
         </Box>
     );
