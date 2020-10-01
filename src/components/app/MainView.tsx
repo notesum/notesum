@@ -4,7 +4,6 @@ import { Box } from '@material-ui/core';
 import Pdf from '../pdf/Pdf';
 import TextEditor from '../editor/Editor';
 import file from '../../resources/sample2.pdf';
-import { ContentState, EditorState } from 'draft-js';
 
 import './MainView.css';
 

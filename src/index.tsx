@@ -1,22 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-// import store from './components/redux/store';
-// import { persistor } from './components/redux/store';
 import Store from './components/redux/store';
-// import {store, persistor } from './components/redux/store';
 
 import './index.css';
 import Root from './components/Root';
 import * as serviceWorker from './serviceWorker';
 import { PersistGate } from 'redux-persist/integration/react';
-
-
-// ReactDOM.render(
-//     <Provider store={store}>
-//             <Root />
-//     </Provider>
-//     , document.getElementById('root'));
 
 const {store,persistor} = Store();
 
