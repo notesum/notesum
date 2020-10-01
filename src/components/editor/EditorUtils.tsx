@@ -61,14 +61,14 @@ export function getSelectionParentElement() {
 export function insertImageUtil(eState, b64) {
     const contentState = eState.getCurrentContent();
     const contentStateWithEntity = contentState.createEntity(
-        "image",
-        "IMMUTABLE",
+        'image',
+        'IMMUTABLE',
         { src: b64 }
     );
     const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
     const editor1 = EditorState.set(eState, {
         currentContent: contentStateWithEntity
     });
-    const editor2 = AtomicBlockUtils.insertAtomicBlock(editor1, entityKey, " ");
+    const editor2 = AtomicBlockUtils.insertAtomicBlock(editor1, entityKey, ' ');
     return insertNewBlock(editor2, '', 'unstyled');
 }

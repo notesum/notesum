@@ -13,11 +13,14 @@ export default function MainView() {
 
     const setCallback = (img) => {
         setImage(img);
-    }
+    };
+
+    const setSS = (b) => {
+        setScreenshot(b);
+    };
 
     return (
         <Box flexDirection="row" display="flex" height="100%">
-            <Button onClick={() => setScreenshot((curr) => !curr)}>{screenshot ? "screenshot on" : "screenshot off"}</Button>
             <Box flexGrow={1} style={{
                 minWidth: '50%', // Later on this size will be more dynamic and 'draggable' by the user.
                 overflow: 'auto',
@@ -30,7 +33,7 @@ export default function MainView() {
                 overflow: 'auto',
                 height: '100%'
             }}>
-                <TextEditor img={image} />
+                <TextEditor screenshotCallback={setSS} img={image} />
             </Box>
         </Box>
     );

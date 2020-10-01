@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import Editor from "draft-js-plugins-editor";
-import createImagePlugin from "draft-js-image-plugin";
+import Editor from 'draft-js-plugins-editor';
+import createImagePlugin from 'draft-js-image-plugin';
 import { EditorState, ContentState, RichUtils } from 'draft-js';
 import 'draft-js/dist/Draft.css';
 import { Button, ButtonGroup, Paper, Grid, Box, Dialog, AppBar, TextField, IconButton, Toolbar, Switch } from '@material-ui/core';
@@ -15,16 +15,18 @@ import TextFormatIcon from '@material-ui/icons/TextFormat';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import FullscreenIcon from '@material-ui/icons/Fullscreen';
+import CameraAltIcon from '@material-ui/icons/CameraAlt';
 
 import './Editor.css';
 import { insertNewBlock, getSelectionParentElement, insertImageUtil } from './EditorUtils';
 import saveState from './Saver';
 
 type EditorProps = {
-    img: String
-}
+    img: string
+    screenshotCallback: (b: boolean) => void
+};
 
-export default function TextEditor({ img }: EditorProps) {
+export default function TextEditor({ img, screenshotCallback }: EditorProps) {
 
 
     const [editorState, setEditor] = useState(EditorState.createWithContent(ContentState.createFromText('')));
@@ -82,7 +84,9 @@ export default function TextEditor({ img }: EditorProps) {
 
     function toggleStyle(event, newStyle) {
         event.preventDefault();
+        screenshotCallback(newStyle === 'img');
         setStyle(newStyle);
+
     }
 
     return (
@@ -95,6 +99,8 @@ export default function TextEditor({ img }: EditorProps) {
                             <ToggleButton value="header-three"> <TextFieldsIcon fontSize="small" /> </ToggleButton>
                             <ToggleButton value="unstyled"> <TextFormatIcon /> </ToggleButton>
                             <ToggleButton value="unordered-list-item"> <FormatListBulletedIcon /> </ToggleButton>
+                            <ToggleButton value="img"> <CameraAltIcon /> </ToggleButton>
+
 
                         </ToggleButtonGroup>
                     </Box>
