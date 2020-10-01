@@ -66,8 +66,9 @@ export function insertImageUtil(eState, b64) {
         { src: b64 }
     );
     const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
-    const newEditorState = EditorState.set(eState, {
+    const editor1 = EditorState.set(eState, {
         currentContent: contentStateWithEntity
     });
-    return AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, " ");
+    const editor2 = AtomicBlockUtils.insertAtomicBlock(editor1, entityKey, " ");
+    return insertNewBlock(editor2, '', 'unstyled');
 }

@@ -20,7 +20,11 @@ import './Editor.css';
 import { insertNewBlock, getSelectionParentElement, insertImageUtil } from './EditorUtils';
 import saveState from './Saver';
 
-export default function TextEditor() {
+type EditorProps = {
+    img: String
+}
+
+export default function TextEditor({ img }: EditorProps) {
 
 
     const [editorState, setEditor] = useState(EditorState.createWithContent(ContentState.createFromText('')));
@@ -47,6 +51,10 @@ export default function TextEditor() {
     }, [style, highlightToggle]);
 
     useEffect(() => {
+        setEditor(prevEditor => insertImageUtil(prevEditor, img));
+    }, [img]);
+
+    useEffect(() => {
         focusEditor();
         // Listen to mouseup for highlight behaviour
         window.addEventListener('mouseup', handleEditor);
@@ -70,11 +78,6 @@ export default function TextEditor() {
     function code() {
         const nextState = RichUtils.toggleCode(editorState);
         setEditor(nextState);
-    }
-
-    // TODO use for the ss
-    function insertImage(img: string) {
-        return insertImageUtil(editorState, img);
     }
 
     function toggleStyle(event, newStyle) {

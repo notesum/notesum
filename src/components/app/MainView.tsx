@@ -8,6 +8,12 @@ import file from '../../resources/sample2.pdf';
 export default function MainView() {
 
     const [screenshot, setScreenshot] = useState(false);
+    const [image, setImage] = useState('');
+
+
+    const setCallback = (img) => {
+        setImage(img);
+    }
 
     return (
         <Box flexDirection="row" display="flex" height="100%">
@@ -17,14 +23,14 @@ export default function MainView() {
                 overflow: 'auto',
                 height: '100%'
             }}>
-                <Pdf file={file} screenshot={screenshot} screenshotCallback={(img) => console.log(img)} hidden={false} fitToWidth={false}/>
+                <Pdf file={file} screenshot={screenshot} screenshotCallback={setCallback} hidden={false} fitToWidth={false} />
             </Box>
             <Box flexGrow={1} style={{
                 minWidth: '50%',
                 overflow: 'auto',
                 height: '100%'
             }}>
-                <TextEditor/>
+                <TextEditor img={image} />
             </Box>
         </Box>
     );
