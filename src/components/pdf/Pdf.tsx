@@ -16,6 +16,9 @@ type PdfProps = {
     hidden?: boolean,
     fitToWidth?: boolean,
     width?: number,
+
+    screenshot?: boolean,
+    screenshotCallback?: (img: string) => void
 };
 
 const useStyles = makeStyles(() => ({
@@ -35,7 +38,7 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-export default function Pdf({ file, fitToWidth, hidden }: PdfProps) {
+export default function Pdf({ file, fitToWidth, hidden, screenshot, screenshotCallback }: PdfProps) {
 
     const [document, setDocument] = useState<PDFDocumentProxy>(null);
     const [pages, setPages] = useState<PDFPageProxy[]>([]);
@@ -178,7 +181,8 @@ export default function Pdf({ file, fitToWidth, hidden }: PdfProps) {
                 }}>
                     {pages.map((page, id) => {
                         return (<Page ref={pageRefs[id]} isVisible={id in visiblePages && visiblePages[id].visible} hidden={hidden} key={id}
-                                      scale={fitToWidth ? null : scale} width={fitToWidth ? mainView.current.clientWidth - 18 : null} page={page} />);
+                            scale={fitToWidth ? null : scale} width={fitToWidth ? mainView.current.clientWidth - 18 : null} page={page}
+                            screenshot={screenshot} screenshotCallback={screenshotCallback} />);
                     })}
                 </div>
 
