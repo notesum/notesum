@@ -136,12 +136,10 @@ export default function Pdf({ file, fitToWidth, hidden, screenshot, screenshotCa
     };
 
     return (
-        <Box flexDirection="column" display="flex" width="100%" height="100%" style={{
-            backgroundColor: '#ddd'
-        }}>
-            <AppBar position="static">
+        <Box flexDirection="column" display="flex" width="100%" height="100%" >
+            <AppBar position="static" color="transparent">
                 <Toolbar variant="dense">
-                    {document && <Paper elevation={2} className={classes.pageBox}>
+                    {document && <Paper elevation={2} className={classes.pageBox} style={{backgroundColor: '#eee'}}>
                         <InputBase ref={pageBoxRef} value={pageBoxValue} className={classes.pageNumber} placeholder={`${currentPage+1}`} inputProps={{ 'aria-label': 'search' }}
                             onKeyPress={(e) => {
                                 if (!['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].includes(e.key)) {
@@ -156,11 +154,11 @@ export default function Pdf({ file, fitToWidth, hidden, screenshot, screenshotCa
                     </Paper>}
 
                     {!fitToWidth && <>
-                        <IconButton onClick={() => setScale(scale + 0.1)} edge="start" color="inherit" aria-label="menu">
+                        <IconButton onClick={() => setScale(scale + 0.1)} edge="start" aria-label="menu">
                             <ZoomInIcon />
                         </IconButton>
 
-                        <IconButton onClick={() => setScale(scale - 0.1)} edge="start" color="inherit" aria-label="menu">
+                        <IconButton onClick={() => setScale(scale - 0.1)} edge="start" aria-label="menu">
                             <ZoomOutIcon />
                         </IconButton>
                     </>}
@@ -172,7 +170,8 @@ export default function Pdf({ file, fitToWidth, hidden, screenshot, screenshotCa
             </AppBar>
 
             <Box flexGrow={1} style={{
-                minHeight: '0'
+                minHeight: '0',
+                backgroundColor: '#eee'
             }}>
                 <div ref={mainView} hidden={hidden} className="pdfViewer" style={{
                     height: '100%',
@@ -190,7 +189,7 @@ export default function Pdf({ file, fitToWidth, hidden, screenshot, screenshotCa
                     height: '100%',
                     overflow: 'auto',
                     overflowY: 'scroll',
-                    backgroundColor: 'white'
+                    backgroundColor: '#eee'
                 }} />
             </Box>
         </Box>
