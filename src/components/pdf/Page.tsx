@@ -28,6 +28,13 @@ const useStyles = makeStyles(() => ({
         overflow: 'hidden',
         backgroundColor: 'rgba(0,0,0,0.1)',
         border: '2px #000 solid'
+    },
+    hidden: {
+        position: 'absolute',
+        overflow: 'hidden',
+        clip: 'rect(0 0 0 0)',
+        height: '1px; width: 1px',
+        margin: '-1px; padding: 0; border: 0'
     }
 }));
 
@@ -105,23 +112,30 @@ export default React.forwardRef(({ page, scale, width, hidden, isVisible, screen
 
         const mouseDownListener = (e: MouseEvent) => {
 
+            const top = e.pageY + pageRef.current.parentElement.scrollTop - pageRef.current.offsetTop - 10;
+            const left = e.pageX + pageRef.current.parentElement.scrollLeft - pageRef.current.offsetLeft - 10;
+
+            if (top < 0 || left < 0) return;
+
             // This hopefully never breaks, but who knows, no other stable way to solve this.
             setScreenshotRect(() => [
-                e.pageY + pageRef.current.parentElement.scrollTop - pageRef.current.offsetTop - 10,
-                e.pageX + pageRef.current.parentElement.scrollLeft - pageRef.current.offsetLeft - 10,
-                e.pageY + pageRef.current.parentElement.scrollTop - pageRef.current.offsetTop - 10,
-                e.pageX + pageRef.current.parentElement.scrollLeft - pageRef.current.offsetLeft - 10,
+                top, left, top, left
             ]);
 
             pageRef.current.addEventListener('mousemove', mouseMoveListener);
         };
 
         const mouseMoveListener = (e: MouseEvent) => {
+            const top = e.pageY + pageRef.current.parentElement.scrollTop - pageRef.current.offsetTop - 10;
+            const left = e.pageX + pageRef.current.parentElement.scrollLeft - pageRef.current.offsetLeft - 10;
+
+            if (top < 0 || left < 0) return;
+
             setScreenshotRect((cur) => [
                 cur[0],
                 cur[1],
-                e.pageY + pageRef.current.parentElement.scrollTop - pageRef.current.offsetTop - 10,
-                e.pageX + pageRef.current.parentElement.scrollLeft - pageRef.current.offsetLeft - 10,
+                top,
+                left,
             ]);
         };
 
@@ -129,6 +143,7 @@ export default React.forwardRef(({ page, scale, width, hidden, isVisible, screen
             pageRef.current.removeEventListener('mousemove', mouseMoveListener);
 
             // Way to get (and set) the current screenshot rect.
+            // setScreenshotRect works synchronously
             setScreenshotRect((cur) => {
                 hiddenCanvas.current.width = Math.abs(cur[3] - cur[1]);
                 hiddenCanvas.current.height = Math.abs(cur[2] - cur[0]);
@@ -147,10 +162,11 @@ export default React.forwardRef(({ page, scale, width, hidden, isVisible, screen
                     Math.abs(cur[2] - cur[0])
                 );
 
-                screenshotCallback(hiddenCanvas.current.toDataURL());
-
                 return [0, 0, 0, 0];
             });
+
+            // Callback with now drawn image
+            screenshotCallback(hiddenCanvas.current.toDataURL());
         };
 
         pageRef.current.addEventListener('mousedown', mouseDownListener);
@@ -178,7 +194,9 @@ export default React.forwardRef(({ page, scale, width, hidden, isVisible, screen
                 height: Math.abs(screenshotRect[2] - screenshotRect[0]),
                 width: Math.abs(screenshotRect[3] - screenshotRect[1])
             }}/>
-            <div hidden={screenshot} className="textLayer" ref={textLayerRef} />
+
+            {/* Hidden class in necessary to retain selection information correctly */}
+            <div hidden={screenshot} className={screenshot ? classes.hidden : 'textLayer'} ref={textLayerRef} />
         </div>
     );
 
