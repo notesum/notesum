@@ -1,4 +1,4 @@
-import { EditorState, genKey, ContentBlock } from 'draft-js';
+import { EditorState, genKey, ContentBlock, AtomicBlockUtils } from 'draft-js';
 
 
 // Add a new block to a given editor state with the text t and the style s
@@ -55,4 +55,19 @@ export function getSelectionParentElement() {
         parentEl = sel.createRange().parentElement();
     }
     return parentEl.parentNode;
+}
+
+// Inserts a given base64 image to the selection state
+export function insertImageUtil(eState, b64) {
+    const contentState = eState.getCurrentContent();
+    const contentStateWithEntity = contentState.createEntity(
+        "image",
+        "IMMUTABLE",
+        { src: b64 }
+    );
+    const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+    const newEditorState = EditorState.set(eState, {
+        currentContent: contentStateWithEntity
+    });
+    return AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, " ");
 }

@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { Editor, EditorState, ContentState, RichUtils } from 'draft-js';
+import Editor from "draft-js-plugins-editor";
+import createImagePlugin from "draft-js-image-plugin";
+import { EditorState, ContentState, RichUtils } from 'draft-js';
 import 'draft-js/dist/Draft.css';
 import { Button, ButtonGroup, Paper, Grid, Box, Dialog, AppBar, TextField, IconButton, Toolbar, Switch } from '@material-ui/core';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
@@ -15,7 +17,7 @@ import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import FullscreenIcon from '@material-ui/icons/Fullscreen';
 
 import './Editor.css';
-import { insertNewBlock, getSelectionParentElement } from './EditorUtils';
+import { insertNewBlock, getSelectionParentElement, insertImageUtil } from './EditorUtils';
 import saveState from './Saver';
 
 export default function TextEditor() {
@@ -30,6 +32,10 @@ export default function TextEditor() {
     const [saveToggle, setSaveToggle] = useState(false);
     const [highlightToggle, setHighlightToggle] = useState(true);
     let prevSelection = null;
+
+    // All the plugins for draft.js
+    const imagePlugin = createImagePlugin();
+    const plugins = [imagePlugin];
 
     const handleEditor = useCallback(() => {
         if (window.getSelection().toString().length && window.getSelection().toString() !== prevSelection && highlightToggle &&
@@ -66,15 +72,9 @@ export default function TextEditor() {
         setEditor(nextState);
     }
 
-    function testButton() {
-        const blocks = editorState.getCurrentContent().getBlockMap();
-        // console.log(blocks);
-        for (const block of blocks) {
-            const entry = block[1];
-            if (entry.getText().length > 0) {
-                console.log(entry.getType(), entry.getText());
-            }
-        }
+    // TODO use for the ss
+    function insertImage(img: string) {
+        return insertImageUtil(editorState, img);
     }
 
     function toggleStyle(event, newStyle) {
@@ -141,6 +141,7 @@ export default function TextEditor() {
                                     <Editor
                                         ref={editor}
                                         editorState={editorState}
+                                        plugins={plugins}
                                         onChange={setEditor}
                                     />
                                 </Paper>
@@ -163,6 +164,7 @@ export default function TextEditor() {
                             <Editor
                                 ref={editor}
                                 editorState={editorState}
+                                plugins={plugins}
                                 onChange={setEditor}
                             />
                         </Paper>
