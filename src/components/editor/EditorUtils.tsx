@@ -1,4 +1,7 @@
-import { EditorState, genKey, ContentBlock, AtomicBlockUtils } from 'draft-js';
+import { EditorState, genKey, ContentBlock, AtomicBlockUtils, convertToRaw } from 'draft-js';
+import { Dispatch } from 'react';
+import { useDispatch } from 'react-redux';
+import { SummaryActions } from '../redux/actions/summaryActions';
 
 
 // Add a new block to a given editor state with the text t and the style s
@@ -35,6 +38,11 @@ export function insertNewBlock(eState, t, s) {
         selectionBefore: selection,
         selectionAfter: selection,
     });
+
+    const contentDispatch = useDispatch<Dispatch<SummaryActions>>();
+    const content = convertToRaw(newContentState);
+    contentDispatch({type: "UPDATE_EDITOR_STATE", payload: content});
+
     return EditorState.push(eState, newContentState, 'insert-fragment');
 }
 
