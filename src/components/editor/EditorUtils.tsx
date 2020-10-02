@@ -1,5 +1,4 @@
 import { EditorState, genKey, ContentBlock, AtomicBlockUtils } from 'draft-js';
-import React from 'react';
 
 
 // Add a new block to a given editor state with the text t and the style s
