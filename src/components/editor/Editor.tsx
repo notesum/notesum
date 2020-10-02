@@ -59,12 +59,20 @@ export default function TextEditor({ img, screenshotCallback }: EditorProps) {
             (getSelectionParentElement().className === 'page' || getSelectionParentElement().className === 'textLayer')) {
             const exactText = window.getSelection().toString();
             prevSelection = exactText;
-            setEditorState(prevEditor => insertNewBlock(prevEditor, exactText, style));
+            setEditorState(() => {
+                const editor = insertNewBlock(editorState,exactText,style);
+                contentDispatch({type: "UPDATE_EDITOR_STATE", payload: convertToRaw(editor.getCurrentContent())});
+                return editor;
+            })
         }
     }, [style, highlightToggle]);
 
     useEffect(() => {
-        setEditorState(prevEditor => insertImageUtil(prevEditor, img));
+        setEditorState(() => {
+            const editor = insertImageUtil(editorState, img);
+            contentDispatch({type: "UPDATE_EDITOR_STATE", payload: convertToRaw(editor.getCurrentContent())});
+            return editor;
+        })
     }, [img]);
 
     useEffect(() => {

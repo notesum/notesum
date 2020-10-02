@@ -39,10 +39,6 @@ export function insertNewBlock(eState, t, s) {
         selectionAfter: selection,
     });
 
-    const contentDispatch = useDispatch<Dispatch<SummaryActions>>();
-    const content = convertToRaw(newContentState);
-    contentDispatch({type: "UPDATE_EDITOR_STATE", payload: content});
-
     return EditorState.push(eState, newContentState, 'insert-fragment');
 }
 
