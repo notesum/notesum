@@ -72,6 +72,5 @@ export function insertImageUtil(eState, b64) {
         currentContent: contentStateWithEntity
     });
     const editor2 = AtomicBlockUtils.insertAtomicBlock(editor1, entityKey, ' ');
-    console.log(entityKey);
     return insertNewBlock(editor2, '', 'unstyled');
 }

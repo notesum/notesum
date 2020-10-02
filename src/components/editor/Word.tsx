@@ -59,8 +59,6 @@ function addBlock(pars, entry, contentState, doc) {
         s.src = data;
         const image1 = Media.addImage(doc, data, s.width/1.3, s.height/1.3); // TODO please less hacky
         p = new docx.Paragraph(image1);
-    } else {
-        console.log('sadness');
     }
     pars.push(p);
     return pars;
