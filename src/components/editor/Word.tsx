@@ -21,7 +21,7 @@ function fillWithData(doc, contentState) {
     for (const block of blocks) {
         const entry = block[1]; // Every entry is sort of a paragraph
 
-        pars = addBlock(pars, entry, contentState);
+        pars = addBlock(pars, entry, contentState, doc);
     }
     doc.addSection({
         children: pars
@@ -30,7 +30,7 @@ function fillWithData(doc, contentState) {
 }
 
 // Makes a paragraph
-function addBlock(pars, entry, contentState) {
+function addBlock(pars, entry, contentState, doc) {
     // console.log(entry);
     let lines = [];
     lines = addLines(lines, entry);
@@ -54,9 +54,12 @@ function addBlock(pars, entry, contentState) {
             children: lines,
         });
     } else if (entry.getType() === 'atomic') {
-        console.log(entry.getKey());
-        // const image1 = Media.addImage(doc, example());
-        // p = new docx.Paragraph(image1)
+        // console.log(entry.getEntityAt(0)); // the right key from the entity map
+        const data = contentState.getEntityMap().get(entry.getEntityAt(0)).getData().src.toString();
+        const s = new Image();
+        s.src = data;
+        const image1 = Media.addImage(doc, data, s.width/1.3, s.height/1.3);
+        p = new docx.Paragraph(image1)
     } else {
         console.log('sadness');
     }

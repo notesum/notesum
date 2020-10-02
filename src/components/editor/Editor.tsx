@@ -37,6 +37,7 @@ export default function TextEditor({ img, screenshotCallback }: EditorProps) {
     const [fullscreenOpen, setFullscreenOpen] = useState(false);
     const [saveToggle, setSaveToggle] = useState(false);
     const [highlightToggle, setHighlightToggle] = useState(true);
+    const [images, setImages] = useState(new Map()); // TODO
     let prevSelection = null;
 
     // All the plugins for draft.js
@@ -54,7 +55,6 @@ export default function TextEditor({ img, screenshotCallback }: EditorProps) {
 
     useEffect(() => {
         setEditor(prevEditor => insertImageUtil(prevEditor, img));
-
     }, [img]);
 
 

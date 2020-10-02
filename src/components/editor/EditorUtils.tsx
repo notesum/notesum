@@ -62,9 +62,7 @@ export function getSelectionParentElement() {
 // Inserts a given base64 image to the selection state
 export function insertImageUtil(eState, b64) {
 
-    console.log(b64);
     const contentState = eState.getCurrentContent();
-    console.log(contentState.getBlockMap().size())
     const contentStateWithEntity = contentState.createEntity(
         'image',
         'IMMUTABLE',
