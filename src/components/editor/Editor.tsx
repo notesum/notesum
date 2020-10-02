@@ -64,7 +64,6 @@ export default function TextEditor({ img, screenshotCallback }: EditorProps) {
                 contentDispatch({type: "UPDATE_EDITOR_STATE", payload: convertToRaw(editor.getCurrentContent())});
                 return editor;
             })
-            // setEditorState(prevEditor => insertNewBlock(prevEditor, exactText, style));
         }
     }, [style, highlightToggle]);
 
@@ -74,7 +73,6 @@ export default function TextEditor({ img, screenshotCallback }: EditorProps) {
             contentDispatch({type: "UPDATE_EDITOR_STATE", payload: convertToRaw(editor.getCurrentContent())});
             return editor;
         })
-        // setEditorState(prevEditor => insertImageUtil(prevEditor, img));
     }, [img]);
 
     useEffect(() => {

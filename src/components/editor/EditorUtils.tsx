@@ -1,8 +1,4 @@
-import { EditorState, genKey, ContentBlock, AtomicBlockUtils, convertToRaw } from 'draft-js';
-import { Dispatch } from 'react';
-import { useDispatch } from 'react-redux';
-import { SummaryActions } from '../redux/actions/summaryActions';
-
+import { EditorState, genKey, ContentBlock, AtomicBlockUtils } from 'draft-js';
 
 // Add a new block to a given editor state with the text t and the style s
 export function insertNewBlock(eState, t, s) {
