@@ -65,15 +65,13 @@ export default function Pdf({ file, fitToWidth, hidden, screenshot, screenshotCa
     const classes = useStyles();
 
     const currentPage = useMemo(() => {
-        var p = 0;
         for (let i = 0; i < pages.length; i++) {
             if (i in visiblePages && visiblePages[i].visible) {
-                p = i;
-                break;
+                handleUpdateCurrentPage(i);
+                return i;
             }
         }
-        handleUpdateCurrentPage(p);
-        return p;
+        return 0;
     }, [visiblePages]);
 
     // Load document
@@ -81,7 +79,6 @@ export default function Pdf({ file, fitToWidth, hidden, screenshot, screenshotCa
         (async () => {
             const doc = await getDocument({ url: file }).promise;
             setDocument(doc);
-            scrollToPage(cp);
             setOutline(await doc.getOutline());
         })();
     }, []);
@@ -108,6 +105,7 @@ export default function Pdf({ file, fitToWidth, hidden, screenshot, screenshotCa
     // However doing it for each page individually seems unstable for some reason..
     useEffect(() => {
         if (pageRefs.length === 0) return;
+        scrollToPage(cp);
 
         const observer = new IntersectionObserver((entries) => {
             setVisiblePages((oldVisible) => {
