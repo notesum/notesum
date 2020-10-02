@@ -1,5 +1,6 @@
 import { EditorState, genKey, ContentBlock, AtomicBlockUtils } from 'draft-js';
 
+
 // Add a new block to a given editor state with the text t and the style s
 export function insertNewBlock(eState, t, s) {
     const selection = eState.getSelection();
@@ -34,7 +35,6 @@ export function insertNewBlock(eState, t, s) {
         selectionBefore: selection,
         selectionAfter: selection,
     });
-
     return EditorState.push(eState, newContentState, 'insert-fragment');
 }
 

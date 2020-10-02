@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useMemo, createRef, RefObject, Dispatch } from 'react';
+import React, { useEffect, useState, useRef, useMemo, createRef, RefObject } from 'react';
 import { GlobalWorkerOptions, getDocument, version } from 'pdfjs-dist';
 import { PDFDocumentProxy, PDFPageProxy } from 'pdfjs-dist/types/display/api';
 import 'pdfjs-dist/web/pdf_viewer.css';
@@ -8,9 +8,6 @@ import ZoomOutIcon from '@material-ui/icons/ZoomOut';
 
 import BookmarksMenu from './BookmarksMenu';
 import Page from './Page';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppState } from '../redux/reducers';
-import { PDFActions } from './../redux/actions/pdfActions';
 
 GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${version}/pdf.worker.min.js`;
 
@@ -42,13 +39,6 @@ const useStyles = makeStyles(() => ({
 }));
 
 export default function Pdf({ file, fitToWidth, hidden, screenshot, screenshotCallback }: PdfProps) {
-    //TODO: start rendering at cp
-    const cp = useSelector((state: AppState) => state.pdf.currentPage);
-    const cpDispatch = useDispatch<Dispatch<PDFActions>>();
-
-    const handleUpdateCurrentPage = (currentPage: number) => {
-        cpDispatch({type: 'UPDATE_CURRENT_PAGE', payload: currentPage});
-    }
 
     const [document, setDocument] = useState<PDFDocumentProxy>(null);
     const [pages, setPages] = useState<PDFPageProxy[]>([]);
@@ -67,7 +57,6 @@ export default function Pdf({ file, fitToWidth, hidden, screenshot, screenshotCa
     const currentPage = useMemo(() => {
         for (let i = 0; i < pages.length; i++) {
             if (i in visiblePages && visiblePages[i].visible) {
-                handleUpdateCurrentPage(i);
                 return i;
             }
         }
@@ -105,7 +94,6 @@ export default function Pdf({ file, fitToWidth, hidden, screenshot, screenshotCa
     // However doing it for each page individually seems unstable for some reason..
     useEffect(() => {
         if (pageRefs.length === 0) return;
-        scrollToPage(cp);
 
         const observer = new IntersectionObserver((entries) => {
             setVisiblePages((oldVisible) => {
