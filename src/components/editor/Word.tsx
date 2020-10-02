@@ -49,10 +49,12 @@ function addBlock(pars, entry) {
             bullet: { level: 0 }
         });
         // Regular text
-    } else {
+    } else if (entry.getType() === 'unstyled') {
         p = new docx.Paragraph({
             children: lines,
         });
+    } else {
+        console.log(entry.getData());
     }
     pars.push(p);
     return pars;
@@ -70,7 +72,7 @@ function addLines(lines, entry) {
 
 function download(doc, name) {
 
-    console.log('Downloading');
+    console.log(doc);
     docx.Packer.toBlob(doc).then(blob => {
         saveAs(blob, name + '.docx');
     });
@@ -83,4 +85,13 @@ function getBlockType(s) {
     } else if (s === 'header-three') {
         return docx.HeadingLevel.HEADING_3;
     }
+}
+
+function saveImageToFile(img, name) {
+    const fs = require('fs');
+    const bufferFrom = require('buffer-from')
+    // strip off the data: url prefix to get just the base64-encoded bytes
+    const data = img.replace(/^data:image\/\w+;base64,/, "");
+    const  buf = bufferFrom(data, 'base64');
+    fs.writeFile(name+'.png', buf);
 }
