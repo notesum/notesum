@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback, Dispatch } from 'react';
 import Editor from 'draft-js-plugins-editor';
 import createImagePlugin from 'draft-js-image-plugin';
-import { EditorState, ContentState, RichUtils } from 'draft-js';
+import { EditorState, RichUtils, convertFromRaw, convertToRaw } from 'draft-js';
 import 'draft-js/dist/Draft.css';
 import { Button, ButtonGroup, Paper, Grid, Box, Dialog, AppBar, TextField, IconButton, Toolbar, Switch, Tooltip } from '@material-ui/core';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
@@ -20,6 +20,9 @@ import CameraAltIcon from '@material-ui/icons/CameraAlt';
 import './Editor.css';
 import { insertNewBlock, getSelectionParentElement, insertImageUtil } from './EditorUtils';
 import saveState from './Saver';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppState } from '../redux/reducers';
+import { SummaryActions } from '../redux/actions/summaryActions';
 
 type EditorProps = {
     img: string
@@ -28,8 +31,16 @@ type EditorProps = {
 
 export default function TextEditor({ img, screenshotCallback }: EditorProps) {
 
+    const { content } = useSelector((state: AppState) => state.summary);
+    const contentDispatch = useDispatch<Dispatch<SummaryActions>>();
+    const [editorState, setEditorState] = useState(EditorState.createWithContent(convertFromRaw(content)));
 
-    const [editorState, setEditor] = useState(EditorState.createWithContent(ContentState.createFromText('')));
+    // Update editorstate both in state and in local storage
+    const setEditor = (editorState: EditorState) => {
+        const content = convertToRaw(editorState.getCurrentContent());
+        contentDispatch({type: "UPDATE_EDITOR_STATE", payload: content});
+        setEditorState(editorState);
+    };
 
     const [style, setStyle] = useState('unstyled');
     // File name in the editor
@@ -48,12 +59,20 @@ export default function TextEditor({ img, screenshotCallback }: EditorProps) {
             (getSelectionParentElement().className === 'page' || getSelectionParentElement().className === 'textLayer')) {
             const exactText = window.getSelection().toString();
             prevSelection = exactText;
-            setEditor(prevEditor => insertNewBlock(prevEditor, exactText, style));
+            setEditorState((prevState) => {
+                const editor = insertNewBlock(prevState,exactText,style);
+                contentDispatch({type: "UPDATE_EDITOR_STATE", payload: convertToRaw(editor.getCurrentContent())});
+                return editor;
+            })
         }
     }, [style, highlightToggle]);
 
     useEffect(() => {
-        setEditor(prevEditor => insertImageUtil(prevEditor, img));
+        setEditorState((prevState) => {
+            const editor = insertImageUtil(prevState, img);
+            contentDispatch({type: "UPDATE_EDITOR_STATE", payload: convertToRaw(editor.getCurrentContent())});
+            return editor;
+        })
     }, [img]);
 
     useEffect(() => {
