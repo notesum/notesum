@@ -54,7 +54,9 @@ export default function TextEditor({ img, screenshotCallback }: EditorProps) {
 
     useEffect(() => {
         setEditor(prevEditor => insertImageUtil(prevEditor, img));
+
     }, [img]);
+
 
     useEffect(() => {
         focusEditor();
@@ -93,7 +95,7 @@ export default function TextEditor({ img, screenshotCallback }: EditorProps) {
         <div>
             <Grid container wrap="wrap">
                 <AppBar color="transparent" position="static">
-                    <Toolbar variant="dense"  style={{ backgroundColor: '#fff' }}>
+                    <Toolbar variant="dense" style={{ backgroundColor: '#fff' }}>
                         <Box>
                             <Tooltip title="Highlight to Editor" placement="top">
                                 <Switch
