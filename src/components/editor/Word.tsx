@@ -1,4 +1,5 @@
 import * as docx from 'docx';
+import { Media } from 'docx';
 import { saveAs } from 'file-saver';
 
 
@@ -20,7 +21,7 @@ function fillWithData(doc, contentState) {
     for (const block of blocks) {
         const entry = block[1]; // Every entry is sort of a paragraph
 
-        pars = addBlock(pars, entry);
+        pars = addBlock(pars, entry, contentState, doc);
     }
     doc.addSection({
         children: pars
@@ -29,13 +30,11 @@ function fillWithData(doc, contentState) {
 }
 
 // Makes a paragraph
-function addBlock(pars, entry) {
-    // console.log(entry);
+function addBlock(pars, entry, contentState, doc) {
     let lines = [];
     lines = addLines(lines, entry);
 
     let p = null;
-    // TODO add bullet point block type
     // Headers
     if (entry.getType().substring(0, 6) === 'header') {
         p = new docx.Paragraph({
@@ -49,10 +48,17 @@ function addBlock(pars, entry) {
             bullet: { level: 0 }
         });
         // Regular text
-    } else {
+    } else if (entry.getType() === 'unstyled') {
         p = new docx.Paragraph({
             children: lines,
         });
+        // Images
+    } else if (entry.getType() === 'atomic') {
+        const data = contentState.getEntity(entry.getEntityAt(0)).getData().src.toString();
+        const s = new Image();
+        s.src = data;
+        const image1 = Media.addImage(doc, data, s.width/1.3, s.height/1.3); // TODO please less hacky
+        p = new docx.Paragraph(image1);
     }
     pars.push(p);
     return pars;
@@ -70,7 +76,6 @@ function addLines(lines, entry) {
 
 function download(doc, name) {
 
-    console.log('Downloading');
     docx.Packer.toBlob(doc).then(blob => {
         saveAs(blob, name + '.docx');
     });

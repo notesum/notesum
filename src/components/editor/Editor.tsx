@@ -31,6 +31,7 @@ type EditorProps = {
 
 export default function TextEditor({ img, screenshotCallback }: EditorProps) {
 
+
     const { content } = useSelector((state: AppState) => state.summary);
     const contentDispatch = useDispatch<Dispatch<SummaryActions>>();
     const [editorState, setEditorState] = useState(EditorState.createWithContent(convertFromRaw(content)));
@@ -41,7 +42,7 @@ export default function TextEditor({ img, screenshotCallback }: EditorProps) {
         contentDispatch({type: "UPDATE_EDITOR_STATE", payload: content});
         setEditorState(editorState);
     };
-
+  
     const [style, setStyle] = useState('unstyled');
     // File name in the editor
     const [name, setName] = useState('Unnamed');
@@ -74,6 +75,7 @@ export default function TextEditor({ img, screenshotCallback }: EditorProps) {
             return editor;
         })
     }, [img]);
+
 
     useEffect(() => {
         focusEditor();
@@ -112,7 +114,7 @@ export default function TextEditor({ img, screenshotCallback }: EditorProps) {
         <div>
             <Grid container wrap="wrap">
                 <AppBar color="transparent" position="static">
-                    <Toolbar variant="dense"  style={{ backgroundColor: '#fff' }}>
+                    <Toolbar variant="dense" style={{ backgroundColor: '#fff' }}>
                         <Box>
                             <Tooltip title="Highlight to Editor" placement="top">
                                 <Switch

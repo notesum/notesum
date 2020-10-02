@@ -2,6 +2,7 @@ import { EditorState, genKey, ContentBlock, AtomicBlockUtils } from 'draft-js';
 
 // Add a new block to a given editor state with the text t and the style s
 export function insertNewBlock(eState, t, s) {
+
     const selection = eState.getSelection();
     const contentState = eState.getCurrentContent();
     const currentBlock = contentState.getBlockForKey(selection.getEndKey());
@@ -59,6 +60,7 @@ export function getSelectionParentElement() {
 
 // Inserts a given base64 image to the selection state
 export function insertImageUtil(eState, b64) {
+
     const contentState = eState.getCurrentContent();
     const contentStateWithEntity = contentState.createEntity(
         'image',
