@@ -57,6 +57,7 @@
         "tslint-react": "^5.0.0"
     },
     "scripts": {
+        "clean": "rimraf dist",
         "lint": "tslint -c tslint.json -p tsconfig.json",
         "build": "yarn run clean && yarn run lint && yarn run build:parcel",
         "build:parcel": "parcel build public/index.html --public-url / --no-source-maps",
