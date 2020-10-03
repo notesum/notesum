@@ -85,7 +85,7 @@ export default function MainView() {
                 height: '100%',
                 backgroundColor: '#eee'
             }}>
-                <TextEditor screenshotCallback={setSS} img={image} />
+                <TextEditor screenshotCallback={setSS} img={image} dragging={dragging} />
             </Box>
         </Box>
     );

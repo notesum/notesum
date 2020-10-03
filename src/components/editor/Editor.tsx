@@ -28,9 +28,10 @@ import saveState from './Saver';
 type EditorProps = {
     img: string
     screenshotCallback: (b: boolean) => void
+    dragging: boolean
 };
 
-export default function TextEditor({ img, screenshotCallback }: EditorProps) {
+export default function TextEditor({ img, screenshotCallback, dragging }: EditorProps) {
 
 
     const { content } = useSelector((state: AppState) => state.summary);
@@ -39,7 +40,7 @@ export default function TextEditor({ img, screenshotCallback }: EditorProps) {
 
     // Update editorstate both in state and in local storage
     const setEditor = (newEditorState: EditorState) => {
-        contentDispatch({ type: 'UPDATE_EDITOR_STATE', payload: convertToRaw(editorState.getCurrentContent())});
+        contentDispatch({ type: 'UPDATE_EDITOR_STATE', payload: convertToRaw(editorState.getCurrentContent()) });
         setEditorState(newEditorState);
     };
 
@@ -61,8 +62,8 @@ export default function TextEditor({ img, screenshotCallback }: EditorProps) {
             const exactText = window.getSelection().toString();
             prevSelection = exactText;
             setEditorState((prevState) => {
-                const newEditor = insertNewBlock(prevState,exactText,style);
-                contentDispatch({ type: 'UPDATE_EDITOR_STATE', payload: convertToRaw(newEditor.getCurrentContent())});
+                const newEditor = insertNewBlock(prevState, exactText, style);
+                contentDispatch({ type: 'UPDATE_EDITOR_STATE', payload: convertToRaw(newEditor.getCurrentContent()) });
                 return newEditor;
             });
         }
@@ -71,7 +72,7 @@ export default function TextEditor({ img, screenshotCallback }: EditorProps) {
     useEffect(() => {
         setEditorState((prevState) => {
             const newEditor = insertImageUtil(prevState, img);
-            contentDispatch({ type: 'UPDATE_EDITOR_STATE', payload: convertToRaw(newEditor.getCurrentContent())});
+            contentDispatch({ type: 'UPDATE_EDITOR_STATE', payload: convertToRaw(newEditor.getCurrentContent()) });
             return newEditor;
         });
     }, [img]);
@@ -196,12 +197,14 @@ export default function TextEditor({ img, screenshotCallback }: EditorProps) {
                 <Grid item xs={12} >
                     <Box my={1} mx={2} >
                         <Paper onClick={focusEditor} elevation={4}>
-                            <Editor
-                                ref={editor}
-                                editorState={editorState}
-                                plugins={plugins}
-                                onChange={setEditor}
-                            />
+                            {!dragging &&
+                                <Editor
+                                    ref={editor}
+                                    editorState={editorState}
+                                    plugins={plugins}
+                                    onChange={setEditor}
+                                />
+                            }
                         </Paper>
                     </Box>
 
