@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback, Dispatch } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Editor from 'draft-js-plugins-editor';
 import createImagePlugin from 'draft-js-image-plugin';
 import { EditorState, RichUtils, convertFromRaw, convertToRaw } from 'draft-js';
@@ -17,12 +18,12 @@ import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
 
+import { AppState } from '../redux/reducers';
+import { SummaryActions } from '../redux/actions/summaryActions';
+
 import './Editor.css';
 import { insertNewBlock, getSelectionParentElement, insertImageUtil } from './EditorUtils';
 import saveState from './Saver';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppState } from '../redux/reducers';
-import { SummaryActions } from '../redux/actions/summaryActions';
 
 type EditorProps = {
     img: string
@@ -37,12 +38,11 @@ export default function TextEditor({ img, screenshotCallback }: EditorProps) {
     const [editorState, setEditorState] = useState(EditorState.createWithContent(convertFromRaw(content)));
 
     // Update editorstate both in state and in local storage
-    const setEditor = (editorState: EditorState) => {
-        const content = convertToRaw(editorState.getCurrentContent());
-        contentDispatch({type: "UPDATE_EDITOR_STATE", payload: content});
-        setEditorState(editorState);
+    const setEditor = (newEditorState: EditorState) => {
+        contentDispatch({ type: 'UPDATE_EDITOR_STATE', payload: convertToRaw(editorState.getCurrentContent())});
+        setEditorState(newEditorState);
     };
-  
+
     const [style, setStyle] = useState('unstyled');
     // File name in the editor
     const [name, setName] = useState('Unnamed');
@@ -61,19 +61,19 @@ export default function TextEditor({ img, screenshotCallback }: EditorProps) {
             const exactText = window.getSelection().toString();
             prevSelection = exactText;
             setEditorState((prevState) => {
-                const editor = insertNewBlock(prevState,exactText,style);
-                contentDispatch({type: "UPDATE_EDITOR_STATE", payload: convertToRaw(editor.getCurrentContent())});
-                return editor;
-            })
+                const newEditor = insertNewBlock(prevState,exactText,style);
+                contentDispatch({ type: 'UPDATE_EDITOR_STATE', payload: convertToRaw(newEditor.getCurrentContent())});
+                return newEditor;
+            });
         }
     }, [style, highlightToggle]);
 
     useEffect(() => {
         setEditorState((prevState) => {
-            const editor = insertImageUtil(prevState, img);
-            contentDispatch({type: "UPDATE_EDITOR_STATE", payload: convertToRaw(editor.getCurrentContent())});
-            return editor;
-        })
+            const newEditor = insertImageUtil(prevState, img);
+            contentDispatch({ type: 'UPDATE_EDITOR_STATE', payload: convertToRaw(newEditor.getCurrentContent())});
+            return newEditor;
+        });
     }, [img]);
 
 

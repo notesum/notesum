@@ -5,8 +5,7 @@ import { add } from '../../add.rs';
 
 import './App.css';
 
-function App() { 
- 
+function App() {
   return (
     <div className="App">
       <header className="App-header">

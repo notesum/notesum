@@ -1,13 +1,14 @@
-import { SummaryActions } from "../actions/summaryActions";
 import { ContentState, convertToRaw, RawDraftContentState } from 'draft-js';
+
+import { SummaryActions } from '../actions/summaryActions';
 
 type SummaryState = {
     content: RawDraftContentState;
-}
+};
 
 const initialState: SummaryState = {
     content: convertToRaw(ContentState.createFromText('')),
-}
+};
 
 const summaryReducer = ( state: SummaryState = initialState, action: SummaryActions) => {
     switch(action.type) {
@@ -20,6 +21,6 @@ const summaryReducer = ( state: SummaryState = initialState, action: SummaryActi
         default:
             return state;
     }
-}
+};
 
 export default summaryReducer;

@@ -8,7 +8,6 @@ declare module "*.pdf" {
     export default content;
 }
 
-
 declare module "*.rs" {
     export function add(a: number, b: number): number;
 }
