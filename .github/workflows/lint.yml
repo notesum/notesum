@@ -11,13 +11,14 @@ jobs:
       - name: Checkout codebase
         uses: actions/checkout@v2.3.3
 
-      - name: Install dependencies with Yarn
-        uses: borales/actions-yarn@v2.0.0
+      - name: Use Node.js
+        uses: actions/setup-node@v1
         with:
-          cmd: install
+          node-version: '12.x'
 
-      - name: Lint codebase
-        uses: borales/actions-yarn@v2.0.0
-        with:
-          cmd: lint
+      - name: Install dependencies
+        run: yarn
+
+      - name: Install dependencies
+        run: yarn lint
       
