@@ -3,5 +3,4 @@ export interface IUpdateCurrentPageAction {
     payload: number;
 }
 
-export type PDFActions =
-| IUpdateCurrentPageAction
+export type PDFActions = IUpdateCurrentPageAction;

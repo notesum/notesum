@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef, useMemo, createRef, RefObject, Dispatch } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { GlobalWorkerOptions, getDocument, version } from 'pdfjs-dist';
 import { PDFDocumentProxy, PDFPageProxy } from 'pdfjs-dist/types/display/api';
 import 'pdfjs-dist/web/pdf_viewer.css';
@@ -6,11 +7,11 @@ import { Paper, Box, AppBar, Toolbar, IconButton, makeStyles, InputBase } from '
 import ZoomInIcon from '@material-ui/icons/ZoomIn';
 import ZoomOutIcon from '@material-ui/icons/ZoomOut';
 
+import { AppState } from '../redux/reducers';
+import { PDFActions } from '../redux/actions/pdfActions';
+
 import BookmarksMenu from './BookmarksMenu';
 import Page from './Page';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppState } from '../redux/reducers';
-import { PDFActions } from './../redux/actions/pdfActions';
 
 GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${version}/pdf.worker.min.js`;
 
@@ -42,13 +43,13 @@ const useStyles = makeStyles(() => ({
 }));
 
 export default function Pdf({ file, fitToWidth, hidden, screenshot, screenshotCallback }: PdfProps) {
-    //TODO: start rendering at cp
+    // TODO: start rendering at cp
     const cp = useSelector((state: AppState) => state.pdf.currentPage);
     const cpDispatch = useDispatch<Dispatch<PDFActions>>();
 
-    const handleUpdateCurrentPage = (currentPage: number) => {
-        cpDispatch({type: 'UPDATE_CURRENT_PAGE', payload: currentPage});
-    }
+    const handleUpdateCurrentPage = (newCurrentPage: number) => {
+        cpDispatch({ type: 'UPDATE_CURRENT_PAGE', payload: newCurrentPage });
+    };
 
     const [document, setDocument] = useState<PDFDocumentProxy>(null);
     const [pages, setPages] = useState<PDFPageProxy[]>([]);
