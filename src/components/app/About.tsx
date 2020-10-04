@@ -12,7 +12,7 @@ export default function About() {
         <div style={{overflow: 'hidden'}}>
             <Box my={7}>
                 <Container>
-                    <Typography component="h1" variant="h4" align="center" color="textPrimary" gutterBottom>
+                    <Typography component="h1" variant="h4" align="center" color="textPrimary" style={{fontWeight: 'bold'}} gutterBottom>
                         How it will save your time and organize your material
                 </Typography>
                     <Typography variant="h6" align="center" color="textSecondary" paragraph>
@@ -36,7 +36,7 @@ export default function About() {
                     </Grid>
             </Box>
         </div>
-    )
+    );
 
 
 
