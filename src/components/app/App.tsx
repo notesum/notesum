@@ -28,8 +28,8 @@ const useStyles = makeStyles({
 function App() {
     const classes = useStyles();
     return (
-        <>
-            <Grid container spacing={7} justify="center" direction="column" alignContent="center" alignItems="center">
+        <div style={{overflow: 'hidden'}}>
+            <Grid container spacing={7} justify="center" direction="column" alignContent="center" alignItems="center" >
                 <Grid item>
                     <Box my={7}>
                         <Typography variant="h3" align="center" color="textPrimary" style={{ fontWeight: 'bold' }}>
@@ -42,7 +42,7 @@ function App() {
                 </Grid>
                 <Grid item>
                     <Grid container spacing={7} justify="center" alignContent="center" alignItems="center">
-                        <Grid item xs={2} />
+                        <Grid item xs={1} />
                         <Grid item xs={4} spacing={2}>
                             <Card elevation={3} className={classes.Card}>
                                 <CardContent className={classes.Content}>
@@ -66,14 +66,14 @@ function App() {
                                 />
                             </Card>
                         </Grid>
-                        <Grid item xs={2} />
+                        <Grid item xs={1} />
 
                     </Grid>
 
                 </Grid>
                 <Grid item>
                     <Grid container spacing={7} justify="center" alignContent="center" alignItems="center">
-                        <Grid item xs={2} />
+                        <Grid item xs={1} />
                         <Grid item xs={4}>
                             <Card className={classes.Card}>
                                 <CardMedia
@@ -99,7 +99,7 @@ function App() {
 
                             </Card>
                         </Grid>
-                        <Grid item xs={2} />
+                        <Grid item xs={1} />
                     </Grid>
 
                 </Grid>
@@ -110,7 +110,7 @@ function App() {
                 </Grid>
                 <Grid item>
                     <Grid container spacing={7} justify="center" alignContent="center" alignItems="center">
-                        <Grid item xs={2} />
+                        <Grid item xs={1} />
                         <Grid item xs={4} spacing={2}>
                             <Card elevation={3} className={classes.Card}>
                                 <CardContent className={classes.Content}>
@@ -139,11 +139,11 @@ function App() {
                                     src="https://maps.google.com/maps?q=incubase%20twente&t=&z=13&ie=UTF8&iwloc=&output=embed" />
                             </Card>
                         </Grid>
-                        <Grid item xs={2} />
+                        <Grid item xs={1} />
                     </Grid>
                 </Grid>
             </Grid>
-        </>
+        </div>
     );
 }
 
