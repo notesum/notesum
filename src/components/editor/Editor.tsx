@@ -81,8 +81,17 @@ export default function TextEditor({ img, screenshotCallback, dragging }: Editor
         if (e.keyCode === 49 && KeyBindingUtil.hasCommandModifier(e)) { // Cmd+1
             return 'header-one';
         }
+        if (e.keyCode === 70 && KeyBindingUtil.hasCommandModifier(e)) { // Cmd+f
+            return 'full';
+        }
         if (e.keyCode === 50 && KeyBindingUtil.hasCommandModifier(e)) { // Cmd+2
             return 'header-three';
+        }
+        if (e.keyCode === 51 && KeyBindingUtil.hasCommandModifier(e)) { // Cmd+3
+            return 'unstyled';
+        }
+        if (e.keyCode === 52 && KeyBindingUtil.hasCommandModifier(e)) { // Cmd+4
+            return 'unordered-list-item';
         }
         if (e.keyCode === 53 && KeyBindingUtil.hasCommandModifier(e)) { // Cmd+5
             return 'img';
@@ -107,12 +116,24 @@ export default function TextEditor({ img, screenshotCallback, dragging }: Editor
             setStyle('header-two');
             return 'handled';
         }
+        if (command === 'full') {
+            setFullscreenOpen(true);
+            return 'handled';
+        }
         if (command === 'save') {
             setSaveToggle(true);
             return 'handled';
         }
         if (command === 'header-three') {
             setStyle('header-three');
+            return 'handled';
+        }
+        if (command === 'unstyled') {
+            setStyle('unstyled');
+            return 'handled';
+        }
+        if (command === 'unordered-list-item') {
+            setStyle('unordered-list-item');
             return 'handled';
         }
         if (command === 'img') {
