@@ -78,8 +78,26 @@ export default function TextEditor({ img, screenshotCallback, dragging }: Editor
     }, [img]);
 
     function myKeyBindingFn(e) {
-        if (e.keyCode === 49 && KeyBindingUtil.hasCommandModifier(e)) { //Cmd+1
+        if (e.keyCode === 49 && KeyBindingUtil.hasCommandModifier(e)) { // Cmd+1
             return 'header-one';
+        }
+        if (e.keyCode === 50 && KeyBindingUtil.hasCommandModifier(e)) { // Cmd+2
+            return 'header-three';
+        }
+        if (e.keyCode === 53 && KeyBindingUtil.hasCommandModifier(e)) { // Cmd+5
+            return 'img';
+        }
+        if (e.keyCode === 83 && KeyBindingUtil.hasCommandModifier(e)) { // Cmd+5
+            return 'save';
+        }
+        if (e.keyCode === 66 && KeyBindingUtil.hasCommandModifier(e)) { // Cmd+b
+            return 'bold';
+        }
+        if (e.keyCode === 73 && KeyBindingUtil.hasCommandModifier(e)) { // Cmd+i
+            return 'italic';
+        }
+        if (e.keyCode === 85 && KeyBindingUtil.hasCommandModifier(e)) { // Cmd+u
+            return 'underline';
         }
         return getDefaultKeyBinding(e);
     }
@@ -87,6 +105,30 @@ export default function TextEditor({ img, screenshotCallback, dragging }: Editor
     function handleKey(command) {
         if (command === 'header-one') {
             setStyle('header-two');
+            return 'handled';
+        }
+        if (command === 'save') {
+            setSaveToggle(true);
+            return 'handled';
+        }
+        if (command === 'header-three') {
+            setStyle('header-three');
+            return 'handled';
+        }
+        if (command === 'img') {
+            setStyle('img');
+            return 'handled';
+        }
+        if (command === 'bold') {
+            formatText('BOLD');
+            return 'handled';
+        }
+        if (command === 'underline') {
+            formatText('UNDERLINE');
+            return 'handled';
+        }
+        if (command === 'italic') {
+            formatText('ITALIC');
             return 'handled';
         }
         return 'not-handled';
@@ -122,7 +164,6 @@ export default function TextEditor({ img, screenshotCallback, dragging }: Editor
         event.preventDefault();
         screenshotCallback(newStyle === 'img');
         setStyle(newStyle);
-
     }
 
     return (
