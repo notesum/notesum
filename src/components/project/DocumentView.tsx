@@ -1,24 +1,26 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { Box } from '@material-ui/core';
+import { DocumentInitParameters, PDFDataRangeTransport, TypedArray } from 'pdfjs-dist/types/display/api';
+import { EditorState } from 'draft-js';
 
 import Pdf from '../pdf/Pdf';
 import TextEditor from '../editor/Editor';
-import file from '../../resources/sample3.pdf';
 
-import './MainView.css';
+import './DocumentView.css';
 
-export default function MainView() {
+type DocumentViewProps = {
+    pdf: string | TypedArray | DocumentInitParameters | PDFDataRangeTransport
+    editorState: EditorState,
+    updateEditorState: (newState: EditorState) => void
+};
+
+export default function DocumentView({ pdf }: DocumentViewProps) {
 
     const [screenshot, setScreenshot] = useState(false);
     const [image, setImage] = useState('');
 
-
-    const setCallback = (img) => {
+    const setCallback = (img: string) => {
         setImage(img);
-    };
-
-    const setSS = (b) => {
-        setScreenshot(b);
     };
 
     const [pdfPercentage, setPdfPercentage] = React.useState(50);
@@ -72,7 +74,7 @@ export default function MainView() {
                 overflow: 'auto',
                 height: '100%'
             }}>
-                <Pdf file={file} screenshot={screenshot} screenshotCallback={setCallback} hidden={dragging} fitToWidth={true} />
+                <Pdf file={pdf} screenshot={screenshot} screenshotCallback={setCallback} hidden={dragging} fitToWidth={true} />
             </Box>
 
             <div
@@ -83,9 +85,8 @@ export default function MainView() {
                 width: `${99 - pdfPercentage}%`,
                 overflow: 'hidden',
                 height: '100%',
-                backgroundColor: '#eee'
             }}>
-                <TextEditor screenshotCallback={setSS} img={image} dragging={dragging} />
+                <TextEditor screenshotCallback={setScreenshot} img={image} dragging={dragging} />
             </Box>
         </Box>
     );

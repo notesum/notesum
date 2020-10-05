@@ -1,29 +1,24 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { IconButton, Box, Button, AppBar, Toolbar } from '@material-ui/core';
-import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
-import HomeIcon from '@material-ui/icons/Home';
-import InfoIcon from '@material-ui/icons/Info';
-import 'regenerator-runtime/runtime';
+import { Box } from '@material-ui/core';
+// import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
+// import HomeIcon from '@material-ui/icons/Home';
+// import InfoIcon from '@material-ui/icons/Info';
 
 
 import App from './app/App';
 import About from './app/About';
-import MainView from './app/MainView';
 import Project from './project/Project';
 
 export default function Root() {
     return (
         <BrowserRouter>
             <Box flexDirection="column" display="flex" height="100%" >
-                <AppBar position="static">
-                    <Toolbar variant="dense">
-                        <IconButton href="/"><HomeIcon style={{ color: '#fff' }} /></IconButton >
-                        <IconButton href="/about"><InfoIcon style={{ color: '#fff' }} /></IconButton>
-                        <IconButton href="/pdf"><PictureAsPdfIcon style={{ color: '#fff' }} /></IconButton>
-                        <Button style={{color: 'white'}}>Feedback</Button>
-                    </Toolbar>
-                </AppBar>
+                {/* <Box m={0} bgcolor="primary.main">
+                    <IconButton href="/"><HomeIcon style={{color: '#fff'}} fontSize="small"/></IconButton >
+                    <IconButton href="/about"><InfoIcon style={{color: '#fff'}} fontSize="small"/></IconButton>
+                    <IconButton href="/project"><PictureAsPdfIcon style={{color: '#fff'}} fontSize="small"/></IconButton>
+                </Box> */}
 
                 {/* This sizes the main content area to fill up the remaining space */}
                 <Box flexGrow={1} style={{
@@ -35,9 +30,6 @@ export default function Root() {
                         </Route>
                         <Route path="/about">
                             <About />
-                        </Route>
-                        <Route path="/pdf">
-                            <MainView />
                         </Route>
 
                         <Route exact path="/project">
