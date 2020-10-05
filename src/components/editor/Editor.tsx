@@ -264,6 +264,8 @@ export default function TextEditor({ img, screenshotCallback, dragging }: Editor
                                         editorState={editorState}
                                         plugins={plugins}
                                         onChange={setEditor}
+                                        handleKeyCommand={handleKey}
+                                        keyBindingFn={hotKey}
                                     />
                                 </Paper>
                             </Dialog>
