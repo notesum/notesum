@@ -5,4 +5,5 @@ export interface IUpdateEditorAction {
     payload: RawDraftContentState;
 }
 
-export type SummaryActions = IUpdateEditorAction;
+export type SummaryActions = 
+| IUpdateEditorAction;

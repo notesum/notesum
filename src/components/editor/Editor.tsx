@@ -18,8 +18,8 @@ import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
 
-import { AppState } from '../redux/reducers';
-import { SummaryActions } from '../redux/actions/summaryActions';
+import { AppState } from './../../redux/reducers';
+import { SummaryActions } from './../../redux/actions/summaryActions';
 
 import './Editor.css';
 import { insertNewBlock, getSelectionParentElement, insertImageUtil } from './EditorUtils';

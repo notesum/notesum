@@ -10,8 +10,9 @@ import 'regenerator-runtime/runtime';
 import App from './app/App';
 import About from './app/About';
 import MainView from './app/MainView';
-import Login from './login/Login';
-import SignUp from './login/SignUp';
+import Login from './auth/Login';
+import SignUp from './auth/SignUp';
+import Test from './Test';
 
 
 export default function Root() {
@@ -44,6 +45,9 @@ export default function Root() {
                         </Route>
                         <Route path="/signup">
                             <SignUp />
+                        </Route>
+                        <Route path="/test">
+                            <Test />
                         </Route>
                     </Switch>
                 </Box>

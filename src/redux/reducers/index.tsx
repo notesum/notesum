@@ -1,11 +1,12 @@
 import { combineReducers } from 'redux';
-
+import userReducer from '../User/reducer';
 import pdfReducer from './pdfReducer';
 import summaryReducer from './summaryReducer';
 
 const rootReducer = combineReducers({
     summary: summaryReducer,
     pdf: pdfReducer,
+    user: userReducer,
 });
 
 export type AppState = ReturnType<typeof rootReducer>;
