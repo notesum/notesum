@@ -4,6 +4,7 @@ import { IconButton, Box } from '@material-ui/core';
 import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 import HomeIcon from '@material-ui/icons/Home';
 import InfoIcon from '@material-ui/icons/Info';
+import 'regenerator-runtime/runtime';
 
 
 import App from './app/App';
