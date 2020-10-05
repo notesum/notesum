@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { IconButton, Box } from '@material-ui/core';
+import { IconButton, Box, Button } from '@material-ui/core';
 import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 import HomeIcon from '@material-ui/icons/Home';
 import InfoIcon from '@material-ui/icons/Info';
@@ -10,6 +10,8 @@ import 'regenerator-runtime/runtime';
 import App from './app/App';
 import About from './app/About';
 import MainView from './app/MainView';
+import Login from './login/Login';
+import SignUp from './login/SignUp';
 
 
 export default function Root() {
@@ -20,6 +22,7 @@ export default function Root() {
                     <IconButton href="/"><HomeIcon style={{color: '#fff'}} fontSize="small"/></IconButton >
                     <IconButton href="/about"><InfoIcon style={{color: '#fff'}} fontSize="small"/></IconButton>
                     <IconButton href="/pdf"><PictureAsPdfIcon style={{color: '#fff'}} fontSize="small"/></IconButton>
+                    <Button href="/login">Login</Button>
                 </Box>
 
                 {/* This sizes the main content area to fill up the remaining space */}
@@ -35,6 +38,12 @@ export default function Root() {
                         </Route>
                         <Route path="/pdf">
                             <MainView />
+                        </Route>
+                        <Route path="/login">
+                            <Login />
+                        </Route>
+                        <Route path="/signup">
+                            <SignUp />
                         </Route>
                     </Switch>
                 </Box>
