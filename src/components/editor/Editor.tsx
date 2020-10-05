@@ -289,21 +289,6 @@ export default function TextEditor({ img, screenshotCallback, dragging }: Editor
                         </Paper>
                     </Box>
                 </Grid>
-                <Box flexGrow={1} style={{
-                    minHeight: '0',
-                }}>
-                    {/* <Box my={1} mx={2} >
-                        <Paper onClick={focusEditor} elevation={4}> */}
-                            <Editor
-                                ref={editor}
-                                editorState={editorState}
-                                plugins={plugins}
-                                onChange={setEditor}
-                            />
-                        {/* </Paper>
-                    </Box> */}
-
-                </Box>
             </Grid>
     );
 }

@@ -10,18 +10,28 @@ export default function EmptyProject({ addFile }: { addFile: (name: string, file
         e.preventDefault();
 
         (async () => {
+            const newFiles: { name: string, data: Int8Array }[] = [];
             for (let i = 0; i < e.dataTransfer.files.length; i++) {
-                addFile(e.dataTransfer.files[i].name, new Int8Array(await e.dataTransfer.files[i].arrayBuffer()));
+                newFiles.push({ name: e.dataTransfer.files[i].name, data: new Int8Array(await e.dataTransfer.files[i].arrayBuffer()) });
             }
+
+            newFiles.forEach((file) => {
+                addFile(file.name, file.data);
+            });
         })();
 
     };
 
     const inputEvent = () => {
         (async () => {
+            const newFiles: { name: string, data: Int8Array }[] = [];
             for (let i = 0; i < fileInputRef.current.files.length; i++) {
-                addFile(fileInputRef.current.files[i].name, new Int8Array(await fileInputRef.current.files[i].arrayBuffer()));
+                newFiles.push({ name: fileInputRef.current.files[i].name, data: new Int8Array(await fileInputRef.current.files[i].arrayBuffer())});
             }
+
+            newFiles.forEach((file) => {
+                addFile(file.name, file.data);
+            });
         })();
     };
 

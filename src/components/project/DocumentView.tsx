@@ -1,7 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { Box } from '@material-ui/core';
 import { DocumentInitParameters, PDFDataRangeTransport, TypedArray } from 'pdfjs-dist/types/display/api';
-import { EditorState } from 'draft-js';
 
 import Pdf from '../pdf/Pdf';
 import TextEditor from '../editor/Editor';
@@ -10,11 +9,10 @@ import './DocumentView.css';
 
 type DocumentViewProps = {
     pdf: string | TypedArray | DocumentInitParameters | PDFDataRangeTransport
-    editorState: EditorState,
-    updateEditorState: (newState: EditorState) => void
+    documentId: string
 };
 
-export default function DocumentView({ pdf }: DocumentViewProps) {
+export default function DocumentView({ pdf, documentId }: DocumentViewProps) {
 
     const [screenshot, setScreenshot] = useState(false);
     const [image, setImage] = useState('');
@@ -74,7 +72,7 @@ export default function DocumentView({ pdf }: DocumentViewProps) {
                 overflow: 'auto',
                 height: '100%'
             }}>
-                <Pdf file={pdf} screenshot={screenshot} screenshotCallback={setCallback} hidden={dragging} fitToWidth={true} />
+                <Pdf id={documentId} file={pdf} screenshot={screenshot} screenshotCallback={setCallback} hidden={dragging} fitToWidth={true} />
             </Box>
 
             <div
@@ -86,7 +84,7 @@ export default function DocumentView({ pdf }: DocumentViewProps) {
                 overflow: 'hidden',
                 height: '100%',
             }}>
-                <TextEditor screenshotCallback={setScreenshot} img={image} dragging={dragging} />
+                <TextEditor documentId={documentId} screenshotCallback={setScreenshot} img={image} dragging={dragging} />
             </Box>
         </Box>
     );
