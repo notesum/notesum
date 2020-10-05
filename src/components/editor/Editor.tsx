@@ -108,6 +108,7 @@ export default function TextEditor({ img, screenshotCallback, dragging }: Editor
         if (e.keyCode === 85 && KeyBindingUtil.hasCommandModifier(e)) { // Cmd+u
             return 'underline';
         }
+        // adds default pre-made draft.js hotkeys
         return getDefaultKeyBinding(e);
     }
 
@@ -138,6 +139,7 @@ export default function TextEditor({ img, screenshotCallback, dragging }: Editor
         }
         if (command === 'img') {
             setStyle('img');
+            screenshotCallback(true);
             return 'handled';
         }
         if (command === 'bold') {
@@ -146,11 +148,9 @@ export default function TextEditor({ img, screenshotCallback, dragging }: Editor
         }
         if (command === 'underline') {
             formatText('UNDERLINE');
-            return 'handled';
         }
         if (command === 'italic') {
             formatText('ITALIC');
-            return 'handled';
         }
         return 'not-handled';
     }
