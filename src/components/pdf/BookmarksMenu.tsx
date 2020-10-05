@@ -19,7 +19,7 @@ export default function BookmarksMenu({ outline, onNavigate }: BookmarkMenuProps
     return (
         <>
             <IconButton ref={anchor} aria-haspopup="true" onClick={() => setIsOpen(true)}>
-                <BookmarkBorderIcon style={{ color: 'white' }} />
+                <BookmarkBorderIcon />
             </IconButton>
             <Menu
                 anchorEl={anchor.current}

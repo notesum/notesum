@@ -3,7 +3,7 @@ import { Box } from '@material-ui/core';
 
 import Pdf from '../pdf/Pdf';
 import TextEditor from '../editor/Editor';
-import file from '../../resources/sample2.pdf';
+import file from '../../resources/sample3.pdf';
 
 import './MainView.css';
 
@@ -85,7 +85,7 @@ export default function MainView() {
                 height: '100%',
                 backgroundColor: '#eee'
             }}>
-                <TextEditor screenshotCallback={setSS} img={image} />
+                <TextEditor screenshotCallback={setSS} img={image} dragging={dragging} />
             </Box>
         </Box>
     );

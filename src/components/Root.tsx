@@ -5,11 +5,10 @@ import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 import HomeIcon from '@material-ui/icons/Home';
 import InfoIcon from '@material-ui/icons/Info';
 
-import designProp from '../resources/designProp.pdf';
 
 import App from './app/App';
+import About from './app/About';
 import MainView from './app/MainView';
-import Pdf from './pdf/Pdf';
 
 
 export default function Root() {
@@ -31,11 +30,7 @@ export default function Root() {
                             <App />
                         </Route>
                         <Route path="/about">
-                            <Box height="100%">
-                                <Box flexGrow={1} style={{ overflow: 'auto', height: '100%' }}>
-                                    <Pdf file={designProp} hidden={false} fitToWidth={false} />
-                                </Box>
-                            </Box>
+                            <About />
                         </Route>
                         <Route path="/pdf">
                             <MainView />
