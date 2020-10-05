@@ -1,14 +1,12 @@
-import { UserActionTypes } from './types';
+import { UserActionTypes, UserState } from './types';
 import { ActionCreator, Action, Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
-import { AppState } from './../reducers';
-
 
 export type AppThunk = ActionCreator<
-    ThunkAction<void, AppState, null, Action<string>>
+    ThunkAction<void, UserState, null, Action<string>>
 >;
 
-export const fetchRequest: AppThunk = () => {
+export const fetchRequest = () => {
     return (dispatch: Dispatch) => {
         console.log("Hey world");
         return fetch('http://localhost:8080/api/test')

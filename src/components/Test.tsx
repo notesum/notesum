@@ -2,8 +2,7 @@ import React, { Dispatch, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchRequest } from './../redux/User/actions';
 import { AppState } from './../redux/reducers';
-import logo from './../resources/logo.svg';
-import { UserActionTypes } from 'src/redux/User/types';
+import { UserActionTypes } from './../redux/User/types';
 
 function Test() {
 
@@ -18,7 +17,7 @@ function Test() {
 
   return (
     <div className="App">
-      <header className="App-header">
+      <header className="App-header">   
         {/* <img src={logo} className="App-logo" alt="logo" /> */}
         <p>
             {data[0]}
