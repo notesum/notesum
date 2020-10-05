@@ -4,15 +4,14 @@ import BackupIcon from '@material-ui/icons/Backup';
 
 import './EmptyProject.css';
 
-export default function EmptyProject({ addFile }: { addFile: (file: Int8Array) => void }) {
+export default function EmptyProject({ addFile }: { addFile: (name: string, file: Int8Array) => void }) {
 
     const dragEvent = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
 
         (async () => {
             for (let i = 0; i < e.dataTransfer.files.length; i++) {
-                addFile(new Int8Array(await e.dataTransfer.files[i].arrayBuffer()));
-                return;
+                addFile(e.dataTransfer.files[i].name, new Int8Array(await e.dataTransfer.files[i].arrayBuffer()));
             }
         })();
 
@@ -21,8 +20,7 @@ export default function EmptyProject({ addFile }: { addFile: (file: Int8Array) =
     const inputEvent = () => {
         (async () => {
             for (let i = 0; i < fileInputRef.current.files.length; i++) {
-                addFile(new Int8Array(await fileInputRef.current.files[i].arrayBuffer()));
-                return;
+                addFile(fileInputRef.current.files[i].name, new Int8Array(await fileInputRef.current.files[i].arrayBuffer()));
             }
         })();
     };
