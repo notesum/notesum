@@ -16,6 +16,7 @@ import BookmarksMenu from './BookmarksMenu';
 GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${version}/pdf.worker.min.js`;
 
 type PdfProps = {
+    id?: string | number,
     file: string | TypedArray | DocumentInitParameters | PDFDataRangeTransport,
     hidden?: boolean,
     fitToWidth?: boolean,
@@ -42,7 +43,7 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-export default function Pdf({ file, fitToWidth, hidden, screenshot, screenshotCallback }: PdfProps) {
+export default function Pdf({ id, file, fitToWidth, hidden, screenshot, screenshotCallback }: PdfProps) {
     // TODO: start rendering at cp
     const cp = useSelector((state: AppState) => state.pdf.currentPage);
     const cpDispatch = useDispatch<Dispatch<PDFActionTypes>>();
@@ -89,7 +90,7 @@ export default function Pdf({ file, fitToWidth, hidden, screenshot, screenshotCa
             setDocument(doc);
             setOutline(await doc.getOutline());
         })();
-    }, []);
+    }, [id]);
 
     useEffect(() => {
         scrollToPage(currentPage);
@@ -129,7 +130,7 @@ export default function Pdf({ file, fitToWidth, hidden, screenshot, screenshotCa
             observer.observe(ref.current);
         });
 
-        return observer.disconnect;
+        return () => observer.disconnect();
     }, [pageRefs]);
 
     const onNavigate = async (loc: [{ num: number, gen: number }] | string) => {
@@ -198,8 +199,8 @@ export default function Pdf({ file, fitToWidth, hidden, screenshot, screenshotCa
                     overflow: 'auto',
                     overflowY: 'scroll'
                 }}>
-                    {pages.map((page, id) => {
-                        return (<Page ref={pageRefs[id]} isVisible={id in visiblePages && visiblePages[id].visible} hidden={hidden} key={id}
+                    {pages.map((page, key) => {
+                        return (<Page ref={pageRefs[key]} isVisible={key in visiblePages && visiblePages[key].visible} hidden={hidden} key={key}
                             scale={fitToWidth ? null : scale} width={fitToWidth ? mainView.current.clientWidth - 18 : null} page={page}
                             screenshot={screenshot} screenshotCallback={screenshotCallback} />);
                     })}
