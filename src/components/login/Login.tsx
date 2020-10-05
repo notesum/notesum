@@ -40,11 +40,15 @@ export default function Login() {
                     </div>
                 </form>
             </Grid>
+            <Grid item style={{ marginTop: '10px' }}>
+                <Button variant="contained" color="primary">Log In</Button>
+
+            </Grid>
             <Grid item style={{ marginTop: '30px' }}>
                 <Typography variant="h6">Don't have an acount?</Typography>
             </Grid>
             <Grid item style={{ marginTop: '10px' }}>
-                <Button href='/signup' variant="contained" color="primary">Sign Up</Button>
+                <Button href="/signup" variant="contained" color="primary">Sign Up</Button>
 
             </Grid>
         </Grid >

@@ -44,7 +44,6 @@ export default function SignUp() {
                     <div>
                         <TextField label="Password Repeat" />
                     </div>
-                    
                 </form>
             </Grid>
             <Grid item style={{marginTop: '10px'}}>
