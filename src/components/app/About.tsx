@@ -9,7 +9,7 @@ import example from '../../resources/example.png';
 export default function About() {
 
     return (
-        <div style={{overflow: 'hidden'}}>
+        <div style={{overflow: 'hidden', marginBottom: '10px'}}>
             <Box my={7}>
                 <Container>
                     <Typography component="h1" variant="h4" align="center" color="textPrimary" style={{fontWeight: 'bold'}} gutterBottom>

@@ -108,7 +108,7 @@ function App() {
                         Contact
                     </Typography>
                 </Grid>
-                <Grid item>
+                <Grid item style={{marginBottom: '40px'}}>
                     <Grid container spacing={7} justify="center" alignContent="center" alignItems="center">
                         <Grid item xs={1} />
                         <Grid item xs={4} spacing={2}>
