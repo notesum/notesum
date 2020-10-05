@@ -77,7 +77,7 @@ export default function TextEditor({ img, screenshotCallback, dragging }: Editor
         });
     }, [img]);
 
-    function myKeyBindingFn(e) {
+    function hotKey(e) {
         if (e.keyCode === 49 && KeyBindingUtil.hasCommandModifier(e)) { // Cmd+1
             return 'header-one';
         }
@@ -96,7 +96,7 @@ export default function TextEditor({ img, screenshotCallback, dragging }: Editor
         if (e.keyCode === 53 && KeyBindingUtil.hasCommandModifier(e)) { // Cmd+5
             return 'img';
         }
-        if (e.keyCode === 83 && KeyBindingUtil.hasCommandModifier(e)) { // Cmd+5
+        if (e.keyCode === 83 && KeyBindingUtil.hasCommandModifier(e)) { // Cmd+s
             return 'save';
         }
         if (e.keyCode === 66 && KeyBindingUtil.hasCommandModifier(e)) { // Cmd+b
@@ -280,7 +280,7 @@ export default function TextEditor({ img, screenshotCallback, dragging }: Editor
                                     plugins={plugins}
                                     onChange={setEditor}
                                     handleKeyCommand={handleKey}
-                                    keyBindingFn={myKeyBindingFn}
+                                    keyBindingFn={hotKey}
                                 />
                             }
                         </Paper>

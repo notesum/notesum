@@ -100,7 +100,7 @@ function App() {
                             </Card>
                         </Grid>
                         <Grid item xs={1} />
-                    </Grid>q
+                    </Grid>
 
                 </Grid>
                 <Grid item>
