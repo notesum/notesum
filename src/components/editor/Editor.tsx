@@ -113,6 +113,7 @@ export default function TextEditor({ img, screenshotCallback, dragging }: Editor
     }
 
     function handleKey(command) {
+        screenshotCallback(false);
         if (command === 'header-one') {
             setStyle('header-two');
             return 'handled';
