@@ -10,9 +10,6 @@ import 'regenerator-runtime/runtime';
 import App from './app/App';
 import About from './app/About';
 import MainView from './app/MainView';
-import AuthIcon from './auth/AuthIcon';
-import SignUp from './auth/SignUp';
-import Login from './auth/Login';
 
 
 export default function Root() {
@@ -24,9 +21,6 @@ export default function Root() {
                         <IconButton href="/"><HomeIcon style={{ color: '#fff' }} /></IconButton >
                         <IconButton href="/about"><InfoIcon style={{ color: '#fff' }} /></IconButton>
                         <IconButton href="/pdf"><PictureAsPdfIcon style={{ color: '#fff' }} /></IconButton>
-                        <Box style={{ marginLeft: 'auto' }}>
-                            <AuthIcon />
-                        </Box>
                         <Button style={{color: 'white'}}>Feedback</Button>
                     </Toolbar>
                 </AppBar>
@@ -44,12 +38,6 @@ export default function Root() {
                         </Route>
                         <Route path="/pdf">
                             <MainView />
-                        </Route>
-                        <Route path="/signup">
-                            <SignUp />
-                        </Route>
-                        <Route path="/login">
-                            <Login />
                         </Route>
                     </Switch>
                 </Box>

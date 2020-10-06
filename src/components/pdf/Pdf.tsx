@@ -8,11 +8,12 @@ import ZoomInIcon from '@material-ui/icons/ZoomIn';
 import ZoomOutIcon from '@material-ui/icons/ZoomOut';
 
 import { AppState } from './../../redux/reducers';
+import { PDFActionTypes } from './../../redux/types/pdfTypes';
+import { updateCurrentPage } from './../../redux/actions/pdfActions';
 
 import BookmarksMenu from './BookmarksMenu';
 import Page from './Page';
-import { PDFActionTypes } from './../../redux/types/pdfTypes';
-import { updateCurrentPage } from './../../redux/actions/pdfActions';
+
 
 GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${version}/pdf.worker.min.js`;
 
