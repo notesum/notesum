@@ -13,6 +13,7 @@ import MainView from './app/MainView';
 import AuthIcon from './auth/AuthIcon';
 import SignUp from './auth/SignUp';
 import Login from './auth/Login';
+import Test from './Test';
 
 
 export default function Root() {
@@ -50,6 +51,9 @@ export default function Root() {
                         </Route>
                         <Route path="/login">
                             <Login />
+                        </Route>
+                        <Route path="/test">
+                            <Test />
                         </Route>
                     </Switch>
                 </Box>
