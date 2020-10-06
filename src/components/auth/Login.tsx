@@ -26,10 +26,10 @@ export default function Login() {
     const [password, setPassword] = useState('');
 
     function handleSubmit() {
-        console.log(email)
+        console.log(email, password)
         const loginData = {email: email, password: password}
         console.log(loginData);
-        useDispatch<Dispatch<UserActionTypes>>(fetchRequest());
+        // useDispatch<Dispatch<UserActionTypes>>(fetchRequest());
     }
 
     return (
@@ -45,27 +45,27 @@ export default function Login() {
                 <Typography variant="h4">Log In</Typography>
             </Grid>
 
-            <Grid item>
+            {/* <Grid item>
                 <form onSubmit={handleSubmit}>
                     <input type="text" value={email} onChange={e => setEmail(e.target.value)} />
                     <input type="text" value={password} onChange={e => setPassword(e.target.value)} />
                     <input type="submit" value="Submit"/>
                 </form>
-            </Grid>
+            </Grid> */}
 
-            {/* <Grid item>
+            <Grid item>
                 <form className={classes.root} noValidate autoComplete="off">
                     <div>
-                        <Input type='text' onChange={handleEmailChange} label="Email" />
+                        <TextField type='text' onChange={(event) => setEmail(event.target.value)} label="Email"/>
                     </div>
                     <div>
-                        <Input type='text' onChange={handlePasswordChange}  label="Password" />
+                        <TextField type='password' onChange={(event) => setPassword(event.target.value)} label="Password"/>
                     </div>
                 </form>
-            </Grid> */}
-            {/* <Grid item style={{ marginTop: '10px' }}>
-                <Button variant="contained" color="primary" onClick={() => handleLogin() }>Log In</Button>
-            </Grid> */}
+            </Grid>
+            <Grid item style={{ marginTop: '10px' }}>
+                <Button variant="contained" color="primary" onMouseDown={() => handleSubmit()}>Log In</Button>
+            </Grid>
             <Grid item style={{ marginTop: '30px' }}>
                 <Typography variant="h6">Don't have an acount?</Typography>
             </Grid>
