@@ -4,7 +4,7 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Button, Grid, Input, Typography } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { login } from './../../redux/login/actions'
-import { fetchRequest } from './../../redux/User/actions';
+// import { fetchRequest } from './../../redux/User/actions';
 // import { UserActionTypes } from './../redux/User/types';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -44,14 +44,6 @@ export default function Login() {
             <Grid item>
                 <Typography variant="h4">Log In</Typography>
             </Grid>
-
-            {/* <Grid item>
-                <form onSubmit={handleSubmit}>
-                    <input type="text" value={email} onChange={e => setEmail(e.target.value)} />
-                    <input type="text" value={password} onChange={e => setPassword(e.target.value)} />
-                    <input type="submit" value="Submit"/>
-                </form>
-            </Grid> */}
 
             <Grid item>
                 <form className={classes.root} noValidate autoComplete="off">
