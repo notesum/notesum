@@ -1,16 +1,12 @@
-import { PDFActions } from '../actions/pdfActions';
+import { PDFActionTypes, PdfState, UPDATE_CURRENT_PAGE } from '../types/pdfTypes';
 
-type pdfState = {
-    currentPage: number;
-};
-
-const initialState: pdfState = {
+const initialState: PdfState = {
     currentPage: 1,
 };
 
-const pdfReducer = ( state: pdfState = initialState, action: PDFActions) => {
+const pdfReducer = ( state = initialState, action: PDFActionTypes) => {
     switch(action.type) {
-        case 'UPDATE_CURRENT_PAGE':
+        case UPDATE_CURRENT_PAGE:
             return {
                 ...state,
                 currentPage: action.payload,
