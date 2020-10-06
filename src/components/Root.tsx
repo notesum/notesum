@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { IconButton, Box, Button, AppBar, Toolbar } from '@material-ui/core';
+import { IconButton, Box, Button, AppBar, Toolbar, Typography } from '@material-ui/core';
 import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 import HomeIcon from '@material-ui/icons/Home';
 import InfoIcon from '@material-ui/icons/Info';
@@ -28,7 +28,7 @@ export default function Root() {
                         <Box style={{ marginLeft: 'auto' }}>
                             <AuthIcon />
                         </Box>
-                        <Button style={{color: 'white'}}>Feedback</Button>
+                        <Button style={{ color: 'white' }}><Typography variant="body1" style={{ color: 'white' }}>Feedback</Typography></Button>
                     </Toolbar>
                 </AppBar>
 
