@@ -10,8 +10,8 @@ import './App.css';
 
 const useStyles = makeStyles({
     Card: {
-        height: 350,
-        minWidth: 600,
+        height: '400px',
+        minWidth: '300px'
     },
     Media: {
         height: 400,
@@ -19,16 +19,17 @@ const useStyles = makeStyles({
     },
     Content: {
         margin: 30,
+        maxHeight: '300px'
     },
     But: {
-        marginTop: 30,
+        marginTop: '2vh',
     }
 });
 
 function App() {
     const classes = useStyles();
     return (
-        <div style={{overflow: 'hidden'}}>
+        <div style={{ overflow: 'hidden' }}>
             <Grid container spacing={7} justify="center" direction="column" alignContent="center" alignItems="center" >
                 <Grid item>
                     <Box my={7}>
@@ -108,7 +109,7 @@ function App() {
                         Contact
                     </Typography>
                 </Grid>
-                <Grid item style={{marginBottom: '40px'}}>
+                <Grid item style={{ marginBottom: '40px' }}>
                     <Grid container spacing={7} justify="center" alignContent="center" alignItems="center">
                         <Grid item xs={1} />
                         <Grid item xs={4} spacing={2}>
@@ -135,7 +136,7 @@ function App() {
                         </Grid>
                         <Grid item xs={4} spacing={2}>
                             <Card className={classes.Card}>
-                                <iframe height="350" width="600" style={{ borderStyle: 'none' }}
+                                <iframe height="400" width="600" style={{ borderStyle: 'none' }}
                                     src="https://maps.google.com/maps?q=incubase%20twente&t=&z=13&ie=UTF8&iwloc=&output=embed" />
                             </Card>
                         </Grid>
