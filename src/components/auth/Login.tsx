@@ -5,7 +5,7 @@ import { Button, Grid, Input, Typography } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { login } from './../../redux/login/actions'
 import { fetchRequest } from './../../redux/User/actions';
-import { UserActionTypes } from './../redux/User/types';
+// import { UserActionTypes } from './../redux/User/types';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
