@@ -59,7 +59,7 @@ export default function AuthIcon() {
                     {loading && <Box m={5}><CircularProgress /></Box>}
                     {!isLoggedIn && !signDialog && !loading && <Login buttonCallback={setSignDialog}/>}
                     {!isLoggedIn && signDialog && !loading && <SignUp />}
-                    {isLoggedIn && actuallyLoggedIn}
+                    {isLoggedIn && !loading && actuallyLoggedIn}
                 </div>
             </Dialog>
         </div>
