@@ -7,11 +7,12 @@ import { Paper, Box, AppBar, Toolbar, IconButton, makeStyles, InputBase } from '
 import ZoomInIcon from '@material-ui/icons/ZoomIn';
 import ZoomOutIcon from '@material-ui/icons/ZoomOut';
 
-import { AppState } from '../redux/reducers';
-import { PDFActions } from '../redux/actions/pdfActions';
-
+import { AppState } from './../../redux/reducers';
+import { PDFActionTypes } from './../../redux/types/pdfTypes';
+import { updateCurrentPage } from './../../redux/actions/pdfActions';
 import BookmarksMenu from './BookmarksMenu';
 import Page from './Page';
+
 
 GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${version}/pdf.worker.min.js`;
 
@@ -45,10 +46,10 @@ const useStyles = makeStyles(() => ({
 export default function Pdf({ file, fitToWidth, hidden, screenshot, screenshotCallback }: PdfProps) {
     // TODO: start rendering at cp
     const cp = useSelector((state: AppState) => state.pdf.currentPage);
-    const cpDispatch = useDispatch<Dispatch<PDFActions>>();
+    const cpDispatch = useDispatch<Dispatch<PDFActionTypes>>();
 
     const handleUpdateCurrentPage = (newCurrentPage: number) => {
-        cpDispatch({ type: 'UPDATE_CURRENT_PAGE', payload: newCurrentPage });
+        cpDispatch(updateCurrentPage(newCurrentPage));
     };
 
     const [document, setDocument] = useState<PDFDocumentProxy>(null);

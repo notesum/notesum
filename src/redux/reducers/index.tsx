@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 
 import pdfReducer from './pdfReducer';
-import summaryReducer from './summaryReducer';
+import editorReducer from './editorReducer';
 
 const rootReducer = combineReducers({
-    summary: summaryReducer,
+    editor: editorReducer,
     pdf: pdfReducer,
 });
 

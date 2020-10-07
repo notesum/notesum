@@ -18,9 +18,10 @@ import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
 
-import { AppState } from '../redux/reducers';
-import { SummaryActions } from '../redux/actions/summaryActions';
+import { updateEditor } from '../../redux/actions/editorActions';
 
+import { AppState } from './../../redux/reducers';
+import { EditorActionTypes } from './../../redux/types/editorTypes';
 import './Editor.css';
 import { insertNewBlock, getSelectionParentElement, insertImageUtil } from './EditorUtils';
 import saveState from './Saver';
@@ -34,13 +35,13 @@ type EditorProps = {
 export default function TextEditor({ img, screenshotCallback, dragging }: EditorProps) {
 
 
-    const { content } = useSelector((state: AppState) => state.summary);
-    const contentDispatch = useDispatch<Dispatch<SummaryActions>>();
+    const { content } = useSelector((state: AppState) => state.editor);
+    const contentDispatch = useDispatch<Dispatch<EditorActionTypes>>();
     const [editorState, setEditorState] = useState(EditorState.createWithContent(convertFromRaw(content)));
 
     // Update editorstate both in state and in local storage
     const setEditor = (newEditorState: EditorState) => {
-        contentDispatch({ type: 'UPDATE_EDITOR_STATE', payload: convertToRaw(editorState.getCurrentContent()) });
+        contentDispatch(updateEditor(convertToRaw(editorState.getCurrentContent())));
         setEditorState(newEditorState);
     };
 
@@ -63,7 +64,7 @@ export default function TextEditor({ img, screenshotCallback, dragging }: Editor
             prevSelection = exactText;
             setEditorState((prevState) => {
                 const newEditor = insertNewBlock(prevState, exactText, style);
-                contentDispatch({ type: 'UPDATE_EDITOR_STATE', payload: convertToRaw(newEditor.getCurrentContent()) });
+                contentDispatch(updateEditor(convertToRaw(newEditor.getCurrentContent())));
                 return newEditor;
             });
         }
@@ -72,7 +73,7 @@ export default function TextEditor({ img, screenshotCallback, dragging }: Editor
     useEffect(() => {
         setEditorState((prevState) => {
             const newEditor = insertImageUtil(prevState, img);
-            contentDispatch({ type: 'UPDATE_EDITOR_STATE', payload: convertToRaw(newEditor.getCurrentContent()) });
+            contentDispatch(updateEditor(convertToRaw(newEditor.getCurrentContent())));
             return newEditor;
         });
     }, [img]);
