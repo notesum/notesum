@@ -1,10 +1,19 @@
 import * as t from './../types/authTypes';
 
+const guest: t.User = {
+    name: 'Guest',
+    email: '',
+    created_at: '',
+    updated_at: '',
+    project_id: null,
+};
+
 const initialState: t.AuthState = {
     loading: false,
     isLoggedIn: false,
     token: null,
     errors: [],
+    user: guest,
 };
 
 const authReducer = ( state = initialState, action: t.AuthActionTypes) => {
@@ -44,14 +53,27 @@ const authReducer = ( state = initialState, action: t.AuthActionTypes) => {
                 loading: false,
                 token: null,
                 isLoggedIn: false,
+                user: guest,
             };
-        case t.USER_LOGOUT_FAILURE:
+        case t.USER_DETAILS_STARTED:
+            return {
+                ...state,
+                loading: true,
+            };
+        case t.USER_DETAILS_SUCCESS:
+            console.log(action.payload);
+            return {
+                ...state,
+                loading: false,
+                user: action.payload,
+            };
+        case t.AUTH_FAILURE:
             return {
                 ...state,
                 loading: false,
                 token: null,
                 isLoggedIn: false,
-                errors: ['logout error'],
+                errors: ['auth error'],
             };
         default:
             return state;

@@ -1,7 +1,7 @@
 import { Dispatch } from 'react';
 
 import { AuthActionTypes } from '../types/authTypes';
-import { userLoginFailure, userLoginStarted, userLoginSuccess, userLogoutStarted, userLogoutSuccess, userLogoutFailure } from '../actions/authActions';
+import { userLoginFailure, userLoginStarted, userLoginSuccess, userLogoutStarted, userLogoutSuccess, authFailure, userDetailsStarted, userDetailsSuccess } from '../actions/authActions';
 
 import { BASE_URL } from './ServerSettings';
 
@@ -30,7 +30,9 @@ export function login(email:string, password:string) {
             .then((data)=> {
                 const statusCode = data[0];
                 if (statusCode) throw new Error(data.errors);
-                else dispatch(userLoginSuccess(data.access_token));
+                else {
+                    dispatch(userLoginSuccess(data.access_token));
+                }
             })
             .catch((err)=> {
                 console.log('I got an error',err);
@@ -51,17 +53,42 @@ export function logout() {
         };
         const url = BASE_URL + '/logout';
         fetch(url,requestOptions)
-        .then(async response => {
-            if(!response.ok) throw new Error(response.statusText);
-            else return await response.json();
-        })
-        .then((data)=> {
-            if (data[0]) throw new Error(data.errors);
-            else dispatch(userLogoutSuccess());
-        })
-        .catch((err)=> {
-            console.log('I got an error',err);
-            dispatch(userLogoutFailure(err));
-        });
+            .then(async response => {
+                if(!response.ok) throw new Error(response.statusText);
+                else return await response.json();
+            })
+            .then((data)=> {
+                if (data[0]) throw new Error(data.errors);
+                else dispatch(userLogoutSuccess());
+            })
+            .catch((err)=> {
+                console.log('I got an error',err);
+                dispatch(authFailure(err));
+            });
+    };
+}
+
+export function getUserInfo() {
+    return (dispatch: Dispatch<AuthActionTypes>, getState) => {
+        const token = getState().auth.token;
+        dispatch(userDetailsStarted());
+        const requestOptions = {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' , 'Authorization': `Bearer ${token}`},
+        };
+        const url = BASE_URL + '/user';
+            fetch(url,requestOptions)
+            .then(async response => {
+                if(!response.ok) throw new Error(response.statusText);
+                else return await response.json();
+            })
+            .then((data)=> {
+                if (data[0]) throw new Error(data.errors);
+                else dispatch(userDetailsSuccess(data.data));
+            })
+            .catch((err)=> {
+                console.log('I got an error',err);
+                dispatch(authFailure(err));
+            });
     };
 }
