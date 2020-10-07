@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Box, Button, Grid, Typography } from '@material-ui/core';
+
+// import { AppState } from '../../redux/reducers';
+import { login } from '../../redux/asynchActions/authAsynchActions';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -25,11 +29,12 @@ export default function Login({ buttonCallback }: LogInProps) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    // const {loading, isLoggedIn} = useSelector((state:AppState)=>state.auth);
+    const dispatch = useDispatch();
+
     function handleSubmit() {
-        console.log(email, password);
-        const loginData = { email, password };
-        console.log(loginData);
-        // useDispatch<Dispatch<UserActionTypes>>(fetchRequest());
+        // console.log(email, password);
+        dispatch(login(email, password));
     }
 
     return (
