@@ -18,10 +18,10 @@ import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
 
-import { AppState } from './../../redux/reducers';
 import { updateEditor } from '../../redux/actions/editorActions';
-import { EditorActionTypes } from './../../redux/types/editorTypes';
 
+import { AppState } from './../../redux/reducers';
+import { EditorActionTypes } from './../../redux/types/editorTypes';
 import './Editor.css';
 import { insertNewBlock, getSelectionParentElement, insertImageUtil } from './EditorUtils';
 import saveState from './Saver';
