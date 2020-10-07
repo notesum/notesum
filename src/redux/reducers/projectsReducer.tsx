@@ -2,7 +2,7 @@ import { ProjectsActionTypes, ProjectsState, NEW_PROJECT, UPDATE_PROJECT_NAME, A
 
 const initialState: ProjectsState = {};
 
-const editorReducer = (state = initialState, action: ProjectsActionTypes): ProjectsState => {
+const projectsReducer = (state = initialState, action: ProjectsActionTypes): ProjectsState => {
     switch (action.type) {
         case NEW_PROJECT:
             return {
@@ -53,4 +53,4 @@ const editorReducer = (state = initialState, action: ProjectsActionTypes): Proje
     }
 };
 
-export default editorReducer;
+export default projectsReducer;
