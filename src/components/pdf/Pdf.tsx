@@ -44,7 +44,7 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-export default function Pdf({ id, file, fitToWidth, hidden, screenshot, screenshotCallback }: PdfProps) {
+export default React.memo(({ id, file, fitToWidth, hidden, screenshot, screenshotCallback }: PdfProps) => {
     // TODO: start rendering at cp
     const cp = useSelector((state: AppState) => state.pdf.currentPage);
     const cpDispatch = useDispatch<Dispatch<PDFActionTypes>>();
@@ -216,4 +216,4 @@ export default function Pdf({ id, file, fitToWidth, hidden, screenshot, screensh
             </Box>
         </Box>
     );
-}
+});
