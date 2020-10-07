@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Editor from 'draft-js-plugins-editor';
 import createImagePlugin from 'draft-js-image-plugin';
 import { EditorState, RichUtils, convertFromRaw, convertToRaw, getDefaultKeyBinding, KeyBindingUtil } from 'draft-js';
-import 'draft-js/dist/Draft.css';
+// import 'draft-js/dist/Draft.css';
 import { Button, ButtonGroup, Paper, Grid, Box, Dialog, AppBar, TextField, IconButton, Toolbar, Switch, Tooltip } from '@material-ui/core';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import FormatBoldIcon from '@material-ui/icons/FormatBold';
@@ -33,6 +33,8 @@ type EditorProps = {
 };
 
 export default function TextEditor({ img, screenshotCallback, dragging }: EditorProps) {
+
+    const editorRef = useRef(null);
 
 
     const { content } = useSelector((state: AppState) => state.editor);
@@ -189,11 +191,13 @@ export default function TextEditor({ img, screenshotCallback, dragging }: Editor
         setStyle(newStyle);
     }
 
+
+
     return (
-        <div>
+        <div style={{ backgroundColor: 'white' }} >
             <Grid container wrap="wrap">
                 <AppBar color="transparent" position="static">
-                    <Toolbar variant="dense" style={{ backgroundColor: '#fff' }}>
+                    <Toolbar variant="dense">
                         <Box>
                             <Tooltip title="Highlight to Editor" placement="top">
                                 <Switch
@@ -259,25 +263,6 @@ export default function TextEditor({ img, screenshotCallback, dragging }: Editor
                                 <FullscreenIcon fontSize="small" />
                             </IconButton>
                             <Dialog fullScreen open={fullscreenOpen} onClose={() => { setFullscreenOpen(false); }}>
-                                <Paper onClick={focusEditor} elevation={4}>
-                                    <Editor
-                                        ref={editor}
-                                        editorState={editorState}
-                                        plugins={plugins}
-                                        onChange={setEditor}
-                                        handleKeyCommand={handleKey}
-                                        keyBindingFn={hotKey}
-                                    />
-                                </Paper>
-                            </Dialog>
-                        </Box>
-
-                    </Toolbar>
-                </AppBar>
-                <Grid item xs={12} >
-                    <Box my={1} mx={2} >
-                        <Paper onClick={focusEditor} elevation={4}>
-                            {!dragging &&
                                 <Editor
                                     ref={editor}
                                     editorState={editorState}
@@ -286,10 +271,22 @@ export default function TextEditor({ img, screenshotCallback, dragging }: Editor
                                     handleKeyCommand={handleKey}
                                     keyBindingFn={hotKey}
                                 />
-                            }
-                        </Paper>
-                    </Box>
+                            </Dialog>
+                        </Box>
 
+                    </Toolbar>
+                </AppBar>
+                <Grid item xs={12} style={{ backgroundColor: 'white' }}>
+                    {!dragging &&
+                        <Editor
+                            ref={editor}
+                            editorState={editorState}
+                            plugins={plugins}
+                            onChange={setEditor}
+                            handleKeyCommand={handleKey}
+                            keyBindingFn={hotKey}
+                        />
+                    }
                 </Grid>
             </Grid>
         </div >
