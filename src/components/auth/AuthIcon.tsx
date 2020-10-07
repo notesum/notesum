@@ -1,40 +1,29 @@
 import React from 'react';
-import { Button, Dialog, Grid, Typography, Box } from '@material-ui/core';
+import { Button, Dialog, Grid, Typography, Box, CircularProgress } from '@material-ui/core';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { useSelector } from 'react-redux';
+
+import { AppState } from '../../redux/reducers';
 
 import Login from './Login';
 import SignUp from './SignUp';
 
 
+
 export default function AuthIcon() {
 
-    const [loggedIn, setLoggedIn] = React.useState(false);
+    const {loading, isLoggedIn} = useSelector((state:AppState)=>state.auth);
+
+    // const loading = false;
+    // const isLoggedIn = true;
+
     const [username, setUsername] = React.useState('Nouser');
     const [dialogOpen, setDialogOpen] = React.useState(false);
     const [signDialog, setSignDialog] = React.useState(false);
 
-
-
     function logOut() {
-        setLoggedIn(false);
         console.log('Log out');
     }
-
-
-    const notLoggedIn =
-        <Box m={4}>
-            <Grid container wrap="wrap" direction="column" spacing={2} alignContent="center" alignItems="center">
-                <Grid item>
-                    <Typography variant="h4">You seemed to be not logged in.</Typography>
-                </Grid>
-                <Grid item>
-                    <Button href="/login" variant="contained" color="primary">Log In</Button>
-                </Grid>
-                <Grid item>
-                    <Button href="/signup" variant="contained" color="primary">Sign Up</Button>
-                </Grid>
-            </Grid>
-        </Box>;
 
     const actuallyLoggedIn =
         <Box m={4}>
@@ -64,9 +53,10 @@ export default function AuthIcon() {
             </Button>
             <Dialog open={dialogOpen} onClose={closeDialog}>
                 <div>
-                    {!loggedIn && !signDialog && <Login buttonCallback={setSignDialog}/>}
-                    {!loggedIn && signDialog && <SignUp />}
-                    {loggedIn && actuallyLoggedIn}
+                    {loading && <Box m={5}><CircularProgress /></Box>}
+                    {!isLoggedIn && !signDialog && !loading && <Login buttonCallback={setSignDialog}/>}
+                    {!isLoggedIn && signDialog && !loading && <SignUp />}
+                    {isLoggedIn && actuallyLoggedIn}
                 </div>
             </Dialog>
         </div>

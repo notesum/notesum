@@ -4,7 +4,6 @@ import TextField from '@material-ui/core/TextField';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Box, Button, Grid, Typography } from '@material-ui/core';
 
-// import { AppState } from '../../redux/reducers';
 import { login } from '../../redux/asynchActions/authAsynchActions';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -33,7 +32,6 @@ export default function Login({ buttonCallback }: LogInProps) {
     const dispatch = useDispatch();
 
     function handleSubmit() {
-        // console.log(email, password);
         dispatch(login(email, password));
     }
 
