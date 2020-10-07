@@ -1,9 +1,10 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { Box, IconButton } from '@material-ui/core';
+import { IconButton, Box, Button, AppBar, Toolbar } from '@material-ui/core';
 import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 import HomeIcon from '@material-ui/icons/Home';
 import InfoIcon from '@material-ui/icons/Info';
+import 'regenerator-runtime/runtime';
 
 import App from './app/App';
 import About from './app/About';
@@ -15,11 +16,14 @@ export default function Root() {
     return (
         <BrowserRouter>
             <Box flexDirection="column" display="flex" height="100%" >
-                <Box m={0} bgcolor="primary.main">
-                    <IconButton href="/"><HomeIcon style={{color: '#fff'}} fontSize="small"/></IconButton >
-                    <IconButton href="/about"><InfoIcon style={{color: '#fff'}} fontSize="small"/></IconButton>
-                    <IconButton href="/project"><PictureAsPdfIcon style={{color: '#fff'}} fontSize="small"/></IconButton>
-                </Box>
+                <AppBar position="static">
+                    <Toolbar variant="dense">
+                        <IconButton href="/"><HomeIcon style={{ color: '#fff' }} /></IconButton >
+                        <IconButton href="/about"><InfoIcon style={{ color: '#fff' }} /></IconButton>
+                        <IconButton href="/projects"><PictureAsPdfIcon style={{ color: '#fff' }} /></IconButton>
+                        <Button style={{ color: 'white' }}>Feedback</Button>
+                    </Toolbar>
+                </AppBar>
 
                 {/* This sizes the main content area to fill up the remaining space */}
                 <Box flexGrow={1} style={{
