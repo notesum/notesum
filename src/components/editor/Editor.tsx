@@ -189,13 +189,8 @@ export default function TextEditor({ img, screenshotCallback, dragging }: Editor
     }
 
     const editorComponent =
-        <Editor
-            ref={editor}
-            editorState={editorState}
-            plugins={plugins}
-            onChange={setEditor}
-            handleKeyCommand={handleKey}
-            keyBindingFn={hotKey} />;
+        <Editor ref={editor} editorState={editorState} plugins={plugins}
+            onChange={setEditor} handleKeyCommand={handleKey} keyBindingFn={hotKey} />;
 
     const saveDialog =
         <Dialog open={saveToggle} onClose={() => { setSaveToggle(false); }}>
@@ -219,7 +214,7 @@ export default function TextEditor({ img, screenshotCallback, dragging }: Editor
         </Dialog>;
 
     const toolbar =
-        <AppBar color="transparent" position="static" style={{overflow: 'auto'}}>
+        <AppBar color="transparent" position="static" style={{ overflow: 'auto' }}>
             <Toolbar variant="dense">
                 <Tooltip title="Highlight to Editor" placement="top">
                     <Switch
