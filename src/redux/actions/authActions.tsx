@@ -19,3 +19,22 @@ export function userLoginSuccess(token:string): t.AuthActionTypes {
         payload: token,
     };
 }
+
+export function userLogoutStarted(): t.AuthActionTypes {
+    return {
+        type: t.USER_LOGOUT_STARTED,
+    };
+}
+
+export function userLogoutSuccess(): t.AuthActionTypes {
+    return {
+        type: t.USER_LOGOUT_SUCCESS,
+    };
+}
+
+export function userLogoutFailure(errors:string[]): t.AuthActionTypes {
+    return {
+        type: t.USER_LOGOUT_FAILURE,
+        payload:errors,
+    };
+}

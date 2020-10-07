@@ -23,7 +23,7 @@ const authReducer = ( state = initialState, action: t.AuthActionTypes) => {
             return {
                 ...state,
                 loading: false,
-                errors: ['error'],
+                errors: ['login error'],
             };
         case t.USER_LOGIN_SUCCESS:
             return {
@@ -31,6 +31,27 @@ const authReducer = ( state = initialState, action: t.AuthActionTypes) => {
                 loading: false,
                 isLoggedIn: true,
                 token: action.payload,
+            };
+        case t.USER_LOGOUT_STARTED:
+            return {
+                ...state,
+                loading: true,
+                errors: null,
+            };
+        case t.USER_LOGOUT_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                token: null,
+                isLoggedIn: false,
+            };
+        case t.USER_LOGOUT_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                token: null,
+                isLoggedIn: false,
+                errors: ['logout error'],
             };
         default:
             return state;

@@ -1,7 +1,9 @@
 import { Dispatch } from 'react';
 
 import { AuthActionTypes } from '../types/authTypes';
-import { userLoginFailure, userLoginStarted, userLoginSuccess } from '../actions/authActions';
+import { userLoginFailure, userLoginStarted, userLoginSuccess, userLogoutStarted, userLogoutSuccess, userLogoutFailure } from '../actions/authActions';
+
+import { BASE_URL } from './ServerSettings';
 
 export function login(email:string, password:string) {
     const requestOptions = {
@@ -18,7 +20,9 @@ export function login(email:string, password:string) {
 
         // TODO: Fix error handling
 
-        fetch('http://localhost:8080/api/login',requestOptions)
+        const url = BASE_URL + '/login';
+
+        fetch(url,requestOptions)
             .then(async response => {
                 if(!response.ok) throw new Error(response.statusText);
                 else return await response.json();
@@ -34,4 +38,30 @@ export function login(email:string, password:string) {
             });
     };
 
+}
+
+export function logout() {
+    return (dispatch: Dispatch<AuthActionTypes>, getState) => {
+        const token = getState().auth.token;
+        dispatch(userLogoutStarted());
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' , 'Authorization': `Bearer ${token}`},
+            body: JSON.stringify({ client_name: 'NoteSum Password Grant Client'})
+        };
+        const url = BASE_URL + '/logout';
+        fetch(url,requestOptions)
+        .then(async response => {
+            if(!response.ok) throw new Error(response.statusText);
+            else return await response.json();
+        })
+        .then((data)=> {
+            if (data[0]) throw new Error(data.errors);
+            else dispatch(userLogoutSuccess());
+        })
+        .catch((err)=> {
+            console.log('I got an error',err);
+            dispatch(userLogoutFailure(err));
+        });
+    };
 }

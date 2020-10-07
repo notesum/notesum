@@ -1,9 +1,10 @@
 import React from 'react';
 import { Button, Dialog, Grid, Typography, Box, CircularProgress } from '@material-ui/core';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { AppState } from '../../redux/reducers';
+import { logout } from '../../redux/asynchActions/authAsynchActions';
 
 import Login from './Login';
 import SignUp from './SignUp';
@@ -13,6 +14,8 @@ import SignUp from './SignUp';
 export default function AuthIcon() {
 
     const {loading, isLoggedIn} = useSelector((state:AppState)=>state.auth);
+    const dispatch = useDispatch();
+
 
     // const loading = false;
     // const isLoggedIn = true;
@@ -22,7 +25,7 @@ export default function AuthIcon() {
     const [signDialog, setSignDialog] = React.useState(false);
 
     function logOut() {
-        console.log('Log out');
+        dispatch(logout());
     }
 
     const actuallyLoggedIn =
