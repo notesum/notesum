@@ -8,8 +8,8 @@ div.DraftEditor-root {
 div.public-DraftEditor-content {
     font-family: verdana;
     font-size: 14px;
-    line-height: 1.4em;
-    max-height: 870px;
+    line-height: 1em;
+    height: 870px;
     padding: 25px;
     padding-top: 35px;
 }
