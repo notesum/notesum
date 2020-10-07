@@ -84,7 +84,7 @@ export default function DocumentView({ pdf, fileUuid }: DocumentViewProps) {
                 overflow: 'hidden',
                 height: '100%'
             }}>
-                <TextEditor fileUuid={fileUuid} screenshotCallback={setScreenshot} img={image} dragging={dragging} />
+                <TextEditor key={fileUuid} fileUuid={fileUuid} screenshotCallback={setScreenshot} img={image} dragging={dragging} />
             </Box>
         </Box>
     );
