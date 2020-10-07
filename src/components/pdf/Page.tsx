@@ -38,7 +38,7 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-export default React.forwardRef(({ page, scale, width, hidden, isVisible, screenshot, screenshotCallback }: PageProps,
+export default React.memo(React.forwardRef(({ page, scale, width, hidden, isVisible, screenshot, screenshotCallback }: PageProps,
                                  pageRef: MutableRefObject<HTMLDivElement>) => {
 
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -204,4 +204,4 @@ export default React.forwardRef(({ page, scale, width, hidden, isVisible, screen
         </div>
     );
 
-});
+}));
