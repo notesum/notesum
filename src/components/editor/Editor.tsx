@@ -18,10 +18,9 @@ import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
 
-import { updateEditor } from '../../redux/actions/editorActions';
+import { FilesActionsTypes } from '../../redux/types/filesTypes';
+import { AppState } from '../../redux/reducers';
 
-import { AppState } from './../../redux/reducers';
-import { EditorActionTypes } from './../../redux/types/editorTypes';
 import './Editor.css';
 import { insertNewBlock, getSelectionParentElement, insertImageUtil } from './EditorUtils';
 import saveState from './Saver';
@@ -29,18 +28,19 @@ import saveState from './Saver';
 type EditorProps = {
     img: string
     screenshotCallback: (b: boolean) => void
-    dragging: boolean
+    dragging: boolean,
+    fileUuid: string
 };
 
-export default function TextEditor({ img, screenshotCallback, dragging }: EditorProps) {
+export default function TextEditor({ img, screenshotCallback, dragging, fileUuid }: EditorProps) {
 
-    const { content } = useSelector((state: AppState) => state.editor);
-    const contentDispatch = useDispatch<Dispatch<EditorActionTypes>>();
+
+    const content = useSelector((state: AppState) => state.files[fileUuid].summary);
+    const contentDispatch = useDispatch<Dispatch<FilesActionsTypes>>();
     const [editorState, setEditorState] = useState(EditorState.createWithContent(convertFromRaw(content)));
 
     // Update editorstate both in state and in local storage
     const setEditor = (newEditorState: EditorState) => {
-        contentDispatch(updateEditor(convertToRaw(editorState.getCurrentContent())));
         setEditorState(newEditorState);
     };
 
@@ -61,20 +61,12 @@ export default function TextEditor({ img, screenshotCallback, dragging }: Editor
             (getSelectionParentElement().className === 'page' || getSelectionParentElement().className === 'textLayer')) {
             const exactText = window.getSelection().toString();
             prevSelection = exactText;
-            setEditorState((prevState) => {
-                const newEditor = insertNewBlock(prevState, exactText, style);
-                contentDispatch(updateEditor(convertToRaw(newEditor.getCurrentContent())));
-                return newEditor;
-            });
+            setEditorState((prevState) => insertNewBlock(prevState, exactText, style));
         }
     }, [style, highlightToggle]);
 
     useEffect(() => {
-        setEditorState((prevState) => {
-            const newEditor = insertImageUtil(prevState, img);
-            contentDispatch(updateEditor(convertToRaw(newEditor.getCurrentContent())));
-            return newEditor;
-        });
+        setEditorState((prevState) => insertImageUtil(prevState, img));
     }, [img]);
 
     function hotKey(e) {

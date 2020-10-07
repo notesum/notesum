@@ -6,12 +6,13 @@ import HomeIcon from '@material-ui/icons/Home';
 import InfoIcon from '@material-ui/icons/Info';
 import 'regenerator-runtime/runtime';
 
-
 import App from './app/App';
 import About from './app/About';
 import AuthIcon from './auth/AuthIcon';
 import Test from './Test';
 import Project from './project/Project';
+import ProjectOverview from './project_overview/ProjectOverview';
+import Error from './Error';
 
 export default function Root() {
     return (
@@ -43,8 +44,12 @@ export default function Root() {
                         <Route path="/test">
                             <Test />
                         </Route>
-                        <Route exact path="/project">
-                            <Project />
+                        <Route exact path="/projects">
+                            <ProjectOverview />
+                        </Route>
+                        <Route exact path="/project/:uuid" children={<Project />} />
+                        <Route path="*">
+                            <Error />
                         </Route>
                     </Switch>
                 </Box>
