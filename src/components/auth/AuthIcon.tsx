@@ -19,7 +19,7 @@ export default function AuthIcon() {
 
 
     // const loading = false;
-    // const isLoggedIn = true;
+    // const isLoggedIn = false;
 
     // const [username, setUsername] = React.useState('Nouser');
     const [dialogOpen, setDialogOpen] = React.useState(false);
@@ -34,7 +34,7 @@ export default function AuthIcon() {
     }
 
     const actuallyLoggedIn =
-        <Box m={4}>
+        <Box m={4} style={{overflow: 'hidden'}}>
             <Grid container wrap="wrap" direction="column" spacing={2} alignContent="center" alignItems="center">
                 <Grid item>
                     <Typography variant="h4">Logged in as {username}</Typography>
