@@ -50,10 +50,8 @@ export default function AuthIcon() {
         </Box>;
 
     const closeDialog = () => {
-
         setDialogOpen(false);
         setSignDialog(false);
-
     };
 
 
