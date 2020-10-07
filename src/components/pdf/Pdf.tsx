@@ -10,7 +10,6 @@ import ZoomOutIcon from '@material-ui/icons/ZoomOut';
 import { AppState } from './../../redux/reducers';
 import { PDFActionTypes } from './../../redux/types/pdfTypes';
 import { updateCurrentPage } from './../../redux/actions/pdfActions';
-
 import Page from './Page';
 import BookmarksMenu from './BookmarksMenu';
 

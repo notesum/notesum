@@ -1,4 +1,4 @@
-import { ADD_FILES, FileActionTypes, FileState, GET_FILES, REPLACE_FILES } from '../types/fileTypes';
+import { ADD_FILES, FileActionTypes, FileState, REPLACE_FILES } from '../types/fileTypes';
 
 const initialState: FileState = {
     files: [],

@@ -1,11 +1,7 @@
-import React, { useState, Dispatch } from 'react';
+import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { Box, Button, Grid, Input, Typography } from '@material-ui/core';
-import { useDispatch } from 'react-redux';
-import { login } from './../../redux/login/actions'
-// import { fetchRequest } from './../../redux/User/actions';
-// import { UserActionTypes } from './../redux/User/types';
+import { Box, Button, Grid, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -30,8 +26,8 @@ export default function Login({ buttonCallback }: LogInProps) {
     const [password, setPassword] = useState('');
 
     function handleSubmit() {
-        console.log(email, password)
-        const loginData = { email: email, password: password }
+        console.log(email, password);
+        const loginData = { email, password };
         console.log(loginData);
         // useDispatch<Dispatch<UserActionTypes>>(fetchRequest());
     }
@@ -51,10 +47,10 @@ export default function Login({ buttonCallback }: LogInProps) {
                 <Grid item>
                     <form className={classes.root} noValidate autoComplete="off">
                         <div>
-                            <TextField type='text' onChange={(event) => setEmail(event.target.value)} label="Email" />
+                            <TextField type="text" onChange={(event) => setEmail(event.target.value)} label="Email" />
                         </div>
                         <div>
-                            <TextField type='password' onChange={(event) => setPassword(event.target.value)} label="Password" />
+                            <TextField type="password" onChange={(event) => setPassword(event.target.value)} label="Password" />
                         </div>
                     </form>
                 </Grid>

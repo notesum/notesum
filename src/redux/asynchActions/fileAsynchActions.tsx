@@ -1,6 +1,6 @@
-import { Dispatch } from "react";
+import { Dispatch } from 'react';
 
-import { FileActionTypes } from "../types/fileTypes";
+import { FileActionTypes } from '../types/fileTypes';
 import { replaceFiles } from '../actions/fileActions';
 
 export function loadFiles() {
