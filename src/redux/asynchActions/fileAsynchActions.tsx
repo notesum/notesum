@@ -1,7 +1,6 @@
 import { Dispatch } from 'react';
 
 import { FileActionTypes } from '../types/fileTypes';
-import { replaceFiles } from '../actions/fileActions';
 
 export function loadFiles() {
     const requestOptions = {
@@ -13,9 +12,10 @@ export function loadFiles() {
         .then(async response => {
             const data = await response.json();
             // console.log("Thunk says:",data);
-            dispatch(
-                replaceFiles(data.data)
-            );
+            // TODO
+            // dispatch(
+            //     replaceFiles(data.data)
+            // );
         });
     };
 }
