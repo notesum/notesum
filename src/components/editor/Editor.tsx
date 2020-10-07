@@ -34,7 +34,6 @@ type EditorProps = {
 
 export default function TextEditor({ img, screenshotCallback, dragging, fileUuid }: EditorProps) {
 
-
     const content = useSelector((state: AppState) => state.files[fileUuid].summary);
     const contentDispatch = useDispatch<Dispatch<FilesActionsTypes>>();
     const [editorState, setEditorState] = useState(EditorState.createWithContent(convertFromRaw(content)));
@@ -43,6 +42,10 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileUuid
     const setEditor = (newEditorState: EditorState) => {
         setEditorState(newEditorState);
     };
+
+    useEffect(() => {
+        contentDispatch(updateEditor(fileUuid, convertToRaw(editorState.getCurrentContent())));
+    }, [editorState]);
 
     const [style, setStyle] = useState('unstyled');
     // File name in the editor
