@@ -10,20 +10,20 @@ function Test() {
     // const { data } = useSelector((state:AppState)=>state.file)
     // const dataDispatch = useDispatch<Dispatch<FileActions>>();
     const  files:File[] = useSelector((state:AppState)=>state.files.files);
-    const fileDispatch = useDispatch();
+    const dispatch = useDispatch();
 
     const getFiles = () => {
-        fileDispatch(loadFiles());
+        dispatch(loadFiles());
     };
     return (
     <div className="App">
         <header className="App-header">
         {/* <img src={logo} className="App-logo" alt="logo" /> */}
-        <p>
+        <ul>
             {files.map(file => (
-      <div  key={file.id}>{file.file}</div>
-    ))}
-        </p>
+                <li key={file.id}>{file.file}</li>
+            ))}
+        </ul>
         <button onClick={getFiles}>Get files</button>
         </header>
     </div>

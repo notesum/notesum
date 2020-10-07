@@ -12,8 +12,9 @@ export function loadFiles() {
         fetch('http://localhost:8080/api/test', requestOptions)
         .then(async response => {
             const data = await response.json();
+            // console.log("Thunk says:",data);
             dispatch(
-                replaceFiles([data])
+                replaceFiles(data.data)
             );
         });
     };

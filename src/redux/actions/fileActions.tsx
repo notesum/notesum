@@ -1,4 +1,4 @@
-import { ADD_FILES, FileActionTypes, GET_FILES, File } from './../types/fileTypes';
+import { FileActionTypes, ADD_FILES, GET_FILES, REPLACE_FILES, File } from './../types/fileTypes';
 
 export function getFiles(): FileActionTypes {
     return {
@@ -14,8 +14,9 @@ export function addFiles(files:File[]): FileActionTypes {
 }
 
 export function replaceFiles(files:File[]): FileActionTypes {
+    // console.log('replaceFiles says:',files);
     return {
-        type: ADD_FILES,
+        type: REPLACE_FILES,
         payload: files,
     };
 }
