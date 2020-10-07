@@ -35,16 +35,18 @@ type EditorProps = {
 
 export default function TextEditor({ img, screenshotCallback, dragging, fileUuid }: EditorProps) {
 
-
     const content = useSelector((state: AppState) => state.files[fileUuid].summary);
     const contentDispatch = useDispatch<Dispatch<FilesActionsTypes>>();
     const [editorState, setEditorState] = useState(EditorState.createWithContent(convertFromRaw(content)));
 
     // Update editorstate both in state and in local storage
     const setEditor = (newEditorState: EditorState) => {
-        contentDispatch(updateEditor(fileUuid, convertToRaw(editorState.getCurrentContent())));
         setEditorState(newEditorState);
     };
+
+    useEffect(() => {
+        contentDispatch(updateEditor(fileUuid, convertToRaw(editorState.getCurrentContent())));
+    }, [editorState]);
 
     const [style, setStyle] = useState('unstyled');
     // File name in the editor
@@ -63,20 +65,12 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileUuid
             (getSelectionParentElement().className === 'page' || getSelectionParentElement().className === 'textLayer')) {
             const exactText = window.getSelection().toString();
             prevSelection = exactText;
-            setEditorState((prevState) => {
-                const newEditor = insertNewBlock(prevState, exactText, style);
-                contentDispatch(updateEditor(fileUuid, convertToRaw(newEditor.getCurrentContent())));
-                return newEditor;
-            });
+            setEditorState((prevState) => insertNewBlock(prevState, exactText, style));
         }
     }, [style, highlightToggle]);
 
     useEffect(() => {
-        setEditorState((prevState) => {
-            const newEditor = insertImageUtil(prevState, img);
-            contentDispatch(updateEditor(fileUuid, convertToRaw(newEditor.getCurrentContent())));
-            return newEditor;
-        });
+        setEditorState((prevState) => insertImageUtil(prevState, img));
     }, [img]);
 
     function hotKey(e) {
