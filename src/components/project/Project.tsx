@@ -1,63 +1,85 @@
-import React, { useState } from 'react';
-import { Box, Button, Dialog, DialogContent, DialogTitle, Drawer, IconButton, List, ListItem, ListItemText, ListSubheader } from '@material-ui/core';
-import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
-import HomeIcon from '@material-ui/icons/Home';
-import InfoIcon from '@material-ui/icons/Info';
+import React, { useState, Dispatch } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { Box, Button, Dialog, DialogContent, DialogTitle, Drawer, IconButton, List,
+    ListItem, ListItemText, ListSubheader, Paper, InputBase, makeStyles, Toolbar } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
+
+import { ProjectsState, ProjectsActionTypes } from '../../redux/types/projectsTypes';
+import { FilesActionsTypes } from '../../redux/types/filesTypes';
+import { newFile } from '../../redux/actions/filesActions';
+import { addFileToProject } from '../../redux/actions/projectsActions';
+import Error from '../Error';
 
 import EmptyProject from './EmptyProject';
 import DocumentView from './DocumentView';
 
-// type ProjectState = {
-//     name: string
-// };
+const useStyles = makeStyles(() => ({
+    nameBox: {
+        padding: '2px 8px',
+        marginRight: '20px',
+        display: 'flex',
+        alignItems: 'center',
+        minWidth: '0',
+    },
+    name: {
+        marginBottom: '-5px',
+        width: 'auto',
+    },
+    grow: {
+        flexGrow: 1
+    }
+}));
 
 export default function Project() {
 
-    // const [file, setFile] = useState<Int8Array>(null);
+    const { uuid } = useParams<{uuid: string}>();
 
-    // TODO Redux.
-    // const [projectState, setProjectState] = useState<ProjectState>({
-    //     name: 'Hello World!',
-    // });
+    const project = useSelector((state: ProjectsState) => state.projects[uuid]);
+    const files = useSelector((state: ProjectsState) => state.files);
 
-    const [files, setFiles] = useState<{
-        [name: string]: { // Probably later will be some kind of uuid
-            name: string,
-            pdf: Int8Array,
-            documentId: string
-        }
-    }>({});
+    const projectsDispatch = useDispatch<Dispatch<ProjectsActionTypes>>();
+    const filesDispatch = useDispatch<Dispatch<FilesActionsTypes>>();
 
-    const [currentFile, setCurrentFile] = useState<string>(null);
+    // Project wasn't found, return 404
+    if (!project) return (<Error />);
 
-    const addProjectFile = (name: string, file: Int8Array) => {
-        setFiles((cur) => { return { ...cur, [name]: { name, pdf: file, documentId: name }}; });
+    const [currentFile, setCurrentFile] = useState<string>(project.files.length === 0 ? null : project.files[0]);
+
+    const addProjectFile = (name: string, pdf: Int8Array) => {
+
+        // Create file
+        const newFileAction = newFile(name, pdf);
+        filesDispatch(newFileAction);
+
+        // Add file to project
+        projectsDispatch(addFileToProject(project.uuid, newFileAction.payload.uuid));
 
         if (!currentFile) {
-            setCurrentFile(name);
+            setCurrentFile(newFileAction.payload.uuid);
         }
     };
 
     const [isFileDrawerOpen, setFileDrawerOpen] = useState(false);
     const [isAddFilesModalOpen, setAddFilesModalOpen] = useState(false);
 
+    const classes = useStyles();
+
     return (
         <>
             <Drawer anchor="left" open={isFileDrawerOpen} onClose={() => setFileDrawerOpen(false)}>
-                <List component="nav" aria-labelledby="nested-list-subheader"
+                <List component="nav"
                     subheader={
-                        <ListSubheader component="div" id="nested-list-subheader">
+                        <ListSubheader component="div">
                             Project files
                         </ListSubheader>
                     } style={{ minWidth: '300px' }} >
 
-                    {Object.keys(files).map((name, id) => {
-                        return (<ListItem key={id} button onClick={() => {
-                            console.log(name);
-                            setCurrentFile(name);
+                    {project.files.map((fileUuid: string) => {
+                        return (<ListItem key={fileUuid} button onClick={() => {
+                            setCurrentFile(fileUuid);
                         }}>
-                            <ListItemText primary={name} />
+                            <ListItemText primary={files[fileUuid].name} />
                         </ListItem>);
                     })}
                 </List>
@@ -72,19 +94,24 @@ export default function Project() {
             </Dialog>
 
             <Box flexDirection="column" display="flex" height="100%">
-                <Box m={0} bgcolor="primary.main">
-                    <IconButton onClick={() => setFileDrawerOpen(true)}><MenuIcon style={{ color: '#fff' }}/></IconButton>
-
-                    <IconButton href="/"><HomeIcon style={{color: '#fff'}} fontSize="small"/></IconButton >
-                    <IconButton href="/about"><InfoIcon style={{color: '#fff'}} fontSize="small"/></IconButton>
-                    <IconButton href="/project"><PictureAsPdfIcon style={{color: '#fff'}} fontSize="small"/></IconButton>
+                <Box m={0} bgcolor="#2f3d88">
+                    <Toolbar variant="dense" style={{padding: 0}}>
+                        <IconButton onClick={() => setFileDrawerOpen(true)}><MenuIcon style={{ color: '#fff' }}/></IconButton>
+                        <Paper elevation={2} className={classes.nameBox}>
+                            <InputBase
+                                value={project.name}
+                                className={classes.name}
+                                onChange={e => { console.log(e.target.value); }}
+                                disabled />
+                        </Paper>
+                    </Toolbar>
                 </Box>
 
                 <Box flexGrow={1} style={{
                     minHeight: '0'
                 }}>
-                    {Object.keys(files).length !== 0 && currentFile ? <>
-                        <DocumentView pdf={{ data: files[currentFile].pdf }} documentId={files[currentFile].documentId} />
+                    {currentFile ? <>
+                        <DocumentView pdf={{ data: files[currentFile].pdfUrl }} fileUuid={currentFile} />
                     </> : <>
                         <EmptyProject addFile={addProjectFile} />
                     </>}
