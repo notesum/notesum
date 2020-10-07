@@ -76,11 +76,13 @@ export default function Project() {
                     } style={{ minWidth: '300px' }} >
 
                     {project.files.map((fileUuid: string) => {
-                        return (<ListItem key={fileUuid} button onClick={() => {
-                            setCurrentFile(fileUuid);
-                        }}>
-                            <ListItemText primary={files[fileUuid].name} />
-                        </ListItem>);
+                        return (
+                            <ListItem key={fileUuid} button onClick={() => {
+                                setCurrentFile(fileUuid);
+                                setFileDrawerOpen(false);
+                            }} selected={fileUuid===currentFile}>
+                                <ListItemText primary={files[fileUuid].name} />
+                            </ListItem>);
                     })}
                 </List>
                 <Button onClick={() => setAddFilesModalOpen(true)}>Add new files</Button>
