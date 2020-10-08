@@ -28,3 +28,5 @@ yarn-error.log*
 
 # Odf example that I am working on
 /src/resources/ODFunpacked/*
+
+.vscode
