@@ -28,7 +28,6 @@ export default function Login({ buttonCallback }: LogInProps) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    // const {loading, isLoggedIn} = useSelector((state:AppState)=>state.auth);
     const dispatch = useDispatch();
 
     function handleSubmit() {

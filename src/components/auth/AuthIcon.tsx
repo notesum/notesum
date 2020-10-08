@@ -17,11 +17,10 @@ export default function AuthIcon() {
     const username = useSelector((state:AppState)=>state.auth.user.name);
     const dispatch = useDispatch();
 
-
+    // This is very handy to test front end auth components
     // const loading = false;
     // const isLoggedIn = false;
 
-    // const [username, setUsername] = React.useState('Nouser');
     const [dialogOpen, setDialogOpen] = React.useState(false);
     const [signDialog, setSignDialog] = React.useState(false);
 
