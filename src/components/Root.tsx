@@ -46,12 +46,6 @@ export default function Root() {
                         <Route path="/pdf">
                             <MainView />
                         </Route>
-                        <Route path="/signup">
-                            <SignUp />
-                        </Route>
-                        <Route path="/login">
-                            <Login />
-                        </Route>
                         <Route path="/test">
                             <Test />
                         </Route>
