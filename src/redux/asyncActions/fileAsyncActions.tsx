@@ -1,13 +1,13 @@
 import { Dispatch } from 'react';
 
-import { FileActionTypes } from '../types/fileTypes';
+import { FilesActionsTypes } from '../types/filesTypes';
 
 export function loadFiles() {
     const requestOptions = {
         method: 'GET',
         headers: { 'Accept': 'application/json'},
     };
-    return (dispatch: Dispatch<FileActionTypes>) => {
+    return (dispatch: Dispatch<FilesActionsTypes>) => {
         fetch('http://localhost:8080/api/test', requestOptions)
         .then(async response => {
             const data = await response.json();
