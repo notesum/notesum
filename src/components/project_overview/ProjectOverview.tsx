@@ -1,6 +1,9 @@
-import { Container, Button, Dialog, DialogTitle, DialogContent, DialogActions, ListItem, ListItemText,
-    TextField, ListItemIcon, List } from '@material-ui/core';
+import {
+    Container, Button, Dialog, DialogTitle, DialogContent, DialogActions, ListItem, ListItemText,
+    TextField, ListItemIcon, List, Typography, Box
+} from '@material-ui/core';
 import DescriptionIcon from '@material-ui/icons/Description';
+import AddIcon from '@material-ui/icons/Add';
 import React, { Dispatch, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
@@ -28,41 +31,49 @@ export default React.memo(() => {
     return (
         <>
             <Dialog fullWidth={true} maxWidth="sm" open={isNewProjectOpen} onClose={() => setNewProjectOpen(false)}>
-                <DialogTitle>New Project</DialogTitle>
-                <DialogContent>
-                    <form ref={newProjectFormRef} onSubmit={(e) => {
-                        e.preventDefault();
-                        newProject(newProjectName);
-                    }}>
-                        <TextField label="Project name" value={newProjectName} onChange={e => { setNewProjectName(e.target.value); }} />
-                    </form>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={() => newProject(newProjectName)} color="primary">Create</Button>
-                    <Button onClick={() => setNewProjectOpen(false)} color="primary">Close</Button>
-                </DialogActions>
+                <Box m={1}>
+                    <DialogTitle>New Project</DialogTitle>
+                    <DialogContent>
+                        <Box style={{ display: 'flex' }} m={0}>
+                            <form ref={newProjectFormRef} onSubmit={(e) => {
+                                e.preventDefault();
+                                newProject(newProjectName);
+                            }}>
+                                <TextField label="Project name" value={newProjectName} onChange={e => { setNewProjectName(e.target.value); }} />
+                            </form>
+                            <DialogActions disableSpacing={true} style={{ marginLeft: 'auto' }}>
+                                <Button variant="contained" color="primary" onClick={() => newProject(newProjectName)}>Create</Button>
+                            </DialogActions>
+                        </Box>
+                    </DialogContent>
+                </Box>
             </Dialog>
 
-            <Container fixed>
-                <h1>Projects</h1>
-                <List>
-                    {Object.keys(projects).map((uuid) => <ProjectListItem key={uuid} uuid={uuid} name={projects[uuid].name} />)}
-                </List>
-                <Button onClick={() => setNewProjectOpen(true)}>New project</Button>
-            </Container>
+            <Box my={7}  >
+                <Container fixed>
+                    <Typography variant="h3" align="center" color="textPrimary" style={{ fontWeight: 'bold' }}>Projects</Typography>
+                    <Button onClick={() => setNewProjectOpen(true)}><AddIcon color="primary" /> New project </Button>
+                    <Box>
+                        <List>
+                            {Object.keys(projects).map((uuid) => <ProjectListItem key={uuid} uuid={uuid} name={projects[uuid].name} />)}
+                        </List>
+                    </Box>
+                </Container>
+            </Box>
         </>
     );
 });
 
-const ProjectListItem = React.memo(({ uuid, name }: { uuid: string, name: string}) => {
+const ProjectListItem = React.memo(({ uuid, name }: { uuid: string, name: string }) => {
     const CustomLink = (props: any) => <Link to={`/project/${uuid}`} {...props} />;
 
     return (
-        <li>
+        <List>
             <ListItem button component={CustomLink}>
-                <ListItemIcon><DescriptionIcon /></ListItemIcon>
-                <ListItemText primary={name} />
+                <ListItemIcon ><DescriptionIcon color="primary" /></ListItemIcon>
+                {/* This seem to alighn the icons and the text but god damn material ui just center things */}
+                <ListItemText disableTypography={true}><p style={{ fontFamily: 'Sans serif' }}>{name}</p></ListItemText>
             </ListItem>
-        </li>
+        </List>
     );
 });
