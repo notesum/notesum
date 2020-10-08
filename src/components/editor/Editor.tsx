@@ -20,6 +20,7 @@ import CameraAltIcon from '@material-ui/icons/CameraAlt';
 
 import { FilesActionsTypes } from '../../redux/types/filesTypes';
 import { AppState } from '../../redux/reducers';
+import { updateEditor } from '../../redux/actions/filesActions';
 
 import './Editor.css';
 import { insertNewBlock, getSelectionParentElement, insertImageUtil } from './EditorUtils';
