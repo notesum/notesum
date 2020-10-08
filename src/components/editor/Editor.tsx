@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Editor from 'draft-js-plugins-editor';
 import createImagePlugin from 'draft-js-image-plugin';
 import { EditorState, RichUtils, convertFromRaw, convertToRaw, getDefaultKeyBinding, KeyBindingUtil } from 'draft-js';
-// import 'draft-js/dist/Draft.css';
+import 'draft-js/dist/Draft.css';
 import { Button, ButtonGroup, Paper, Grid, Box, Dialog, AppBar, TextField, IconButton, Toolbar, Switch, Tooltip } from '@material-ui/core';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import FormatBoldIcon from '@material-ui/icons/FormatBold';
