@@ -1,9 +1,12 @@
 import React, { useState, Dispatch } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { Box, Button, Dialog, DialogContent, DialogTitle, Drawer, IconButton, List,
-    ListItem, ListItemText, ListSubheader, Paper, InputBase, makeStyles, Toolbar } from '@material-ui/core';
+import {
+    Box, Button, Dialog, DialogContent, DialogTitle, Drawer, IconButton, List,
+    ListItem, ListItemText, ListSubheader, Paper, InputBase, makeStyles, Toolbar
+} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import { ProjectsState, ProjectsActionTypes } from '../../redux/types/projectsTypes';
 import { FilesActionsTypes } from '../../redux/types/filesTypes';
@@ -20,11 +23,13 @@ const useStyles = makeStyles(() => ({
         marginRight: '20px',
         display: 'flex',
         alignItems: 'center',
-        minWidth: '0',
+        minWidth: '0'
     },
     name: {
         marginBottom: '-5px',
         width: 'auto',
+        color: 'white',
+        fontWeight: 'bold'
     },
     grow: {
         flexGrow: 1
@@ -33,7 +38,7 @@ const useStyles = makeStyles(() => ({
 
 export default function Project() {
 
-    const { uuid } = useParams<{uuid: string}>();
+    const { uuid } = useParams<{ uuid: string }>();
 
     const project = useSelector((state: ProjectsState) => state.projects[uuid]);
     const files = useSelector((state: ProjectsState) => state.files);
@@ -70,7 +75,7 @@ export default function Project() {
             <Drawer anchor="left" open={isFileDrawerOpen} onClose={() => setFileDrawerOpen(false)}>
                 <List component="nav"
                     subheader={
-                        <ListSubheader component="div">
+                        <ListSubheader color="primary" component="div">
                             Project files
                         </ListSubheader>
                     } style={{ minWidth: '300px' }} >
@@ -80,12 +85,14 @@ export default function Project() {
                             <ListItem key={fileUuid} button onClick={() => {
                                 setCurrentFile(fileUuid);
                                 setFileDrawerOpen(false);
-                            }} selected={fileUuid===currentFile}>
+                            }} selected={fileUuid === currentFile}>
                                 <ListItemText primary={files[fileUuid].name} />
                             </ListItem>);
                     })}
                 </List>
                 <Button onClick={() => setAddFilesModalOpen(true)}>Add new files</Button>
+                <Button href="/projects"> <ArrowBackIcon fontSize="small" color="primary"/>Back to Projects</Button>
+
             </Drawer>
 
             <Dialog onClose={() => setAddFilesModalOpen(false)} aria-labelledby="customized-dialog-title" open={isAddFilesModalOpen}>
@@ -97,15 +104,12 @@ export default function Project() {
 
             <Box flexDirection="column" display="flex" height="100%">
                 <Box m={0} bgcolor="#2f3d88">
-                    <Toolbar variant="dense" style={{padding: 0}}>
-                        <IconButton onClick={() => setFileDrawerOpen(true)}><MenuIcon style={{ color: '#fff' }}/></IconButton>
-                        <Paper elevation={2} className={classes.nameBox}>
-                            <InputBase
-                                value={project.name}
-                                className={classes.name}
-                                onChange={e => { console.log(e.target.value); }}
-                                disabled />
-                        </Paper>
+                    <Toolbar variant="dense" style={{ padding: 0 }}>
+                        <IconButton onClick={() => setFileDrawerOpen(true)}><MenuIcon style={{ color: '#fff' }} /></IconButton>
+                        <InputBase
+                            value={project.name}
+                            className={classes.name}
+                            onChange={e => { console.log(e.target.value); }} />
                     </Toolbar>
                 </Box>
 
@@ -115,8 +119,8 @@ export default function Project() {
                     {currentFile ? <>
                         <DocumentView pdf={{ data: files[currentFile].pdfUrl }} fileUuid={currentFile} />
                     </> : <>
-                        <EmptyProject addFile={addProjectFile} />
-                    </>}
+                            <EmptyProject addFile={addProjectFile} />
+                        </>}
                 </Box>
             </Box>
         </>
