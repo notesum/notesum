@@ -34,7 +34,6 @@ type EditorProps = {
 
 export default function TextEditor({ img, screenshotCallback, dragging }: EditorProps) {
 
-
     const { content } = useSelector((state: AppState) => state.editor);
     const contentDispatch = useDispatch<Dispatch<EditorActionTypes>>();
     const [editorState, setEditorState] = useState(EditorState.createWithContent(convertFromRaw(content)));
@@ -189,109 +188,89 @@ export default function TextEditor({ img, screenshotCallback, dragging }: Editor
         setStyle(newStyle);
     }
 
+    const editorComponent =
+        <Editor ref={editor} editorState={editorState} plugins={plugins}
+            onChange={setEditor} handleKeyCommand={handleKey} keyBindingFn={hotKey} />;
+
+    const saveDialog =
+        <Dialog open={saveToggle} onClose={() => { setSaveToggle(false); }}>
+            <Box m={2} overflow="hidden">
+                <Grid container wrap="wrap" direction="column">
+                    <Grid item xs>
+                        <TextField id="filled-helperText" defaultValue={name} label="File Name"
+                            onChange={(event) => { setName(event.target.value); }} />
+                    </Grid>
+                    <Grid item xs>
+                        <Button onMouseDown={() => saveState(editorState, 'docx', name)}>Save as Word Document</Button>
+                    </Grid>
+                    <Grid item xs>
+                        <Button onMouseDown={() => saveState(editorState, 'html', name)}>Save as HTML</Button>
+                    </Grid>
+                    <Grid item xs>
+                        <Button onMouseDown={() => saveState(editorState, 'txt', name)}>Save as Text Document</Button>
+                    </Grid>
+                </Grid>
+            </Box>
+        </Dialog>;
+
+    const toolbar =
+        <AppBar color="transparent" position="static" style={{ overflow: 'auto' }}>
+            <Toolbar variant="dense">
+                <Tooltip title="Highlight to Editor" placement="top">
+                    <Switch
+                        checked={highlightToggle}
+                        onChange={() => { setHighlightToggle(!highlightToggle); }}
+                        name="Highlight"
+                        color="primary"
+                        inputProps={{ 'aria-label': 'secondary checkbox' }} />
+                </Tooltip>
+                <Tooltip title="Highlight Text Types" placement="top">
+                    <ToggleButtonGroup exclusive value={style} onChange={toggleStyle} size="small">
+                        <ToggleButton value="header-two"> <TextFieldsIcon /> </ToggleButton>
+                        <ToggleButton value="header-three"> <TextFieldsIcon fontSize="small" /> </ToggleButton>
+                        <ToggleButton value="unstyled"> <TextFormatIcon /> </ToggleButton>
+                        <ToggleButton value="unordered-list-item"> <FormatListBulletedIcon /> </ToggleButton>
+                        <ToggleButton value="img"> <CameraAltIcon /> </ToggleButton>
+                    </ToggleButtonGroup>
+                </Tooltip>
+                <ButtonGroup >
+                    <IconButton onMouseDown={() => formatText('BOLD')}><FormatBoldIcon fontSize="small" /></IconButton>
+                    <IconButton onMouseDown={() => formatText('ITALIC')}><FormatItalicIcon fontSize="small" /></IconButton>
+                    <IconButton onMouseDown={() => formatText('STRIKETHROUGH')}><FormatStrikethroughIcon fontSize="small" /></IconButton>
+                    <IconButton onMouseDown={() => formatText('UNDERLINE')}><FormatUnderlinedIcon fontSize="small" /></IconButton>
+                    <IconButton onMouseDown={() => code()}><CodeIcon fontSize="small" /></IconButton>
+                </ButtonGroup>
+                <IconButton onClick={() => { setSaveToggle(true); }} style={{ marginLeft: 'auto' }}>
+                    <SaveAltIcon fontSize="small" />
+                </IconButton>
+                <IconButton onClick={() => { setFullscreenOpen(true); }}>
+                    <FullscreenIcon fontSize="small" />
+                </IconButton>
+
+            </Toolbar>
+        </AppBar>;
+
+
+    const editorFull =
+        <Dialog fullScreen open={fullscreenOpen} onClose={() => { setFullscreenOpen(false); }}>
+            {toolbar}
+            {editorComponent}
+        </Dialog>;
+
+
+    // Main design
     return (
-        <div>
+        <div style={{ backgroundColor: 'white' }} >
             <Grid container wrap="wrap">
-                <AppBar color="transparent" position="static">
-                    <Toolbar variant="dense" style={{ backgroundColor: '#fff' }}>
-                        <Box>
-                            <Tooltip title="Highlight to Editor" placement="top">
-                                <Switch
-                                    checked={highlightToggle}
-                                    onChange={() => { setHighlightToggle(!highlightToggle); }}
-                                    name="Highlight"
-                                    color="primary"
-                                    inputProps={{ 'aria-label': 'secondary checkbox' }}
-                                />
-                            </Tooltip>
-                        </Box>
-                        <Box overflow="hidden">
-                            <Tooltip title="Highlight Text Types" placement="top">
-                                <ToggleButtonGroup exclusive value={style} onChange={toggleStyle} size="small">
-                                    <ToggleButton value="header-two"> <TextFieldsIcon /> </ToggleButton>
-                                    <ToggleButton value="header-three"> <TextFieldsIcon fontSize="small" /> </ToggleButton>
-                                    <ToggleButton value="unstyled"> <TextFormatIcon /> </ToggleButton>
-                                    <ToggleButton value="unordered-list-item"> <FormatListBulletedIcon /> </ToggleButton>
-                                    <ToggleButton value="img"> <CameraAltIcon /> </ToggleButton>
-
-
-                                </ToggleButtonGroup>
-                            </Tooltip>
-                        </Box>
-                        <Box overflow="hidden">
-                            <ButtonGroup >
-                                <IconButton onMouseDown={() => formatText('BOLD')}><FormatBoldIcon fontSize="small" /></IconButton>
-                                <IconButton onMouseDown={() => formatText('ITALIC')}><FormatItalicIcon fontSize="small" /></IconButton>
-                                <IconButton onMouseDown={() => formatText('STRIKETHROUGH')}><FormatStrikethroughIcon fontSize="small" /></IconButton>
-                                <IconButton onMouseDown={() => formatText('UNDERLINE')}><FormatUnderlinedIcon fontSize="small" /></IconButton>
-                                <IconButton onMouseDown={() => code()}><CodeIcon fontSize="small" /></IconButton>
-
-                            </ButtonGroup>
-                        </Box>
-                        <Box overflow="hidden">
-                            <IconButton onClick={() => { setSaveToggle(true); }}>
-                                <SaveAltIcon fontSize="small" />
-                            </IconButton>
-                        </Box>
-                        <Box overflow="hidden">
-                            <Dialog open={saveToggle} onClose={() => { setSaveToggle(false); }}>
-                                <Box m={2} overflow="hidden">
-                                    <Grid container wrap="wrap" direction="column">
-                                        <Grid item xs>
-                                            <TextField id="filled-helperText" defaultValue={name} label="File Name"
-                                                onChange={(event) => { setName(event.target.value); }} />
-                                        </Grid>
-                                        <Grid item xs>
-                                            <Button onMouseDown={() => saveState(editorState, 'docx', name)}>Save as Word Document</Button>
-                                        </Grid>
-                                        <Grid item xs>
-                                            <Button onMouseDown={() => saveState(editorState, 'html', name)}>Save as HTML</Button>
-                                        </Grid>
-                                        <Grid item xs>
-                                            <Button onMouseDown={() => saveState(editorState, 'txt', name)}>Save as Text Document</Button>
-                                        </Grid>
-                                    </Grid>
-                                </Box>
-                            </Dialog>
-                        </Box>
-                        <Box overflow="hidden">
-                            <IconButton onClick={() => { setFullscreenOpen(true); }}>
-                                <FullscreenIcon fontSize="small" />
-                            </IconButton>
-                            <Dialog fullScreen open={fullscreenOpen} onClose={() => { setFullscreenOpen(false); }}>
-                                <Paper onClick={focusEditor} elevation={4}>
-                                    <Editor
-                                        ref={editor}
-                                        editorState={editorState}
-                                        plugins={plugins}
-                                        onChange={setEditor}
-                                        handleKeyCommand={handleKey}
-                                        keyBindingFn={hotKey}
-                                    />
-                                </Paper>
-                            </Dialog>
-                        </Box>
-
-                    </Toolbar>
-                </AppBar>
-                <Grid item xs={12} >
-                    <Box my={1} mx={2} >
-                        <Paper onClick={focusEditor} elevation={4}>
-                            {!dragging &&
-                                <Editor
-                                    ref={editor}
-                                    editorState={editorState}
-                                    plugins={plugins}
-                                    onChange={setEditor}
-                                    handleKeyCommand={handleKey}
-                                    keyBindingFn={hotKey}
-                                />
-                            }
-                        </Paper>
-                    </Box>
-
+                {toolbar}
+                <Grid item xs={12} style={{ backgroundColor: 'white' }}>
+                    {!dragging && !fullscreenOpen && editorComponent
+                    }
                 </Grid>
             </Grid>
+            {/* The dialogs */}
+            {editorFull}
+            {saveDialog}
         </div >
     );
 }

@@ -83,7 +83,7 @@ export default function MainView() {
                 width: `${99 - pdfPercentage}%`,
                 overflow: 'hidden',
                 height: '100%',
-                backgroundColor: '#eee'
+                backgroundColor: 'white'
             }}>
                 <TextEditor screenshotCallback={setSS} img={image} dragging={dragging} />
             </Box>
