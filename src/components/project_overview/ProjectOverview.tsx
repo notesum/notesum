@@ -68,10 +68,12 @@ const ProjectListItem = React.memo(({ uuid, name }: { uuid: string, name: string
     const CustomLink = (props: any) => <Link to={`/project/${uuid}`} {...props} />;
 
     return (
-        <ListItem button component={CustomLink}>
-            <ListItemIcon ><DescriptionIcon color="primary" /></ListItemIcon>
-            {/* This seem to alighn the icons and the text but god damn material ui just center things */}
-            <ListItemText disableTypography={true}><p style={{ fontFamily: 'Sans serif' }}>{name}</p></ListItemText>
-        </ListItem>
+        <li>
+            <ListItem button component={CustomLink}>
+                <ListItemIcon ><DescriptionIcon color="primary" /></ListItemIcon>
+                {/* This seem to alighn the icons and the text but god damn material ui just center things */}
+                <ListItemText disableTypography={true}><p style={{ fontFamily: 'Sans serif' }}>{name}</p></ListItemText>
+            </ListItem>
+        </li>
     );
 });
