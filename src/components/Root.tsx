@@ -41,9 +41,6 @@ export default function Root() {
                         <Route path="/about">
                             <About />
                         </Route>
-                        <Route path="/test">
-                            <Test />
-                        </Route>
                         <Route exact path="/projects">
                             <ProjectOverview />
                         </Route>
