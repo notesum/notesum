@@ -27,7 +27,7 @@ export default function About() {
                 </Container>
                     <Grid container spacing={2} justify="center" direction="column" alignContent="center" alignItems="center">
                         <Grid item>
-                            <Button variant="contained" color="primary" href="/pdf">Try It!</Button>
+                            <Button variant="contained" color="primary" href="/projects">Try It!</Button>
                         </Grid>
                         <Grid item justify="center">
                             <img src={example} style={{ height: '55vmin'}}/>
