@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Box, Button, Grid, Typography } from '@material-ui/core';
@@ -28,6 +28,21 @@ export default function SignUp() {
     const [didntMatch, setDidntMatch] = useState(false);
 
     const dispatch = useDispatch();
+
+
+    function downHandler({ key }) {
+        console.log(key);
+        if (key === 'Enter') {
+            handleSubmit();
+        }
+    }
+
+    useEffect(() => {
+        window.addEventListener('keydown', downHandler);
+        return () => {
+            window.removeEventListener('keydown', downHandler);
+        };
+    }, []);
 
     function handleSubmit() {
         if (password === passwordConf) {

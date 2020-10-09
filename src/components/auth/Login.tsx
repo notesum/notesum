@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
@@ -33,6 +33,20 @@ export default function Login({ buttonCallback }: LogInProps) {
     function handleSubmit() {
         dispatch(login(email, password));
     }
+
+    function downHandler({ key }) {
+        console.log(key);
+        if (key === 'Enter') {
+            handleSubmit();
+        }
+    }
+
+    useEffect(() => {
+        window.addEventListener('keydown', downHandler);
+        return () => {
+            window.removeEventListener('keydown', downHandler);
+        };
+    }, []);
 
     return (
         <Box m={3}>
