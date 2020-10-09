@@ -19,6 +19,12 @@ export default function AuthIcon() {
     const username = useSelector((state: AppState) => state.auth.user.name);
     const dispatch = useDispatch();
 
+    React.useEffect(() => {
+        if(isLoggedIn) {
+            dispatch(getUserInfo());
+        }
+    }, [isLoggedIn]);
+
     // This is very handy to test front end auth components
     // const loading = false;
     // const isLoggedIn = false;
@@ -30,10 +36,13 @@ export default function AuthIcon() {
         dispatch(logout());
     }
 
-    function getDetails() {
-        dispatch(getUserInfo());
-    }
+    // function getDetails() {
+    //     dispatch(getUserInfo());
+    // }
     function getError() {
+        if(error === null) {
+            return false;
+        }
         return error.length > 0;
     }
 
@@ -46,9 +55,9 @@ export default function AuthIcon() {
                 <Grid item>
                     <Button onMouseDown={() => logOut()} variant="contained" color="primary">Log Out</Button>
                 </Grid>
-                <Grid item>
+                {/* <Grid item>
                     <Button onMouseDown={() => getDetails()} variant="contained" color="primary">Get details</Button>
-                </Grid>
+                </Grid> */}
             </Grid>
         </Box>
     );
