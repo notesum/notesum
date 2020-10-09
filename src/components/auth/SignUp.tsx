@@ -24,12 +24,12 @@ export default function SignUp() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [password_conf, setPasswordConf] = useState('');
+    const [passwordConf, setPasswordConf] = useState('');
 
     const dispatch = useDispatch();
 
     function handleSubmit() {
-        if (password === password_conf) {
+        if (password === passwordConf) {
             dispatch(register(name,email,password));
         }
     }

@@ -125,5 +125,5 @@ export function register(name:string,email:string,password:string) {
                 console.log('I got an error',err);
                 dispatch(a.userSignupFailure(err));
             });
-    }
+    };
 }
