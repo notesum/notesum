@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Box, Button, Grid, Typography } from '@material-ui/core';
 
-import { login } from '../../redux/asynchActions/authAsynchActions';
+import { login } from '../../redux/asyncActions/authAsyncActions';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -19,10 +19,11 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 type LogInProps = {
+    warning?: boolean
     buttonCallback?: (a: boolean) => void
 };
 
-export default function Login({ buttonCallback }: LogInProps) {
+export default function Login({ buttonCallback, warning }: LogInProps) {
     const classes = useStyles();
 
     const [email, setEmail] = useState('');
@@ -57,6 +58,11 @@ export default function Login({ buttonCallback }: LogInProps) {
                 alignItems="center"
                 justify="center"
             >
+                {warning &&
+                    <Grid item style={{ marginBottom: '40px' }}>
+                        <Typography variant="h4" color="secondary">You must be logged in.</Typography>
+                    </Grid>
+                }
                 <Grid item>
                     <Typography variant="h4">Log In</Typography>
                 </Grid>
@@ -73,13 +79,15 @@ export default function Login({ buttonCallback }: LogInProps) {
                 <Grid item style={{ marginTop: '10px' }}>
                     <Button variant="contained" color="primary" onMouseDown={() => handleSubmit()}>Log In</Button>
                 </Grid>
-                <Grid item style={{ marginTop: '30px' }}>
-                    <Typography variant="h6">Don't have an acount?</Typography>
-                </Grid>
-                <Grid item style={{ marginTop: '10px' }}>
-                    <Button onMouseDown={() => buttonCallback(true)} variant="contained" color="primary">Sign Up</Button>
-
-                </Grid>
+                {!warning &&
+                    <>
+                        <Grid item style={{ marginTop: '30px' }}>
+                            <Typography variant="h6">Don't have an acount?</Typography>
+                        </Grid>
+                        <Grid item style={{ marginTop: '10px' }}>
+                            <Button onMouseDown={() => buttonCallback(true)} variant="contained" color="primary">Sign Up</Button>
+                        </Grid>
+                    </>}
             </Grid >
         </Box>
     );

@@ -4,7 +4,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { AppState } from '../../redux/reducers';
-import { getUserInfo, logout } from '../../redux/asynchActions/authAsynchActions';
+import { getUserInfo, logout } from '../../redux/asyncActions/authAsyncActions';
 
 import Login from './Login';
 import SignUp from './SignUp';
