@@ -97,7 +97,7 @@ const authReducer = ( state = initialState, action: t.AuthActionTypes) => {
         case t.AUTH_RESET:
             return {
                 ...initialState,
-            }
+            };
         default:
             return state;
     }
