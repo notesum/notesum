@@ -21,7 +21,7 @@ export default function Root() {
                     <Toolbar variant="dense">
                         <IconButton href="/"><HomeIcon style={{ color: '#fff' }} /></IconButton >
                         <IconButton href="/about"><InfoIcon style={{ color: '#fff' }} /></IconButton>
-                        <IconButton href="/rojects"><PictureAsPdfIcon style={{ color: '#fff' }} /></IconButton>
+                        <IconButton href="/projects"><PictureAsPdfIcon style={{ color: '#fff' }} /></IconButton>
                         <Box style={{ marginLeft: 'auto' }}>
                             <AuthIcon />
                         </Box>
