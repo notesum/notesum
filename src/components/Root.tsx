@@ -16,7 +16,7 @@ import ProjectOverview from './project_overview/ProjectOverview';
 import Error from './Error';
 
 export default function Root() {
-    
+
     return (
         <BrowserRouter>
             <Box flexDirection="column" display="flex" height="100%" >
