@@ -38,7 +38,7 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-export default React.forwardRef(({ page, scale, width, hidden, isVisible, screenshot, screenshotCallback }: PageProps,
+export default React.memo(React.forwardRef(({ page, scale, width, hidden, isVisible, screenshot, screenshotCallback }: PageProps,
                                  pageRef: MutableRefObject<HTMLDivElement>) => {
 
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -74,6 +74,10 @@ export default React.forwardRef(({ page, scale, width, hidden, isVisible, screen
         setState((curState) => curState === PageState.RENDERING ? PageState.RENDERING_OUTDATED : PageState.NEEDS_RENDER);
     }, [page, scale, width]);
 
+    useEffect(() => {
+        setTextData(null);
+    }, [page]);
+
     // Main renderer. Should only be ran once after every update
     useEffect(() => {
         if (!isVisible || state !== PageState.NEEDS_RENDER || hidden) return;
@@ -105,7 +109,7 @@ export default React.forwardRef(({ page, scale, width, hidden, isVisible, screen
             setState((curState) => curState === PageState.RENDERING_OUTDATED ? PageState.NEEDS_RENDER : PageState.FINISHED);
         })();
 
-    }, [isVisible, state, hidden]);
+    }, [isVisible, state, hidden, ctx]);
 
     useEffect(() => {
         if (!screenshot) return;
@@ -200,4 +204,4 @@ export default React.forwardRef(({ page, scale, width, hidden, isVisible, screen
         </div>
     );
 
-});
+}));

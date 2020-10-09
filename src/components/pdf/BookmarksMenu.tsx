@@ -11,7 +11,7 @@ type BookmarkMenuProps = {
     isOpen?: boolean
 };
 
-export default function BookmarksMenu({ outline, onNavigate }: BookmarkMenuProps) {
+export default React.memo(({ outline, onNavigate }: BookmarkMenuProps) => {
 
     const [isOpen, setIsOpen] = useState(false);
     const anchor = useRef(null);
@@ -30,8 +30,7 @@ export default function BookmarksMenu({ outline, onNavigate }: BookmarkMenuProps
             </Menu>
         </>
     );
-}
-
+});
 
 type BookmarkMenuListProps = {
     outline: any,
@@ -39,7 +38,7 @@ type BookmarkMenuListProps = {
     level: number
 };
 
-const BookmarkMenuList = React.forwardRef(({ outline, onNavigate, level }: BookmarkMenuListProps, ref: RefObject<HTMLUListElement>) => {
+const BookmarkMenuList = React.memo(React.forwardRef(({ outline, onNavigate, level }: BookmarkMenuListProps, ref: RefObject<HTMLUListElement>) => {
     return (
         <List ref={ref}>
             {outline.map((bookmark, id) => {
@@ -47,7 +46,7 @@ const BookmarkMenuList = React.forwardRef(({ outline, onNavigate, level }: Bookm
             })}
         </List>
     );
-});
+}));
 
 
 type BookmarkMenuItemProps = {
@@ -57,7 +56,7 @@ type BookmarkMenuItemProps = {
 };
 
 
-function BookmarkMenuItem({ bookmark, onNavigate, level }: BookmarkMenuItemProps) {
+const BookmarkMenuItem = React.memo(({ bookmark, onNavigate, level }: BookmarkMenuItemProps) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleOpen = () => {
@@ -88,4 +87,4 @@ function BookmarkMenuItem({ bookmark, onNavigate, level }: BookmarkMenuItemProps
             }
         </>
     );
-}
+});

@@ -6,15 +6,12 @@ import HomeIcon from '@material-ui/icons/Home';
 import InfoIcon from '@material-ui/icons/Info';
 import 'regenerator-runtime/runtime';
 
-
 import App from './app/App';
 import About from './app/About';
-import MainView from './app/MainView';
 import AuthIcon from './auth/AuthIcon';
-import SignUp from './auth/SignUp';
-import Login from './auth/Login';
-import Test from './Test';
-
+import Project from './project/Project';
+import ProjectOverview from './project_overview/ProjectOverview';
+import Error from './Error';
 
 export default function Root() {
     return (
@@ -24,11 +21,13 @@ export default function Root() {
                     <Toolbar variant="dense">
                         <IconButton href="/"><HomeIcon style={{ color: '#fff' }} /></IconButton >
                         <IconButton href="/about"><InfoIcon style={{ color: '#fff' }} /></IconButton>
-                        <IconButton href="/pdf"><PictureAsPdfIcon style={{ color: '#fff' }} /></IconButton>
+                        <IconButton href="/projects"><PictureAsPdfIcon style={{ color: '#fff' }} /></IconButton>
                         <Box style={{ marginLeft: 'auto' }}>
                             <AuthIcon />
                         </Box>
-                        <Button style={{ color: 'white' }}><Typography variant="body1" style={{ color: 'white' }}>Feedback</Typography></Button>
+                        <Button target="_blank"
+                        href="https://docs.google.com/forms/d/e/1FAIpQLScK9dZrpjcqcL4SGUc_bcwpAxWYSAH62hYPfdcK_v-2z0PRow/viewform"
+                        style={{ color: 'white' }}><Typography variant="body1" style={{ color: 'white' }}>Feedback</Typography></Button>
                     </Toolbar>
                 </AppBar>
 
@@ -43,11 +42,12 @@ export default function Root() {
                         <Route path="/about">
                             <About />
                         </Route>
-                        <Route path="/pdf">
-                            <MainView />
+                        <Route exact path="/projects">
+                            <ProjectOverview />
                         </Route>
-                        <Route path="/test">
-                            <Test />
+                        <Route exact path="/project/:id" children={<Project />} />
+                        <Route path="*">
+                            <Error />
                         </Route>
                     </Switch>
                 </Box>

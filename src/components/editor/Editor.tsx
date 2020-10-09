@@ -1,10 +1,10 @@
-import React, { useState, useRef, useEffect, useCallback, Dispatch } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Editor from 'draft-js-plugins-editor';
 import createImagePlugin from 'draft-js-image-plugin';
 import { EditorState, RichUtils, convertFromRaw, convertToRaw, getDefaultKeyBinding, KeyBindingUtil } from 'draft-js';
 import 'draft-js/dist/Draft.css';
-import { Button, ButtonGroup, Paper, Grid, Box, Dialog, AppBar, TextField, IconButton, Toolbar, Switch, Tooltip } from '@material-ui/core';
+import { Button, ButtonGroup, Grid, Box, Dialog, AppBar, TextField, IconButton, Toolbar, Switch, Tooltip } from '@material-ui/core';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import FormatBoldIcon from '@material-ui/icons/FormatBold';
 import FormatItalicIcon from '@material-ui/icons/FormatItalic';
@@ -17,11 +17,12 @@ import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
+import SaveIcon from '@material-ui/icons/Save';
 
-import { updateEditor } from '../../redux/actions/editorActions';
+import { AppState } from '../../redux/reducers';
+import { updateEditor } from '../../redux/actions/filesActions';
+import { saveFile } from '../../redux/asyncActions/fileAsyncActions';
 
-import { AppState } from './../../redux/reducers';
-import { EditorActionTypes } from './../../redux/types/editorTypes';
 import './Editor.css';
 import { insertNewBlock, getSelectionParentElement, insertImageUtil } from './EditorUtils';
 import saveState from './Saver';
@@ -29,20 +30,25 @@ import saveState from './Saver';
 type EditorProps = {
     img: string
     screenshotCallback: (b: boolean) => void
-    dragging: boolean
+    dragging: boolean,
+    fileId: string
 };
 
-export default function TextEditor({ img, screenshotCallback, dragging }: EditorProps) {
+export default function TextEditor({ img, screenshotCallback, dragging, fileId }: EditorProps) {
 
-    const { content } = useSelector((state: AppState) => state.editor);
-    const contentDispatch = useDispatch<Dispatch<EditorActionTypes>>();
+    const content = useSelector((state: AppState) => state.files[fileId].summary);
+    const file = useSelector((state: AppState) => state.files[fileId]);
+    const dispatch = useDispatch();
     const [editorState, setEditorState] = useState(EditorState.createWithContent(convertFromRaw(content)));
 
     // Update editorstate both in state and in local storage
     const setEditor = (newEditorState: EditorState) => {
-        contentDispatch(updateEditor(convertToRaw(editorState.getCurrentContent())));
         setEditorState(newEditorState);
     };
+
+    useEffect(() => {
+        dispatch(updateEditor(fileId, convertToRaw(editorState.getCurrentContent())));
+    }, [editorState]);
 
     const [style, setStyle] = useState('unstyled');
     // File name in the editor
@@ -61,20 +67,12 @@ export default function TextEditor({ img, screenshotCallback, dragging }: Editor
             (getSelectionParentElement().className === 'page' || getSelectionParentElement().className === 'textLayer')) {
             const exactText = window.getSelection().toString();
             prevSelection = exactText;
-            setEditorState((prevState) => {
-                const newEditor = insertNewBlock(prevState, exactText, style);
-                contentDispatch(updateEditor(convertToRaw(newEditor.getCurrentContent())));
-                return newEditor;
-            });
+            setEditorState((prevState) => insertNewBlock(prevState, exactText, style));
         }
     }, [style, highlightToggle]);
 
     useEffect(() => {
-        setEditorState((prevState) => {
-            const newEditor = insertImageUtil(prevState, img);
-            contentDispatch(updateEditor(convertToRaw(newEditor.getCurrentContent())));
-            return newEditor;
-        });
+        setEditorState((prevState) => insertImageUtil(prevState, img));
     }, [img]);
 
     function hotKey(e) {
@@ -243,10 +241,12 @@ export default function TextEditor({ img, screenshotCallback, dragging }: Editor
                 <IconButton onClick={() => { setSaveToggle(true); }} style={{ marginLeft: 'auto' }}>
                     <SaveAltIcon fontSize="small" />
                 </IconButton>
+                <IconButton onClick={() => dispatch(saveFile(fileId))} style={file.needsSave ? {color: '#000'} : {}}>
+                    <SaveIcon fontSize="small" />
+                </IconButton>
                 <IconButton onClick={() => { setFullscreenOpen(true); }}>
                     <FullscreenIcon fontSize="small" />
                 </IconButton>
-
             </Toolbar>
         </AppBar>;
 

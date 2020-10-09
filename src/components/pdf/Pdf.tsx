@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef, useMemo, createRef, RefObject, Dispatch } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { GlobalWorkerOptions, getDocument, version } from 'pdfjs-dist';
-import { PDFDocumentProxy, PDFPageProxy } from 'pdfjs-dist/types/display/api';
+import { DocumentInitParameters, PDFDataRangeTransport, PDFDocumentProxy, PDFPageProxy, TypedArray } from 'pdfjs-dist/types/display/api';
 import 'pdfjs-dist/web/pdf_viewer.css';
 import { Paper, Box, AppBar, Toolbar, IconButton, makeStyles, InputBase } from '@material-ui/core';
 import ZoomInIcon from '@material-ui/icons/ZoomIn';
@@ -16,7 +16,8 @@ import BookmarksMenu from './BookmarksMenu';
 GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${version}/pdf.worker.min.js`;
 
 type PdfProps = {
-    file: string,
+    id?: string | number,
+    file: string | TypedArray | DocumentInitParameters | PDFDataRangeTransport,
     hidden?: boolean,
     fitToWidth?: boolean,
     width?: number,
@@ -42,7 +43,7 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-export default function Pdf({ file, fitToWidth, hidden, screenshot, screenshotCallback }: PdfProps) {
+export default React.memo(({ id, file, fitToWidth, hidden, screenshot, screenshotCallback }: PdfProps) => {
     // TODO: start rendering at cp
     const cp = useSelector((state: AppState) => state.pdf.currentPage);
     const cpDispatch = useDispatch<Dispatch<PDFActionTypes>>();
@@ -78,11 +79,18 @@ export default function Pdf({ file, fitToWidth, hidden, screenshot, screenshotCa
     // Load document
     useEffect(() => {
         (async () => {
-            const doc = await getDocument({ url: file }).promise;
+            let doc: PDFDocumentProxy;
+
+            if (typeof file === 'string') {
+                doc = await getDocument({ url: file }).promise;
+            } else {
+                doc = await getDocument(file).promise;
+            }
+
             setDocument(doc);
             setOutline(await doc.getOutline());
         })();
-    }, []);
+    }, [id]);
 
     useEffect(() => {
         scrollToPage(currentPage);
@@ -122,7 +130,7 @@ export default function Pdf({ file, fitToWidth, hidden, screenshot, screenshotCa
             observer.observe(ref.current);
         });
 
-        return observer.disconnect;
+        return () => observer.disconnect();
     }, [pageRefs]);
 
     const onNavigate = async (loc: [{ num: number, gen: number }] | string) => {
@@ -191,8 +199,8 @@ export default function Pdf({ file, fitToWidth, hidden, screenshot, screenshotCa
                     overflow: 'auto',
                     overflowY: 'scroll'
                 }}>
-                    {pages.map((page, id) => {
-                        return (<Page ref={pageRefs[id]} isVisible={id in visiblePages && visiblePages[id].visible} hidden={hidden} key={id}
+                    {pages.map((page, key) => {
+                        return (<Page ref={pageRefs[key]} isVisible={key in visiblePages && visiblePages[key].visible} hidden={hidden} key={key}
                             scale={fitToWidth ? null : scale} width={fitToWidth ? mainView.current.clientWidth - 18 : null} page={page}
                             screenshot={screenshot} screenshotCallback={screenshotCallback} />);
                     })}
@@ -207,4 +215,4 @@ export default function Pdf({ file, fitToWidth, hidden, screenshot, screenshotCa
             </Box>
         </Box>
     );
-}
+});
