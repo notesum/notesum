@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback, Dispatch } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Editor from 'draft-js-plugins-editor';
 import createImagePlugin from 'draft-js-image-plugin';
@@ -17,10 +17,11 @@ import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
+import SaveIcon from '@material-ui/icons/Save';
 
-import { FilesActionsTypes } from '../../redux/types/filesTypes';
 import { AppState } from '../../redux/reducers';
 import { updateEditor } from '../../redux/actions/filesActions';
+import { saveFile } from '../../redux/asyncActions/fileAsyncActions';
 
 import './Editor.css';
 import { insertNewBlock, getSelectionParentElement, insertImageUtil } from './EditorUtils';
@@ -36,7 +37,8 @@ type EditorProps = {
 export default function TextEditor({ img, screenshotCallback, dragging, fileId }: EditorProps) {
 
     const content = useSelector((state: AppState) => state.files[fileId].summary);
-    const contentDispatch = useDispatch<Dispatch<FilesActionsTypes>>();
+    const file = useSelector((state: AppState) => state.files[fileId]);
+    const dispatch = useDispatch();
     const [editorState, setEditorState] = useState(EditorState.createWithContent(convertFromRaw(content)));
 
     // Update editorstate both in state and in local storage
@@ -45,7 +47,7 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
     };
 
     useEffect(() => {
-        contentDispatch(updateEditor(fileId, convertToRaw(editorState.getCurrentContent())));
+        dispatch(updateEditor(fileId, convertToRaw(editorState.getCurrentContent())));
     }, [editorState]);
 
     const [style, setStyle] = useState('unstyled');
@@ -239,10 +241,12 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
                 <IconButton onClick={() => { setSaveToggle(true); }} style={{ marginLeft: 'auto' }}>
                     <SaveAltIcon fontSize="small" />
                 </IconButton>
+                <IconButton onClick={() => dispatch(saveFile(fileId))} style={file.needsSave ? {color: '#000'} : {}}>
+                    <SaveIcon fontSize="small" />
+                </IconButton>
                 <IconButton onClick={() => { setFullscreenOpen(true); }}>
                     <FullscreenIcon fontSize="small" />
                 </IconButton>
-
             </Toolbar>
         </AppBar>;
 

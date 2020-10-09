@@ -48,6 +48,14 @@ export interface IUpdateProjectList {
     payload: ProjectsState;
 }
 
+export const SET_OPEN_PROJECT_FILE = 'SET_OPEN_PROJECT_FILE';
+export interface ISetOpenProjectFile {
+    readonly type: typeof SET_OPEN_PROJECT_FILE;
+    payload: {
+        id: string,
+        fileId: string
+    };
+}
 
 export type ProjectActionTypes =
     | INewProjectAction
@@ -55,12 +63,14 @@ export type ProjectActionTypes =
     | IUpdateProjectNameAction
     | IAddProjectFileAction
     | IRemoveProjectFileAction
-    | IUpdateProjectList;
+    | IUpdateProjectList
+    | ISetOpenProjectFile;
 
 export interface Project {
     id: string;
     name: string;
     files: string[];
+    currentOpenFile?: string;
 }
 
 export interface ProjectsState {

@@ -25,11 +25,19 @@ export interface IUpdateFileList {
     payload: Files;
 }
 
+export const FILE_EDITOR_SAVE = 'FILE_EDITOR_SAVE';
+export interface IFileEditorSave {
+    readonly type: typeof FILE_EDITOR_SAVE;
+    payload: {
+        id: string
+    };
+}
 
 export type FilesActionsTypes =
     | INewFileAction
     | IUpdateEditorState
-    | IUpdateFileList;
+    | IUpdateFileList
+    | IFileEditorSave;
 
 export interface ProjectFile {
     id: string;
@@ -37,6 +45,8 @@ export interface ProjectFile {
     summary: RawDraftContentState;
     currentPage: number;
     pdf: string; // url
+    needsSave?: boolean;
+    lastSavedSummary?: RawDraftContentState;
 }
 
 export interface Files {

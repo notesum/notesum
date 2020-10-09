@@ -1,7 +1,7 @@
 import { Dispatch } from 'react';
 import { ContentState, convertToRaw } from 'draft-js';
 
-import { Files, FilesActionsTypes, NEW_FILE } from '../types/filesTypes';
+import { Files, FilesActionsTypes, FILE_EDITOR_SAVE, NEW_FILE, ProjectFile } from '../types/filesTypes';
 import { updateFileList } from '../actions/filesActions';
 import { addFileToProject } from '../actions/projectActions';
 import { ProjectActionTypes } from '../types/projectTypes';
@@ -22,10 +22,18 @@ export function loadFiles() {
 
             // TODO handle errors
             const result = await fetch(`${BASE_URL}/files`, requestOptions);
+            const json = (await result.json());
 
-            const files: Files = (await result.json()).data.reduce((obj: Files, item) => {
+            if (!('data' in json)) return;
+
+            const files: Files = json.data.reduce((obj: Files, item) => {
                 delete item.project_id;
-                item.summary = convertToRaw(ContentState.createFromText(''));
+
+                if (item.summary == null) {
+                    item.summary = convertToRaw(ContentState.createFromText(''));
+                } else {
+                    item.summary = JSON.parse(item.summary);
+                }
 
                 return {
                     ...obj,
@@ -39,7 +47,7 @@ export function loadFiles() {
 
 }
 
-export function createFile(projectId: string, title: string, pdf: File) {
+export function createFile(projectId: string, pdf: File) {
     return (dispatch: Dispatch<FilesActionsTypes | ProjectActionTypes>, getState) => {
         (async () => {
             const formData = new FormData();
@@ -56,21 +64,57 @@ export function createFile(projectId: string, title: string, pdf: File) {
             };
 
             const result = await fetch(`${BASE_URL}/files`, requestOptions);
-            console.log(result);
-
             const json = (await result.json());
-            console.log(json);
+
+            if (!('data' in json)) {
+                return;
+            }
 
             dispatch({
                 type: NEW_FILE,
                 payload: {
-                    id: json.id,
-                    title: json.title,
-                    pdf: json.pdf
+                    id: json.data.id,
+                    title: json.data.title,
+                    pdf: json.data.pdf
                 }
             });
 
-            dispatch(addFileToProject(projectId, json.id));
+            dispatch(addFileToProject(projectId, json.data.id));
+        })();
+    };
+}
+
+export function saveFile(fileId: string) {
+    return (dispatch: Dispatch<FilesActionsTypes | ProjectActionTypes>, getState) => {
+        const file: ProjectFile = getState().files[fileId];
+
+        (async () => {
+            const requestOptions = {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${getState().auth.token}`
+                },
+                body: JSON.stringify({
+                    title: file.title,
+                    summary: JSON.stringify(file.summary)
+                })
+            };
+
+            const result = await fetch(`${BASE_URL}/files/${fileId}`, requestOptions);
+            const json = await result.json();
+
+            console.log(result);
+            console.log(json);
+
+            dispatch({
+                type: FILE_EDITOR_SAVE,
+                payload: {
+                    id: fileId
+                }
+            });
+
         })();
     };
 }

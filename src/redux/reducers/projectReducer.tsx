@@ -1,5 +1,5 @@
 import { ProjectActionTypes, ProjectsState, NEW_PROJECT, UPDATE_PROJECT_NAME, ADD_PROJECT_FILE,
-    REMOVE_PROJECT_FILE, DELETE_PROJECT, UPDATE_PROJECT_LIST } from '../types/projectTypes';
+    REMOVE_PROJECT_FILE, DELETE_PROJECT, UPDATE_PROJECT_LIST, SET_OPEN_PROJECT_FILE } from '../types/projectTypes';
 
 const initialState: ProjectsState = {};
 
@@ -49,6 +49,15 @@ const projectReducer = (state = initialState, action: ProjectActionTypes): Proje
                 [action.payload.id]: {
                     ...state[action.payload.id],
                     files: state[action.payload.id].files.filter((file) => file !== action.payload.fileId)
+                }
+            };
+
+        case SET_OPEN_PROJECT_FILE:
+            return {
+                ...state,
+                [action.payload.id]: {
+                    ...state[action.payload.id],
+                    currentOpenFile: action.payload.fileId
                 }
             };
 

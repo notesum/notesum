@@ -1,6 +1,7 @@
 import { ContentState, convertToRaw } from 'draft-js';
 
-import { FilesActionsTypes, Files, NEW_FILE, UPDATE_FILE_EDITOR_STATE, UPDATE_FILE_LIST } from '../types/filesTypes';
+import { FilesActionsTypes, Files, NEW_FILE, UPDATE_FILE_EDITOR_STATE,
+    UPDATE_FILE_LIST, FILE_EDITOR_SAVE } from '../types/filesTypes';
 
 const initialState: Files = {};
 
@@ -26,7 +27,19 @@ const filesReducer = (state = initialState, action: FilesActionsTypes): Files =>
                 ...state,
                 [action.payload.id]: {
                     ...state[action.payload.id],
-                    summary: action.payload.summary
+                    summary: action.payload.summary,
+                    needsSave: true,
+                    lastSavedSummary: !state[action.payload.id].needsSave ? state[action.payload.id].summary : state[action.payload.id].lastSavedSummary
+                }
+            };
+
+        case FILE_EDITOR_SAVE:
+            return {
+                ...state,
+                [action.payload.id]: {
+                    ...state[action.payload.id],
+                    needsSave: false,
+                    lastSavedSummary: state[action.payload.id].summary
                 }
             };
 

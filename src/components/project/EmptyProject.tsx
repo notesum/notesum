@@ -4,19 +4,19 @@ import BackupIcon from '@material-ui/icons/Backup';
 
 import './EmptyProject.css';
 
-export default function EmptyProject({ addFile }: { addFile: (name: string, file: File) => void }) {
+export default function EmptyProject({ addFile }: { addFile: (file: File) => void }) {
 
     const dragEvent = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
 
         (async () => {
-            const newFiles: { name: string, data: File }[] = [];
+            const newFiles: File[] = [];
             for (let i = 0; i < e.dataTransfer.files.length; i++) {
-                newFiles.push({ name: e.dataTransfer.files[i].name, data: e.dataTransfer.files[i] });
+                newFiles.push(e.dataTransfer.files[i]);
             }
 
             newFiles.forEach((file) => {
-                addFile(file.name, file.data);
+                addFile(file);
             });
         })();
 
@@ -24,13 +24,13 @@ export default function EmptyProject({ addFile }: { addFile: (name: string, file
 
     const inputEvent = () => {
         (async () => {
-            const newFiles: { name: string, data: File }[] = [];
+            const newFiles: File[] = [];
             for (let i = 0; i < fileInputRef.current.files.length; i++) {
-                newFiles.push({ name: fileInputRef.current.files[i].name, data: fileInputRef.current.files[i]});
+                newFiles.push(fileInputRef.current.files[i]);
             }
 
             newFiles.forEach((file) => {
-                addFile(file.name, file.data);
+                addFile(file);
             });
         })();
     };

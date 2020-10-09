@@ -50,16 +50,16 @@ export function createNewProject(name: string) {
                 })
             };
 
-            console.log(requestOptions);
-
             const result = await fetch(`${BASE_URL}/projects`, requestOptions);
-            const data = (await result.json()).data;
+            const json: {data: {id: string, name: string}} | {message: string} = (await result.json());
+
+            if (!('data' in json)) return;
 
             dispatch({
                 type: NEW_PROJECT,
                 payload: {
-                    id: data.id,
-                    name: data.name
+                    id: json.data.id,
+                    name: json.data.name
                 }
             });
         })();

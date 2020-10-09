@@ -12,6 +12,9 @@ import { Project } from '../../redux/types/projectTypes';
 import { Files } from '../../redux/types/filesTypes';
 import { AppState } from '../../redux/reducers';
 import { createFile, loadFiles } from '../../redux/asyncActions/fileAsyncActions';
+import { BASE_URL } from '../../redux/asyncActions/ServerSettings';
+import { loadProjects } from '../../redux/asyncActions/projectAsyncActions';
+import { setCurrentFile } from '../../redux/actions/projectActions';
 import Error from '../Error';
 import Login from '../auth/Login';
 
@@ -47,18 +50,25 @@ export default function Project() {
         </>);
     }
 
+    const authToken = useSelector((state: any) => state.auth.token);
+
     // Project wasn't found, return 404
     if (!project) return (<Error />);
 
+    // Update project & files list
     useEffect(() => {
+        dispatch(loadProjects());
         dispatch(loadFiles());
     }, []);
 
-    const [currentFile, setCurrentFile] = useState<string>(
-        project.files.length === 0 || !(project.files[0] in files) ? null : project.files[0]);
+    const currentFile = project.currentOpenFile;
 
-    const addProjectFile = (title: string, pdf: File) => {
-        dispatch(createFile(id, title, pdf));
+    if (!currentFile && project.files.length > 0) {
+        dispatch(setCurrentFile(id, project.files[0]));
+    }
+
+    const addProjectFile = (pdf: File) => {
+        dispatch(createFile(id, pdf));
     };
 
     const [isFileDrawerOpen, setFileDrawerOpen] = useState(false);
@@ -81,7 +91,7 @@ export default function Project() {
 
                         return (
                             <ListItem key={fileId} button onClick={() => {
-                                setCurrentFile(fileId);
+                                dispatch(setCurrentFile(id, fileId));
                                 setFileDrawerOpen(false);
                             }} selected={fileId === currentFile}>
                                 <ListItemText primary={files[fileId].title} />
@@ -115,7 +125,7 @@ export default function Project() {
                     minHeight: '0'
                 }}>
                     {currentFile ? <>
-                        <DocumentView pdf={{ data: files[currentFile].pdf }} fileId={currentFile} />
+                        <DocumentView pdf={`${BASE_URL}${files[currentFile].pdf}?token=${authToken}`} fileId={currentFile} />
                     </> : <>
                             <EmptyProject addFile={addProjectFile} />
                         </>}
