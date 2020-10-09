@@ -36,9 +36,6 @@ export default function AuthIcon() {
         dispatch(logout());
     }
 
-    // function getDetails() {
-    //     dispatch(getUserInfo());
-    // }
     function getError() {
         if(error === null) {
             return false;
@@ -55,9 +52,6 @@ export default function AuthIcon() {
                 <Grid item>
                     <Button onMouseDown={() => logOut()} variant="contained" color="primary">Log Out</Button>
                 </Grid>
-                {/* <Grid item>
-                    <Button onMouseDown={() => getDetails()} variant="contained" color="primary">Get details</Button>
-                </Grid> */}
             </Grid>
         </Box>
     );
