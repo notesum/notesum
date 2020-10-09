@@ -9,7 +9,6 @@ import 'regenerator-runtime/runtime';
 import App from './app/App';
 import About from './app/About';
 import AuthIcon from './auth/AuthIcon';
-import Test from './Test';
 import Project from './project/Project';
 import ProjectOverview from './project_overview/ProjectOverview';
 import Error from './Error';
@@ -22,7 +21,7 @@ export default function Root() {
                     <Toolbar variant="dense">
                         <IconButton href="/"><HomeIcon style={{ color: '#fff' }} /></IconButton >
                         <IconButton href="/about"><InfoIcon style={{ color: '#fff' }} /></IconButton>
-                        <IconButton href="/pdf"><PictureAsPdfIcon style={{ color: '#fff' }} /></IconButton>
+                        <IconButton href="/rojects"><PictureAsPdfIcon style={{ color: '#fff' }} /></IconButton>
                         <Box style={{ marginLeft: 'auto' }}>
                             <AuthIcon />
                         </Box>

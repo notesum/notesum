@@ -44,7 +44,8 @@ export default React.memo(() => {
                                 <TextField label="Project name" value={newProjectName} onChange={e => { setNewProjectName(e.target.value); }} />
                             </form>
                             <DialogActions disableSpacing={true} style={{ marginLeft: 'auto' }}>
-                                <Button variant="contained" color="primary" onClick={() => newProject(newProjectName)}>Create</Button>
+                                <Button variant="contained" color="primary"
+                                onClick={() => { newProject(newProjectName); setNewProjectOpen(false); }}>Create</Button>
                             </DialogActions>
                         </Box>
                     </DialogContent>
