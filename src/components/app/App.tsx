@@ -95,7 +95,7 @@ function App() {
                                         The NoteSum Beta has started!  Click on the Try It Out button to join us
                                         on our journey to create a great and helpful application!
                                 </Typography>
-                                    <Button className={classes.But} variant="contained" color="primary" href="/pdf">Try Now</Button>
+                                    <Button className={classes.But} variant="contained" color="primary" href="/projects">Try Now</Button>
                                 </CardContent>
 
                             </Card>
