@@ -4,7 +4,7 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Box, Button, Grid, Typography } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 
-import { register } from '../../redux/asynchActions/authAsynchActions';
+import { register } from '../../redux/asyncActions/authAsyncActions';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({

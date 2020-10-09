@@ -11,7 +11,6 @@ import PrivateRoute from '../Routes/PrivateRoute';
 import App from './app/App';
 import About from './app/About';
 import AuthIcon from './auth/AuthIcon';
-
 import Project from './project/Project';
 import ProjectOverview from './project_overview/ProjectOverview';
 import Error from './Error';
