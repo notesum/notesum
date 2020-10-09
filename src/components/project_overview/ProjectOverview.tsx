@@ -4,25 +4,30 @@ import {
 } from '@material-ui/core';
 import DescriptionIcon from '@material-ui/icons/Description';
 import AddIcon from '@material-ui/icons/Add';
-import React, { Dispatch, useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 
 import { AppState } from '../../redux/reducers';
-import { ProjectsActionTypes } from '../../redux/types/projectsTypes';
-import { createNewProject } from '../../redux/actions/projectsActions';
+import { createNewProject } from '../../redux/actions/projectActions';
+import { loadProjects } from '../../redux/asyncActions/projectAsyncActions';
 
 export default React.memo(() => {
     const history = useHistory();
 
     const projects = useSelector((state: AppState) => state.projects);
-    const projectDispatch = useDispatch<Dispatch<ProjectsActionTypes>>();
+    const dispatch = useDispatch();
 
     const newProject = (name: string) => {
         const project = createNewProject(name);
-        projectDispatch(project);
-        history.push(`/project/${project.payload.uuid}`);
+        dispatch(project);
+        history.push(`/project/${project.payload.id}`);
     };
+
+    // Load projects
+    useEffect(() => {
+        dispatch(loadProjects());
+    }, []);
 
     const [isNewProjectOpen, setNewProjectOpen] = useState(false);
     const [newProjectName, setNewProjectName] = useState('');
@@ -64,16 +69,16 @@ export default React.memo(() => {
     );
 });
 
-const ProjectListItem = React.memo(({ uuid, name }: { uuid: string, name: string }) => {
-    const CustomLink = (props: any) => <Link to={`/project/${uuid}`} {...props} />;
+const ProjectListItem = React.memo(React.forwardRef(({ uuid, name }: { uuid: string, name: string }, ref) => {
+    const CustomLink = React.forwardRef((props: any, iref) => <Link to={`/project/${uuid}`} {...props} ref={iref} />);
 
     return (
         <li>
-            <ListItem button component={CustomLink}>
+            <ListItem button component={CustomLink} ref={ref}>
                 <ListItemIcon ><DescriptionIcon color="primary" /></ListItemIcon>
-                {/* This seem to alighn the icons and the text but god damn material ui just center things */}
+                {/* This seem to align the icons and the text but god damn material ui just center things */}
                 <ListItemText disableTypography={true}><p style={{ fontFamily: 'Sans serif' }}>{name}</p></ListItemText>
             </ListItem>
         </li>
     );
-});
+}));

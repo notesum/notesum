@@ -3,15 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import {
     Box, Button, Dialog, DialogContent, DialogTitle, Drawer, IconButton, List,
-    ListItem, ListItemText, ListSubheader, Paper, InputBase, makeStyles, Toolbar
+    ListItem, ListItemText, ListSubheader, InputBase, makeStyles, Toolbar
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
-import { ProjectsState, ProjectsActionTypes } from '../../redux/types/projectsTypes';
+import { ProjectsState, ProjectActionTypes } from '../../redux/types/projectTypes';
 import { FilesActionsTypes } from '../../redux/types/filesTypes';
 import { newFile } from '../../redux/actions/filesActions';
-import { addFileToProject } from '../../redux/actions/projectsActions';
+import { addFileToProject } from '../../redux/actions/projectActions';
 import Error from '../Error';
 
 import EmptyProject from './EmptyProject';
@@ -43,7 +43,7 @@ export default function Project() {
     const project = useSelector((state: ProjectsState) => state.projects[uuid]);
     const files = useSelector((state: ProjectsState) => state.files);
 
-    const projectsDispatch = useDispatch<Dispatch<ProjectsActionTypes>>();
+    const projectsDispatch = useDispatch<Dispatch<ProjectActionTypes>>();
     const filesDispatch = useDispatch<Dispatch<FilesActionsTypes>>();
 
     // Project wasn't found, return 404
