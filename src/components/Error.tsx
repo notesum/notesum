@@ -1,12 +1,16 @@
-import { Container } from '@material-ui/core';
+import { Container, Typography } from '@material-ui/core';
+import WarningIcon from '@material-ui/icons/Warning';
 import React from 'react';
 
 export default React.memo(() => {
-    // TODO style this page.
 
     return (
-        <Container fixed>
-            <p>Sorry, the page you were looking for couldn't be found</p>
-        </Container>
+        <>
+            <WarningIcon fontSize="large" style={{ marginTop: '100px', display: 'flex', marginLeft: 'auto', marginRight: 'auto' }} />
+            <Container fixed style={{ marginTop: '50px' }}>
+                <Typography variant="h3">Sorry, the page you were looking for couldn't be found</Typography>
+            </Container>
+        </>
+
     );
 });
