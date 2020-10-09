@@ -37,12 +37,7 @@ export default React.memo(() => {
                     <DialogTitle>New Project</DialogTitle>
                     <DialogContent>
                         <Box style={{ display: 'flex' }} m={0}>
-                            <form ref={newProjectFormRef} onSubmit={(e) => {
-                                e.preventDefault();
-                                newProject(newProjectName);
-                            }}>
-                                <TextField label="Project name" value={newProjectName} onChange={e => { setNewProjectName(e.target.value); }} />
-                            </form>
+                            <TextField label="Project name" onChange={e => { setNewProjectName(e.target.value); }} />
                             <DialogActions disableSpacing={true} style={{ marginLeft: 'auto' }}>
                                 <Button variant="contained" color="primary"
                                 onClick={() => { newProject(newProjectName); setNewProjectOpen(false); }}>Create</Button>
