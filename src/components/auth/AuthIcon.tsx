@@ -60,7 +60,7 @@ export default function AuthIcon() {
                     <Typography variant="h4">Something went wrong logging in</Typography>
                 </Grid>
                 <Grid item>
-                    <Typography variant="body2">Your password or username might not have been correct</Typography>
+                    <Typography color="secondary" variant="body2">Your password or username might not have been correct</Typography>
                 </Grid>
             </Grid>
         </Box>
