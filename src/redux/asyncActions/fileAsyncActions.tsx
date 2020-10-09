@@ -50,6 +50,7 @@ export function loadFiles() {
 export function createFile(projectId: string, pdf: File) {
     return (dispatch: Dispatch<FilesActionsTypes | ProjectActionTypes>, getState) => {
         (async () => {
+
             const formData = new FormData();
             formData.append('project_id', projectId);
             formData.append('file', pdf);
