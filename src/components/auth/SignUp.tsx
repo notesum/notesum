@@ -25,12 +25,16 @@ export default function SignUp() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordConf, setPasswordConf] = useState('');
+    const [didntMatch, setDidntMatch] = useState(false);
 
     const dispatch = useDispatch();
 
     function handleSubmit() {
         if (password === passwordConf) {
-            dispatch(register(name,email,password));
+            setDidntMatch(false);
+            dispatch(register(name, email, password));
+        } else {
+            setDidntMatch(true);
         }
     }
 
@@ -62,9 +66,15 @@ export default function SignUp() {
                         </div>
                     </form>
                 </Grid>
+                {didntMatch &&
+                    <Grid item>
+                        <Typography variant="body1" color="secondary">Please make sure the passw the repeat</Typography>
+                    </Grid>
+                }
                 <Grid item style={{ marginTop: '10px' }}>
-                    <Button variant="contained" color="primary"onMouseDown={() => handleSubmit()}>Sign Up!</Button>
+                    <Button variant="contained" color="primary" onMouseDown={() => handleSubmit()}>Sign Up!</Button>
                 </Grid>
+
             </Grid >
         </Box>
     );
