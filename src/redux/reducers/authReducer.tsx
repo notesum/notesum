@@ -43,7 +43,7 @@ const authReducer = ( state = initialState, action: t.AuthActionTypes) => {
             return {
                 ...state,
                 loading: true,
-                errors: null,
+                errors: [],
             };
         case t.USER_LOGOUT_SUCCESS:
             return {
