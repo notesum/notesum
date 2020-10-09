@@ -8,6 +8,10 @@ export const USER_LOGOUT_SUCCESS = 'USER_LOGOUT_SUCCESS';
 export const USER_DETAILS_STARTED = 'USER_DETAILS_STARTED';
 export const USER_DETAILS_SUCCESS = 'USER_DETAILS_SUCCESS';
 
+export const USER_SIGNUP_STARTED = 'USER_SIGNUP_STARTED';
+export const USER_SIGNUP_SUCCESS = 'USER_SIGNUP_SUCCESS';
+export const USER_SIGNUP_FAILURE = 'USER_SIGNUP_FAILURE';
+
 export const AUTH_FAILURE = 'AUTH_FAILURE';
 
 interface IUserLoginStarted {
@@ -41,6 +45,20 @@ interface IUserDetailsSuccess {
     payload: User;
 }
 
+interface IUserSignupStarted {
+    readonly type: typeof USER_SIGNUP_STARTED;
+}
+
+interface IUserSignupFailure {
+    readonly type: typeof USER_SIGNUP_FAILURE;
+    payload: string[];
+}
+
+interface IUserSignupSuccess {
+    readonly type: typeof USER_SIGNUP_SUCCESS;
+    payload: string;
+}
+
 interface IAuthFailure {
     readonly type: typeof AUTH_FAILURE;
     payload: string[];
@@ -54,6 +72,9 @@ export type AuthActionTypes =
 | IUserLogoutSuccess
 | IUserDetailsStarted
 | IUserDetailsSuccess
+| IUserSignupStarted
+| IUserSignupFailure
+| IUserSignupSuccess
 | IAuthFailure
 ;
 

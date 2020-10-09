@@ -67,6 +67,27 @@ const authReducer = ( state = initialState, action: t.AuthActionTypes) => {
                 loading: false,
                 user: action.payload,
             };
+        case t.USER_SIGNUP_STARTED:
+            return {
+                ...state,
+                loading: true,
+                token: null,
+                errors: [],
+                isLoggedIn: false,
+            };
+        case t.USER_SIGNUP_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                errors: ['signup error'],
+            };
+        case t.USER_SIGNUP_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                isLoggedIn: true,
+                token: action.payload,
+            };
         case t.AUTH_FAILURE:
             return {
                 ...state,
