@@ -17,13 +17,6 @@ import EmptyProject from './EmptyProject';
 import DocumentView from './DocumentView';
 
 const useStyles = makeStyles(() => ({
-    nameBox: {
-        padding: '2px 8px',
-        marginRight: '20px',
-        display: 'flex',
-        alignItems: 'center',
-        minWidth: '0'
-    },
     name: {
         marginBottom: '-5px',
         width: 'auto',
@@ -68,10 +61,10 @@ export default function Project() {
             <Drawer anchor="left" open={isFileDrawerOpen} onClose={() => setFileDrawerOpen(false)}>
                 <List component="nav"
                     subheader={
-                        <ListSubheader color="primary" component="div">
+                        <ListSubheader color="primary" component="div" style={{fontWeight: 'bold'}}>
                             Project files
                         </ListSubheader>
-                    } style={{ minWidth: '300px' }} >
+                    } style={{ minWidth: '300px', maxWidth: '500px' }} >
 
                     {project.files.map((fileId: string) => {
                         if (!(fileId in files)) return;

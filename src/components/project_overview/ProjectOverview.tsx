@@ -4,7 +4,7 @@ import {
 } from '@material-ui/core';
 import DescriptionIcon from '@material-ui/icons/Description';
 import AddIcon from '@material-ui/icons/Add';
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -28,7 +28,6 @@ export default React.memo(() => {
 
     const [isNewProjectOpen, setNewProjectOpen] = useState(false);
     const [newProjectName, setNewProjectName] = useState('');
-    const newProjectFormRef = useRef<HTMLFormElement>(null);
 
     return (
         <>

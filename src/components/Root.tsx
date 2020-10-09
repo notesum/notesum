@@ -25,7 +25,9 @@ export default function Root() {
                         <Box style={{ marginLeft: 'auto' }}>
                             <AuthIcon />
                         </Box>
-                        <Button style={{ color: 'white' }}><Typography variant="body1" style={{ color: 'white' }}>Feedback</Typography></Button>
+                        <Button target="_blank"
+                        href="https://docs.google.com/forms/d/e/1FAIpQLScK9dZrpjcqcL4SGUc_bcwpAxWYSAH62hYPfdcK_v-2z0PRow/viewform"
+                        style={{ color: 'white' }}><Typography variant="body1" style={{ color: 'white' }}>Feedback</Typography></Button>
                     </Toolbar>
                 </AppBar>
 
