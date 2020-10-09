@@ -44,7 +44,7 @@ export default function Root() {
                         <Route exact path="/projects">
                             <ProjectOverview />
                         </Route>
-                        <Route exact path="/project/:uuid" children={<Project />} />
+                        <Route exact path="/project/:id" children={<Project />} />
                         <Route path="*">
                             <Error />
                         </Route>

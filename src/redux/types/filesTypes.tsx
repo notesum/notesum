@@ -4,9 +4,9 @@ export const NEW_FILE = 'NEW_FILE';
 export interface INewFileAction {
     readonly type: typeof NEW_FILE;
     payload: {
-        uuid: string,
-        name: string,
-        pdfUrl: string
+        id: string,
+        title: string,
+        pdf: string
     };
 }
 
@@ -14,22 +14,31 @@ export const UPDATE_FILE_EDITOR_STATE = 'UPDATE_FILE_EDITOR_STATE';
 export interface IUpdateEditorState {
     readonly type: typeof UPDATE_FILE_EDITOR_STATE;
     payload: {
-        uuid: string,
+        id: string,
         summary: RawDraftContentState,
     };
+}
+
+export const UPDATE_FILE_LIST = 'UPDATE_FILE_LIST';
+export interface IUpdateFileList {
+    readonly type: typeof UPDATE_FILE_LIST;
+    payload: Files;
 }
 
 
 export type FilesActionsTypes =
     | INewFileAction
-    | IUpdateEditorState;
+    | IUpdateEditorState
+    | IUpdateFileList;
+
+export interface ProjectFile {
+    id: string;
+    title: string;
+    summary: RawDraftContentState;
+    currentPage: number;
+    pdf: string; // url
+}
 
 export interface Files {
-    [uuid: string]: {
-        uuid: string,
-        name: string,
-        summary: RawDraftContentState,
-        currentPage: number,
-        pdfUrl: string
-    };
+    [id: string]: ProjectFile;
 }

@@ -29,7 +29,7 @@ export interface IAddProjectFileAction {
     readonly type: typeof ADD_PROJECT_FILE;
     payload: {
         id: string,
-        fileUuid: string
+        fileId: string
     };
 }
 
@@ -38,7 +38,7 @@ export interface IRemoveProjectFileAction {
     readonly type: typeof REMOVE_PROJECT_FILE;
     payload: {
         id: string,
-        fileUuid: string
+        fileId: string
     };
 }
 
@@ -57,10 +57,12 @@ export type ProjectActionTypes =
     | IRemoveProjectFileAction
     | IUpdateProjectList;
 
+export interface Project {
+    id: string;
+    name: string;
+    files: string[];
+}
+
 export interface ProjectsState {
-    [id: string]: {
-        id: string,
-        name: string,
-        files: string[]
-    };
+    [id: string]: Project;
 }

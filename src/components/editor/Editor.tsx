@@ -30,12 +30,12 @@ type EditorProps = {
     img: string
     screenshotCallback: (b: boolean) => void
     dragging: boolean,
-    fileUuid: string
+    fileId: string
 };
 
-export default function TextEditor({ img, screenshotCallback, dragging, fileUuid }: EditorProps) {
+export default function TextEditor({ img, screenshotCallback, dragging, fileId }: EditorProps) {
 
-    const content = useSelector((state: AppState) => state.files[fileUuid].summary);
+    const content = useSelector((state: AppState) => state.files[fileId].summary);
     const contentDispatch = useDispatch<Dispatch<FilesActionsTypes>>();
     const [editorState, setEditorState] = useState(EditorState.createWithContent(convertFromRaw(content)));
 
@@ -45,7 +45,7 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileUuid
     };
 
     useEffect(() => {
-        contentDispatch(updateEditor(fileUuid, convertToRaw(editorState.getCurrentContent())));
+        contentDispatch(updateEditor(fileId, convertToRaw(editorState.getCurrentContent())));
     }, [editorState]);
 
     const [style, setStyle] = useState('unstyled');

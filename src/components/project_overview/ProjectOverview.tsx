@@ -6,22 +6,19 @@ import DescriptionIcon from '@material-ui/icons/Description';
 import AddIcon from '@material-ui/icons/Add';
 import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { AppState } from '../../redux/reducers';
-import { createNewProject } from '../../redux/actions/projectActions';
-import { loadProjects } from '../../redux/asyncActions/projectAsyncActions';
+import { loadProjects, createNewProject } from '../../redux/asyncActions/projectAsyncActions';
 
 export default React.memo(() => {
-    const history = useHistory();
 
     const projects = useSelector((state: AppState) => state.projects);
     const dispatch = useDispatch();
 
     const newProject = (name: string) => {
-        const project = createNewProject(name);
-        dispatch(project);
-        history.push(`/project/${project.payload.id}`);
+        dispatch(createNewProject(name));
+        // TODO auto redirect to newly created project.
     };
 
     // Load projects

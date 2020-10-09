@@ -1,6 +1,6 @@
 import { Dispatch } from 'react';
 
-import { ProjectActionTypes, ProjectsState } from '../types/projectTypes';
+import { NEW_PROJECT, ProjectActionTypes, ProjectsState } from '../types/projectTypes';
 import { updateProjectsList } from '../actions/projectActions';
 
 import { BASE_URL } from './ServerSettings';
@@ -21,6 +21,8 @@ export function loadProjects() {
             const result = await fetch(`${BASE_URL}/projects`, requestOptions);
 
             const projects: ProjectsState = (await result.json()).data.reduce((obj: ProjectsState, item) => {
+                item.files = item.files.map((file) => file.id);
+
                 return {
                     ...obj,
                     [item.id]: item,
@@ -33,9 +35,33 @@ export function loadProjects() {
 
 }
 
-export function createProject() {
+export function createNewProject(name: string) {
     return (dispatch: Dispatch<ProjectActionTypes>, getState) => {
+        (async () => {
+            const requestOptions = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${getState().auth.token}`
+                },
+                body: JSON.stringify({
+                    name
+                })
+            };
 
+            console.log(requestOptions);
 
+            const result = await fetch(`${BASE_URL}/projects`, requestOptions);
+            const data = (await result.json()).data;
+
+            dispatch({
+                type: NEW_PROJECT,
+                payload: {
+                    id: data.id,
+                    name: data.name
+                }
+            });
+        })();
     };
 }

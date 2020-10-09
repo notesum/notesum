@@ -1,4 +1,4 @@
-import React, { useState, Dispatch } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import {
@@ -8,10 +8,9 @@ import {
 import MenuIcon from '@material-ui/icons/Menu';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
-import { ProjectsState, ProjectActionTypes } from '../../redux/types/projectTypes';
-import { FilesActionsTypes } from '../../redux/types/filesTypes';
-import { newFile } from '../../redux/actions/filesActions';
-import { addFileToProject } from '../../redux/actions/projectActions';
+import { Project } from '../../redux/types/projectTypes';
+import { Files } from '../../redux/types/filesTypes';
+import { createFile, loadFiles } from '../../redux/asyncActions/fileAsyncActions';
 import Error from '../Error';
 
 import EmptyProject from './EmptyProject';
@@ -38,31 +37,25 @@ const useStyles = makeStyles(() => ({
 
 export default function Project() {
 
-    const { uuid } = useParams<{ uuid: string }>();
+    const { id } = useParams<{ id: string }>();
 
-    const project = useSelector((state: ProjectsState) => state.projects[uuid]);
-    const files = useSelector((state: ProjectsState) => state.files);
+    const project: Project = useSelector((state: any) => state.projects[id]);
+    const files: Files = useSelector((state: any) => state.files);
 
-    const projectsDispatch = useDispatch<Dispatch<ProjectActionTypes>>();
-    const filesDispatch = useDispatch<Dispatch<FilesActionsTypes>>();
+    const dispatch = useDispatch();
 
     // Project wasn't found, return 404
     if (!project) return (<Error />);
 
-    const [currentFile, setCurrentFile] = useState<string>(project.files.length === 0 ? null : project.files[0]);
+    useEffect(() => {
+        dispatch(loadFiles());
+    }, []);
 
-    const addProjectFile = (name: string, pdf: Int8Array) => {
+    const [currentFile, setCurrentFile] = useState<string>(
+        project.files.length === 0 || !(project.files[0] in files) ? null : project.files[0]);
 
-        // Create file
-        const newFileAction = newFile(name, pdf);
-        filesDispatch(newFileAction);
-
-        // Add file to project
-        projectsDispatch(addFileToProject(project.uuid, newFileAction.payload.uuid));
-
-        if (!currentFile) {
-            setCurrentFile(newFileAction.payload.uuid);
-        }
+    const addProjectFile = (title: string, pdf: File) => {
+        dispatch(createFile(id, title, pdf));
     };
 
     const [isFileDrawerOpen, setFileDrawerOpen] = useState(false);
@@ -80,13 +73,15 @@ export default function Project() {
                         </ListSubheader>
                     } style={{ minWidth: '300px' }} >
 
-                    {project.files.map((fileUuid: string) => {
+                    {project.files.map((fileId: string) => {
+                        if (!(fileId in files)) return;
+
                         return (
-                            <ListItem key={fileUuid} button onClick={() => {
-                                setCurrentFile(fileUuid);
+                            <ListItem key={fileId} button onClick={() => {
+                                setCurrentFile(fileId);
                                 setFileDrawerOpen(false);
-                            }} selected={fileUuid === currentFile}>
-                                <ListItemText primary={files[fileUuid].name} />
+                            }} selected={fileId === currentFile}>
+                                <ListItemText primary={files[fileId].title} />
                             </ListItem>);
                     })}
                 </List>
@@ -117,7 +112,7 @@ export default function Project() {
                     minHeight: '0'
                 }}>
                     {currentFile ? <>
-                        <DocumentView pdf={{ data: files[currentFile].pdfUrl }} fileUuid={currentFile} />
+                        <DocumentView pdf={{ data: files[currentFile].pdf }} fileId={currentFile} />
                     </> : <>
                             <EmptyProject addFile={addProjectFile} />
                         </>}

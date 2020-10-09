@@ -39,7 +39,7 @@ const projectReducer = (state = initialState, action: ProjectActionTypes): Proje
                 ...state,
                 [action.payload.id]: {
                     ...state[action.payload.id],
-                    files: [...state[action.payload.id].files, action.payload.fileUuid]
+                    files: [...state[action.payload.id].files, action.payload.fileId]
                 }
             };
 
@@ -48,7 +48,7 @@ const projectReducer = (state = initialState, action: ProjectActionTypes): Proje
                 ...state,
                 [action.payload.id]: {
                     ...state[action.payload.id],
-                    files: state[action.payload.id].files.filter((file) => file !== action.payload.fileUuid)
+                    files: state[action.payload.id].files.filter((file) => file !== action.payload.fileId)
                 }
             };
 

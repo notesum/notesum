@@ -4,15 +4,15 @@ import BackupIcon from '@material-ui/icons/Backup';
 
 import './EmptyProject.css';
 
-export default function EmptyProject({ addFile }: { addFile: (name: string, file: Int8Array) => void }) {
+export default function EmptyProject({ addFile }: { addFile: (name: string, file: File) => void }) {
 
     const dragEvent = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
 
         (async () => {
-            const newFiles: { name: string, data: Int8Array }[] = [];
+            const newFiles: { name: string, data: File }[] = [];
             for (let i = 0; i < e.dataTransfer.files.length; i++) {
-                newFiles.push({ name: e.dataTransfer.files[i].name, data: new Int8Array(await e.dataTransfer.files[i].arrayBuffer()) });
+                newFiles.push({ name: e.dataTransfer.files[i].name, data: e.dataTransfer.files[i] });
             }
 
             newFiles.forEach((file) => {
@@ -24,9 +24,9 @@ export default function EmptyProject({ addFile }: { addFile: (name: string, file
 
     const inputEvent = () => {
         (async () => {
-            const newFiles: { name: string, data: Int8Array }[] = [];
+            const newFiles: { name: string, data: File }[] = [];
             for (let i = 0; i < fileInputRef.current.files.length; i++) {
-                newFiles.push({ name: fileInputRef.current.files[i].name, data: new Int8Array(await fileInputRef.current.files[i].arrayBuffer())});
+                newFiles.push({ name: fileInputRef.current.files[i].name, data: fileInputRef.current.files[i]});
             }
 
             newFiles.forEach((file) => {

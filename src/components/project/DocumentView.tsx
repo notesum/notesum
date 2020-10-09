@@ -9,10 +9,10 @@ import './DocumentView.css';
 
 type DocumentViewProps = {
     pdf: string | TypedArray | DocumentInitParameters | PDFDataRangeTransport
-    fileUuid: string
+    fileId: string
 };
 
-export default function DocumentView({ pdf, fileUuid }: DocumentViewProps) {
+export default function DocumentView({ pdf, fileId }: DocumentViewProps) {
 
     const [screenshot, setScreenshot] = useState(false);
     const [image, setImage] = useState('');
@@ -72,7 +72,7 @@ export default function DocumentView({ pdf, fileUuid }: DocumentViewProps) {
                 overflow: 'auto',
                 height: '100%'
             }}>
-                <Pdf id={fileUuid} file={pdf} screenshot={screenshot} screenshotCallback={setCallback} hidden={dragging} fitToWidth={true} />
+                <Pdf id={fileId} file={pdf} screenshot={screenshot} screenshotCallback={setCallback} hidden={dragging} fitToWidth={true} />
             </Box>
 
             <div
@@ -84,7 +84,7 @@ export default function DocumentView({ pdf, fileUuid }: DocumentViewProps) {
                 overflow: 'hidden',
                 height: '100%'
             }}>
-                <TextEditor key={fileUuid} fileUuid={fileUuid} screenshotCallback={setScreenshot} img={image} dragging={dragging} />
+                <TextEditor key={fileId} fileId={fileId} screenshotCallback={setScreenshot} img={image} dragging={dragging} />
             </Box>
         </Box>
     );
