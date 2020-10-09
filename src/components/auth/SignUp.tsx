@@ -68,7 +68,7 @@ export default function SignUp() {
                 </Grid>
                 {didntMatch &&
                     <Grid item>
-                        <Typography variant="body1" color="secondary">Please make sure the passw the repeat</Typography>
+                        <Typography variant="body1" color="secondary">Please make sure the password matches the repeat</Typography>
                     </Grid>
                 }
                 <Grid item style={{ marginTop: '10px' }}>
