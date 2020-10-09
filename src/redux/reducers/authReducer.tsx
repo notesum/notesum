@@ -27,8 +27,6 @@ const authReducer = ( state = initialState, action: t.AuthActionTypes) => {
                 isLoggedIn: false,
             };
         case t.USER_LOGIN_FAILURE:
-            // const temp = [...action.payload];
-            // console.log('Reducer:',temp, typeof temp);
             return {
                 ...state,
                 loading: false,
@@ -96,6 +94,10 @@ const authReducer = ( state = initialState, action: t.AuthActionTypes) => {
                 isLoggedIn: false,
                 errors: ['auth error'],
             };
+        case t.AUTH_RESET:
+            return {
+                ...initialState,
+            }
         default:
             return state;
     }

@@ -13,6 +13,7 @@ export const USER_SIGNUP_SUCCESS = 'USER_SIGNUP_SUCCESS';
 export const USER_SIGNUP_FAILURE = 'USER_SIGNUP_FAILURE';
 
 export const AUTH_FAILURE = 'AUTH_FAILURE';
+export const AUTH_RESET = 'AUTH_RESET';
 
 interface IUserLoginStarted {
     readonly type: typeof USER_LOGIN_STARTED;
@@ -64,6 +65,10 @@ interface IAuthFailure {
     payload: string[];
 }
 
+interface IAuthReset {
+    readonly type: typeof AUTH_RESET;
+}
+
 export type AuthActionTypes =
 | IUserLoginStarted
 | IUserLoginFailure
@@ -76,6 +81,7 @@ export type AuthActionTypes =
 | IUserSignupFailure
 | IUserSignupSuccess
 | IAuthFailure
+| IAuthReset
 ;
 
 export interface AuthState {

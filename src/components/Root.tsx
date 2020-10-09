@@ -6,14 +6,12 @@ import HomeIcon from '@material-ui/icons/Home';
 import InfoIcon from '@material-ui/icons/Info';
 import 'regenerator-runtime/runtime';
 
+import PrivateRoute from '../Routes/PrivateRoute';
 
 import App from './app/App';
 import About from './app/About';
 import MainView from './app/MainView';
 import AuthIcon from './auth/AuthIcon';
-import SignUp from './auth/SignUp';
-import Login from './auth/Login';
-import Test from './Test';
 
 
 export default function Root() {
@@ -43,12 +41,7 @@ export default function Root() {
                         <Route path="/about">
                             <About />
                         </Route>
-                        <Route path="/pdf">
-                            <MainView />
-                        </Route>
-                        <Route path="/test">
-                            <Test />
-                        </Route>
+                        <PrivateRoute path="/pdf" component={MainView} />
                     </Switch>
                 </Box>
             </Box>

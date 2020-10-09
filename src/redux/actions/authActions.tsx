@@ -71,3 +71,9 @@ export function authFailure(errors:string[]): t.AuthActionTypes {
         payload:errors,
     };
 }
+
+export function authReset(): t.AuthActionTypes {
+    return {
+        type: t.AUTH_RESET,
+    };
+}
