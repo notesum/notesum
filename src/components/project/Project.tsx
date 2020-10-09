@@ -10,13 +10,11 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import { Project } from '../../redux/types/projectTypes';
 import { Files } from '../../redux/types/filesTypes';
-import { AppState } from '../../redux/reducers';
 import { createFile, loadFiles } from '../../redux/asyncActions/fileAsyncActions';
 import { BASE_URL } from '../../redux/asyncActions/ServerSettings';
 import { loadProjects } from '../../redux/asyncActions/projectAsyncActions';
 import { setCurrentFile } from '../../redux/actions/projectActions';
 import Error from '../Error';
-import Login from '../auth/Login';
 
 import EmptyProject from './EmptyProject';
 import DocumentView from './DocumentView';
@@ -41,14 +39,6 @@ export default function Project() {
     const files: Files = useSelector((state: any) => state.files);
 
     const dispatch = useDispatch();
-
-    // Check if the user is logged in
-    const isLoggedIn = useSelector((state: AppState) => state.auth.isLoggedIn);
-    if (!isLoggedIn) {
-        return (<>
-            <Login warning={true} />
-        </>);
-    }
 
     const authToken = useSelector((state: any) => state.auth.token);
 
