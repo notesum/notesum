@@ -10,8 +10,10 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import { Project } from '../../redux/types/projectTypes';
 import { Files } from '../../redux/types/filesTypes';
+import { AppState } from '../../redux/reducers';
 import { createFile, loadFiles } from '../../redux/asyncActions/fileAsyncActions';
 import Error from '../Error';
+import Login from '../auth/Login';
 
 import EmptyProject from './EmptyProject';
 import DocumentView from './DocumentView';
@@ -37,6 +39,14 @@ export default function Project() {
 
     const dispatch = useDispatch();
 
+    // Check if the user is logged in
+    const isLoggedIn = useSelector((state: AppState) => state.auth.isLoggedIn);
+    if (!isLoggedIn) {
+        return (<>
+            <Login warning={true} />
+        </>);
+    }
+
     // Project wasn't found, return 404
     if (!project) return (<Error />);
 
@@ -61,7 +71,7 @@ export default function Project() {
             <Drawer anchor="left" open={isFileDrawerOpen} onClose={() => setFileDrawerOpen(false)}>
                 <List component="nav"
                     subheader={
-                        <ListSubheader color="primary" component="div" style={{fontWeight: 'bold'}}>
+                        <ListSubheader color="primary" component="div" style={{ fontWeight: 'bold' }}>
                             Project files
                         </ListSubheader>
                     } style={{ minWidth: '300px', maxWidth: '500px' }} >
@@ -79,7 +89,7 @@ export default function Project() {
                     })}
                 </List>
                 <Button onClick={() => setAddFilesModalOpen(true)}>Add new files</Button>
-                <Button href="/projects"> <ArrowBackIcon fontSize="small" color="primary"/>Back to Projects</Button>
+                <Button href="/projects"> <ArrowBackIcon fontSize="small" color="primary" />Back to Projects</Button>
 
             </Drawer>
 

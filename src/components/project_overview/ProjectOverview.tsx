@@ -10,8 +10,17 @@ import { Link } from 'react-router-dom';
 
 import { AppState } from '../../redux/reducers';
 import { loadProjects, createNewProject } from '../../redux/asyncActions/projectAsyncActions';
+import Login from '../auth/Login';
 
 export default React.memo(() => {
+
+    // Check if the user is logged in
+    const isLoggedIn = useSelector((state: AppState) => state.auth.isLoggedIn);
+    if (!isLoggedIn) {
+        return (<>
+            <Login warning={true} />
+        </>);
+    }
 
     const projects = useSelector((state: AppState) => state.projects);
     const dispatch = useDispatch();
@@ -39,7 +48,7 @@ export default React.memo(() => {
                             <TextField label="Project name" onChange={e => { setNewProjectName(e.target.value); }} />
                             <DialogActions disableSpacing={true} style={{ marginLeft: 'auto' }}>
                                 <Button variant="contained" color="primary"
-                                onClick={() => { newProject(newProjectName); setNewProjectOpen(false); }}>Create</Button>
+                                    onClick={() => { newProject(newProjectName); setNewProjectOpen(false); }}>Create</Button>
                             </DialogActions>
                         </Box>
                     </DialogContent>
