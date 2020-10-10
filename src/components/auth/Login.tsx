@@ -36,7 +36,6 @@ export default function Login({ buttonCallback, warning }: LogInProps) {
     }
 
     function downHandler({ key }) {
-        console.log(key);
         if (key === 'Enter') {
             handleSubmit();
         }

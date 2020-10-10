@@ -3,14 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import {
     Box, Button, Dialog, DialogContent, DialogTitle, Drawer, IconButton, List,
-    ListItem, ListItemText, ListSubheader, InputBase, makeStyles, Toolbar
+    ListItem, ListItemText, ListSubheader, InputBase, makeStyles, Toolbar, CircularProgress
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import { Project } from '../../redux/types/projectTypes';
 import { Files } from '../../redux/types/filesTypes';
-import { createFile, loadFiles } from '../../redux/asyncActions/fileAsyncActions';
+import { createFile, loadFiles, saveFile } from '../../redux/asyncActions/fileAsyncActions';
 import { BASE_URL } from '../../redux/asyncActions/ServerSettings';
 import { loadProjects } from '../../redux/asyncActions/projectAsyncActions';
 import { setCurrentFile } from '../../redux/actions/projectActions';
@@ -53,9 +53,18 @@ export default function Project() {
 
     const currentFile = project.currentOpenFile;
 
-    if (!currentFile && project.files.length > 0) {
-        dispatch(setCurrentFile(id, project.files[0]));
-    }
+    useEffect(() => {
+        if (!currentFile && project.files.length > 0) {
+            dispatch(setCurrentFile(id, project.files[0]));
+        }
+    }, [project.files]);
+
+    // On unmount, save file
+    useEffect(() => {
+        return () => {
+            if (currentFile) dispatch(saveFile(currentFile));
+        };
+    }, [currentFile]);
 
     const addProjectFile = (pdf: File) => {
         dispatch(createFile(id, pdf));
@@ -114,11 +123,23 @@ export default function Project() {
                 <Box flexGrow={1} style={{
                     minHeight: '0'
                 }}>
-                    {currentFile ? <>
+                    {currentFile && currentFile in files ?
+                    <>
                         <DocumentView pdf={`${BASE_URL}${files[currentFile].pdf}?token=${authToken}`} fileId={currentFile} />
-                    </> : <>
-                            <EmptyProject addFile={addProjectFile} />
-                        </>}
+                    </> : (currentFile ?
+                    <>
+                        <div style={{
+                            marginLeft: 'auto',
+                            marginRight: 'auto',
+                            marginTop: '200px',
+                            width: '40px',
+                        }}>
+                            <CircularProgress/>
+                        </div>
+                    </> :
+                    <>
+                        <EmptyProject addFile={addProjectFile} />
+                    </>)}
                 </Box>
             </Box>
         </>

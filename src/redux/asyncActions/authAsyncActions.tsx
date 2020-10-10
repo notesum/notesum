@@ -2,6 +2,8 @@ import { Dispatch } from 'react';
 
 import { AuthActionTypes } from '../types/authTypes';
 import * as a from '../actions/authActions';
+import { updateFileList } from '../actions/filesActions';
+import { updateProjectsList } from '../actions/projectActions';
 
 import { BASE_URL } from './ServerSettings';
 
@@ -43,7 +45,7 @@ export function login(email:string, password:string) {
 }
 
 export function logout() {
-    return (dispatch: Dispatch<AuthActionTypes>, getState) => {
+    return (dispatch, getState) => {
         const token = getState().auth.token;
         dispatch(a.userLogoutStarted());
         const requestOptions = {
@@ -59,7 +61,11 @@ export function logout() {
             })
             .then((data)=> {
                 if (data[0]) throw new Error(data.errors);
-                else dispatch(a.userLogoutSuccess());
+                else {
+                    dispatch(a.userLogoutSuccess());
+                    dispatch(updateFileList({}));
+                    dispatch(updateProjectsList({}));
+                }
             })
             .catch((err)=> {
                 console.log('I got an error',err);

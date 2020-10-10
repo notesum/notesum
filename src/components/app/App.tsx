@@ -44,7 +44,7 @@ function App() {
                 <Grid item>
                     <Grid container spacing={7} justify="center" alignContent="center" alignItems="center">
                         <Grid item xs={1} />
-                        <Grid item xs={4} spacing={2}>
+                        <Grid item xs={4}>
                             <Card elevation={3} className={classes.Card}>
                                 <CardContent className={classes.Content}>
                                     <Typography variant="h5" color="textPrimary" gutterBottom>
@@ -83,7 +83,7 @@ function App() {
                                 />
                             </Card>
                         </Grid>
-                        <Grid item xs={4} spacing={2}>
+                        <Grid item xs={4}>
                             <Card elevation={3} className={classes.Card}>
                                 <CardContent className={classes.Content}>
                                     <Typography variant="h5" color="textPrimary" gutterBottom>
@@ -112,7 +112,7 @@ function App() {
                 <Grid item style={{ marginBottom: '40px' }}>
                     <Grid container spacing={7} justify="center" alignContent="center" alignItems="center">
                         <Grid item xs={1} />
-                        <Grid item xs={4} spacing={2}>
+                        <Grid item xs={4} >
                             <Card elevation={3} className={classes.Card}>
                                 <CardContent className={classes.Content}>
                                     <Typography variant="h6" color="textPrimary" gutterBottom>
@@ -134,7 +134,7 @@ function App() {
 
                             </Card>
                         </Grid>
-                        <Grid item xs={4} spacing={2}>
+                        <Grid item xs={4} >
                             <Card className={classes.Card}>
                                 <iframe height="400" width="600" style={{ borderStyle: 'none' }}
                                     src="https://maps.google.com/maps?q=incubase%20twente&t=&z=13&ie=UTF8&iwloc=&output=embed" />

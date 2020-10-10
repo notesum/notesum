@@ -29,7 +29,7 @@ export default function About() {
                         <Grid item>
                             <Button variant="contained" color="primary" href="/projects">Try It!</Button>
                         </Grid>
-                        <Grid item justify="center">
+                        <Grid item>
                             <img src={example} style={{ height: '55vmin'}}/>
                         </Grid>
 

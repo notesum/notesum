@@ -59,7 +59,6 @@ const authReducer = ( state = initialState, action: t.AuthActionTypes) => {
                 loading: true,
             };
         case t.USER_DETAILS_SUCCESS:
-            console.log(action.payload);
             return {
                 ...state,
                 loading: false,
