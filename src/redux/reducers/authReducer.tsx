@@ -27,8 +27,6 @@ const authReducer = ( state = initialState, action: t.AuthActionTypes) => {
                 isLoggedIn: false,
             };
         case t.USER_LOGIN_FAILURE:
-            // const temp = [...action.payload];
-            // console.log('Reducer:',temp, typeof temp);
             return {
                 ...state,
                 loading: false,
@@ -45,7 +43,7 @@ const authReducer = ( state = initialState, action: t.AuthActionTypes) => {
             return {
                 ...state,
                 loading: true,
-                errors: null,
+                errors: [],
             };
         case t.USER_LOGOUT_SUCCESS:
             return {
@@ -67,6 +65,27 @@ const authReducer = ( state = initialState, action: t.AuthActionTypes) => {
                 loading: false,
                 user: action.payload,
             };
+        case t.USER_SIGNUP_STARTED:
+            return {
+                ...state,
+                loading: true,
+                token: null,
+                errors: [],
+                isLoggedIn: false,
+            };
+        case t.USER_SIGNUP_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                errors: ['signup error'],
+            };
+        case t.USER_SIGNUP_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                isLoggedIn: true,
+                token: action.payload,
+            };
         case t.AUTH_FAILURE:
             return {
                 ...state,
@@ -74,6 +93,10 @@ const authReducer = ( state = initialState, action: t.AuthActionTypes) => {
                 token: null,
                 isLoggedIn: false,
                 errors: ['auth error'],
+            };
+        case t.AUTH_RESET:
+            return {
+                ...initialState,
             };
         default:
             return state;

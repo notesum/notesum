@@ -6,6 +6,8 @@ import HomeIcon from '@material-ui/icons/Home';
 import InfoIcon from '@material-ui/icons/Info';
 import 'regenerator-runtime/runtime';
 
+import PrivateRoute from '../Routes/PrivateRoute';
+
 import App from './app/App';
 import About from './app/About';
 import AuthIcon from './auth/AuthIcon';
@@ -14,6 +16,7 @@ import ProjectOverview from './project_overview/ProjectOverview';
 import Error from './Error';
 
 export default function Root() {
+
     return (
         <BrowserRouter>
             <Box flexDirection="column" display="flex" height="100%" >
@@ -42,9 +45,7 @@ export default function Root() {
                         <Route path="/about">
                             <About />
                         </Route>
-                        <Route exact path="/projects">
-                            <ProjectOverview />
-                        </Route>
+                        <PrivateRoute path="/projects" component={ProjectOverview} />
                         <Route exact path="/project/:id" children={<Project />} />
                         <Route path="*">
                             <Error />

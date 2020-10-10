@@ -10,17 +10,8 @@ import { Link } from 'react-router-dom';
 
 import { AppState } from '../../redux/reducers';
 import { loadProjects, createNewProject } from '../../redux/asyncActions/projectAsyncActions';
-import Login from '../auth/Login';
 
 export default React.memo(() => {
-
-    // Check if the user is logged in
-    const isLoggedIn = useSelector((state: AppState) => state.auth.isLoggedIn);
-    if (!isLoggedIn) {
-        return (<>
-            <Login warning={true} />
-        </>);
-    }
 
     const projects = useSelector((state: AppState) => state.projects);
     const dispatch = useDispatch();

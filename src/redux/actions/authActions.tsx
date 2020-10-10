@@ -45,9 +45,35 @@ export function userDetailsSuccess(user:t.User): t.AuthActionTypes {
     };
 }
 
+export function userSignupStarted(): t.AuthActionTypes {
+    return {
+        type: t.USER_SIGNUP_STARTED,
+    };
+}
+
+export function userSignupFailure(errors:string[]): t.AuthActionTypes {
+    return {
+        type: t.USER_SIGNUP_FAILURE,
+        payload: errors,
+    };
+}
+
+export function userSignupSuccess(token:string): t.AuthActionTypes {
+    return {
+        type: t.USER_SIGNUP_SUCCESS,
+        payload: token,
+    };
+}
+
 export function authFailure(errors:string[]): t.AuthActionTypes {
     return {
         type: t.AUTH_FAILURE,
         payload:errors,
+    };
+}
+
+export function authReset(): t.AuthActionTypes {
+    return {
+        type: t.AUTH_RESET,
     };
 }

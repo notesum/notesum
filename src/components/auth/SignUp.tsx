@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Box, Button, Grid, Typography } from '@material-ui/core';
+import { useDispatch } from 'react-redux';
 
+import { register } from '../../redux/asyncActions/authAsyncActions';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -19,6 +21,38 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function SignUp() {
     const classes = useStyles();
 
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [passwordConf, setPasswordConf] = useState('');
+    const [didntMatch, setDidntMatch] = useState(false);
+
+    const dispatch = useDispatch();
+
+
+    function downHandler({ key }) {
+        console.log(key);
+        if (key === 'Enter') {
+            handleSubmit();
+        }
+    }
+
+    useEffect(() => {
+        window.addEventListener('keydown', downHandler);
+        return () => {
+            window.removeEventListener('keydown', downHandler);
+        };
+    }, []);
+
+    function handleSubmit() {
+        if (password === passwordConf) {
+            setDidntMatch(false);
+            dispatch(register(name, email, password));
+        } else {
+            setDidntMatch(true);
+        }
+    }
+
     return (
         <Box m={3}>
             <Grid
@@ -34,22 +68,28 @@ export default function SignUp() {
                 <Grid item>
                     <form className={classes.root} noValidate autoComplete="off">
                         <div>
-                            <TextField label="User Name" />
+                            <TextField onChange={(event) => setName(event.target.value)} label="Name" />
                         </div>
                         <div>
-                            <TextField label="Email" />
+                            <TextField onChange={(event) => setEmail(event.target.value)} label="Email" />
                         </div>
                         <div>
-                            <TextField label="Password" />
+                            <TextField type="password" onChange={(event) => setPassword(event.target.value)} label="Password" />
                         </div>
                         <div>
-                            <TextField label="Password Repeat" />
+                            <TextField type="password" onChange={(event) => setPasswordConf(event.target.value)} label="Password Repeat" />
                         </div>
                     </form>
                 </Grid>
+                {didntMatch &&
+                    <Grid item>
+                        <Typography variant="body1" color="secondary">Please make sure the password matches the repeat</Typography>
+                    </Grid>
+                }
                 <Grid item style={{ marginTop: '10px' }}>
-                    <Button variant="contained" color="primary">Sign Up!</Button>
+                    <Button variant="contained" color="primary" onMouseDown={() => handleSubmit()}>Sign Up!</Button>
                 </Grid>
+
             </Grid >
         </Box>
     );
