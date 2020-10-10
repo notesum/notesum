@@ -1,5 +1,6 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { IconButton, Box, Button, AppBar, Toolbar, Typography } from '@material-ui/core';
 import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 import HomeIcon from '@material-ui/icons/Home';
@@ -7,6 +8,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import 'regenerator-runtime/runtime';
 
 import PrivateRoute from '../Routes/PrivateRoute';
+import { AppState } from '../redux/reducers';
 
 import App from './app/App';
 import About from './app/About';
@@ -16,15 +18,16 @@ import ProjectOverview from './project_overview/ProjectOverview';
 import Error from './Error';
 
 export default function Root() {
+    const { isLoggedIn } = useSelector((state: AppState) => state.auth);
 
     return (
         <BrowserRouter>
             <Box flexDirection="column" display="flex" height="100%" >
                 <AppBar position="static">
                     <Toolbar variant="dense">
-                        <IconButton href="/"><HomeIcon style={{ color: '#fff' }} /></IconButton >
-                        <IconButton href="/about"><InfoIcon style={{ color: '#fff' }} /></IconButton>
-                        <IconButton href="/projects"><PictureAsPdfIcon style={{ color: '#fff' }} /></IconButton>
+                        <Link to="/"><IconButton><HomeIcon style={{ color: '#fff' }} /></IconButton ></Link>
+                        <Link to="/about"><IconButton><InfoIcon style={{ color: '#fff' }} /></IconButton></Link>
+                        <Link hidden={!isLoggedIn} to="/projects"><IconButton><PictureAsPdfIcon style={{ color: '#fff' }} /></IconButton></Link>
                         <Box style={{ marginLeft: 'auto' }}>
                             <AuthIcon />
                         </Box>
@@ -45,8 +48,10 @@ export default function Root() {
                         <Route path="/about">
                             <About />
                         </Route>
-                        <PrivateRoute path="/projects" component={ProjectOverview} />
-                        <Route exact path="/project/:id" children={<Project />} />
+                        <PrivateRoute path="/projects">
+                            <ProjectOverview />
+                        </PrivateRoute>
+                        <PrivateRoute exact path="/project/:id" children={<Project />} />
                         <Route path="*">
                             <Error />
                         </Route>
