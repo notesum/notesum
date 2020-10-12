@@ -79,7 +79,12 @@ export default function SignUp() {
                             <TextField type="password" onChange={(event) => setPasswordConf(event.target.value)} label="Password Repeat" />
                         </div>
                     </form>
+
                 </Grid>
+                <Grid item style={{ marginTop: '10px' }}>
+                        <Button target="_blank" href="/terms" variant="text"><Typography variant="subtitle2">by siging up
+                        in you accept the terms and conditions</Typography></Button>
+                    </Grid>
                 {didntMatch &&
                     <Grid item>
                         <Typography variant="body1" color="secondary">Please make sure the password matches the repeat</Typography>

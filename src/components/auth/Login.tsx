@@ -80,8 +80,13 @@ export default function Login({ buttonCallback, warning }: LogInProps) {
                     </form>
                 </Grid>
                 <Grid item style={{ marginTop: '10px' }}>
+                    <Button target="_blank" href="/terms"><Typography variant="subtitle2">by logging in
+                    you accept the terms and conditions</Typography></Button>
+                </Grid>
+                <Grid item style={{ marginTop: '10px' }}>
                     <Button variant="contained" color="primary" onMouseDown={() => handleSubmit()}>Log In</Button>
                 </Grid>
+
                 {!warning &&
                     <>
                         <Grid item style={{ marginTop: '30px' }}>

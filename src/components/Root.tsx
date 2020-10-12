@@ -16,6 +16,7 @@ import AuthIcon from './auth/AuthIcon';
 import Project from './project/Project';
 import ProjectOverview from './project_overview/ProjectOverview';
 import Error from './Error';
+import Terms from './app/Terms';
 
 export default function Root() {
     const { isLoggedIn } = useSelector((state: AppState) => state.auth);
@@ -33,21 +34,29 @@ export default function Root() {
                             <AuthIcon openProp={makeLogin} />
                         </Box>
                         <Button target="_blank"
-                        href="https://docs.google.com/forms/d/e/1FAIpQLScK9dZrpjcqcL4SGUc_bcwpAxWYSAH62hYPfdcK_v-2z0PRow/viewform"
-                        style={{ color: 'white' }}><Typography variant="body1" style={{ color: 'white' }}>Feedback</Typography></Button>
+                            href="https://docs.google.com/forms/d/e/1FAIpQLScK9dZrpjcqcL4SGUc_bcwpAxWYSAH62hYPfdcK_v-2z0PRow/viewform"
+                            style={{ color: 'white' }}><Typography variant="body1" style={{ color: 'white' }}>Feedback</Typography></Button>
+                        <Button target="_blank"
+                            href="/terms"
+                            variant="text"
+                            style={{ color: 'white' }}><Typography variant="subtitle2" style={{ color: 'white' }}>Terms and Conditions</Typography></Button>
                     </Toolbar>
                 </AppBar>
 
                 {/* This sizes the main content area to fill up the remaining space */}
                 <Box flexGrow={1} style={{
-                    minHeight: '0'
+                    minHeight: '0',
+                    overflowX: 'hidden'
                 }}>
                     <Switch >
                         <Route exact path="/">
-                            <App loginCallback={setMakeLogIn}/>
+                            <App loginCallback={setMakeLogIn} />
                         </Route>
                         <Route path="/about">
                             <About />
+                        </Route>
+                        <Route path="/terms">
+                            <Terms />
                         </Route>
                         <PrivateRoute path="/projects">
                             <ProjectOverview />
