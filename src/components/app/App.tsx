@@ -2,7 +2,9 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Box, Grid, Card, CardMedia, CardContent, makeStyles } from '@material-ui/core';
+import { useSelector } from 'react-redux';
 
+import { AppState } from '../../redux/reducers';
 import higlight from '../../resources/higlight.jpg';
 import work from '../../resources/work.jpg';
 
@@ -26,8 +28,21 @@ const useStyles = makeStyles({
     }
 });
 
-function App() {
+type AppProps = {
+    loginCallback:any
+};
+
+function App({loginCallback}: AppProps) {
     const classes = useStyles();
+
+    const isLoggedIn = useSelector((state: AppState) => state.auth.isLoggedIn);
+
+    React.useEffect(() => {
+        if(!isLoggedIn) {
+            loginCallback(true);
+        }
+    }, [isLoggedIn]);
+
     return (
         <div style={{ overflow: 'hidden' }}>
             <Grid container spacing={7} justify="center" direction="column" alignContent="center" alignItems="center" >

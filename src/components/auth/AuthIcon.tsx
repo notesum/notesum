@@ -10,8 +10,18 @@ import Login from './Login';
 import SignUp from './SignUp';
 
 
+type AuthProps = {
+    openProp: boolean
+};
 
-export default function AuthIcon() {
+export default function AuthIcon({openProp}: AuthProps) {
+
+    React.useEffect(()=> {
+        if(openProp) {
+            setDialogOpen(() => true);
+        }
+
+    }, [openProp]);
 
     const { loading, isLoggedIn } = useSelector((state: AppState) => state.auth);
     const error = useSelector((state: AppState) => state.auth.errors);

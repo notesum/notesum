@@ -64,6 +64,10 @@ export default function Login({ buttonCallback, warning }: LogInProps) {
                 }
                 <Grid item>
                     <Typography variant="h4">Log In</Typography>
+
+                </Grid>
+                <Grid item>
+                    <Typography variant="h6"> You always need to be logged in to test</Typography>
                 </Grid>
                 <Grid item>
                     <form className={classes.root} noValidate autoComplete="off">

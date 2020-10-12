@@ -19,6 +19,7 @@ import Error from './Error';
 
 export default function Root() {
     const { isLoggedIn } = useSelector((state: AppState) => state.auth);
+    const [makeLogin, setMakeLogIn] = React.useState(false);
 
     return (
         <BrowserRouter>
@@ -29,7 +30,7 @@ export default function Root() {
                         <Link to="/about"><IconButton><InfoIcon style={{ color: '#fff' }} /></IconButton></Link>
                         <Link hidden={!isLoggedIn} to="/projects"><IconButton><PictureAsPdfIcon style={{ color: '#fff' }} /></IconButton></Link>
                         <Box style={{ marginLeft: 'auto' }}>
-                            <AuthIcon />
+                            <AuthIcon openProp={makeLogin} />
                         </Box>
                         <Button target="_blank"
                         href="https://docs.google.com/forms/d/e/1FAIpQLScK9dZrpjcqcL4SGUc_bcwpAxWYSAH62hYPfdcK_v-2z0PRow/viewform"
@@ -43,7 +44,7 @@ export default function Root() {
                 }}>
                     <Switch >
                         <Route exact path="/">
-                            <App />
+                            <App loginCallback={setMakeLogIn}/>
                         </Route>
                         <Route path="/about">
                             <About />
