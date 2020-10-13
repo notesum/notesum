@@ -175,7 +175,7 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
     const toolbar = (
         <AppBar color="transparent" position="static" style={{ overflow: 'auto' }}>
             <Toolbar variant="dense">
-                <Tooltip title="Highlight to Editor" placement="top">
+                <Tooltip title="Highlight to Editor from PDF" placement="top">
                     <Switch
                         checked={highlightToggle}
                         onChange={() => { setHighlightToggle(!highlightToggle); }}
@@ -199,12 +199,18 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
                     <IconButton onMouseDown={() => formatText('UNDERLINE')}><FormatUnderlinedIcon fontSize="small" /></IconButton>
                     <IconButton onMouseDown={() => formatText('CODE')}><CodeIcon fontSize="small" /></IconButton>
                 </ButtonGroup>
-                <IconButton onClick={() => { setSaveToggle(true); }} style={{ marginLeft: 'auto' }}>
-                    <SaveAltIcon fontSize="small" />
-                </IconButton>
-                <IconButton onClick={() => dispatch(saveFile(fileId))} style={file.needsSave ? { color: '#000' } : {}}>
-                    <SaveIcon fontSize="small" />
-                </IconButton>
+                <Tooltip title="Download" placement="top">
+                    <IconButton onClick={() => { setSaveToggle(true); }} style={{ marginLeft: 'auto' }}>
+                        <SaveAltIcon fontSize="small" />
+                    </IconButton>
+                </Tooltip>
+
+                <Tooltip title={file.needsSave ? 'Save work to cloud' : 'Work already saved to cloud'} placement="top">
+                    <IconButton onClick={() => dispatch(saveFile(fileId))} style={file.needsSave ? { color: '#000' } : {}}>
+                        <SaveIcon fontSize="small" />
+                    </IconButton>
+                </Tooltip>
+
                 <IconButton onClick={() => { setFullscreenOpen(true); }}>
                     <FullscreenIcon fontSize="small" />
                 </IconButton>
