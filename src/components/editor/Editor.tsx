@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Editor from 'draft-js-plugins-editor';
 import createImagePlugin from 'draft-js-image-plugin';
-import { EditorState, RichUtils, convertFromRaw, convertToRaw, getDefaultKeyBinding, KeyBindingUtil } from 'draft-js';
+import { EditorState, RichUtils, convertFromRaw, convertToRaw } from 'draft-js';
 import 'draft-js/dist/Draft.css';
 import { Button, ButtonGroup, Grid, Box, Dialog, AppBar, TextField, IconButton, Toolbar, Switch, Tooltip } from '@material-ui/core';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
@@ -24,7 +24,7 @@ import { updateEditor } from '../../redux/actions/filesActions';
 import { saveFile } from '../../redux/asyncActions/fileAsyncActions';
 
 import './Editor.css';
-import { insertNewBlock, getSelectionParentElement, insertImageUtil } from './EditorUtils';
+import { insertNewBlock, getSelectionParentElement, insertImageUtil, hotKey } from './EditorUtils';
 import saveState from './Saver';
 
 type EditorProps = {
@@ -39,17 +39,16 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
     const content = useSelector((state: AppState) => state.files[fileId].summary);
     const file = useSelector((state: AppState) => state.files[fileId]);
     const dispatch = useDispatch();
+
+    // Main data structure for the draft js editor
     const [editorState, setEditorState] = useState(EditorState.createWithContent(convertFromRaw(content)));
 
-    // Update editorstate both in state and in local storage
-    const setEditor = (newEditorState: EditorState) => {
-        setEditorState(newEditorState);
-    };
-
+    // Update redux with the editor changes
     useEffect(() => {
         dispatch(updateEditor(fileId, convertToRaw(editorState.getCurrentContent())));
     }, [editorState]);
 
+    // Current used text style, bold, italic ...
     const [style, setStyle] = useState('unstyled');
     // File name in the editor
     const [name, setName] = useState('Unnamed');
@@ -62,6 +61,7 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
     const imagePlugin = createImagePlugin();
     const plugins = [imagePlugin];
 
+    // Called everytime there is a higlight
     const handleEditor = useCallback(() => {
         if (window.getSelection().toString().length && window.getSelection().toString() !== prevSelection && highlightToggle &&
             (getSelectionParentElement().className === 'page' || getSelectionParentElement().className === 'textLayer')) {
@@ -71,98 +71,60 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
         }
     }, [style, highlightToggle]);
 
+    // If there is a new image insert it to the editor
     useEffect(() => {
         setEditorState((prevState) => insertImageUtil(prevState, img));
     }, [img]);
 
-    function hotKey(e) {
-        if (e.keyCode === 49 && KeyBindingUtil.hasCommandModifier(e)) { // Cmd+1
-            return 'header-one';
-        }
-        if (e.keyCode === 70 && KeyBindingUtil.hasCommandModifier(e)) { // Cmd+f
-            return 'full';
-        }
-        if (e.keyCode === 50 && KeyBindingUtil.hasCommandModifier(e)) { // Cmd+2
-            return 'header-three';
-        }
-        if (e.keyCode === 51 && KeyBindingUtil.hasCommandModifier(e)) { // Cmd+3
-            return 'unstyled';
-        }
-        if (e.keyCode === 52 && KeyBindingUtil.hasCommandModifier(e)) { // Cmd+4
-            return 'unordered-list-item';
-        }
-        if (e.keyCode === 53 && KeyBindingUtil.hasCommandModifier(e)) { // Cmd+5
-            return 'img';
-        }
-        if (e.keyCode === 83 && KeyBindingUtil.hasCommandModifier(e)) { // Cmd+s
-            return 'save';
-        }
-        if (e.keyCode === 66 && KeyBindingUtil.hasCommandModifier(e)) { // Cmd+b
-            return 'bold';
-        }
-        if (e.keyCode === 73 && KeyBindingUtil.hasCommandModifier(e)) { // Cmd+i
-            return 'italic';
-        }
-        if (e.keyCode === 85 && KeyBindingUtil.hasCommandModifier(e)) { // Cmd+u
-            return 'underline';
-        }
-        // adds default pre-made draft.js hotkeys
-        return getDefaultKeyBinding(e);
-    }
+    // Listen to mouseup for highlight behaviour
+    useEffect(() => {
+        focusEditor();
+        window.addEventListener('mouseup', handleEditor);
+        return () => {
+            window.removeEventListener('mouseup', handleEditor);
+        };
+    }, []);
+
 
     function handleKey(command) {
         screenshotCallback(false);
         if (command === 'header-one') {
             setStyle('header-two');
-            return 'handled';
         }
-        if (command === 'full') {
+        else if (command === 'full') {
             setFullscreenOpen(true);
-            return 'handled';
         }
-        if (command === 'save') {
+        else if (command === 'save') {
             setSaveToggle(true);
-            return 'handled';
         }
-        if (command === 'header-three') {
+        else if (command === 'header-three') {
             setStyle('header-three');
-            return 'handled';
         }
-        if (command === 'unstyled') {
+        else if (command === 'unstyled') {
             setStyle('unstyled');
-            return 'handled';
         }
-        if (command === 'unordered-list-item') {
+        else if (command === 'unordered-list-item') {
             setStyle('unordered-list-item');
-            return 'handled';
         }
-        if (command === 'img') {
+        else if (command === 'img') {
             setStyle('img');
             screenshotCallback(true);
-            return 'handled';
         }
-        if (command === 'bold') {
+        else if (command === 'bold') {
             formatText('BOLD');
-            return 'handled';
         }
-        if (command === 'underline') {
+        else if (command === 'underline') {
             formatText('UNDERLINE');
         }
-        if (command === 'italic') {
+        else if (command === 'italic') {
             formatText('ITALIC');
+        } else {
+            return 'not-handled';
         }
-        return 'not-handled';
+        return 'handled';
     }
 
-    useEffect(() => {
-        focusEditor();
-        // Listen to mouseup for highlight behaviour
-        window.addEventListener('mouseup', handleEditor);
 
-        return () => {
-            window.removeEventListener('mouseup', handleEditor);
-        };
-    }, [handleEditor, style]);
 
     const editor = useRef(null);
 
@@ -172,12 +134,12 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
 
     function formatText(f) {
         const nextState = RichUtils.toggleInlineStyle(editorState, f);
-        setEditor(nextState);
+        setEditorState(nextState);
     }
 
     function code() {
         const nextState = RichUtils.toggleCode(editorState);
-        setEditor(nextState);
+        setEditorState(nextState);
     }
 
     function toggleStyle(event, newStyle) {
@@ -188,7 +150,7 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
 
     const editorComponent =
         <Editor ref={editor} editorState={editorState} plugins={plugins}
-            onChange={setEditor} handleKeyCommand={handleKey} keyBindingFn={hotKey} />;
+            onChange={setEditorState} handleKeyCommand={handleKey} keyBindingFn={hotKey} />;
 
     const saveDialog =
         <Dialog open={saveToggle} onClose={() => { setSaveToggle(false); }}>
@@ -241,7 +203,7 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
                 <IconButton onClick={() => { setSaveToggle(true); }} style={{ marginLeft: 'auto' }}>
                     <SaveAltIcon fontSize="small" />
                 </IconButton>
-                <IconButton onClick={() => dispatch(saveFile(fileId))} style={file.needsSave ? {color: '#000'} : {}}>
+                <IconButton onClick={() => dispatch(saveFile(fileId))} style={file.needsSave ? { color: '#000' } : {}}>
                     <SaveIcon fontSize="small" />
                 </IconButton>
                 <IconButton onClick={() => { setFullscreenOpen(true); }}>
