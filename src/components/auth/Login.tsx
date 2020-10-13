@@ -14,16 +14,14 @@ const useStyles = makeStyles((theme: Theme) =>
                 width: 400,
             },
         },
-
     }),
 );
 
 type LogInProps = {
-    warning?: boolean
     buttonCallback?: (a: boolean) => void
 };
 
-export default function Login({ buttonCallback, warning }: LogInProps) {
+export default function Login({ buttonCallback }: LogInProps) {
     const classes = useStyles();
 
     const [email, setEmail] = useState('');
@@ -35,12 +33,14 @@ export default function Login({ buttonCallback, warning }: LogInProps) {
         dispatch(login(email, password));
     }
 
-    function downHandler({ key }) {
+    // Enter submits
+    function downHandler({ key }: KeyboardEvent) {
         if (key === 'Enter') {
             handleSubmit();
         }
     }
 
+    // Listen for Enter
     useEffect(() => {
         window.addEventListener('keydown', downHandler);
         return () => {
@@ -57,17 +57,12 @@ export default function Login({ buttonCallback, warning }: LogInProps) {
                 alignItems="center"
                 justify="center"
             >
-                {warning &&
-                    <Grid item style={{ marginBottom: '40px' }}>
-                        <Typography variant="h4" color="secondary">You must be logged in.</Typography>
-                    </Grid>
-                }
                 <Grid item>
                     <Typography variant="h4">Log In</Typography>
 
                 </Grid>
                 <Grid item>
-                    <Typography variant="h6"> You always need to be logged in to test</Typography>
+                    <Typography variant="h6"> You need to log in to access the beta test</Typography>
                 </Grid>
                 <Grid item>
                     <form className={classes.root} noValidate autoComplete="off">
@@ -80,22 +75,19 @@ export default function Login({ buttonCallback, warning }: LogInProps) {
                     </form>
                 </Grid>
                 <Grid item style={{ marginTop: '10px' }}>
-                    <Button target="_blank" href="/terms"><Typography variant="subtitle2">by logging in
+                    <Button target="_blank" href="/terms"><Typography variant="subtitle2">by signing up
                     you accept the terms and conditions</Typography></Button>
                 </Grid>
                 <Grid item style={{ marginTop: '10px' }}>
                     <Button variant="contained" color="primary" onMouseDown={() => handleSubmit()}>Log In</Button>
                 </Grid>
 
-                {!warning &&
-                    <>
-                        <Grid item style={{ marginTop: '30px' }}>
-                            <Typography variant="h6">Don't have an acount?</Typography>
-                        </Grid>
-                        <Grid item style={{ marginTop: '10px' }}>
-                            <Button onMouseDown={() => buttonCallback(true)} variant="contained" color="primary">Sign Up</Button>
-                        </Grid>
-                    </>}
+                <Grid item style={{ marginTop: '30px' }}>
+                    <Typography variant="h6">Don't have an acount?</Typography>
+                </Grid>
+                <Grid item style={{ marginTop: '10px' }}>
+                    <Button onMouseDown={() => buttonCallback(true)} variant="contained" color="primary">Sign Up</Button>
+                </Grid>
             </Grid >
         </Box>
     );
