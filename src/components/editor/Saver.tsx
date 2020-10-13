@@ -2,19 +2,25 @@ import { convertToRaw, EditorState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import { saveAs } from 'file-saver';
 
-
 import generateWordDoc from './Word';
 
-// Save the editor state with the given extension type ex
-export default function saveState(eState: EditorState, extension: string, name: string) {
-    const contents = convertToRaw(eState.getCurrentContent());
-    const markup = draftToHtml(contents, true);
-
-    if (extension === 'html' || extension === 'txt') { htmlOrtxt(markup, extension, name); }
+/**
+ * Download an EditorState as a file
+ * @param eState EditorState to be downloaded
+ * @param extension The file extension to be used, so file type to be downloaded
+ * @param name Name of the file to be downloaded
+ */
+export default function downloadState(eState: EditorState, extension: string, name: string): void {
+    if (extension === 'html' || extension === 'txt') { htmlOrtxt(eState, extension, name); }
     else if (extension === 'docx') {generateWordDoc(eState.getCurrentContent(), name);}
 }
 
-function htmlOrtxt(markup: any, ex: 'html' | 'txt', name: string) {
+// TODO: handle images
+// Handle .txt or .html coversion and download
+function htmlOrtxt(eState: EditorState, ex: 'html' | 'txt', name: string) {
+
+    const contents = convertToRaw(eState.getCurrentContent());
+    const markup = draftToHtml(contents, true);
     const file = new Blob([markup.toString()]);
     saveAs(file, name + '.' + ex);
 }

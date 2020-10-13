@@ -25,7 +25,7 @@ import { saveFile } from '../../redux/asyncActions/fileAsyncActions';
 
 import './Editor.css';
 import { insertNewBlock, getSelectionParentElement, insertImageUtil, hotKey } from './EditorUtils';
-import saveState from './Saver';
+import downloadState from './Saver';
 
 type EditorProps = {
     img: string
@@ -83,7 +83,7 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
         return () => {
             window.removeEventListener('mouseup', handleEditor);
         };
-    }, []);
+    }, [style]);
 
     const editor = useRef(null);
 
@@ -158,13 +158,13 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
                             onChange={(event) => { setName(event.target.value); }} />
                     </Grid>
                     <Grid item xs>
-                        <Button onMouseDown={() => saveState(editorState, 'docx', name)}>Save as Word Document</Button>
+                        <Button onMouseDown={() => downloadState(editorState, 'docx', name)}>Save as Word Document</Button>
                     </Grid>
                     <Grid item xs>
-                        <Button onMouseDown={() => saveState(editorState, 'html', name)}>Save as HTML</Button>
+                        <Button onMouseDown={() => downloadState(editorState, 'html', name)}>Save as HTML</Button>
                     </Grid>
                     <Grid item xs>
-                        <Button onMouseDown={() => saveState(editorState, 'txt', name)}>Save as Text Document</Button>
+                        <Button onMouseDown={() => downloadState(editorState, 'txt', name)}>Save as Text Document</Button>
                     </Grid>
                 </Grid>
             </Box>

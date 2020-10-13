@@ -30,7 +30,7 @@ export function insertNewBlock(eState: EditorState, t: string, s: string): Edito
         // @ts-ignore
         newBlocks = [[key1, new ContentBlock({ key: key1, type: s, text: t })],
         // @ts-ignore
-        [key2, new ContentBlock({ key: key2, type: 'unstyled', text: '' })],
+        [key2, new ContentBlock({ key: key2, type: 'unstyled'})],
         [currentBlock.getKey(), currentBlock]];
     }
 
