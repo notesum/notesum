@@ -78,15 +78,16 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
 
     // Listen to mouseup for highlight behaviour
     useEffect(() => {
-        focusEditor();
+        editor.current.focus();
         window.addEventListener('mouseup', handleEditor);
         return () => {
             window.removeEventListener('mouseup', handleEditor);
         };
     }, []);
 
+    const editor = useRef(null);
 
-    function handleKey(command) {
+    function handleKey(command: string) {
         screenshotCallback(false);
         if (command === 'header-one') {
             setStyle('header-two');
@@ -124,35 +125,31 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
         return 'handled';
     }
 
-
-
-    const editor = useRef(null);
-
-    function focusEditor() {
-        editor.current.focus();
+    // Toggle inline style
+    function formatText(nextStyle: string): void {
+        if (nextStyle === 'CODE') {
+            setEditorState(RichUtils.toggleCode(editorState));
+        } else {
+            setEditorState(RichUtils.toggleInlineStyle(editorState, nextStyle));
+        }
     }
 
-    function formatText(f) {
-        const nextState = RichUtils.toggleInlineStyle(editorState, f);
-        setEditorState(nextState);
-    }
-
-    function code() {
-        const nextState = RichUtils.toggleCode(editorState);
-        setEditorState(nextState);
-    }
-
-    function toggleStyle(event, newStyle) {
+    // Toggle the style in which we capture highlights. Header, text, image...
+    function toggleStyle(event, newStyle: string): void {
         event.preventDefault();
+        // Call the parent component to tell we want screenshots
         screenshotCallback(newStyle === 'img');
         setStyle(newStyle);
     }
 
-    const editorComponent =
+    // Draft editor
+    const editorComponent = (
         <Editor ref={editor} editorState={editorState} plugins={plugins}
-            onChange={setEditorState} handleKeyCommand={handleKey} keyBindingFn={hotKey} />;
+            onChange={setEditorState} handleKeyCommand={handleKey} keyBindingFn={hotKey} />
+    );
 
-    const saveDialog =
+    // Pops up when the save button is clicked
+    const saveDialog = (
         <Dialog open={saveToggle} onClose={() => { setSaveToggle(false); }}>
             <Box m={2} overflow="hidden">
                 <Grid container wrap="wrap" direction="column">
@@ -171,9 +168,11 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
                     </Grid>
                 </Grid>
             </Box>
-        </Dialog>;
+        </Dialog>
+    );
 
-    const toolbar =
+    // The toolbar with all the buttons
+    const toolbar = (
         <AppBar color="transparent" position="static" style={{ overflow: 'auto' }}>
             <Toolbar variant="dense">
                 <Tooltip title="Highlight to Editor" placement="top">
@@ -198,7 +197,7 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
                     <IconButton onMouseDown={() => formatText('ITALIC')}><FormatItalicIcon fontSize="small" /></IconButton>
                     <IconButton onMouseDown={() => formatText('STRIKETHROUGH')}><FormatStrikethroughIcon fontSize="small" /></IconButton>
                     <IconButton onMouseDown={() => formatText('UNDERLINE')}><FormatUnderlinedIcon fontSize="small" /></IconButton>
-                    <IconButton onMouseDown={() => code()}><CodeIcon fontSize="small" /></IconButton>
+                    <IconButton onMouseDown={() => formatText('CODE')}><CodeIcon fontSize="small" /></IconButton>
                 </ButtonGroup>
                 <IconButton onClick={() => { setSaveToggle(true); }} style={{ marginLeft: 'auto' }}>
                     <SaveAltIcon fontSize="small" />
@@ -210,17 +209,18 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
                     <FullscreenIcon fontSize="small" />
                 </IconButton>
             </Toolbar>
-        </AppBar>;
+        </AppBar>
+    );
 
-
-    const editorFull =
+    // Editor but in full screen, using a dialog
+    // TODO: make more proper
+    const editorFull = (
         <Dialog fullScreen open={fullscreenOpen} onClose={() => { setFullscreenOpen(false); }}>
             {toolbar}
             {editorComponent}
-        </Dialog>;
+        </Dialog>
+    );
 
-
-    // Main design
     return (
         <div style={{ backgroundColor: 'white' }} >
             <Grid container wrap="wrap">
