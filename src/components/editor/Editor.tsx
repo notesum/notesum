@@ -25,7 +25,7 @@ import { saveFile } from '../../redux/asyncActions/fileAsyncActions';
 
 import './Editor.css';
 import { insertNewBlock, getSelectionParentElement, insertImageUtil, hotKey } from './EditorUtils';
-import downloadState from './Saver';
+import downloadState from './Download';
 
 type EditorProps = {
     img: string
