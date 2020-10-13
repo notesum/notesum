@@ -9,10 +9,10 @@ import example from '../../resources/example.png';
 export default function About() {
 
     return (
-        <div style={{overflow: 'hidden', marginBottom: '10px'}}>
+        <div style={{ overflow: 'hidden', marginBottom: '10px' }}>
             <Box my={7}>
                 <Container>
-                    <Typography component="h1" variant="h4" align="center" color="textPrimary" style={{fontWeight: 'bold'}} gutterBottom>
+                    <Typography component="h1" variant="h4" align="center" color="textPrimary" style={{ fontWeight: 'bold' }} gutterBottom>
                         How it will save your time and organize your material
                 </Typography>
                     <Typography variant="h6" align="center" color="textSecondary" paragraph>
@@ -25,15 +25,14 @@ export default function About() {
                         Easy as that!
                 </Typography>
                 </Container>
-                    <Grid container spacing={2} justify="center" direction="column" alignContent="center" alignItems="center">
-                        <Grid item>
-                            <Button variant="contained" color="primary" href="/projects">Try It!</Button>
-                        </Grid>
-                        <Grid item>
-                            <img src={example} style={{ height: '55vmin'}}/>
-                        </Grid>
-
+                <Grid container spacing={2} justify="center" direction="column" alignContent="center" alignItems="center">
+                    <Grid item>
+                        <Button variant="contained" color="primary" href="/projects">Try It!</Button>
                     </Grid>
+                    <Grid item>
+                        <img src={example} style={{ height: '55vmin' }} />
+                    </Grid>
+                </Grid>
             </Box>
         </div>
     );
