@@ -53,12 +53,17 @@ function addBlock(pars, entry, contentState, doc) {
             children: lines,
         });
         // Images
-    } else if (entry.getType() === 'atomic') {
-        const data = contentState.getEntity(entry.getEntityAt(0)).getData().src.toString();
-        const s = new Image();
-        s.src = data;
-        const image1 = Media.addImage(doc, data, s.width/1.3, s.height/1.3); // TODO please less hacky
-        p = new docx.Paragraph(image1);
+    } else if (entry.getType() === 'atomic' || entry.getType() === 'img') {
+        try {
+            const data = contentState.getEntity(entry.getEntityAt(0)).getData().src.toString();
+            const s = new Image();
+            s.src = data;
+            const image1 = Media.addImage(doc, data, s.width / 1.3, s.height / 1.3); // TODO please less hacky
+            p = new docx.Paragraph(image1);
+        } catch (e) {
+            console.log(`Image saving might have gone bad\n ${e.message}`);
+            return pars;
+        }
     }
     pars.push(p);
     return pars;
