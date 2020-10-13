@@ -204,13 +204,11 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
                         <SaveAltIcon fontSize="small" />
                     </IconButton>
                 </Tooltip>
-
                 <Tooltip title={file.needsSave ? 'Save work to cloud' : 'Work already saved to cloud'} placement="top">
                     <IconButton onClick={() => dispatch(saveFile(fileId))} style={file.needsSave ? { color: '#000' } : {}}>
                         <SaveIcon fontSize="small" />
                     </IconButton>
                 </Tooltip>
-
                 <IconButton onClick={() => { setFullscreenOpen(true); }}>
                     <FullscreenIcon fontSize="small" />
                 </IconButton>

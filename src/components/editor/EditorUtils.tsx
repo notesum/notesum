@@ -1,7 +1,7 @@
 import { EditorState, genKey, ContentBlock, AtomicBlockUtils, getDefaultKeyBinding, KeyBindingUtil } from 'draft-js';
 
 /**
- * Adds a give text with a style to an EditorState
+ * Add a give text with a style to an EditorState
  * @param eState EditorState of the edior
  * @param t Text to be added
  * @param s Style of the text to be added
@@ -91,7 +91,7 @@ export function insertImageUtil(eState: EditorState, imgB64: string): EditorStat
 }
 
 /**
- * Map key strokes certain styles of insertion or text styling
+ * Map key strokes to certain styles of insertion or text styling
  * @param event Key stroke event
  * @return New style of the editor
  */
