@@ -199,6 +199,9 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
                             onChange={(event) => { setName(event.target.value); }} />
                     </Grid>
                     <Grid item xs>
+                        <Button onMouseDown={() => saveState(editorState, 'pdf', name)}>Save as PDF</Button>
+                    </Grid>
+                    <Grid item xs>
                         <Button onMouseDown={() => saveState(editorState, 'docx', name)}>Save as Word Document</Button>
                     </Grid>
                     <Grid item xs>

@@ -18,6 +18,7 @@ function fillWithData(doc, contentState) {
     const blocks = contentState.getBlockMap();
     let pars = [];
 
+    // TODO: to array and types
     for (const block of blocks) {
         const entry = block[1]; // Every entry is sort of a paragraph
 
