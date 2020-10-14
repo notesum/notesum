@@ -18,6 +18,7 @@
         }
     ],
     "dependencies": {
+        "@jest/globals": "^26.5.3",
         "@material-ui/core": "^4.9.10",
         "@material-ui/icons": "^4.9.1",
         "@material-ui/lab": "^4.0.0-alpha.56",
@@ -45,10 +46,16 @@
         "redux-devtools-extension": "^2.13.8",
         "redux-persist": "^6.0.0",
         "redux-thunk": "^2.3.0",
+        "selenium": "^2.20.0",
         "src": "^1.1.2",
         "typescript": "~4.0.2"
     },
     "devDependencies": {
+        "@babel/core": "^7.11.6",
+        "@babel/preset-env": "^7.11.5",
+        "@babel/preset-typescript": "^7.10.4",
+        "babel-jest": "^26.5.2",
+        "jest": "^26.5.3",
         "parcel-bundler": "^1.12.4",
         "tslint": "^6.1.2",
         "tslint-react": "^5.0.0"
@@ -58,7 +65,8 @@
         "lint": "tslint -c tslint.json -p tsconfig.json",
         "build": "yarn run clean && yarn run lint && yarn run build:parcel",
         "build:parcel": "parcel build public/index.html --public-url / --no-source-maps",
-        "dev": "parcel public/index.html"
+        "dev": "parcel public/index.html",
+        "test": "jest"
     },
     "eslintConfig": {
         "extends": "react-app"
