@@ -37,6 +37,7 @@ function App({loginCallback}: AppProps) {
 
     const isLoggedIn = useSelector((state: AppState) => state.auth.isLoggedIn);
 
+    // If someone is not logged in and the page is reloaded, show the dialog
     React.useEffect(() => {
         if(!isLoggedIn) {
             loginCallback(true);
@@ -83,9 +84,7 @@ function App({loginCallback}: AppProps) {
                             </Card>
                         </Grid>
                         <Grid item xs={1} />
-
                     </Grid>
-
                 </Grid>
                 <Grid item>
                     <Grid container spacing={7} justify="center" alignContent="center" alignItems="center">
@@ -112,7 +111,6 @@ function App({loginCallback}: AppProps) {
                                 </Typography>
                                     <Button className={classes.But} variant="contained" color="primary" href="/projects">Try Now</Button>
                                 </CardContent>
-
                             </Card>
                         </Grid>
                         <Grid item xs={1} />

@@ -14,13 +14,13 @@ const useStyles = makeStyles((theme: Theme) =>
                 width: 400,
             },
         },
-
     }),
 );
 
 export default function SignUp() {
     const classes = useStyles();
 
+    // Form data
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -29,13 +29,14 @@ export default function SignUp() {
 
     const dispatch = useDispatch();
 
-
+    // Enter submits
     function downHandler({ key }) {
         if (key === 'Enter') {
             handleSubmit();
         }
     }
 
+    // Listen for Enter
     useEffect(() => {
         window.addEventListener('keydown', downHandler);
         return () => {
@@ -43,6 +44,7 @@ export default function SignUp() {
         };
     }, []);
 
+    // Submit the user if the passwords match
     function handleSubmit() {
         if (password === passwordConf) {
             setDidntMatch(false);
@@ -52,39 +54,37 @@ export default function SignUp() {
         }
     }
 
+    // Sign up form
+    const form = (
+        <form className={classes.root} noValidate autoComplete="off">
+            <div>
+                <TextField onChange={(event) => setName(event.target.value)} label="Name" />
+            </div>
+            <div>
+                <TextField onChange={(event) => setEmail(event.target.value)} label="Email" />
+            </div>
+            <div>
+                <TextField type="password" onChange={(event) => setPassword(event.target.value)} label="Password" />
+            </div>
+            <div>
+                <TextField type="password" onChange={(event) => setPasswordConf(event.target.value)} label="Password Repeat" />
+            </div>
+        </form>
+    );
+
     return (
         <Box m={3}>
-            <Grid
-                container
-                spacing={0}
-                direction="column"
-                alignItems="center"
-                justify="center"
-            >
+            <Grid container spacing={0} direction="column" alignItems="center" justify="center">
                 <Grid item>
                     <Typography variant="h4">Sign Up</Typography>
                 </Grid>
                 <Grid item>
-                    <form className={classes.root} noValidate autoComplete="off">
-                        <div>
-                            <TextField onChange={(event) => setName(event.target.value)} label="Name" />
-                        </div>
-                        <div>
-                            <TextField onChange={(event) => setEmail(event.target.value)} label="Email" />
-                        </div>
-                        <div>
-                            <TextField type="password" onChange={(event) => setPassword(event.target.value)} label="Password" />
-                        </div>
-                        <div>
-                            <TextField type="password" onChange={(event) => setPasswordConf(event.target.value)} label="Password Repeat" />
-                        </div>
-                    </form>
-
+                    {form}
                 </Grid>
                 <Grid item style={{ marginTop: '10px' }}>
-                        <Button target="_blank" href="/terms" variant="text"><Typography variant="subtitle2">by siging up
+                    <Button target="_blank" href="/terms" variant="text"><Typography variant="subtitle2">by siging up
                         in you accept the terms and conditions</Typography></Button>
-                    </Grid>
+                </Grid>
                 {didntMatch &&
                     <Grid item>
                         <Typography variant="body1" color="secondary">Please make sure the password matches the repeat</Typography>
@@ -93,7 +93,6 @@ export default function SignUp() {
                 <Grid item style={{ marginTop: '10px' }}>
                     <Button variant="contained" color="primary" onMouseDown={() => handleSubmit()}>Sign Up!</Button>
                 </Grid>
-
             </Grid >
         </Box>
     );

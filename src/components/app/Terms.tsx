@@ -10,10 +10,9 @@ export default function Terms() {
             <Box my={7}>
                 <Container>
                     <Typography component="h1" variant="h4" align="center" color="textPrimary" style={{ fontWeight: 'bold' }} gutterBottom>
-                        Nice that you want to join us!
+                        It is amazing that you want to try the beta version of NoteSum!
                     </Typography>
                     <Typography component="h1" variant="h5" align="center" color="textPrimary" style={{ fontWeight: 'bold', marginBottom: '30px' }}>
-
                         Before you can access the beta, please read the following terms and conditions carefully:
                     </Typography>
                     <Typography variant="h6" color="textSecondary" paragraph>
@@ -65,8 +64,6 @@ export default function Terms() {
                     </Typography>
                     <Button variant="contained" color="primary" href="/projects">Accept</Button>
                 </Container>
-
-
             </Box>
         </div>
     );
