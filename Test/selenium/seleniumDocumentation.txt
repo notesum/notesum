@@ -6,5 +6,5 @@ their respective web stores.
 Selenium IDE is an integrated development environment for Selenium tests.
 It is implemented as a Firefox extension, and allows you to record, edit, and debug tests.
 
-Run the .list file on "app.notesum.org" to test online or "localhost" if you want to test locally.
+Run the .side file on "app.notesum.org" to test online or "localhost" if you want to test locally.
 
