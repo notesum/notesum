@@ -3,6 +3,7 @@ import draftToHtml from 'draftjs-to-html';
 import { saveAs } from 'file-saver';
 
 import generateWordDoc from './Word';
+import pdfDownload from './PdfDownload';
 
 /**
  * Download an EditorState as a file
@@ -13,6 +14,8 @@ import generateWordDoc from './Word';
 export default function downloadState(eState: EditorState, extension: string, name: string): void {
     if (extension === 'html' || extension === 'txt') { htmlOrtxt(eState, extension, name); }
     else if (extension === 'docx') {generateWordDoc(eState.getCurrentContent(), name);}
+    else if (extension === 'pdf') { pdfDownload(eState.getCurrentContent(), name); }
+
 }
 
 // TODO: handle images

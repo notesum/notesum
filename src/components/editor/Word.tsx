@@ -30,6 +30,7 @@ function fillWithData(doc: docx.Document, contentState): docx.Document {
     let paragraphs = [];
 
     // Iterate the entries of the content state and add them as paragraph objects
+    // TODO: to array and types
     for (const block of blocks) {
         const entry = block[1]; // Every entry is sort of a paragraph
 
