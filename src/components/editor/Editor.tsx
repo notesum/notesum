@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Editor from 'draft-js-plugins-editor';
 import createImagePlugin from 'draft-js-image-plugin';
-import { EditorState, RichUtils, convertFromRaw, convertToRaw, getDefaultKeyBinding, KeyBindingUtil } from 'draft-js';
+import { EditorState, RichUtils, convertFromRaw, convertToRaw } from 'draft-js';
 import 'draft-js/dist/Draft.css';
 import { Button, ButtonGroup, Grid, Box, Dialog, AppBar, TextField, IconButton, Toolbar, Switch, Tooltip } from '@material-ui/core';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
@@ -24,8 +24,8 @@ import { updateEditor } from '../../redux/actions/filesActions';
 import { saveFile } from '../../redux/asyncActions/fileAsyncActions';
 
 import './Editor.css';
-import { insertNewBlock, getSelectionParentElement, insertImageUtil } from './EditorUtils';
-import saveState from './Saver';
+import { insertNewBlock, getSelectionParentElement, insertImageUtil, hotKey } from './EditorUtils';
+import downloadState from './Download';
 
 type EditorProps = {
     img: string
@@ -39,17 +39,16 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
     const content = useSelector((state: AppState) => state.files[fileId].summary);
     const file = useSelector((state: AppState) => state.files[fileId]);
     const dispatch = useDispatch();
+
+    // Main data structure for the draft js editor
     const [editorState, setEditorState] = useState(EditorState.createWithContent(convertFromRaw(content)));
 
-    // Update editorstate both in state and in local storage
-    const setEditor = (newEditorState: EditorState) => {
-        setEditorState(newEditorState);
-    };
-
+    // Update redux with the editor changes
     useEffect(() => {
         dispatch(updateEditor(fileId, convertToRaw(editorState.getCurrentContent())));
     }, [editorState]);
 
+    // Current used text style, bold, italic ...
     const [style, setStyle] = useState('unstyled');
     // File name in the editor
     const [name, setName] = useState('Unnamed');
@@ -62,6 +61,7 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
     const imagePlugin = createImagePlugin();
     const plugins = [imagePlugin];
 
+    // Called everytime there is a higlight
     const handleEditor = useCallback(() => {
         if (window.getSelection().toString().length && window.getSelection().toString() !== prevSelection && highlightToggle &&
             (getSelectionParentElement().className === 'page' || getSelectionParentElement().className === 'textLayer')) {
@@ -71,126 +71,85 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
         }
     }, [style, highlightToggle]);
 
+    // If there is a new image insert it to the editor
     useEffect(() => {
         setEditorState((prevState) => insertImageUtil(prevState, img));
     }, [img]);
 
-    function hotKey(e) {
-        if (e.keyCode === 49 && KeyBindingUtil.hasCommandModifier(e)) { // Cmd+1
-            return 'header-one';
-        }
-        if (e.keyCode === 70 && KeyBindingUtil.hasCommandModifier(e)) { // Cmd+f
-            return 'full';
-        }
-        if (e.keyCode === 50 && KeyBindingUtil.hasCommandModifier(e)) { // Cmd+2
-            return 'header-three';
-        }
-        if (e.keyCode === 51 && KeyBindingUtil.hasCommandModifier(e)) { // Cmd+3
-            return 'unstyled';
-        }
-        if (e.keyCode === 52 && KeyBindingUtil.hasCommandModifier(e)) { // Cmd+4
-            return 'unordered-list-item';
-        }
-        if (e.keyCode === 53 && KeyBindingUtil.hasCommandModifier(e)) { // Cmd+5
-            return 'img';
-        }
-        if (e.keyCode === 83 && KeyBindingUtil.hasCommandModifier(e)) { // Cmd+s
-            return 'save';
-        }
-        if (e.keyCode === 66 && KeyBindingUtil.hasCommandModifier(e)) { // Cmd+b
-            return 'bold';
-        }
-        if (e.keyCode === 73 && KeyBindingUtil.hasCommandModifier(e)) { // Cmd+i
-            return 'italic';
-        }
-        if (e.keyCode === 85 && KeyBindingUtil.hasCommandModifier(e)) { // Cmd+u
-            return 'underline';
-        }
-        // adds default pre-made draft.js hotkeys
-        return getDefaultKeyBinding(e);
-    }
-
-    function handleKey(command) {
-        screenshotCallback(false);
-        if (command === 'header-one') {
-            setStyle('header-two');
-            return 'handled';
-        }
-        if (command === 'full') {
-            setFullscreenOpen(true);
-            return 'handled';
-        }
-        if (command === 'save') {
-            setSaveToggle(true);
-            return 'handled';
-        }
-        if (command === 'header-three') {
-            setStyle('header-three');
-            return 'handled';
-        }
-        if (command === 'unstyled') {
-            setStyle('unstyled');
-            return 'handled';
-        }
-        if (command === 'unordered-list-item') {
-            setStyle('unordered-list-item');
-            return 'handled';
-        }
-        if (command === 'img') {
-            setStyle('img');
-            screenshotCallback(true);
-            return 'handled';
-        }
-        if (command === 'bold') {
-            formatText('BOLD');
-            return 'handled';
-        }
-        if (command === 'underline') {
-            formatText('UNDERLINE');
-        }
-        if (command === 'italic') {
-            formatText('ITALIC');
-        }
-        return 'not-handled';
-    }
-
+    // Listen to mouseup for highlight behaviour
     useEffect(() => {
-        focusEditor();
-        // Listen to mouseup for highlight behaviour
+        editor.current.focus();
         window.addEventListener('mouseup', handleEditor);
-
         return () => {
             window.removeEventListener('mouseup', handleEditor);
         };
-    }, [handleEditor, style]);
+    }, [style]);
 
     const editor = useRef(null);
 
-    function focusEditor() {
-        editor.current.focus();
+    function handleKey(command: string) {
+        screenshotCallback(false);
+        if (command === 'header-one') {
+            setStyle('header-two');
+        }
+        else if (command === 'full') {
+            setFullscreenOpen(true);
+        }
+        else if (command === 'save') {
+            setSaveToggle(true);
+        }
+        else if (command === 'header-three') {
+            setStyle('header-three');
+        }
+        else if (command === 'unstyled') {
+            setStyle('unstyled');
+        }
+        else if (command === 'unordered-list-item') {
+            setStyle('unordered-list-item');
+        }
+        else if (command === 'img') {
+            setStyle('img');
+            screenshotCallback(true);
+        }
+        else if (command === 'bold') {
+            formatText('BOLD');
+        }
+        else if (command === 'underline') {
+            formatText('UNDERLINE');
+        }
+        else if (command === 'italic') {
+            formatText('ITALIC');
+        } else {
+            return 'not-handled';
+        }
+        return 'handled';
     }
 
-    function formatText(f) {
-        const nextState = RichUtils.toggleInlineStyle(editorState, f);
-        setEditor(nextState);
+    // Toggle inline style
+    function formatText(nextStyle: string): void {
+        if (nextStyle === 'CODE') {
+            setEditorState(RichUtils.toggleCode(editorState));
+        } else {
+            setEditorState(RichUtils.toggleInlineStyle(editorState, nextStyle));
+        }
     }
 
-    function code() {
-        const nextState = RichUtils.toggleCode(editorState);
-        setEditor(nextState);
-    }
-
-    function toggleStyle(event, newStyle) {
+    // Toggle the style in which we capture highlights. Header, text, image...
+    function toggleStyle(event, newStyle: string): void {
         event.preventDefault();
+        // Call the parent component to tell we want screenshots
         screenshotCallback(newStyle === 'img');
         setStyle(newStyle);
     }
 
-    const editorComponent =
+    // Draft editor
+    const editorComponent = (
         <Editor ref={editor} editorState={editorState} plugins={plugins}
-            onChange={setEditor} handleKeyCommand={handleKey} keyBindingFn={hotKey} />;
+            onChange={setEditorState} handleKeyCommand={handleKey} keyBindingFn={hotKey} />
+    );
 
-    const saveDialog =
+    // Pops up when the save button is clicked
+    const saveDialog = (
         <Dialog open={saveToggle} onClose={() => { setSaveToggle(false); }}>
             <Box m={2} overflow="hidden">
                 <Grid container wrap="wrap" direction="column">
@@ -199,25 +158,27 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
                             onChange={(event) => { setName(event.target.value); }} />
                     </Grid>
                     <Grid item xs>
-                        <Button onMouseDown={() => saveState(editorState, 'pdf', name)}>Save as PDF</Button>
+                        <Button onMouseDown={() => downloadState(editorState, 'pdf', name)}>Save as PDF</Button>
                     </Grid>
                     <Grid item xs>
-                        <Button onMouseDown={() => saveState(editorState, 'docx', name)}>Save as Word Document</Button>
+                        <Button onMouseDown={() => downloadState(editorState, 'docx', name)}>Save as Word Document</Button>
                     </Grid>
                     <Grid item xs>
-                        <Button onMouseDown={() => saveState(editorState, 'html', name)}>Save as HTML</Button>
+                        <Button onMouseDown={() => downloadState(editorState, 'html', name)}>Save as HTML</Button>
                     </Grid>
                     <Grid item xs>
-                        <Button onMouseDown={() => saveState(editorState, 'txt', name)}>Save as Text Document</Button>
+                        <Button onMouseDown={() => downloadState(editorState, 'txt', name)}>Save as Text Document</Button>
                     </Grid>
                 </Grid>
             </Box>
-        </Dialog>;
+        </Dialog>
+    );
 
-    const toolbar =
+    // The toolbar with all the buttons
+    const toolbar = (
         <AppBar color="transparent" position="static" style={{ overflow: 'auto' }}>
             <Toolbar variant="dense">
-                <Tooltip title="Highlight to Editor" placement="top">
+                <Tooltip title="Highlight to Editor from PDF" placement="top">
                     <Switch
                         checked={highlightToggle}
                         onChange={() => { setHighlightToggle(!highlightToggle); }}
@@ -239,29 +200,34 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
                     <IconButton onMouseDown={() => formatText('ITALIC')}><FormatItalicIcon fontSize="small" /></IconButton>
                     <IconButton onMouseDown={() => formatText('STRIKETHROUGH')}><FormatStrikethroughIcon fontSize="small" /></IconButton>
                     <IconButton onMouseDown={() => formatText('UNDERLINE')}><FormatUnderlinedIcon fontSize="small" /></IconButton>
-                    <IconButton onMouseDown={() => code()}><CodeIcon fontSize="small" /></IconButton>
+                    <IconButton onMouseDown={() => formatText('CODE')}><CodeIcon fontSize="small" /></IconButton>
                 </ButtonGroup>
-                <IconButton onClick={() => { setSaveToggle(true); }} style={{ marginLeft: 'auto' }}>
-                    <SaveAltIcon fontSize="small" />
-                </IconButton>
-                <IconButton onClick={() => dispatch(saveFile(fileId))} style={file.needsSave ? {color: '#000'} : {}}>
-                    <SaveIcon fontSize="small" />
-                </IconButton>
+                <Tooltip title="Download" placement="top">
+                    <IconButton onClick={() => { setSaveToggle(true); }} style={{ marginLeft: 'auto' }}>
+                        <SaveAltIcon fontSize="small" />
+                    </IconButton>
+                </Tooltip>
+                <Tooltip title={file.needsSave ? 'Save work to cloud' : 'Work already saved to cloud'} placement="top">
+                    <IconButton onClick={() => dispatch(saveFile(fileId))} style={file.needsSave ? { color: '#000' } : {}}>
+                        <SaveIcon fontSize="small" />
+                    </IconButton>
+                </Tooltip>
                 <IconButton onClick={() => { setFullscreenOpen(true); }}>
                     <FullscreenIcon fontSize="small" />
                 </IconButton>
             </Toolbar>
-        </AppBar>;
+        </AppBar>
+    );
 
-
-    const editorFull =
+    // Editor but in full screen, using a dialog
+    // TODO: make more proper
+    const editorFull = (
         <Dialog fullScreen open={fullscreenOpen} onClose={() => { setFullscreenOpen(false); }}>
             {toolbar}
             {editorComponent}
-        </Dialog>;
+        </Dialog>
+    );
 
-
-    // Main design
     return (
         <div style={{ backgroundColor: 'white' }} >
             <Grid container wrap="wrap">

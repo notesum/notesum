@@ -21,27 +21,28 @@ export default function DocumentView({ pdf, fileId }: DocumentViewProps) {
         setImage(img);
     };
 
+    // States for the resizing of panels
     const [pdfPercentage, setPdfPercentage] = React.useState(50);
     const [dragging, setDragging] = React.useState(false);
 
     const mainViewRef = useRef<HTMLDivElement>(null);
 
+    // Convert pixels to current element size percentage
     function calcPers(pixels: number) {
         return (pixels / mainViewRef.current.clientWidth) * 100;
     }
 
-    function clearSelection() {
+    // Start dragging the bar in the middle
+    function startDrag() {
+        // If there is text selected, deselect
         if (window.getSelection) {
             window.getSelection().removeAllRanges();
         }
-    }
-
-    function startDrag() {
-        clearSelection();
         setDragging(true);
     }
 
-    const stopResize = (event: MouseEvent) => {
+    // Stop dragging of the middle bar, stop resizing
+    const stopDragging = (event: MouseEvent) => {
         if (dragging) {
             setDragging(() => false);
             setPdfPercentage(() => calcPers(event.clientX));
@@ -49,6 +50,7 @@ export default function DocumentView({ pdf, fileId }: DocumentViewProps) {
         }
     };
 
+    // While dragging, render the change sizes
     const animateResize = (event: MouseEvent) => {
         if (dragging) {
             setPdfPercentage(() => calcPers(event.clientX));
@@ -56,11 +58,11 @@ export default function DocumentView({ pdf, fileId }: DocumentViewProps) {
     };
 
     useEffect(() => {
-        window.addEventListener('mouseup', stopResize);
+        window.addEventListener('mouseup', stopDragging);
         window.addEventListener('mousemove', animateResize);
 
         return () => {
-            window.removeEventListener('mouseup', stopResize);
+            window.removeEventListener('mouseup', stopDragging);
             window.removeEventListener('mousemove', animateResize);
         };
     }, [dragging]);

@@ -1,7 +1,13 @@
-import { EditorState, genKey, ContentBlock, AtomicBlockUtils } from 'draft-js';
+import { EditorState, genKey, ContentBlock, AtomicBlockUtils, getDefaultKeyBinding, KeyBindingUtil } from 'draft-js';
 
-// Add a new block to a given editor state with the text t and the style s
-export function insertNewBlock(eState: EditorState, t: string, s: string) {
+/**
+ * Add a give text with a style to an EditorState
+ * @param eState EditorState of the edior
+ * @param t Text to be added
+ * @param s Style of the text to be added
+ * @return New EditorState with the added text
+ */
+export function insertNewBlock(eState: EditorState, t: string, s: string): EditorState {
 
     const selection = eState.getSelection();
     const contentState = eState.getCurrentContent();
@@ -24,7 +30,7 @@ export function insertNewBlock(eState: EditorState, t: string, s: string) {
         // @ts-ignore
         newBlocks = [[key1, new ContentBlock({ key: key1, type: s, text: t })],
         // @ts-ignore
-        [key2, new ContentBlock({ key: key2, type: 'unstyled', text: '' })],
+        [key2, new ContentBlock({ key: key2, type: 'unstyled'})],
         [currentBlock.getKey(), currentBlock]];
     }
 
@@ -41,8 +47,10 @@ export function insertNewBlock(eState: EditorState, t: string, s: string) {
     return EditorState.push(eState, newContentState, 'insert-fragment');
 }
 
-// Return the parent element classname of the selected element on the page
-// Source: https://stackoverflow.com/questions/7215479/get-parent-element-of-a-selected-text
+/**
+ * @return The parent element of the element, currently selected on the window
+ * Source: https://stackoverflow.com/questions/7215479/get-parent-element-of-a-selected-text
+ */
 export function getSelectionParentElement() {
     let parentEl = null;
     let sel = null;
@@ -60,14 +68,19 @@ export function getSelectionParentElement() {
     return parentEl.parentNode;
 }
 
-// Inserts a given base64 image to the selection state
-export function insertImageUtil(eState: EditorState, b64: string) {
+/**
+ * Add an image to the EditorState
+ * @param eState EditorState the image is to be added
+ * @param imgB64 The image in base64 format
+ * @return The EditorState with the image added
+ */
+export function insertImageUtil(eState: EditorState, imgB64: string): EditorState {
 
     const contentState = eState.getCurrentContent();
     const contentStateWithEntity = contentState.createEntity(
         'image',
         'IMMUTABLE',
-        { src: b64 }
+        { src: imgB64 }
     );
     const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
     const editor1 = EditorState.set(eState, {
@@ -75,4 +88,38 @@ export function insertImageUtil(eState: EditorState, b64: string) {
     });
     const editor2 = AtomicBlockUtils.insertAtomicBlock(editor1, entityKey, ' ');
     return insertNewBlock(editor2, '', 'unstyled');
+}
+
+/**
+ * Map key strokes to certain styles of insertion or text styling
+ * @param event Key stroke event
+ * @return New style of the editor
+ */
+export function hotKey(event): string {
+    if (KeyBindingUtil.hasCommandModifier(event)) {
+        switch (event.keyCode) {
+            case 49:
+                return 'header-one';
+            case 70:
+                return 'full';
+            case 50:
+                return 'header-three';
+            case 51:
+                return 'unstyled';
+            case 52:
+                return 'unordered-list-item';
+            case 53:
+                return 'img';
+            case 83:
+                return 'save';
+            case 66:
+                return 'bold';
+            case 73:
+                return 'italic';
+            case 85:
+                return 'underline';
+        }
+    }
+    // adds default pre-made draft.js hotkeys
+    return getDefaultKeyBinding(event);
 }
