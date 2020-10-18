@@ -1,10 +1,10 @@
 One can learn more about selenium at https://www.selenium.dev/
 
-To run the .side automated test file use the Selenium IDE by Selenium.
-This is an extension you can add on to your firefox or Chrome browser from
+To run the .side automated test file use the Selenium IDE by Selenium  or via terminal.
+The Selenium web IDE is an extension you can add on to your firefox or Chrome browser from
 their respective web stores.
-Selenium IDE is an integrated development environment for Selenium tests.
-It is implemented as a Firefox extension, and allows you to record, edit, and debug tests.
+The Selenium IDE is an integrated development environment for Selenium tests.
+It is implemented as a web extension, and allows you to record, edit, and debug automated tests.
 
 Run the .side file on "app.notesum.org" to test online or "localhost" if you want to test locally.
 
