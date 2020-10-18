@@ -1,0 +1,182 @@
+{
+  "id": "58d9e117-139d-4aaa-a0a2-a57e98a3c203",
+  "version": "2.0",
+  "name": "notesum",
+  "url": "https://app.notesum.org",
+  "tests": [{
+    "id": "e238d715-cd36-4328-8284-b697c1f86a51",
+    "name": "login",
+    "commands": [{
+      "id": "2d1b1475-9712-43cb-b495-2a02e1157c4f",
+      "comment": "",
+      "command": "open",
+      "target": "https://app.notesum.org",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d88732fb-d9e8-468b-835a-78a257f1ed23",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1050x721",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "6b61efa8-b52f-4a67-8642-2419f05fa484",
+      "comment": "",
+      "command": "click",
+      "target": "css=.jss9 > div:nth-child(1)",
+      "targets": [
+        ["css=.jss9 > div:nth-child(1)", "css:finder"],
+        ["xpath=//form/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d8ab8dcc-af91-4762-8e70-2b727724409f",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//input[@value='']",
+      "targets": [
+        ["css=.Mui-focused > .MuiInputBase-input", "css:finder"],
+        ["xpath=//input[@value='']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c8d74e2e-22ce-4372-a47e-9e3ccf868a96",
+      "comment": "",
+      "command": "type",
+      "target": "xpath=//input[@value='']",
+      "targets": [
+        ["css=.Mui-focused > .MuiInputBase-input", "css:finder"],
+        ["xpath=//input[@value='']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "k.singpurwala@student.utwente.nl"
+    }, {
+      "id": "10ee6fb7-a01b-44a9-9688-bcc979691bf3",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=(//input[@value=''])[2]",
+      "targets": [
+        ["css=.Mui-focused > .MuiInputBase-input", "css:finder"],
+        ["xpath=(//input[@value=''])[2]", "xpath:attributes"],
+        ["xpath=//div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9881fdcd-3f3e-446d-8516-d7804570e9ea",
+      "comment": "",
+      "command": "type",
+      "target": "xpath=(//input[@value=''])[2]",
+      "targets": [
+        ["css=.Mui-focused > .MuiInputBase-input", "css:finder"],
+        ["xpath=(//input[@value=''])[2]", "xpath:attributes"],
+        ["xpath=//div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": "12345678hi"
+    }, {
+      "id": "70efa615-8e03-4d8e-a087-b54658700d6d",
+      "comment": "",
+      "command": "mouseUp",
+      "target": "xpath=//div[2]/div[3]/div/div/div/div/div[5]/button",
+      "targets": [
+        ["css=.Mui-focused > .MuiInputBase-input", "css:finder"],
+        ["xpath=//input[@value='']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b20ea7ef-6ab6-4022-bc2f-57b3efd00078",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[2]/div[3]/div/div/div/div/div[5]/button",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f2d87652-f4b3-49ef-b907-ffc0c5813df7",
+      "comment": "",
+      "command": "assertText",
+      "target": "xpath=//h4[contains(.,'Logged in as kevin')]",
+      "targets": [
+        ["css=.MuiTypography-h4", "css:finder"],
+        ["xpath=//h4", "xpath:position"],
+        ["xpath=//h4[contains(.,'Logged in as kevin')]", "xpath:innerText"]
+      ],
+      "value": "Logged in as kevin"
+    }, {
+      "id": "ebc45bcc-1e7d-441d-ba03-a892fcde1527",
+      "comment": "",
+      "command": "click",
+      "target": "css=a:nth-child(3) .MuiSvgIcon-root",
+      "targets": [
+        ["css=a:nth-child(3) .MuiSvgIcon-root", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "6daea4fd-8eae-428a-8bfc-36fd561a1141",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiListItemText-root > p",
+      "targets": [
+        ["css=.MuiListItemText-root > p", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/div/div/ul/li/a/div[2]/p", "xpath:idRelative"],
+        ["xpath=//div[2]/p", "xpath:position"],
+        ["xpath=//p[contains(.,'Test')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "eb8bddb1-39cc-4af2-bad8-131107818972",
+      "comment": "",
+      "command": "click",
+      "target": "css=path:nth-child(2)",
+      "targets": [
+        ["css=path:nth-child(2)", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "4ffa4365-8910-4564-a5e1-414eb2c60d68",
+      "comment": "",
+      "command": "mouseDown",
+      "target": "css=.page:nth-child(2) > .canvasWrapper",
+      "targets": [
+        ["css=.page:nth-child(2) > .canvasWrapper", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/div[2]/div/div/div/div/div/div[2]/canvas[2]", "xpath:idRelative"],
+        ["xpath=//div[2]/canvas[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "fdda491a-7a97-4dd1-a823-50587c5567d4",
+      "comment": "",
+      "command": "mouseUpAt",
+      "target": "css=.page:nth-child(2) > .canvasWrapper",
+      "targets": [
+        ["css=.page:nth-child(2) > .canvasWrapper", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/div[2]/div/div/div/div/div/div[2]/canvas[2]", "xpath:idRelative"],
+        ["xpath=//div[2]/canvas[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c7a26bb5-667c-41bd-ae9f-3481d89efb0d",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "css=.draftJsEmojiPlugin__image__192TI",
+      "targets": [
+        ["css=.draftJsEmojiPlugin__image__192TI", "css:finder"],
+        ["xpath=//img[contains(@src,'data:,')]", "xpath:img"],
+        ["xpath=//div[@id='root']/div/div/div/div[2]/div/div[3]/div/div/div/div/div/div/div/figure/img", "xpath:idRelative"],
+        ["xpath=//figure/img", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "2f51db48-657c-45e2-bbbc-d94d99333613",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["e238d715-cd36-4328-8284-b697c1f86a51"]
+  }],
+  "urls": ["https://app.notesum.org/"],
+  "plugins": []
+}
