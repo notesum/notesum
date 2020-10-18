@@ -14,6 +14,7 @@ registerTestDefferentPassword- the passwords much match to register
 
 loginTests-basic login test
 
-EditorTestOverView-checks all rich texteditor features from formatting text to
-taking images to saving the documentas a .docx
-PdfReaderTest - tests the pdf's functionality from changing page number to going to a specific section
+EditorTestOverView-checks all rich text editor features from formatting text to
+taking images to saving the document as a .docx
+PdfReaderTest - tests the PDF's functionality from changing page number to going to a specific section
+addImageTest - tests if an image was successfully added
