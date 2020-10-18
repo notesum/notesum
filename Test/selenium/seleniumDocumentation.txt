@@ -8,3 +8,12 @@ It is implemented as a web extension, and allows you to record, edit, and debug 
 
 Run the .side file on "app.notesum.org" to test online or "localhost" if you want to test locally.
 
+registerWithTakenEmailTest- you should not be able to register with an already used email
+registerTest-if basic registration works
+registerTestDefferentPassword- the passwords much match to register
+
+loginTests-basic login test
+
+EditorTestOverView-checks all rich texteditor features from formatting text to
+taking images to saving the documentas a .docx
+PdfReaderTest - tests the pdf's functionality from changing page number to going to a specific section
