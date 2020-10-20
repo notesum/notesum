@@ -18,3 +18,6 @@ EditorTestOverView-checks all rich text editor features from formatting text to
 taking images to saving the document as a .docx
 PdfReaderTest - tests the PDF's functionality from changing page number to going to a specific section
 addImageTest - tests if an image was successfully added
+
+
+To run via terminal type " selenium-side-runner /path/to/your-project.side"
