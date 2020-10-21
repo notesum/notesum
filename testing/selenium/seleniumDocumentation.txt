@@ -19,5 +19,5 @@ taking images to saving the document as a .docx
 PdfReaderTest - tests the PDF's functionality from changing page number to going to a specific section
 addImageTest - tests if an image was successfully added
 
-
-To run via terminal type " selenium-side-runner /path/to/your-project.side"
+To run via terminal type "selenium-side-runner /path/to/your-project.side"
+For more info see https://www.selenium.dev/selenium-ide/docs/en/introduction/command-line-runner
