@@ -2,6 +2,7 @@ import { Dispatch } from 'react';
 
 import { NEW_PROJECT, ProjectActionTypes, ProjectsState } from '../types/projectTypes';
 import { updateProjectsList } from '../actions/projectActions';
+import { REDIRECT, RedirectActionTypes } from '../types/redirectTypes';
 
 import { BASE_URL } from './ServerSettings';
 
@@ -36,7 +37,7 @@ export function loadProjects() {
 }
 
 export function createNewProject(name: string) {
-    return (dispatch: Dispatch<ProjectActionTypes>, getState) => {
+    return (dispatch: Dispatch<ProjectActionTypes | RedirectActionTypes>, getState) => {
         (async () => {
             const requestOptions = {
                 method: 'POST',
@@ -61,6 +62,11 @@ export function createNewProject(name: string) {
                     id: json.data.id,
                     name: json.data.name
                 }
+            });
+
+            dispatch({
+                type: REDIRECT,
+                payload: `/project/${json.data.id}`
             });
         })();
     };

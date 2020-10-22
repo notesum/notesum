@@ -3,7 +3,7 @@ import { ContentState, convertToRaw } from 'draft-js';
 
 import { Files, FilesActionsTypes, FILE_EDITOR_SAVE, NEW_FILE, ProjectFile } from '../types/filesTypes';
 import { updateFileList } from '../actions/filesActions';
-import { addFileToProject } from '../actions/projectActions';
+import { addFileToProject, setCurrentFile } from '../actions/projectActions';
 import { ProjectActionTypes } from '../types/projectTypes';
 
 import { BASE_URL } from './ServerSettings';
@@ -81,6 +81,8 @@ export function createFile(projectId: string, pdf: File) {
             });
 
             dispatch(addFileToProject(projectId, json.data.id));
+            dispatch(setCurrentFile(projectId, json.data.id));
+
         })();
     };
 }
