@@ -3,8 +3,9 @@ import { ContentState, convertToRaw } from 'draft-js';
 
 import { Files, FilesActionsTypes, FILE_EDITOR_SAVE, NEW_FILE, ProjectFile } from '../types/filesTypes';
 import { updateFileList } from '../actions/filesActions';
-import { addFileToProject, setCurrentFile } from '../actions/projectActions';
+import { addFileToProject, setLastOpenFile } from '../actions/projectActions';
 import { ProjectActionTypes } from '../types/projectTypes';
+import { REDIRECT, RedirectActionTypes } from '../types/redirectTypes';
 
 import { BASE_URL } from './ServerSettings';
 
@@ -48,7 +49,7 @@ export function loadFiles() {
 }
 
 export function createFile(projectId: string, pdf: File) {
-    return (dispatch: Dispatch<FilesActionsTypes | ProjectActionTypes>, getState) => {
+    return (dispatch: Dispatch<FilesActionsTypes | ProjectActionTypes | RedirectActionTypes>, getState) => {
         (async () => {
 
             const formData = new FormData();
@@ -81,7 +82,11 @@ export function createFile(projectId: string, pdf: File) {
             });
 
             dispatch(addFileToProject(projectId, json.data.id));
-            dispatch(setCurrentFile(projectId, json.data.id));
+            dispatch({
+                type: REDIRECT,
+                payload: `/project/${projectId}/${json.data.id}`
+            });
+            dispatch(setLastOpenFile(projectId, json.data.id));
 
         })();
     };

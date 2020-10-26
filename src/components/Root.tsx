@@ -74,7 +74,7 @@ export default function Root() {
                     <PrivateRoute path="/projects">
                         <ProjectOverview />
                     </PrivateRoute>
-                    <PrivateRoute exact path="/project/:id" children={<Project />} />
+                    <PrivateRoute exact path="/project/:id/:urlFileId?" children={<Project />} />
                     <Route path="*">
                         <Error />
                     </Route>

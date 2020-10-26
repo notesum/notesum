@@ -68,7 +68,7 @@ const projectReducer = (state = initialState, action: ProjectActionTypes): Proje
                 ...state,
                 [action.payload.id]: {
                     ...state[action.payload.id],
-                    currentOpenFile: action.payload.fileId
+                    lastOpenFile: action.payload.fileId
                 }
             };
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {
     Box, Button, Dialog, DialogContent, DialogTitle, Drawer, IconButton, List,
     ListItem, ListItemText, ListSubheader, InputBase, makeStyles, Toolbar, CircularProgress
@@ -12,8 +12,8 @@ import { Project } from '../../redux/types/projectTypes';
 import { Files } from '../../redux/types/filesTypes';
 import { createFile, loadFiles, saveFile } from '../../redux/asyncActions/fileAsyncActions';
 import { BASE_URL } from '../../redux/asyncActions/ServerSettings';
+import { setLastOpenFile } from '../../redux/actions/projectActions';
 import { loadProjects } from '../../redux/asyncActions/projectAsyncActions';
-import { setCurrentFile } from '../../redux/actions/projectActions';
 import Error from '../Error';
 
 import EmptyProject from './EmptyProject';
@@ -33,7 +33,7 @@ const useStyles = makeStyles(() => ({
 
 export default function Project() {
 
-    const { id } = useParams<{ id: string }>();
+    const { id, urlFileId } = useParams<{ id: string, urlFileId?: string }>();
 
     const project: Project = useSelector((state: any) => state.projects[id]);
     const files: Files = useSelector((state: any) => state.files);
@@ -41,6 +41,8 @@ export default function Project() {
     const dispatch = useDispatch();
 
     const authToken = useSelector((state: any) => state.auth.token);
+
+    const history = useHistory();
 
     // Project wasn't found, return 404
     if (!project) return (<Error />);
@@ -51,19 +53,27 @@ export default function Project() {
         dispatch(loadFiles());
     }, []);
 
-    const currentFile = project.currentOpenFile;
+    const currentFile = urlFileId;
 
     useEffect(() => {
         if (!currentFile && project.files.length > 0) {
-            dispatch(setCurrentFile(id, project.files[0]));
+            history.push(`/project/${id}/${project.lastOpenFile ? project.lastOpenFile : project.files[0]}`);
         }
-    }, [project.files]);
+    }, [currentFile, project.files]);
 
     // On unmount, save file
     useEffect(() => {
         return () => {
             if (currentFile) dispatch(saveFile(currentFile));
         };
+    }, [currentFile]);
+
+    // Update last opened file
+    useEffect(() => {
+        if (currentFile) {
+            setFileDrawerOpen(false);
+            dispatch(setLastOpenFile(id, currentFile));
+        }
     }, [currentFile]);
 
     const addProjectFile = (pdf: File) => {
@@ -89,10 +99,7 @@ export default function Project() {
                         if (!(fileId in files)) return;
 
                         return (
-                            <ListItem key={fileId} button onClick={() => {
-                                dispatch(setCurrentFile(id, fileId));
-                                setFileDrawerOpen(false);
-                            }} selected={fileId === currentFile}>
+                            <ListItem key={fileId} button onClick={() => history.push(`/project/${id}/${fileId}`)} selected={`${fileId}` === currentFile}>
                                 <ListItemText primary={files[fileId].title} />
                             </ListItem>);
                     })}
@@ -126,7 +133,7 @@ export default function Project() {
                     {currentFile && currentFile in files ?
                     <>
                         <DocumentView pdf={`${BASE_URL}${files[currentFile].pdf}?token=${authToken}`} fileId={currentFile} />
-                    </> : (currentFile ?
+                    </> : (currentFile || project.files.length > 0 ?
                     <>
                         <div style={{
                             marginLeft: 'auto',
