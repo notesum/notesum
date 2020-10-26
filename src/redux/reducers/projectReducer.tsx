@@ -6,7 +6,18 @@ const initialState: ProjectsState = {};
 const projectReducer = (state = initialState, action: ProjectActionTypes): ProjectsState => {
     switch (action.type) {
         case UPDATE_PROJECT_LIST:
-            return action.payload;
+            const newState = {
+                ...state
+            };
+
+            for (const projectId of Object.keys(action.payload)) {
+                newState[projectId] = {
+                    ...(projectId in newState ? newState[projectId] : {}),
+                    ...action.payload[projectId]
+                };
+            }
+
+            return newState;
 
         case NEW_PROJECT:
             return {
