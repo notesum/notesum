@@ -5,10 +5,13 @@ import storage from 'redux-persist/lib/storage';
 import thunkMiddleware from 'redux-thunk';
 
 import rootReducer from '../reducers';
+import migrations from '../migrations';
 
 const config = {
     key: 'root',
     storage,
+    migrate: migrations,
+    version: 0
 };
 
 const persisted = persistReducer(config, rootReducer);

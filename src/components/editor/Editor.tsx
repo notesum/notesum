@@ -195,12 +195,14 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
                         <ToggleButton value="img"> <CameraAltIcon /> </ToggleButton>
                     </ToggleButtonGroup>
                 </Tooltip>
-                <ButtonGroup >
-                    <IconButton onMouseDown={() => formatText('BOLD')}><FormatBoldIcon fontSize="small" /></IconButton>
-                    <IconButton onMouseDown={() => formatText('ITALIC')}><FormatItalicIcon fontSize="small" /></IconButton>
-                    <IconButton onMouseDown={() => formatText('STRIKETHROUGH')}><FormatStrikethroughIcon fontSize="small" /></IconButton>
-                    <IconButton onMouseDown={() => formatText('UNDERLINE')}><FormatUnderlinedIcon fontSize="small" /></IconButton>
-                    <IconButton onMouseDown={() => formatText('CODE')}><CodeIcon fontSize="small" /></IconButton>
+                <ButtonGroup style={{
+                    paddingLeft: 10
+                }}>
+                    <Button onMouseDown={() => formatText('BOLD')} className="editorButton"><FormatBoldIcon fontSize="small" /></Button>
+                    <Button onMouseDown={() => formatText('ITALIC')} className="editorButton"><FormatItalicIcon fontSize="small" /></Button>
+                    <Button onMouseDown={() => formatText('STRIKETHROUGH')} className="editorButton"><FormatStrikethroughIcon fontSize="small" /></Button>
+                    <Button onMouseDown={() => formatText('UNDERLINE')} className="editorButton"><FormatUnderlinedIcon fontSize="small" /></Button>
+                    <Button onMouseDown={() => formatText('CODE')} className="editorButton"><CodeIcon fontSize="small" /></Button>
                 </ButtonGroup>
                 <Tooltip title="Download" placement="top">
                     <IconButton onClick={() => { setSaveToggle(true); }} style={{ marginLeft: 'auto' }}>

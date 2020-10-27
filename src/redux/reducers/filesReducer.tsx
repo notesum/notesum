@@ -8,7 +8,18 @@ const initialState: Files = {};
 const filesReducer = (state = initialState, action: FilesActionsTypes): Files => {
     switch (action.type) {
         case UPDATE_FILE_LIST:
-            return action.payload;
+            const newState = {
+                ...state
+            };
+
+            for (const fileId of Object.keys(action.payload)) {
+                newState[fileId] = {
+                    ...(fileId in newState ? newState[fileId] : {}),
+                    ...action.payload[fileId]
+                };
+            }
+
+            return newState;
 
         case NEW_FILE:
             return {

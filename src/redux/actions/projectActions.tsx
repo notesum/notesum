@@ -17,7 +17,7 @@ export function addFileToProject(id: string, fileId: string): ProjectActionTypes
     };
 }
 
-export function setCurrentFile(id: string, fileId: string): ProjectActionTypes {
+export function setLastOpenFile(id: string, fileId: string): ProjectActionTypes {
     return {
         type: SET_OPEN_PROJECT_FILE,
         payload: {

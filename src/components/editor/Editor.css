@@ -20,3 +20,8 @@ div.public-DraftEditor-content {
     font-style: italic;
     text-align: center;
 }
+
+.editorButton {
+    color: rgba(0, 0, 0, 0.54) !important;
+    border: 0 !important;
+}
