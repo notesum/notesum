@@ -34,6 +34,7 @@ COPY public /srv/app/public
 COPY src /srv/app/src
 COPY tsconfig.json /srv/app
 COPY tslint.json /srv/app
+COPY .env.example /srv/app/.env
 
 # Build app
 RUN yarn run build

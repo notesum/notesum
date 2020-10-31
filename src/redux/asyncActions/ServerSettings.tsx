@@ -1,2 +1,1 @@
-// TODO: improve in the future
-export const BASE_URL = 'https://api.notesum.org/api';
+export const BASE_URL = process.env.API_BASE_URL;
