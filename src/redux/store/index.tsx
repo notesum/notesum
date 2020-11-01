@@ -11,7 +11,7 @@ const config = {
     key: 'root',
     storage,
     migrate: migrations,
-    version: 0
+    version: 1
 };
 
 const persisted = persistReducer(config, rootReducer);

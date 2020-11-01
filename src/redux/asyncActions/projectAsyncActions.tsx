@@ -21,12 +21,16 @@ export function loadProjects() {
 
             const result = await fetch(`${BASE_URL}/projects`, requestOptions);
 
-            const projects: ProjectsState = (await result.json()).data.reduce((obj: ProjectsState, item) => {
-                item.files = item.files.map((file) => file.id);
-
+            const projects: ProjectsState = (await result.json()).data.reduce((obj: ProjectsState, item: any): ProjectsState => {
                 return {
                     ...obj,
-                    [item.id]: item,
+                    [item.id]: {
+                        id: item.id,
+                        name: item.name,
+                        files: item.files.map((file: any) => file.id),
+                        updatedAt: new Date(item.updated_at),
+                        createdAt: new Date(item.created_at)
+                    }
                 };
             }, {});
 
@@ -52,7 +56,8 @@ export function createNewProject(name: string) {
             };
 
             const result = await fetch(`${BASE_URL}/projects`, requestOptions);
-            const json: {data: {id: string, name: string}} | {message: string} = (await result.json());
+            const json: {data: any} | {message: string} = (await result.json());
+            console.log(json);
 
             if (!('data' in json)) return;
 
@@ -60,7 +65,10 @@ export function createNewProject(name: string) {
                 type: NEW_PROJECT,
                 payload: {
                     id: json.data.id,
-                    name: json.data.name
+                    name: json.data.name,
+                    files: [],
+                    updatedAt: new Date(json.data.updated_at),
+                    createdAt: new Date(json.data.created_at)
                 }
             });
 

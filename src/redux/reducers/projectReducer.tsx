@@ -11,10 +11,19 @@ const projectReducer = (state = initialState, action: ProjectActionTypes): Proje
             };
 
             for (const projectId of Object.keys(action.payload)) {
-                newState[projectId] = {
-                    ...(projectId in newState ? newState[projectId] : {}),
-                    ...action.payload[projectId]
-                };
+                if (projectId in newState && newState[projectId].updatedAt >= action.payload[projectId].updatedAt) {
+                    newState[projectId] = {
+                        ...action.payload[projectId],
+                        ...newState[projectId]
+                    };
+                } else if (projectId in newState) {
+                    newState[projectId] = {
+                        ...newState[projectId],
+                        ...action.payload[projectId]
+                    };
+                } else {
+                    newState[projectId] = action.payload[projectId];
+                }
             }
 
             return newState;
@@ -22,11 +31,7 @@ const projectReducer = (state = initialState, action: ProjectActionTypes): Proje
         case NEW_PROJECT:
             return {
                 ...state,
-                [action.payload.id]: {
-                    id: action.payload.id,
-                    name: action.payload.name,
-                    files: []
-                }
+                [action.payload.id]: action.payload
             };
 
         case DELETE_PROJECT:

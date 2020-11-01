@@ -7,16 +7,17 @@ import { Paper, Box, AppBar, Toolbar, IconButton, makeStyles, InputBase } from '
 import ZoomInIcon from '@material-ui/icons/ZoomIn';
 import ZoomOutIcon from '@material-ui/icons/ZoomOut';
 
-import { AppState } from './../../redux/reducers';
-import { PDFActionTypes } from './../../redux/types/pdfTypes';
-import { updateCurrentPage } from './../../redux/actions/pdfActions';
+import { AppState } from '../../redux/reducers';
+import { FilesActionsTypes } from '../../redux/types/filesTypes';
+import { updateCurrentPage } from '../../redux/actions/filesActions';
+
 import Page from './Page';
 import BookmarksMenu from './BookmarksMenu';
 
 GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${version}/pdf.worker.min.js`;
 
 type PdfProps = {
-    id?: string | number,
+    id?: string,
     file: string | TypedArray | DocumentInitParameters | PDFDataRangeTransport,
     hidden?: boolean,
     fitToWidth?: boolean,
@@ -44,13 +45,8 @@ const useStyles = makeStyles(() => ({
 }));
 
 export default React.memo(({ id, file, fitToWidth, hidden, screenshot, screenshotCallback }: PdfProps) => {
-    // TODO: start rendering at cp
-    const cp = useSelector((state: AppState) => state.pdf.currentPage);
-    const cpDispatch = useDispatch<Dispatch<PDFActionTypes>>();
-
-    const handleUpdateCurrentPage = (newCurrentPage: number) => {
-        cpDispatch(updateCurrentPage(newCurrentPage));
-    };
+    const initialPage = useSelector((state: AppState) => state.files[id].currentPage);
+    const dispatch = useDispatch<Dispatch<FilesActionsTypes>>();
 
     const [document, setDocument] = useState<PDFDocumentProxy>(null);
     const [pages, setPages] = useState<PDFPageProxy[]>([]);
@@ -69,12 +65,16 @@ export default React.memo(({ id, file, fitToWidth, hidden, screenshot, screensho
     const currentPage = useMemo(() => {
         for (let i = 0; i < pages.length; i++) {
             if (i in visiblePages && visiblePages[i].visible) {
-                handleUpdateCurrentPage(i);
                 return i;
             }
         }
-        return 0;
+        return null;
     }, [visiblePages]);
+
+    useEffect(() => {
+        if (currentPage === null) return;
+        dispatch(updateCurrentPage(id, currentPage));
+    }, [currentPage]);
 
     // Load document
     useEffect(() => {
@@ -114,7 +114,10 @@ export default React.memo(({ id, file, fitToWidth, hidden, screenshot, screensho
     // However doing it for each page individually seems unstable for some reason..
     useEffect(() => {
         if (pageRefs.length === 0) return;
-        scrollToPage(cp);
+
+        if (typeof initialPage !== 'undefined') {
+            scrollToPage(initialPage);
+        }
 
         const observer = new IntersectionObserver((entries) => {
             setVisiblePages((oldVisible) => {

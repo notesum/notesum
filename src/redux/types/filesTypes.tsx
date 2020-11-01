@@ -3,11 +3,7 @@ import { RawDraftContentState } from 'draft-js';
 export const NEW_FILE = 'NEW_FILE';
 export interface INewFileAction {
     readonly type: typeof NEW_FILE;
-    payload: {
-        id: string,
-        title: string,
-        pdf: string
-    };
+    payload: ProjectFile;
 }
 
 export const UPDATE_FILE_EDITOR_STATE = 'UPDATE_FILE_EDITOR_STATE';
@@ -33,20 +29,32 @@ export interface IFileEditorSave {
     };
 }
 
+export const UPDATE_FILE_CURRENT_PAGE = 'UPDATE_FILE_CURRENT_PAGE';
+export interface IUpdateFileCurrentPage {
+    readonly type: typeof UPDATE_FILE_CURRENT_PAGE;
+    payload: {
+        id: string,
+        page: number
+    };
+}
+
 export type FilesActionsTypes =
     | INewFileAction
     | IUpdateEditorState
     | IUpdateFileList
-    | IFileEditorSave;
+    | IFileEditorSave
+    | IUpdateFileCurrentPage;
 
 export interface ProjectFile {
     id: string;
     title: string;
     summary: RawDraftContentState;
-    currentPage: number;
+    currentPage?: number;
     pdf: string; // url
     needsSave?: boolean;
     lastSavedSummary?: RawDraftContentState;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
 export interface Files {

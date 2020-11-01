@@ -28,17 +28,16 @@ export function loadFiles() {
             if (!('data' in json)) return;
 
             const files: Files = json.data.reduce((obj: Files, item) => {
-                delete item.project_id;
-
-                if (item.summary == null) {
-                    item.summary = convertToRaw(ContentState.createFromText(''));
-                } else {
-                    item.summary = JSON.parse(item.summary);
-                }
-
                 return {
                     ...obj,
-                    [item.id]: item,
+                    [item.id]: {
+                        id: item.id,
+                        title: item.title,
+                        pdf: item.pdf,
+                        updatedAt: item.updated_at,
+                        createdAt: item.created_at,
+                        summary: item.summary == null ? convertToRaw(ContentState.createFromText('')) : JSON.parse(item.summary)
+                    },
                 };
             }, {});
 
@@ -77,7 +76,11 @@ export function createFile(projectId: string, pdf: File) {
                 payload: {
                     id: json.data.id,
                     title: json.data.title,
-                    pdf: json.data.pdf
+                    pdf: json.data.pdf,
+                    updatedAt: json.data.updated_at,
+                    createdAt: json.data.created_at,
+                    currentPage: 0,
+                    summary: convertToRaw(ContentState.createFromText(''))
                 }
             });
 
@@ -120,7 +123,6 @@ export function saveFile(fileId: string) {
                     id: fileId
                 }
             });
-
         })();
     };
 }

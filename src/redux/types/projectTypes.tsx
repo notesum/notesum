@@ -1,10 +1,7 @@
 export const NEW_PROJECT = 'NEW_PROJECT';
 export interface INewProjectAction {
     readonly type: typeof NEW_PROJECT;
-    payload: {
-        id: string,
-        name: string
-    };
+    payload: Project;
 }
 
 export const DELETE_PROJECT = 'DELETE_PROJECT';
@@ -71,6 +68,8 @@ export interface Project {
     name: string;
     files: string[];
     lastOpenFile?: string;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
 export interface ProjectsState {
