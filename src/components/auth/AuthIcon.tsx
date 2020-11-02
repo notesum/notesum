@@ -11,11 +11,13 @@ import SignUp from './SignUp';
 
 
 type AuthProps = {
+    // Force open the dialog without a user click
     openProp: boolean
 };
 
 export default function AuthIcon({openProp}: AuthProps) {
 
+    // Force open the dialog without a user click
     React.useEffect(()=> {
         if(openProp) {
             setDialogOpen(() => true);
@@ -23,21 +25,19 @@ export default function AuthIcon({openProp}: AuthProps) {
 
     }, [openProp]);
 
+    // States from redux
     const { loading, isLoggedIn } = useSelector((state: AppState) => state.auth);
     const error = useSelector((state: AppState) => state.auth.errors);
-
     const username = useSelector((state: AppState) => state.auth.user.name);
+
     const dispatch = useDispatch();
 
+    // Get user information if the login status changes
     React.useEffect(() => {
         if(isLoggedIn) {
             dispatch(getUserInfo());
         }
     }, [isLoggedIn]);
-
-    // This is very handy to test front end auth components
-    // const loading = false;
-    // const isLoggedIn = false;
 
     const [dialogOpen, setDialogOpen] = React.useState(false);
     const [signDialog, setSignDialog] = React.useState(false);
@@ -46,13 +46,15 @@ export default function AuthIcon({openProp}: AuthProps) {
         dispatch(logout());
     }
 
-    function getError() {
+    // Should the error banner be displayed
+    function isError() {
         if(error === null) {
             return false;
         }
         return error.length > 0;
     }
 
+    // Shown when a user is logged in
     const actuallyLoggedIn = (
         <Box m={4} style={{ overflow: 'hidden' }}>
             <Grid container wrap="wrap" direction="column" spacing={2} alignContent="center" alignItems="center">
@@ -66,11 +68,12 @@ export default function AuthIcon({openProp}: AuthProps) {
         </Box>
     );
 
+    // The error banner on top of the login / signup dialog
     const errorHappened = (
         <Box m={4} style={{ overflow: 'hidden' }}>
             <Grid container wrap="wrap" direction="column" spacing={2} alignContent="center" alignItems="center">
                 <Grid item>
-                    <Typography variant="h4">Something went wrong logging in</Typography>
+                    <Typography variant="h5">Something went wrong logging in</Typography>
                 </Grid>
                 <Grid item>
                     <Typography color="secondary" variant="body2">Your password or username might not have been correct</Typography>
@@ -79,12 +82,10 @@ export default function AuthIcon({openProp}: AuthProps) {
         </Box>
     );
 
-
     const closeDialog = () => {
         setDialogOpen(false);
         setSignDialog(false);
     };
-
 
     return (
         <div>
@@ -93,7 +94,8 @@ export default function AuthIcon({openProp}: AuthProps) {
             </Button>
             <Dialog open={dialogOpen} onClose={closeDialog}>
                 <div>
-                    {getError() && errorHappened}
+                    {/* TODO: Get rid of the errorHappened after it is displayed once */}
+                    {isError() && errorHappened}
                     {loading && <Box m={5}><CircularProgress /></Box>}
                     {!isLoggedIn && !signDialog && !loading && <Login buttonCallback={setSignDialog} />}
                     {!isLoggedIn && signDialog && !loading && <SignUp />}

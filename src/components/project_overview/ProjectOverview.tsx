@@ -18,7 +18,6 @@ export default React.memo(() => {
 
     const newProject = (name: string) => {
         dispatch(createNewProject(name));
-        // TODO auto redirect to newly created project.
     };
 
     // Load projects

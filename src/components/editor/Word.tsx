@@ -1,9 +1,14 @@
 import * as docx from 'docx';
 import { Media } from 'docx';
+import { ContentState } from 'draft-js';
 import { saveAs } from 'file-saver';
 
-
-export default function generateWordDoc(contentState, name) {
+/**
+ * Generate and download a Word Document based on a content state
+ * @param contentState Content state of the editor
+ * @param name Name of the file to be downloaded
+ */
+export default function generateWordDoc(contentState: ContentState, name: string): void {
 
     const doc = new docx.Document({
         creator: 'NoteSum',
@@ -13,27 +18,38 @@ export default function generateWordDoc(contentState, name) {
     const filled = fillWithData(doc, contentState);
     download(filled, name);
 }
-function fillWithData(doc, contentState) {
+
+/**
+ * Populate a given Word Document witha content state
+ * @param doc The document being populated
+ * @param contentState Content state to be downloaded
+ */
+function fillWithData(doc: docx.Document, contentState): docx.Document {
 
     const blocks = contentState.getBlockMap();
-    let pars = [];
+    let paragraphs = [];
 
+    // Iterate the entries of the content state and add them as paragraph objects
+    // TODO: to array and types
     for (const block of blocks) {
         const entry = block[1]; // Every entry is sort of a paragraph
 
-        pars = addBlock(pars, entry, contentState, doc);
+        paragraphs = addBlock(paragraphs, entry, contentState, doc);
     }
     doc.addSection({
-        children: pars
+        children: paragraphs
     });
     return doc;
 }
 
 // Makes a paragraph
-function addBlock(pars, entry, contentState, doc) {
-    let lines = [];
-    lines = addLines(lines, entry);
+function addBlock(paragraphs, entry, contentState, doc) {
 
+    // Lines of a paragraph
+    const lines = [];
+    addLines(lines, entry);
+
+    // The pragraph being created
     let p = null;
     // Headers
     if (entry.getType().substring(0, 6) === 'header') {
@@ -62,31 +78,30 @@ function addBlock(pars, entry, contentState, doc) {
             p = new docx.Paragraph(image1);
         } catch (e) {
             console.log(`Image saving might have gone bad\n ${e.message}`);
-            return pars;
+            return paragraphs;
         }
     }
-    pars.push(p);
-    return pars;
+    paragraphs.push(p);
+    return paragraphs;
 }
 
 function addLines(lines, entry) {
-    let l = null;
+    // TODO: parse the inline styles, probably from the entity map like the images (entity ranges)
 
-    l = new docx.TextRun({
+    lines.push(new docx.TextRun({
         text: entry.getText()
-    });
-    lines.push(l);
+    }));
     return lines;
 }
 
+// Given a document object and name, actually download
 function download(doc, name) {
-
     docx.Packer.toBlob(doc).then(blob => {
         saveAs(blob, name + '.docx');
     });
-    console.log('Downloaded');
 }
 
+// Convert header types to docx ones
 function getBlockType(s) {
     if (s === 'header-two') {
         return docx.HeadingLevel.HEADING_2;
