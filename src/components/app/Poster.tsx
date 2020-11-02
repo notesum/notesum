@@ -1,6 +1,9 @@
 import React from 'react';
 import { Box, Grid, Card, CardMedia, CardContent, makeStyles, Typography } from '@material-ui/core';
 
+import poster3 from '../../resources/poster3.png';
+import eu from '../../resources/eu-law-summary.png';
+
 
 const useStyles = makeStyles({
     Card: {
@@ -25,7 +28,7 @@ export default function Poster() {
                         <Typography variant="h5" align="center" color="textPrimary" gutterBottom>
                             A Productivity Application
                         </Typography>
-                        <Typography variant="h6" align="center" color="textPrimary" gutterBottom style={{fontStyle: 'italic'}}>
+                        <Typography variant="h6" align="center" color="textPrimary" gutterBottom style={{ fontStyle: 'italic' }}>
                             Summarize Pdf documents on the same page as you read them, with the most intuitional way for you to not loose focus
                         </Typography>
                     </Box>
@@ -109,6 +112,92 @@ export default function Poster() {
                         </Grid>
                     </Grid>
 
+                </Grid>
+                <Grid item>
+                    <Box my={7}>
+                        <Grid container spacing={7}>
+                            <Grid item xs={7}>
+                                <Box m={4}>
+                                    <Typography variant="h5" style={{ fontWeight: 'bold' }}>
+                                        Upload your book or classnotes to NoteSum and structure them
+                                    </Typography>
+                                </Box>
+                                <Box m={4}>
+                                    <Typography variant="body1" style={{ lineHeight: '1.5', fontSize: 'large' }}>
+                                        Create a new project by using the intuitive UI, name it
+                                        something useful, and then upload your resources to the
+                                        project. From this point on all your documents will be automatically saved on our server for your convenience.
+                                    </Typography>
+                                </Box>
+                                <Box mx={7}>
+                                    <Typography variant="body1">
+                                        <ul style={{ lineHeight: '2.5', fontSize: 'large' }}>
+                                            <li>
+                                                Create unlimited amount of projects
+                                        </li>
+                                            <li>
+                                                Upload any size Pdf document without delay
+                                        </li>
+                                            <li>
+                                                Carry on where you left off easily
+                                        </li>
+                                            <li>
+                                                Combine subjects in projects for structure
+                                        </li>
+                                        </ul>
+                                    </Typography>
+                                </Box>
+                            </Grid>
+                            <Grid item xs={5} justify="center" >
+                                <img src={poster3} style={{width: '80%'}}/>
+                            </Grid>
+                        </Grid>
+                    </Box>
+                </Grid>
+                <Grid item>
+                    <Box my={5}>
+                        <Grid container spacing={7}>
+                            <Grid item xs={5} justify="center" >
+                                <Box mx={7} my={3}>
+                                    <img src={eu} style={{width: '100%'}}/>
+                                </Box>
+                            </Grid>
+                            <Grid item xs={7}>
+                                <Box m={4}>
+                                    <Typography variant="h5" style={{ fontWeight: 'bold'}}>
+                                        Start summurizing your documents on the webpage
+                                    </Typography>
+                                </Box>
+                                <Box m={4}>
+                                    <Typography variant="body1" style={{ lineHeight: '1.5', fontSize: 'large' }}>
+                                        All you have to do is highligh text on your document or book and it
+                                         will automatically be added to the summary. Is there a disgaram you want to remember?
+                                          You can make a screen grab on the page itself! Do you want extra structure? You can
+                                           have different titles and bullet point lists.
+                                    </Typography>
+                                </Box>
+                                <Box mx={7}>
+                                    <Typography variant="body1">
+                                        <ul style={{ lineHeight: '2.5', fontSize: 'large' }}>
+                                            <li>
+                                                Responsive and efficient Pdf renderer
+                                        </li>
+                                            <li>
+                                                Editing with many style options and possibilities
+                                        </li>
+                                            <li>
+                                                Automatic syncronization with our server
+                                        </li>
+                                            <li>
+                                                Support for large files
+                                        </li>
+                                        </ul>
+                                    </Typography>
+                                </Box>
+                            </Grid>
+
+                        </Grid>
+                    </Box>
                 </Grid>
             </Grid>
         </div>
