@@ -30,3 +30,5 @@ yarn-error.log*
 /src/resources/ODFunpacked/*
 
 .vscode
+
+.env
