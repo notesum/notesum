@@ -18,6 +18,7 @@ import Project from './project/Project';
 import ProjectOverview from './project_overview/ProjectOverview';
 import Error from './Error';
 import Terms from './app/Terms';
+import Poster from './app/Poster';
 
 export default function Root() {
     const { isLoggedIn } = useSelector((state: AppState) => state.auth);
@@ -67,6 +68,9 @@ export default function Root() {
                     </Route>
                     <Route path="/about">
                         <About />
+                    </Route>
+                    <Route path="/poster">
+                        <Poster />
                     </Route>
                     <Route path="/terms">
                         <Terms />
