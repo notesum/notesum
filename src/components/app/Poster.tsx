@@ -18,7 +18,7 @@ export default function Poster() {
     const classes = useStyles();
 
     return (
-        <div>
+        <Container maxWidth="xl">
             <Grid spacing={7} direction="column" alignContent="center" alignItems="center">
                 <Grid item>
                     <Box my={7}>
@@ -282,7 +282,7 @@ export default function Poster() {
                     </Box>
                 </Grid>
             </Grid>
-        </div>
-    )
+        </Container>
+    );
 
 }
