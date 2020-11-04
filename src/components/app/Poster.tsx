@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Fade from 'react-reveal/Fade';
 import { Box, Grid, Card, makeStyles, Typography, Container, TextField, Button, createStyles, Theme } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 
 import tryMeArrow from '../../resources/poster/try-me.svg';
 import eu from '../../resources/eu-law-summary.png';
@@ -163,7 +164,7 @@ export default function Poster() {
                     <Fade>
                         <Box my={5}>
                             <Grid container spacing={7}>
-                                <Grid item xs={5} justify="center" >
+                                <Grid item xs={6} justify="center" >
                                     <Box mx={7} my={3}>
                                         <Card elevation={24} style={{
                                             width: '500px',
@@ -213,7 +214,7 @@ export default function Poster() {
                                         </Card>
                                     </Box>
                                 </Grid>
-                                <Grid item xs={7}>
+                                <Grid item xs={6}>
                                     <Box m={4}>
                                         <Typography variant="h5" style={{ fontWeight: 'bold' }}>
                                             Make a personal account to keep everything safe and intact
@@ -248,6 +249,14 @@ export default function Poster() {
                             </Grid>
                         </Box>
                     </Fade>
+                </Grid>
+                <Grid item xs={12} justify="center">
+                    <div style={{
+                        margin: '0 auto 0 auto',
+                        width: 40
+                    }}>
+                        <ArrowDownwardIcon style={{ fontSize: 40, textAlign: 'center' }} />
+                    </div>
                 </Grid>
                 <Grid item>
                     <Fade>
@@ -293,6 +302,14 @@ export default function Poster() {
                             </Grid>
                         </Box>
                     </Fade>
+                </Grid>
+                <Grid item xs={12} justify="center">
+                    <div style={{
+                        margin: '70px auto 0 auto',
+                        width: 40
+                    }}>
+                        <ArrowDownwardIcon style={{ fontSize: 40, textAlign: 'center' }} />
+                    </div>
                 </Grid>
                 <Grid item>
                     <Fade>
@@ -340,6 +357,14 @@ export default function Poster() {
                         </Box>
                     </Fade>
                 </Grid>
+                <Grid item xs={12} justify="center">
+                    <div style={{
+                        margin: '0 auto 0 auto',
+                        width: 40
+                    }}>
+                        <ArrowDownwardIcon style={{ fontSize: 40, textAlign: 'center' }} />
+                    </div>
+                </Grid>
                 <Grid item>
                     <Fade>
                         <Box my={7}>
@@ -365,6 +390,9 @@ export default function Poster() {
                                             </li>
                                                 <li>
                                                     Keep all your styling, images and structures intact
+                                            </li>
+                                                <li>
+                                                    Share your summary with your fellow classmates
                                             </li>
                                                 <li>
                                                     Want to summarize more? Reupload the PDF and summarize that!
