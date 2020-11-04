@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import Fade from 'react-reveal/Fade';
-import { Box, Grid, Card, makeStyles, Typography, Container, TextField, Button } from '@material-ui/core';
+import { Box, Grid, Card, makeStyles, Typography, Container, TextField, Button, createStyles, Theme } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 
 // import downloadImage from '../../resources/poster/download.png';
-import loginImage from '../../resources/poster/login.png';
+// import loginImage from '../../resources/poster/login.png';
 import tryMeArrow from '../../resources/poster/try-me.svg';
 import eu from '../../resources/eu-law-summary.png';
 import EmptyProject from '../project/EmptyProject';
@@ -13,14 +13,20 @@ import { NEW_FILE } from '../../redux/types/filesTypes';
 
 import './Poster.css';
 
-const useStyles = makeStyles({
-    Card: {
-        width: '90%',
-        padding: '20px'
-    },
-});
-
-
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        Card: {
+            width: '90%',
+            padding: '20px'
+        },
+        root: {
+            '& .MuiTextField-root': {
+                margin: theme.spacing(2),
+                width: 400,
+            },
+        },
+    })
+);
 
 export default function Poster() {
     const classes = useStyles();
@@ -161,7 +167,53 @@ export default function Poster() {
                             <Grid container spacing={7}>
                                 <Grid item xs={5} justify="center" >
                                     <Box mx={7} my={3}>
-                                        <img src={loginImage} style={{ width: 'auto', maxHeight: '450px' }} />
+                                        {/* <img src={loginImage} style={{ width: 'auto', maxHeight: '450px' }} /> */}
+                                        <Card elevation={24} style={{
+                                            width: '500px',
+                                            margin: '0 auto 0 auto'
+                                        }}>
+                                            <Box m={3}>
+                                                <Grid
+                                                    container
+                                                    spacing={0}
+                                                    direction="column"
+                                                    alignItems="center"
+                                                    justify="center"
+                                                >
+                                                    <Grid item>
+                                                        <Typography variant="h4">Log In</Typography>
+
+                                                    </Grid>
+                                                    <Grid item>
+                                                        <Typography variant="h6"> You need to log in to access the beta test</Typography>
+                                                    </Grid>
+                                                    <Grid item>
+                                                        <form className={classes.root} noValidate autoComplete="off">
+                                                            <div>
+                                                                <TextField type="text" label="Email" />
+                                                            </div>
+                                                            <div>
+                                                                <TextField type="password" label="Password" />
+                                                            </div>
+                                                        </form>
+                                                    </Grid>
+                                                    <Grid item style={{ marginTop: '10px' }}>
+                                                        <Button target="_blank" href="/terms"><Typography variant="subtitle2">
+                                                            by signing up you accept the terms and conditions</Typography></Button>
+                                                    </Grid>
+                                                    <Grid item style={{ marginTop: '10px' }}>
+                                                        <Button variant="contained" color="primary">Log In</Button>
+                                                    </Grid>
+
+                                                    <Grid item style={{ marginTop: '30px' }}>
+                                                        <Typography variant="h6">Don't have an acount?</Typography>
+                                                    </Grid>
+                                                    <Grid item style={{ marginTop: '10px' }}>
+                                                        <Button variant="contained" color="primary">Sign Up</Button>
+                                                    </Grid>
+                                                </Grid >
+                                            </Box>
+                                        </Card>
                                     </Box>
                                 </Grid>
                                 <Grid item xs={7}>
@@ -326,8 +378,7 @@ export default function Poster() {
                                     </Box>
                                 </Grid>
                                 <Grid item xs={5} justify="center" >
-                                    {/* <img src={downloadImage} style={{ width: 'auto', maxHeight: '343px', margin: '0 auto 0 auto' }} /> */}
-                                    <Card elevation={3} style={{
+                                    <Card elevation={24} style={{
                                         width: '300px',
                                         margin: '0 auto 0 auto'
                                     }}>
