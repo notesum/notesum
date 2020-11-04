@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import Fade from 'react-reveal/Fade';
-import { Box, Grid, Card, makeStyles, Typography, Container } from '@material-ui/core';
+import { Box, Grid, Card, makeStyles, Typography, Container, TextField, Button } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 
-import downloadImage from '../../resources/poster/download.png';
+// import downloadImage from '../../resources/poster/download.png';
 import loginImage from '../../resources/poster/login.png';
 import tryMeArrow from '../../resources/poster/try-me.svg';
 import eu from '../../resources/eu-law-summary.png';
@@ -326,7 +326,32 @@ export default function Poster() {
                                     </Box>
                                 </Grid>
                                 <Grid item xs={5} justify="center" >
-                                    <img src={downloadImage} style={{ width: 'auto', maxHeight: '343px', margin: '0 auto 0 auto' }} />
+                                    {/* <img src={downloadImage} style={{ width: 'auto', maxHeight: '343px', margin: '0 auto 0 auto' }} /> */}
+                                    <Card elevation={3} style={{
+                                        width: '300px',
+                                        margin: '0 auto 0 auto'
+                                    }}>
+                                        <Box m={2} overflow="hidden">
+                                            <Grid container wrap="wrap" direction="column">
+                                                <Grid item xs>
+                                                    <TextField id="filled-helperText" value={'Europe and the World'} label="File Name"
+                                                        onChange={() => null} />
+                                                </Grid>
+                                                <Grid item xs>
+                                                    <Button onMouseDown={() => null}>Save as PDF</Button>
+                                                </Grid>
+                                                <Grid item xs>
+                                                    <Button onMouseDown={() => null}>Save as Word Document</Button>
+                                                </Grid>
+                                                <Grid item xs>
+                                                    <Button onMouseDown={() => null}>Save as HTML</Button>
+                                                </Grid>
+                                                <Grid item xs>
+                                                    <Button onMouseDown={() => null}>Save as Text Document</Button>
+                                                </Grid>
+                                            </Grid>
+                                        </Box>
+                                    </Card>
                                 </Grid>
                             </Grid>
                         </Box>
