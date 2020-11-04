@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Grid, Card, CardMedia, CardContent, makeStyles, Typography } from '@material-ui/core';
+import { Box, Grid, Card, makeStyles, Typography, Container } from '@material-ui/core';
 
 import poster3 from '../../resources/poster3.png';
 import eu from '../../resources/eu-law-summary.png';
