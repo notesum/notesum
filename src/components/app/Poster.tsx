@@ -187,7 +187,7 @@ export default function Poster() {
                                                     Tied to your email for safety
                                             </li>
                                                 <li>
-                                                    Exteremly easy to sign up
+                                                    Extremely easy to sign up
                                             </li>
                                                 <li>
                                                     Stay logged in for your pleasure
@@ -278,7 +278,7 @@ export default function Poster() {
                                                     Editing with many style options and possibilities
                                             </li>
                                                 <li>
-                                                    Automatic syncronization with our server
+                                                    Automatic synchronization with our server
                                             </li>
                                                 <li>
                                                     Effortlessly put your diagrams and pictures into your summary
