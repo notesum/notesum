@@ -88,7 +88,7 @@ export default function Poster() {
                                         <Typography variant="body1" style={{ lineHeight: '1.6' }}>
                                             <ul style={{ lineHeight: '2.5', fontSize: 'large' }}>
                                                 <li>
-                                                    Make life easy for students to study using PDF documents
+                                                    Make life easier for students to study using PDF documents
                                             </li>
                                                 <li>
                                                     Create a product that is scalable and reliable
@@ -124,7 +124,7 @@ export default function Poster() {
                                                     Fully functional editor to overcome using another program
                                             </li>
                                                 <li>
-                                                    Professional grade PDF renderer, with exellent compatibility
+                                                    Professional grade PDF renderer, with excellent compatibility
                                             </li>
                                             </ul>
                                         </Typography>
@@ -148,7 +148,7 @@ export default function Poster() {
                                                     Editor built with draft.js and PDF renderer built with pdf.js
                                             </li>
                                                 <li>
-                                                    Reliable state local state management with redux.js
+                                                    Reliable local state management with redux.js
                                             </li>
                                                 <li>
                                                     Backend built to last with Laravel and MySQL
@@ -239,7 +239,7 @@ export default function Poster() {
                                                     Tied to your email for safety
                                             </li>
                                                 <li>
-                                                    Exteremly easy to sign up
+                                                    Extremely easy to sign up
                                             </li>
                                                 <li>
                                                     Stay logged in for your pleasure
@@ -309,7 +309,7 @@ export default function Poster() {
                                 <Grid item xs={7}>
                                     <Box m={4}>
                                         <Typography variant="h5" style={{ fontWeight: 'bold' }}>
-                                            Start summurizing your documents on the webpage
+                                            Start summarizing your documents on the webpage
                                         </Typography>
                                     </Box>
                                     <Box m={4}>
@@ -330,7 +330,7 @@ export default function Poster() {
                                                     Editing with many style options and possibilities
                                             </li>
                                                 <li>
-                                                    Automatic syncronization with our server
+                                                    Automatic synchronization with our server
                                             </li>
                                                 <li>
                                                     Effortlessly put your diagrams and pictures into your summary
@@ -368,10 +368,10 @@ export default function Poster() {
                                                     Download locally without any delay
                                             </li>
                                                 <li>
-                                                    Kepp all your styling, images and structures intact
+                                                    Keep all your styling, images and structures intact
                                             </li>
                                                 <li>
-                                                    Want to summurize more? Reupload the PDF and summurize that!
+                                                    Want to summarize more? Reupload the PDF and summurize that!
                                             </li>
                                             </ul>
                                         </Typography>
