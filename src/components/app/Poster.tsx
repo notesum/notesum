@@ -15,7 +15,8 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         Card: {
             width: '90%',
-            padding: '20px'
+            padding: '20px',
+            height: '330px'
         },
         root: {
             '& .MuiTextField-root': {
