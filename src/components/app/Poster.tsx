@@ -82,7 +82,7 @@ export default function Poster() {
                                         <Typography variant="body1" style={{ lineHeight: '1.6' }}>
                                             <ul style={{ lineHeight: '2.5', fontSize: 'large' }}>
                                                 <li>
-                                                    Make life easy for students to study using PDF documents
+                                                    Make life easier for students to study using PDF documents
                                             </li>
                                                 <li>
                                                     Create a product that is scalable and reliable
@@ -118,7 +118,7 @@ export default function Poster() {
                                                     Fully functional editor to overcome using another program
                                             </li>
                                                 <li>
-                                                    Professional grade PDF renderer, with exellent compatibility
+                                                    Professional grade PDF renderer, with excellent compatibility
                                             </li>
                                             </ul>
                                         </Typography>
@@ -142,7 +142,7 @@ export default function Poster() {
                                                     Editor built with draft.js and PDF renderer built with pdf.js
                                             </li>
                                                 <li>
-                                                    Reliable state local state management with redux.js
+                                                    Reliable local state management with redux.js
                                             </li>
                                                 <li>
                                                     Backend built to last with Laravel and MySQL
