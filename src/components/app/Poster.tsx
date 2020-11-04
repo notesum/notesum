@@ -257,7 +257,7 @@ export default function Poster() {
                                 <Grid item xs={7}>
                                     <Box m={4}>
                                         <Typography variant="h5" style={{ fontWeight: 'bold' }}>
-                                            Start summurizing your documents on the webpage
+                                            Start summarizing your documents on the webpage
                                         </Typography>
                                     </Box>
                                     <Box m={4}>
@@ -316,10 +316,10 @@ export default function Poster() {
                                                     Download locally without any delay
                                             </li>
                                                 <li>
-                                                    Kepp all your styling, images and structures intact
+                                                    Keep all your styling, images and structures intact
                                             </li>
                                                 <li>
-                                                    Want to summurize more? Reupload the PDF and summurize that!
+                                                    Want to summarize more? Reupload the PDF and summurize that!
                                             </li>
                                             </ul>
                                         </Typography>
