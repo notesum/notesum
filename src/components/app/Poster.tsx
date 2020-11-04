@@ -256,7 +256,7 @@ export default function Poster() {
                         margin: '0 auto 0 auto',
                         width: 40
                     }}>
-                        <ArrowDownwardIcon style={{ fontSize: 40, textAlign: 'center' }} />
+                        <ArrowDownwardIcon style={{ fontSize: 40, textAlign: 'center', color: '#3f51b5' }} />
                     </div>
                 </Grid>
                 <Grid item>
@@ -309,7 +309,7 @@ export default function Poster() {
                         margin: '70px auto 0 auto',
                         width: 40
                     }}>
-                        <ArrowDownwardIcon style={{ fontSize: 40, textAlign: 'center' }} />
+                        <ArrowDownwardIcon style={{ fontSize: 40, textAlign: 'center', color: '#3f51b5' }} />
                     </div>
                 </Grid>
                 <Grid item>
@@ -363,7 +363,7 @@ export default function Poster() {
                         margin: '0 auto 0 auto',
                         width: 40
                     }}>
-                        <ArrowDownwardIcon style={{ fontSize: 40, textAlign: 'center' }} />
+                        <ArrowDownwardIcon style={{ fontSize: 40, textAlign: 'center', color: '#3f51b5' }} />
                     </div>
                 </Grid>
                 <Grid item>
