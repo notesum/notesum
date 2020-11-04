@@ -65,7 +65,7 @@ export default function Poster() {
                                 A Productivity Application
                             </Typography>
                             <Typography variant="h6" align="center" color="textPrimary" gutterBottom style={{ fontStyle: 'italic' }}>
-                                Summarize Pdf documents on the same page as you read them, with the most intuitional way for you to not loose focus
+                                Summarize Pdf documents on the same page as you read them, with the most intuitive way for you to not loose focus
                             </Typography>
                         </Box>
                     </Fade>
@@ -82,7 +82,7 @@ export default function Poster() {
                                         <Typography variant="body1" style={{ lineHeight: '1.6' }}>
                                             <ul style={{ lineHeight: '2.5', fontSize: 'large' }}>
                                                 <li>
-                                                    Make life easy for students to study using Pdf documents
+                                                    Make life easy for students to study using PDF documents
                                             </li>
                                                 <li>
                                                     Create a product that is scalable and reliable
@@ -91,7 +91,7 @@ export default function Poster() {
                                                     Provide the right balance between design and functionality
                                             </li>
                                                 <li>
-                                                    Make a product that is intuitional and functional
+                                                    Make a product that is intuitive and functional
                                             </li>
                                             </ul>
                                         </Typography>
@@ -109,7 +109,7 @@ export default function Poster() {
                                         <Typography variant="body1">
                                             <ul style={{ lineHeight: '2.5', fontSize: 'large' }}>
                                                 <li>
-                                                    A split screen with both the Pdf and the summary
+                                                    A split screen with both the PDF and the summary
                                             </li>
                                                 <li>
                                                     Individual accounts for users to save their work
@@ -118,7 +118,7 @@ export default function Poster() {
                                                     Fully functional editor to overcome using another program
                                             </li>
                                                 <li>
-                                                    Professional grade Pdf renderer, with exellent compatibility
+                                                    Professional grade PDF renderer, with exellent compatibility
                                             </li>
                                             </ul>
                                         </Typography>
@@ -167,7 +167,7 @@ export default function Poster() {
                                 <Grid item xs={7}>
                                     <Box m={4}>
                                         <Typography variant="h5" style={{ fontWeight: 'bold' }}>
-                                            Make a personal account to keep verything safe and intact
+                                            Make a personal account to keep everything safe and intact
                                         </Typography>
                                     </Box>
                                     <Box m={4}>
@@ -224,7 +224,7 @@ export default function Poster() {
                                                     Create unlimited amount of projects
                                             </li>
                                                 <li>
-                                                    Upload any size Pdf document without delay
+                                                    Upload any size PDF document without delay
                                             </li>
                                                 <li>
                                                     Carry on where you left off easily
@@ -262,8 +262,8 @@ export default function Poster() {
                                     </Box>
                                     <Box m={4}>
                                         <Typography variant="body1" style={{ lineHeight: '1.5', fontSize: 'large' }}>
-                                            All you have to do is highligh text on your document or book and it
-                                            will automatically be added to the summary. Is there a disgaram you want to remember?
+                                            All you have to do is highlight text on your document or book and it
+                                            will automatically be added to the summary. Is there a diagram you want to remember?
                                             You can make a screen grab on the page itself! Do you want extra structure? You can
                                             have different titles and bullet point lists.
                                         </Typography>
@@ -272,7 +272,7 @@ export default function Poster() {
                                         <Typography variant="body1">
                                             <ul style={{ lineHeight: '2.5', fontSize: 'large' }}>
                                                 <li>
-                                                    Responsive and efficient Pdf renderer
+                                                    Responsive and efficient PDF renderer
                                             </li>
                                                 <li>
                                                     Editing with many style options and possibilities
@@ -304,8 +304,8 @@ export default function Poster() {
                                     </Box>
                                     <Box m={4}>
                                         <Typography variant="body1" style={{ lineHeight: '1.5', fontSize: 'large' }}>
-                                            If you have finishged your summary, NoteSum gives you the ability to download the entire summary
-                                            to a file format of your choosing. This can be a Word document, a Pdf or if you like living
+                                            If you have finished your summary, NoteSum gives you the ability to download the entire summary
+                                            to a file format of your choosing. This can be a Word document, a PDF or if you like living
                                             the dangerous life, you can even make it an HTML document.
                                         </Typography>
                                     </Box>
@@ -319,7 +319,7 @@ export default function Poster() {
                                                     Kepp all your styling, images and structures intact
                                             </li>
                                                 <li>
-                                                    Want to summurize more? Reupload the Pdf and summurize that!
+                                                    Want to summurize more? Reupload the PDF and summurize that!
                                             </li>
                                             </ul>
                                         </Typography>
