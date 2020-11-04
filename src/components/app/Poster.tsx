@@ -69,7 +69,7 @@ export default function Poster() {
                                 A Productivity Application
                             </Typography>
                             <Typography variant="h6" align="center" color="textPrimary" gutterBottom style={{ fontStyle: 'italic' }}>
-                                Summarize PDF documents on the same page as you read them, with the most intuitive way for you to not loose focus
+                                Summarize PDF documents on the same page as you read them, with the most intuitive way for you to not lose focus
                             </Typography>
                         </Box>
                     </Fade>
