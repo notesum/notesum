@@ -65,7 +65,7 @@ export default function Poster() {
                                 A Productivity Application
                             </Typography>
                             <Typography variant="h6" align="center" color="textPrimary" gutterBottom style={{ fontStyle: 'italic' }}>
-                                Summarize Pdf documents on the same page as you read them, with the most intuitive way for you to not loose focus
+                                Summarize PDF documents on the same page as you read them, with the most intuitive way for you to not loose focus
                             </Typography>
                         </Box>
                     </Fade>
@@ -139,7 +139,7 @@ export default function Poster() {
                                                     Website built with react.js and material design
                                             </li>
                                                 <li>
-                                                    Editor built with draft.js and Pdf renderer built with pdf.js
+                                                    Editor built with draft.js and PDF renderer built with pdf.js
                                             </li>
                                                 <li>
                                                     Reliable state local state management with redux.js
