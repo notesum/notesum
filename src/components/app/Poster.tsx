@@ -371,7 +371,7 @@ export default function Poster() {
                                                     Keep all your styling, images and structures intact
                                             </li>
                                                 <li>
-                                                    Want to summarize more? Reupload the PDF and summurize that!
+                                                    Want to summarize more? Reupload the PDF and summarize that!
                                             </li>
                                             </ul>
                                         </Typography>
