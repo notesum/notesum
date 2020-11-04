@@ -156,174 +156,181 @@ export default function Poster() {
                     </Grid>
                 </Grid>
                 <Grid item>
-                    <Box my={5}>
-                        <Grid container spacing={7}>
-                            <Grid item xs={5} justify="center" >
-                                <Box mx={7} my={3}>
-                                    <img src={loginImage} style={{ width: 'auto', maxHeight: '450px' }} />
-                                </Box>
+                    <Fade>
+                        <Box my={5}>
+                            <Grid container spacing={7}>
+                                <Grid item xs={5} justify="center" >
+                                    <Box mx={7} my={3}>
+                                        <img src={loginImage} style={{ width: 'auto', maxHeight: '450px' }} />
+                                    </Box>
+                                </Grid>
+                                <Grid item xs={7}>
+                                    <Box m={4}>
+                                        <Typography variant="h5" style={{ fontWeight: 'bold' }}>
+                                            Make a personal account to keep verything safe and intact
+                                        </Typography>
+                                    </Box>
+                                    <Box m={4}>
+                                        <Typography variant="body1" style={{ lineHeight: '1.5', fontSize: 'large' }}>
+                                            NoteSum gives you the ability to make a personal account where your information is kept,
+                                            secret and secure. We make sure only you have access to your data and we also make certain that
+                                            your data will not be lost.
+                                        </Typography>
+                                    </Box>
+                                    <Box mx={7}>
+                                        <Typography variant="body1">
+                                            <ul style={{ lineHeight: '2.5', fontSize: 'large' }}>
+                                                <li>
+                                                    Password protected account
+                                            </li>
+                                                <li>
+                                                    Tied to your email for safety
+                                            </li>
+                                                <li>
+                                                    Exteremly easy to sign up
+                                            </li>
+                                                <li>
+                                                    Stay logged in for your pleasure
+                                            </li>
+                                            </ul>
+                                        </Typography>
+                                    </Box>
+                                </Grid>
                             </Grid>
-                            <Grid item xs={7}>
-                                <Box m={4}>
-                                    <Typography variant="h5" style={{ fontWeight: 'bold' }}>
-                                        Make a personal account to keep verything safe and intact
-                                    </Typography>
-                                </Box>
-                                <Box m={4}>
-                                    <Typography variant="body1" style={{ lineHeight: '1.5', fontSize: 'large' }}>
-                                        NoteSum gives you the ability to make a personal account where your information is kept,
-                                        secret and secure. We make sure only you have access to your data and we also make certain that
-                                        your data will not be lost.
-                                    </Typography>
-                                </Box>
-                                <Box mx={7}>
-                                    <Typography variant="body1">
-                                        <ul style={{ lineHeight: '2.5', fontSize: 'large' }}>
-                                            <li>
-                                                Password protected account
-                                        </li>
-                                            <li>
-                                                Tied to your email for safety
-                                        </li>
-                                            <li>
-                                                Exteremly easy to sign up
-                                        </li>
-                                            <li>
-                                                Stay logged in for your pleasure
-                                        </li>
-                                        </ul>
-                                    </Typography>
-                                </Box>
+                        </Box>
+                    </Fade>
+                </Grid>
+                <Grid item>
+                    <Fade>
+                        <Box my={7}>
+                            <Grid container spacing={7}>
+                                <Grid item xs={7}>
+                                    <Box m={4}>
+                                        <Typography variant="h5" style={{ fontWeight: 'bold' }}>
+                                            Upload your book or classnotes to NoteSum and structure them
+                                        </Typography>
+                                    </Box>
+                                    <Box m={4}>
+                                        <Typography variant="body1" style={{ lineHeight: '1.5', fontSize: 'large' }}>
+                                            Create a new project by using the intuitive UI, name it
+                                            something useful, and then upload your resources to the
+                                            project. From this point on all your documents will be automatically saved on our server for your convenience.
+                                        </Typography>
+                                    </Box>
+                                    <Box mx={7}>
+                                        <Typography variant="body1">
+                                            <ul style={{ lineHeight: '2.5', fontSize: 'large' }}>
+                                                <li>
+                                                    Create unlimited amount of projects
+                                            </li>
+                                                <li>
+                                                    Upload any size Pdf document without delay
+                                            </li>
+                                                <li>
+                                                    Carry on where you left off easily
+                                            </li>
+                                                <li>
+                                                    Combine subjects in projects for structure
+                                            </li>
+                                            </ul>
+                                        </Typography>
+                                    </Box>
+                                </Grid>
+                                <Grid item xs={5} justify="center" >
+                                    {/* <img src={poster3} style={{ width: '80%' }} /> */}
+                                    <EmptyProject addFile={onUpload} />
+                                    <img src={tryMeArrow} alt="Try me!" className="tryMe" />
+                                </Grid>
                             </Grid>
+                        </Box>
+                    </Fade>
+                </Grid>
+                <Grid item>
+                    <Fade>
+                        <Box my={5}>
+                            <Grid container spacing={7}>
+                                <Grid item xs={5} justify="center" >
+                                    <Box mx={7} my={3}>
+                                        <img src={eu} style={{ width: '100%' }} />
+                                    </Box>
+                                </Grid>
+                                <Grid item xs={7}>
+                                    <Box m={4}>
+                                        <Typography variant="h5" style={{ fontWeight: 'bold' }}>
+                                            Start summurizing your documents on the webpage
+                                        </Typography>
+                                    </Box>
+                                    <Box m={4}>
+                                        <Typography variant="body1" style={{ lineHeight: '1.5', fontSize: 'large' }}>
+                                            All you have to do is highligh text on your document or book and it
+                                            will automatically be added to the summary. Is there a disgaram you want to remember?
+                                            You can make a screen grab on the page itself! Do you want extra structure? You can
+                                            have different titles and bullet point lists.
+                                        </Typography>
+                                    </Box>
+                                    <Box mx={7}>
+                                        <Typography variant="body1">
+                                            <ul style={{ lineHeight: '2.5', fontSize: 'large' }}>
+                                                <li>
+                                                    Responsive and efficient Pdf renderer
+                                            </li>
+                                                <li>
+                                                    Editing with many style options and possibilities
+                                            </li>
+                                                <li>
+                                                    Automatic syncronization with our server
+                                            </li>
+                                                <li>
+                                                    Effortlessly put your diagrams and pictures into your summary
+                                            </li>
+                                            </ul>
+                                        </Typography>
+                                    </Box>
+                                </Grid>
 
-                        </Grid>
-                    </Box>
+                            </Grid>
+                        </Box>
+                    </Fade>
                 </Grid>
                 <Grid item>
-                    <Box my={7}>
-                        <Grid container spacing={7}>
-                            <Grid item xs={7}>
-                                <Box m={4}>
-                                    <Typography variant="h5" style={{ fontWeight: 'bold' }}>
-                                        Upload your book or classnotes to NoteSum and structure them
-                                    </Typography>
-                                </Box>
-                                <Box m={4}>
-                                    <Typography variant="body1" style={{ lineHeight: '1.5', fontSize: 'large' }}>
-                                        Create a new project by using the intuitive UI, name it
-                                        something useful, and then upload your resources to the
-                                        project. From this point on all your documents will be automatically saved on our server for your convenience.
-                                    </Typography>
-                                </Box>
-                                <Box mx={7}>
-                                    <Typography variant="body1">
-                                        <ul style={{ lineHeight: '2.5', fontSize: 'large' }}>
-                                            <li>
-                                                Create unlimited amount of projects
-                                        </li>
-                                            <li>
-                                                Upload any size Pdf document without delay
-                                        </li>
-                                            <li>
-                                                Carry on where you left off easily
-                                        </li>
-                                            <li>
-                                                Combine subjects in projects for structure
-                                        </li>
-                                        </ul>
-                                    </Typography>
-                                </Box>
+                    <Fade>
+                        <Box my={7}>
+                            <Grid container spacing={7}>
+                                <Grid item xs={7}>
+                                    <Box m={4}>
+                                        <Typography variant="h5" style={{ fontWeight: 'bold' }}>
+                                            Finally when you are done, download it however you like!
+                                        </Typography>
+                                    </Box>
+                                    <Box m={4}>
+                                        <Typography variant="body1" style={{ lineHeight: '1.5', fontSize: 'large' }}>
+                                            If you have finishged your summary, NoteSum gives you the ability to download the entire summary
+                                            to a file format of your choosing. This can be a Word document, a Pdf or if you like living
+                                            the dangerous life, you can even make it an HTML document.
+                                        </Typography>
+                                    </Box>
+                                    <Box mx={7}>
+                                        <Typography variant="body1">
+                                            <ul style={{ lineHeight: '2.5', fontSize: 'large' }}>
+                                                <li>
+                                                    Download locally without any delay
+                                            </li>
+                                                <li>
+                                                    Kepp all your styling, images and structures intact
+                                            </li>
+                                                <li>
+                                                    Want to summurize more? Reupload the Pdf and summurize that!
+                                            </li>
+                                            </ul>
+                                        </Typography>
+                                    </Box>
+                                </Grid>
+                                <Grid item xs={5} justify="center" >
+                                    <img src={downloadImage} style={{ width: 'auto', maxHeight: '343px', margin: '0 auto 0 auto' }} />
+                                </Grid>
                             </Grid>
-                            <Grid item xs={5} justify="center" >
-                                {/* <img src={poster3} style={{ width: '80%' }} /> */}
-                                <EmptyProject addFile={onUpload} />
-                                <img src={tryMeArrow} alt="Try me!" className="tryMe" />
-                            </Grid>
-                        </Grid>
-                    </Box>
-                </Grid>
-                <Grid item>
-                    <Box my={5}>
-                        <Grid container spacing={7}>
-                            <Grid item xs={5} justify="center" >
-                                <Box mx={7} my={3}>
-                                    <img src={eu} style={{ width: '100%' }} />
-                                </Box>
-                            </Grid>
-                            <Grid item xs={7}>
-                                <Box m={4}>
-                                    <Typography variant="h5" style={{ fontWeight: 'bold' }}>
-                                        Start summurizing your documents on the webpage
-                                    </Typography>
-                                </Box>
-                                <Box m={4}>
-                                    <Typography variant="body1" style={{ lineHeight: '1.5', fontSize: 'large' }}>
-                                        All you have to do is highligh text on your document or book and it
-                                        will automatically be added to the summary. Is there a disgaram you want to remember?
-                                        You can make a screen grab on the page itself! Do you want extra structure? You can
-                                        have different titles and bullet point lists.
-                                    </Typography>
-                                </Box>
-                                <Box mx={7}>
-                                    <Typography variant="body1">
-                                        <ul style={{ lineHeight: '2.5', fontSize: 'large' }}>
-                                            <li>
-                                                Responsive and efficient Pdf renderer
-                                        </li>
-                                            <li>
-                                                Editing with many style options and possibilities
-                                        </li>
-                                            <li>
-                                                Automatic syncronization with our server
-                                        </li>
-                                            <li>
-                                                Effortlessly put your diagrams and pictures into your summary
-                                        </li>
-                                        </ul>
-                                    </Typography>
-                                </Box>
-                            </Grid>
-
-                        </Grid>
-                    </Box>
-                </Grid>
-                <Grid item>
-                    <Box my={7}>
-                        <Grid container spacing={7}>
-                            <Grid item xs={7}>
-                                <Box m={4}>
-                                    <Typography variant="h5" style={{ fontWeight: 'bold' }}>
-                                        Finally when you are done, download it however you like!
-                                    </Typography>
-                                </Box>
-                                <Box m={4}>
-                                    <Typography variant="body1" style={{ lineHeight: '1.5', fontSize: 'large' }}>
-                                        If you have finishged your summary, NoteSum gives you the ability to download the entire summary
-                                        to a file format of your choosing. This can be a Word document, a Pdf or if you like living
-                                        the dangerous life, you can even make it an HTML document.
-                                    </Typography>
-                                </Box>
-                                <Box mx={7}>
-                                    <Typography variant="body1">
-                                        <ul style={{ lineHeight: '2.5', fontSize: 'large' }}>
-                                            <li>
-                                                Download locally without any delay
-                                        </li>
-                                            <li>
-                                                Kepp all your styling, images and structures intact
-                                        </li>
-                                            <li>
-                                                Want to summurize more? Reupload the Pdf and summurize that!
-                                        </li>
-                                        </ul>
-                                    </Typography>
-                                </Box>
-                            </Grid>
-                            <Grid item xs={5} justify="center" >
-                                <img src={downloadImage} style={{ width: 'auto', maxHeight: '343px', margin: '0 auto 0 auto' }} />
-                            </Grid>
-                        </Grid>
-                    </Box>
+                        </Box>
+                    </Fade>
                 </Grid>
             </Grid>
         </Container>
