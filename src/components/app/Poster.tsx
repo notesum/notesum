@@ -3,8 +3,6 @@ import Fade from 'react-reveal/Fade';
 import { Box, Grid, Card, makeStyles, Typography, Container, TextField, Button, createStyles, Theme } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 
-// import downloadImage from '../../resources/poster/download.png';
-// import loginImage from '../../resources/poster/login.png';
 import tryMeArrow from '../../resources/poster/try-me.svg';
 import eu from '../../resources/eu-law-summary.png';
 import EmptyProject from '../project/EmptyProject';
@@ -167,7 +165,6 @@ export default function Poster() {
                             <Grid container spacing={7}>
                                 <Grid item xs={5} justify="center" >
                                     <Box mx={7} my={3}>
-                                        {/* <img src={loginImage} style={{ width: 'auto', maxHeight: '450px' }} /> */}
                                         <Card elevation={24} style={{
                                             width: '500px',
                                             margin: '0 auto 0 auto'
@@ -309,7 +306,7 @@ export default function Poster() {
                                 <Grid item xs={7}>
                                     <Box m={4}>
                                         <Typography variant="h5" style={{ fontWeight: 'bold' }}>
-                                            Start summarizing your documents on the webpage
+                                            Start summarizing your documents!
                                         </Typography>
                                     </Box>
                                     <Box m={4}>
@@ -339,7 +336,6 @@ export default function Poster() {
                                         </Typography>
                                     </Box>
                                 </Grid>
-
                             </Grid>
                         </Box>
                     </Fade>
@@ -351,7 +347,7 @@ export default function Poster() {
                                 <Grid item xs={7}>
                                     <Box m={4}>
                                         <Typography variant="h5" style={{ fontWeight: 'bold' }}>
-                                            Finally when you are done, download it however you like!
+                                            Finally when you are done, download it however you like
                                         </Typography>
                                     </Box>
                                     <Box m={4}>
