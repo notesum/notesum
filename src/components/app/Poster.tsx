@@ -1,9 +1,14 @@
 import React from 'react';
+import Fade from 'react-reveal/Fade';
 import { Box, Grid, Card, makeStyles, Typography, Container } from '@material-ui/core';
 
-import poster3 from '../../resources/poster3.png';
+import downloadImage from '../../resources/poster/download.png';
+import loginImage from '../../resources/poster/login.png';
+import tryMeArrow from '../../resources/poster/try-me.svg';
 import eu from '../../resources/eu-law-summary.png';
+import EmptyProject from '../project/EmptyProject';
 
+import './Poster.css';
 
 const useStyles = makeStyles({
     Card: {
@@ -21,104 +26,111 @@ export default function Poster() {
         <Container maxWidth="xl">
             <Grid spacing={7} direction="column" alignContent="center" alignItems="center">
                 <Grid item>
-                    <Box my={7}>
-                        <Typography variant="h3" align="center" color="textPrimary" style={{ fontWeight: 'bold' }}>
-                            NoteSum
-                        </Typography>
-                        <Typography variant="h5" align="center" color="textPrimary" gutterBottom>
-                            A Productivity Application
-                        </Typography>
-                        <Typography variant="h6" align="center" color="textPrimary" gutterBottom style={{ fontStyle: 'italic' }}>
-                            Summarize Pdf documents on the same page as you read them, with the most intuitional way for you to not loose focus
-                        </Typography>
-                    </Box>
+                    <Fade>
+                        <Box my={7}>
+                            <Typography variant="h3" align="center" color="textPrimary" style={{ fontWeight: 'bold' }}>
+                                NoteSum
+                            </Typography>
+                            <Typography variant="h5" align="center" color="textPrimary" gutterBottom>
+                                A Productivity Application
+                            </Typography>
+                            <Typography variant="h6" align="center" color="textPrimary" gutterBottom style={{ fontStyle: 'italic' }}>
+                                Summarize Pdf documents on the same page as you read them, with the most intuitional way for you to not loose focus
+                            </Typography>
+                        </Box>
+                    </Fade>
                 </Grid>
                 <Grid item>
                     <Grid container justify="center" alignContent="center" alignItems="center">
                         <Grid item xs={4}>
                             <Box mx={3}>
-                                <Card elevation={3} className={classes.Card}>
-                                    <Typography variant="h5" align="center" style={{ fontWeight: 'bold' }}>
-                                        Goals
-                                    </Typography>
-                                    <Typography variant="body1" style={{ lineHeight: '1.6' }}>
-                                        <ul style={{ lineHeight: '2.5', fontSize: 'large' }}>
-                                            <li>
-                                                Make life easy for students to study using Pdf documents
-                                        </li>
-                                            <li>
-                                                Create a product that is scalable and reliable
-                                        </li>
-                                            <li>
-                                                Provide the right balance between design and functionality
-                                        </li>
-                                            <li>
-                                                Make a product that is intuitional and functional
-                                        </li>
-                                        </ul>
-                                    </Typography>
-                                </Card>
+                                <Fade>
+                                    <Card elevation={3} className={classes.Card}>
+                                        <Typography variant="h5" align="center" style={{ fontWeight: 'bold' }}>
+                                            Goals
+                                        </Typography>
+                                        <Typography variant="body1" style={{ lineHeight: '1.6' }}>
+                                            <ul style={{ lineHeight: '2.5', fontSize: 'large' }}>
+                                                <li>
+                                                    Make life easy for students to study using Pdf documents
+                                            </li>
+                                                <li>
+                                                    Create a product that is scalable and reliable
+                                            </li>
+                                                <li>
+                                                    Provide the right balance between design and functionality
+                                            </li>
+                                                <li>
+                                                    Make a product that is intuitional and functional
+                                            </li>
+                                            </ul>
+                                        </Typography>
+                                    </Card>
+                                </Fade>
                             </Box>
                         </Grid>
                         <Grid item xs={4}>
                             <Box mx={3}>
-                                <Card elevation={3} className={classes.Card}>
-                                    <Typography variant="h5" align="center" style={{ fontWeight: 'bold' }}>
-                                        Idea
-                                    </Typography>
-                                    <Typography variant="body1">
-                                        <ul style={{ lineHeight: '2.5', fontSize: 'large' }}>
-                                            <li>
-                                                A split screen with both the Pdf and the summary
-                                        </li>
-                                            <li>
-                                                Individual accounts for users to save their work
-                                        </li>
-                                            <li>
-                                                Fully functional editor to overcome using another program
-                                        </li>
-                                            <li>
-                                                Professional grade Pdf renderer, with exellent compatibility
-                                        </li>
-                                        </ul>
-                                    </Typography>
-                                </Card>
+                                <Fade>
+                                    <Card elevation={3} className={classes.Card}>
+                                        <Typography variant="h5" align="center" style={{ fontWeight: 'bold' }}>
+                                            Idea
+                                        </Typography>
+                                        <Typography variant="body1">
+                                            <ul style={{ lineHeight: '2.5', fontSize: 'large' }}>
+                                                <li>
+                                                    A split screen with both the Pdf and the summary
+                                            </li>
+                                                <li>
+                                                    Individual accounts for users to save their work
+                                            </li>
+                                                <li>
+                                                    Fully functional editor to overcome using another program
+                                            </li>
+                                                <li>
+                                                    Professional grade Pdf renderer, with exellent compatibility
+                                            </li>
+                                            </ul>
+                                        </Typography>
+                                    </Card>
+                                </Fade>
                             </Box>
                         </Grid>
                         <Grid item xs={4}>
                             <Box mx={3}>
-                                <Card elevation={3} className={classes.Card}>
-                                    <Typography variant="h5" align="center" style={{ fontWeight: 'bold' }}>
-                                        Execution
-                                    </Typography>
-                                    <Typography variant="body1">
-                                        <ul style={{ lineHeight: '2.5', fontSize: 'large' }}>
-                                            <li>
-                                                Website built with react.js and material design
-                                        </li>
-                                            <li>
-                                                Editor built with draft.js and Pdf renderer built with pdf.js
-                                        </li>
-                                            <li>
-                                                Reliable state local state management with redux.js
-                                        </li>
-                                            <li>
-                                                Backend built to last with Laravel and MySQL
-                                        </li>
-                                        </ul>
-                                    </Typography>
-                                </Card>
+                                <Fade>
+                                    <Card elevation={3} className={classes.Card}>
+                                        <Typography variant="h5" align="center" style={{ fontWeight: 'bold' }}>
+                                            Execution
+                                        </Typography>
+                                        <Typography variant="body1">
+                                            <ul style={{ lineHeight: '2.5', fontSize: 'large' }}>
+                                                <li>
+                                                    Website built with react.js and material design
+                                            </li>
+                                                <li>
+                                                    Editor built with draft.js and Pdf renderer built with pdf.js
+                                            </li>
+                                                <li>
+                                                    Reliable state local state management with redux.js
+                                            </li>
+                                                <li>
+                                                    Backend built to last with Laravel and MySQL
+                                            </li>
+                                            </ul>
+                                        </Typography>
+                                    </Card>
+                                </Fade>
                             </Box>
                         </Grid>
                     </Grid>
-
                 </Grid>
                 <Grid item>
                     <Box my={5}>
                         <Grid container spacing={7}>
                             <Grid item xs={5} justify="center" >
                                 <Box mx={7} my={3}>
-                                    <img src={eu} style={{ width: '100%' }} /> //TODO: Log in and sign up
+                                    <img src={loginImage} style={{ width: 'auto', maxHeight: '450px' }} />
                                 </Box>
                             </Grid>
                             <Grid item xs={7}>
@@ -193,7 +205,9 @@ export default function Poster() {
                                 </Box>
                             </Grid>
                             <Grid item xs={5} justify="center" >
-                                <img src={poster3} style={{ width: '80%' }} />
+                                {/* <img src={poster3} style={{ width: '80%' }} /> */}
+                                <EmptyProject addFile={() => null} />
+                                <img src={tryMeArrow} alt="Try me!" className="tryMe" />
                             </Grid>
                         </Grid>
                     </Box>
@@ -276,7 +290,7 @@ export default function Poster() {
                                 </Box>
                             </Grid>
                             <Grid item xs={5} justify="center" >
-                                <img src={poster3} style={{ width: '80%' }} /> // TODO: downoad and maybe a picture of pdf reader with a summary
+                                <img src={downloadImage} style={{ width: 'auto', maxHeight: '343px', margin: '0 auto 0 auto' }} />
                             </Grid>
                         </Grid>
                     </Box>

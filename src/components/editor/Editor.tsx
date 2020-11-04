@@ -231,17 +231,20 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
     );
 
     return (
-        <div style={{ backgroundColor: 'white' }} >
-            <Grid container wrap="wrap">
+        <>
+            <Box flexDirection="column" display="flex" width="100%" height="100%" >
                 {toolbar}
-                <Grid item xs={12} style={{ backgroundColor: 'white' }}>
-                    {!dragging && !fullscreenOpen && editorComponent
-                    }
-                </Grid>
-            </Grid>
-            {/* The dialogs */}
+
+                <Box flexGrow={1} style={{
+                    minHeight: '0',
+                    backgroundColor: '#fff',
+                    overflow: 'auto'
+                }}>
+                    {!dragging && !fullscreenOpen && editorComponent}
+                </Box>
+            </Box>
             {editorFull}
             {saveDialog}
-        </div >
+        </>
     );
 }
