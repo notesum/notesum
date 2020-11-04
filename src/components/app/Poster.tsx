@@ -239,10 +239,10 @@ export default function Poster() {
                                                     Tied to your email for safety
                                             </li>
                                                 <li>
-                                                    Extremely easy to sign up
+                                                    Quick and easy sign up
                                             </li>
                                                 <li>
-                                                    Stay logged in for your pleasure
+                                                    Easily share documents between devices
                                             </li>
                                             </ul>
                                         </Typography>
