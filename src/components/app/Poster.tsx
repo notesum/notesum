@@ -142,16 +142,16 @@ export default function Poster() {
                                         <Typography variant="body1">
                                             <ul style={{ lineHeight: '2.5', fontSize: 'large' }}>
                                                 <li>
-                                                    Website built with react.js and material design
+                                                    Website built with React and material design
                                             </li>
                                                 <li>
-                                                    Editor built with draft.js and PDF renderer built with pdf.js
+                                                    Editor built with Draft.js and PDF renderer built with PDF.js
                                             </li>
                                                 <li>
-                                                    Reliable local state management with redux.js
+                                                    Reliable state management with Redux and Laravel
                                             </li>
                                                 <li>
-                                                    Backend built to last with Laravel and MySQL
+                                                    Safe and stable code by using TypeScript
                                             </li>
                                             </ul>
                                         </Typography>
