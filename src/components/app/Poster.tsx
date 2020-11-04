@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Fade from 'react-reveal/Fade';
 import { Box, Grid, Card, makeStyles, Typography, Container } from '@material-ui/core';
+import { useDispatch } from 'react-redux';
 
 import downloadImage from '../../resources/poster/download.png';
 import loginImage from '../../resources/poster/login.png';
 import tryMeArrow from '../../resources/poster/try-me.svg';
 import eu from '../../resources/eu-law-summary.png';
 import EmptyProject from '../project/EmptyProject';
+import DocumentView from '../project/DocumentView';
+import { NEW_FILE } from '../../redux/types/filesTypes';
 
 import './Poster.css';
 
@@ -21,6 +24,33 @@ const useStyles = makeStyles({
 
 export default function Poster() {
     const classes = useStyles();
+
+    const dispatch = useDispatch();
+    const [fileId, setFileId] = useState<string>(undefined);
+    const [pdf, setPdf] = useState<Uint8Array>(undefined);
+
+    if (fileId !== undefined && pdf !== undefined) {
+        return (<DocumentView fileId={fileId} pdf={pdf}/>);
+    }
+
+    const onUpload = (file: File) => {
+        (async () => {
+            const id = 'poster-pdf';
+
+            setPdf(new Uint8Array(await file.arrayBuffer()));
+
+            dispatch({
+                type: NEW_FILE,
+                payload: {
+                    id,
+                    title: file.name,
+                    pdf: ''
+                }
+            });
+
+            setFileId(id);
+        })();
+    };
 
     return (
         <Container maxWidth="xl">
@@ -206,7 +236,7 @@ export default function Poster() {
                             </Grid>
                             <Grid item xs={5} justify="center" >
                                 {/* <img src={poster3} style={{ width: '80%' }} /> */}
-                                <EmptyProject addFile={() => null} />
+                                <EmptyProject addFile={onUpload} />
                                 <img src={tryMeArrow} alt="Try me!" className="tryMe" />
                             </Grid>
                         </Grid>
