@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import { Box } from '@material-ui/core';
 import { DocumentInitParameters, PDFDataRangeTransport, TypedArray } from 'pdfjs-dist/types/display/api';
 
-import Pdf from '../pdf/Pdf';
+import PdfViewer from '../pdf/PdfViewer';
 import TextEditor from '../editor/Editor';
 
 import './DocumentView.css';
@@ -71,10 +71,9 @@ export default function DocumentView({ pdf, fileId }: DocumentViewProps) {
         <Box flexDirection="row" display="flex" height="100%" {...{ ref: mainViewRef }}>
             <Box flexGrow={1} style={{
                 width: `${pdfPercentage}%`,
-                overflow: 'auto',
                 height: '100%'
             }}>
-                <Pdf id={fileId} file={pdf} screenshot={screenshot} screenshotCallback={setCallback} hidden={dragging} fitToWidth={true} />
+                <PdfViewer fileUrl={pdf}/>
             </Box>
 
             <div
