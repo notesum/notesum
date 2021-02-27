@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Editor from 'draft-js-plugins-editor';
 import createImagePlugin from 'draft-js-image-plugin';
@@ -22,19 +22,21 @@ import SaveIcon from '@material-ui/icons/Save';
 import { AppState } from '../../redux/reducers';
 import { updateEditor } from '../../redux/actions/filesActions';
 import { saveFile } from '../../redux/asyncActions/fileAsyncActions';
+import { Note } from '../pdf/PdfViewer';
 
 import './Editor.css';
-import { insertNewBlock, getSelectionParentElement, insertImageUtil, hotKey } from './EditorUtils';
+import {insertImageUtil, hotKey, insertNewBlock} from './EditorUtils';
 import downloadState from './Download';
 
 type EditorProps = {
     img: string
     screenshotCallback: (b: boolean) => void
     dragging: boolean,
-    fileId: string
+    fileId: string,
+    notes: Note[];
 };
 
-export default function TextEditor({ img, screenshotCallback, dragging, fileId }: EditorProps) {
+export default function TextEditor({ img, screenshotCallback, dragging, fileId, notes }: EditorProps) {
 
     const content = useSelector((state: AppState) => state.files[fileId].summary);
     const file = useSelector((state: AppState) => state.files[fileId]);
@@ -55,35 +57,26 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
     const [fullscreenOpen, setFullscreenOpen] = useState(false);
     const [saveToggle, setSaveToggle] = useState(false);
     const [highlightToggle, setHighlightToggle] = useState(true);
-    let prevSelection = null;
 
     // All the plugins for draft.js
     const imagePlugin = createImagePlugin();
     const plugins = [imagePlugin];
-
-    // Called everytime there is a higlight
-    const handleEditor = useCallback(() => {
-        if (window.getSelection().toString().length && window.getSelection().toString() !== prevSelection && highlightToggle &&
-            (getSelectionParentElement().className === 'page' || getSelectionParentElement().className === 'textLayer')) {
-            const exactText = window.getSelection().toString();
-            prevSelection = exactText;
-            setEditorState((prevState) => insertNewBlock(prevState, exactText, style));
-        }
-    }, [style, highlightToggle]);
 
     // If there is a new image insert it to the editor
     useEffect(() => {
         setEditorState((prevState) => insertImageUtil(prevState, img));
     }, [img]);
 
-    // Listen to mouseup for highlight behaviour
     useEffect(() => {
-        editor.current.focus();
-        window.addEventListener('mouseup', handleEditor);
-        return () => {
-            window.removeEventListener('mouseup', handleEditor);
-        };
-    }, [style]);
+        let copyPasteText = '';
+        const length = notes.length;
+        if ( length > 0 && notes[length - 1].quote) {
+            copyPasteText = notes[length - 1].quote;
+        }
+        if (highlightToggle && copyPasteText !== ''){
+            setEditorState((prevState) => insertNewBlock(prevState, copyPasteText, style));
+        }
+    },[notes]);
 
     const editor = useRef(null);
 

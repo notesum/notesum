@@ -5,20 +5,21 @@ import { HighlightArea, highlightPlugin, MessageIcon, RenderHighlightContentProp
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 
-interface Note {
+type Note = {
     id: number;
     content: string;
     highlightAreas: HighlightArea[];
     quote: string;
-}
+};
 
 interface HighlightExampleProps {
     fileUrl: string;
+    notes: Note[];
+    notesCallback: (notes: Note[]) => void;
 }
 
-const HighlightExample: React.FC<HighlightExampleProps> = ({ fileUrl }) => {
+const HighlightExample: React.FC<HighlightExampleProps> = ({ fileUrl, notes, notesCallback }) => {
     const [message, setMessage] = React.useState('');
-    const [notes, setNotes] = React.useState<Note[]>([]);
     const notesContainerRef = React.useRef<HTMLDivElement | null>(null);
     let noteId = notes.length;
 
@@ -29,7 +30,7 @@ const HighlightExample: React.FC<HighlightExampleProps> = ({ fileUrl }) => {
         setCurrentDoc(e.doc);
         if (currentDoc && currentDoc !== e.doc) {
             // User opens new document
-            setNotes([]);
+            notesCallback([]);
         }
     };
 
@@ -62,7 +63,7 @@ const HighlightExample: React.FC<HighlightExampleProps> = ({ fileUrl }) => {
                     highlightAreas: props.highlightAreas,
                     quote: props.selectedText,
                 };
-                setNotes(notes.concat([note]));
+                notesCallback(notes.concat([note]));
                 props.cancel();
             }
         };
@@ -221,3 +222,4 @@ const HighlightExample: React.FC<HighlightExampleProps> = ({ fileUrl }) => {
 };
 
 export default HighlightExample;
+export type { Note };

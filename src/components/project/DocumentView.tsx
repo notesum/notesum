@@ -1,14 +1,13 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { Box } from '@material-ui/core';
-import { DocumentInitParameters, PDFDataRangeTransport, TypedArray } from 'pdfjs-dist/types/display/api';
 
-import PdfViewer from '../pdf/PdfViewer';
+import PdfViewer, { Note } from '../pdf/PdfViewer';
 import TextEditor from '../editor/Editor';
 
 import './DocumentView.css';
 
 type DocumentViewProps = {
-    pdf: string | TypedArray | DocumentInitParameters | PDFDataRangeTransport
+    pdf: string
     fileId: string
 };
 
@@ -16,6 +15,7 @@ export default function DocumentView({ pdf, fileId }: DocumentViewProps) {
 
     const [screenshot, setScreenshot] = useState(false);
     const [image, setImage] = useState('');
+    const [notes, setNotes] = useState<Note[]>([]);
 
     const setCallback = (img: string) => {
         setImage(img);
@@ -73,7 +73,7 @@ export default function DocumentView({ pdf, fileId }: DocumentViewProps) {
                 width: `${pdfPercentage}%`,
                 height: '100%'
             }}>
-                <PdfViewer fileUrl={pdf}/>
+                <PdfViewer fileUrl={pdf} notes={notes} notesCallback={setNotes}/>
             </Box>
 
             <div
@@ -85,7 +85,7 @@ export default function DocumentView({ pdf, fileId }: DocumentViewProps) {
                 overflow: 'hidden',
                 height: '100%'
             }}>
-                <TextEditor key={fileId} fileId={fileId} screenshotCallback={setScreenshot} img={image} dragging={dragging} />
+                <TextEditor key={fileId} fileId={fileId} notes={notes} screenshotCallback={setScreenshot} img={image} dragging={dragging} />
             </Box>
         </Box>
     );
