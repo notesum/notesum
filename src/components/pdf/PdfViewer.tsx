@@ -234,7 +234,10 @@ const HighlightExample: React.FC<HighlightExampleProps> = ({ fileUrl, notes, not
     );
 
     const defaultLayoutPluginInstance = defaultLayoutPlugin({
-        sidebarTabs: defaultTabs => defaultTabs.concat({
+        sidebarTabs: defaultTabs => [
+            defaultTabs[1] // Bookmarks tab
+
+        ].concat({
             content: sidebarNotes,
             icon: <MessageIcon />,
             title: <>Notes</>,
