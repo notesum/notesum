@@ -1,6 +1,7 @@
 import * as React from 'react';
+import { ReactElement } from 'react';
 import { Button, DocumentLoadEvent, PdfJs, Position, PrimaryButton, Tooltip, Viewer, Worker } from '@react-pdf-viewer/core';
-import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
+import { defaultLayoutPlugin, ToolbarProps } from '@react-pdf-viewer/default-layout';
 import { HighlightArea, highlightPlugin, MessageIcon, RenderHighlightContentProps, RenderHighlightTargetProps, RenderHighlightsProps } from '@react-pdf-viewer/highlight';
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
@@ -16,6 +17,8 @@ interface HighlightExampleProps {
     fileUrl: string;
     notes: Note[];
     notesCallback: (notes: Note[]) => void;
+    screenshot: boolean;
+    setScreenshotCallback: (img: string) => null;
 }
 
 const HighlightExample: React.FC<HighlightExampleProps> = ({ fileUrl, notes, notesCallback }) => {
@@ -198,13 +201,47 @@ const HighlightExample: React.FC<HighlightExampleProps> = ({ fileUrl, notes, not
         </div>
     );
 
+    const renderToolbar = (Toolbar: ((props: ToolbarProps) => ReactElement)) => (
+        <Toolbar>
+            {
+                (slots) => {
+                    const { CurrentPageInput, NumberOfPages, Zoom, ZoomIn, ZoomOut } = slots;
+                    return (
+                        <div
+                            style={{
+                                alignItems: 'center',
+                                display: 'flex',
+                            }}
+                        >
+                            <div style={{ padding: '0px 2px' }}>
+                                <CurrentPageInput /> / <NumberOfPages />
+                            </div>
+                            <div style={{ padding: '0px 2px',
+                                          marginLeft: 'auto'}}>
+                                <ZoomOut />
+                            </div>
+                            <div style={{ padding: '0px 2px' }}>
+                                <Zoom />
+                            </div>
+                            <div style={{ padding: '0px 2px' }}>
+                                <ZoomIn />
+                            </div>
+                        </div>
+                    );
+                }
+            }
+        </Toolbar>
+    );
+
     const defaultLayoutPluginInstance = defaultLayoutPlugin({
         sidebarTabs: defaultTabs => defaultTabs.concat({
             content: sidebarNotes,
             icon: <MessageIcon />,
             title: <>Notes</>,
         }),
+        renderToolbar
     });
+
     const { activateTab } = defaultLayoutPluginInstance;
 
     return (

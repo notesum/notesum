@@ -17,8 +17,10 @@ export default function DocumentView({ pdf, fileId }: DocumentViewProps) {
     const [image, setImage] = useState('');
     const [notes, setNotes] = useState<Note[]>([]);
 
+
     const setCallback = (img: string) => {
         setImage(img);
+        return null;
     };
 
     // States for the resizing of panels
@@ -73,7 +75,7 @@ export default function DocumentView({ pdf, fileId }: DocumentViewProps) {
                 width: `${pdfPercentage}%`,
                 height: '100%'
             }}>
-                <PdfViewer fileUrl={pdf} notes={notes} notesCallback={setNotes}/>
+                <PdfViewer fileUrl={pdf} notes={notes} notesCallback={setNotes} screenshot={screenshot} setScreenshotCallback={setCallback}/>
             </Box>
 
             <div
