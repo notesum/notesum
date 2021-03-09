@@ -1,205 +1,207 @@
-import React from 'react';
-import { highlightPlugin, HighlightArea, MessageIcon, RenderHighlightContentProps, RenderHighlightsProps, RenderHighlightTargetProps } from '@react-pdf-viewer/highlight';
-import { Button, Position, PrimaryButton, Tooltip, Viewer } from '@react-pdf-viewer/core';
-import '@react-pdf-viewer/core/lib/styles/index.css';
-import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 
-interface DisplayNotesSidebarExampleProps {
-    fileUrl: string;
-}
+import React, { useRef, useEffect, useState, MutableRefObject } from 'react';
+import { renderTextLayer } from 'pdfjs-dist';
+import { PDFPageProxy } from 'pdfjs-dist/types/display/api';
+import { makeStyles } from '@material-ui/core';
 
-interface Note {
-    id: number;
-    content: string;
-    highlightAreas: HighlightArea[];
-    quote: string;
-}
+type PageProps = {
+    page: PDFPageProxy
+    scale?: number,
+    width?: number,
+    hidden?: boolean,
+    isVisible: boolean,
 
-const DisplayNotesSidebarExample: React.FC<DisplayNotesSidebarExampleProps> = ({ fileUrl }) => {
-    const [message, setMessage] = React.useState('');
-    const [notes, setNotes] = React.useState<Note[]>([]);
-    let noteId = notes.length;
-
-    const noteEles: Map<number, HTMLElement> = new Map();
-
-    const renderHighlightTarget = (props: RenderHighlightTargetProps) => (
-        <div
-            style={{
-                background: '#eee',
-                display: 'flex',
-                position: 'absolute',
-                left: `${props.selectionRegion.left}%`,
-                top: `${props.selectionRegion.top + props.selectionRegion.height}%`,
-                transform: 'translate(0, 8px)',
-            }}
-        >
-            <Tooltip
-                position={Position.TopCenter}
-                target={<Button onClick={props.toggle}><MessageIcon /></Button>}
-                content={() => <div style={{ width: '100px' }}>Add a note</div>}
-                offset={{ left: 0, top: -8 }}
-            />
-        </div>
-    );
-
-    const renderHighlightContent = (props: RenderHighlightContentProps) => {
-        const addNote = () => {
-            if (message !== '') {
-                const note: Note = {
-                    id: ++noteId,
-                    content: message,
-                    highlightAreas: props.highlightAreas,
-                    quote: props.selectedText,
-                };
-                setNotes(notes.concat([note]));
-                props.cancel();
-            }
-        };
-
-        return (
-            <div
-                style={{
-                    background: '#fff',
-                    border: '1px solid rgba(0, 0, 0, .3)',
-                    borderRadius: '2px',
-                    padding: '8px',
-                    position: 'absolute',
-                    left: `${props.selectionRegion.left}%`,
-                    top: `${props.selectionRegion.top + props.selectionRegion.height}%`,
-                    zIndex: 1,
-                }}
-            >
-                <div>
-                    <textarea
-                        rows={3}
-                        style={{
-                            border: '1px solid rgba(0, 0, 0, .3)',
-                        }}
-                        onChange={e => setMessage(e.target.value)}
-                    />
-                </div>
-                <div
-                    style={{
-                        display: 'flex',
-                        marginTop: '8px',
-                    }}
-                >
-                    <div style={{ marginRight: '8px' }}>
-                        <PrimaryButton onClick={addNote}>Add</PrimaryButton>
-                    </div>
-                    <Button onClick={props.cancel}>Cancel</Button>
-                </div>
-            </div>
-        );
-    };
-
-    const jumpToNote = (note: Note) => {
-        if (noteEles.has(note.id)) {
-            noteEles.get(note.id).scrollIntoView();
-        }
-    };
-
-    const renderHighlights = (props: RenderHighlightsProps) => (
-        <div>
-            {
-                notes.map(note => (
-                    <React.Fragment key={note.id}>
-                        {
-                            note.highlightAreas
-                                .filter(area => area.pageIndex === props.pageIndex)
-                                .map((area, idx) => (
-                                    <div
-                                        key={idx}
-                                        style={
-                                            Object.assign({}, {
-                                                background: 'yellow',
-                                                opacity: 0.4,
-                                            }, props.getCssProperties(area, props.rotation))
-                                        }
-                                        onClick={() => jumpToNote(note)}
-                                        ref={(ref): void => {
-                                            noteEles.set(note.id, ref as HTMLElement);
-                                        }}
-                                    />
-                                ))
-                        }
-                    </React.Fragment>
-                ))
-            }
-        </div>
-    );
-
-    const highlightPluginInstance = highlightPlugin({
-        renderHighlightTarget,
-        renderHighlightContent,
-        renderHighlights,
-    });
-
-    const { jumpToHighlightArea } = highlightPluginInstance;
-
-    return (
-        <div
-            style={{
-                border: '1px solid rgba(0, 0, 0, 0.3)',
-                display: 'flex',
-                height: '100%',
-                overflow: 'hidden',
-            }}
-        >
-            <div
-                style={{
-                    borderRight: '1px solid rgba(0, 0, 0, 0.3)',
-                    width: '25%',
-                    overflow: 'auto',
-                }}
-            >
-                {notes.length === 0 && <div style={{ textAlign: 'center' }}>There is no note</div>}
-                {
-                    notes.map(note => {
-                        return (
-                            <div
-                                key={note.id}
-                                style={{
-                                    borderBottom: '1px solid rgba(0, 0, 0, .3)',
-                                    cursor: 'pointer',
-                                    padding: '8px',
-                                }}
-                                // Jump to the associated highlight area
-                                onClick={() => jumpToHighlightArea(note.highlightAreas[0])}
-                            >
-                                <blockquote
-                                    style={{
-                                        borderLeft: '2px solid rgba(0, 0, 0, 0.2)',
-                                        fontSize: '.75rem',
-                                        lineHeight: 1.5,
-                                        margin: '0 0 8px 0',
-                                        paddingLeft: '8px',
-                                        textAlign: 'justify',
-                                    }}
-                                >
-                                    {note.quote}
-                                </blockquote>
-                                {note.content}
-                            </div>
-                        );
-                    })
-                }
-            </div>
-            <div
-                style={{
-                    flex: '1 1 0',
-                    overflow: 'auto',
-                }}
-            >
-                <Viewer
-                    fileUrl={fileUrl}
-                    plugins={[
-                        highlightPluginInstance,
-                    ]}
-                />
-            </div>
-        </div>
-    );
+    screenshot: boolean,
+    screenshotCallback?: (img: string) => void
 };
 
-export default DisplayNotesSidebarExample;
+enum PageState {
+    NEEDS_RENDER,       // Initial state, signifies that the page is not currently being rendered and that it needs to be
+    RENDERING,          // Page is currently rendering (the page shouldn't be rendered twice at the same time)
+    RENDERING_OUTDATED, // Page is currently being rendered but is already outdated
+    FINISHED            // Page is fully rendered and doesn't need a re-render a.t.m.
+}
+
+const useStyles = makeStyles(() => ({
+    reset: {
+        position: 'absolute',
+        overflow: 'hidden',
+        backgroundColor: 'rgba(0,0,0,0.1)',
+        border: '2px #000 solid'
+    },
+    hidden: {
+        position: 'absolute',
+        overflow: 'hidden',
+        clip: 'rect(0 0 0 0)',
+        height: '1px; width: 1px',
+        margin: '-1px; padding: 0; border: 0'
+    }
+}));
+
+export default React.memo(React.forwardRef(({ page, scale, width, hidden, isVisible, screenshot, screenshotCallback }: PageProps,
+                                            pageRef: MutableRefObject<HTMLDivElement>) => {
+
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+    const textLayerRef = useRef<HTMLDivElement>(null);
+
+    // State management
+    const [state, setState] = useState<PageState>(PageState.NEEDS_RENDER);
+
+    // Caches for rendering quicker
+    const [ctx, setCtx] = useState<CanvasRenderingContext2D>(null);
+    const [textData, setTextData] = useState(null);
+
+    // Viewport
+    const viewport = page.getViewport({
+        scale: scale != null ? scale : (width / page.view[2])
+    });
+
+    const classes = useStyles();
+
+    // Screenshots
+    const screenshotLayerRef = useRef<HTMLDivElement>(null);
+    const [screenshotRect, setScreenshotRect] = useState([0,0,0,0]);
+    const hiddenCanvas = useRef<HTMLCanvasElement>(null);
+
+    useEffect(() => {
+        setCtx(canvasRef.current.getContext('2d'));
+    }, []);
+
+    // Effect called when state changes
+    useEffect(() => {
+        // Empty text layer when changed
+        textLayerRef.current.innerHTML = '';
+        setState((curState) => curState === PageState.RENDERING ? PageState.RENDERING_OUTDATED : PageState.NEEDS_RENDER);
+    }, [page, scale, width]);
+
+    useEffect(() => {
+        setTextData(null);
+    }, [page]);
+
+    // Main renderer. Should only be ran once after every update
+    useEffect(() => {
+        if (!isVisible || state !== PageState.NEEDS_RENDER || hidden) return;
+
+        setState(() => PageState.RENDERING);
+
+        // Render
+        (async () => {
+            const PageRenderer = page.render({
+                canvasContext: ctx,
+                viewport
+            }).promise;
+
+            const text = textData === null ? await page.getTextContent() : textData;
+            if (textData === null) {
+                setTextData(text);
+            }
+
+            // Render text content
+            const textRenderer = renderTextLayer({
+                container: textLayerRef.current,
+                viewport,
+                textContent: text,
+                enhanceTextSelection: false
+            });
+
+            await Promise.all([PageRenderer, textRenderer]);
+
+            setState((curState) => curState === PageState.RENDERING_OUTDATED ? PageState.NEEDS_RENDER : PageState.FINISHED);
+        })();
+
+    }, [isVisible, state, hidden, ctx]);
+
+    useEffect(() => {
+        if (!screenshot) return;
+
+        const mouseDownListener = (e: MouseEvent) => {
+
+            const top = e.pageY + pageRef.current.parentElement.scrollTop - pageRef.current.offsetTop - 10;
+            const left = e.pageX + pageRef.current.parentElement.scrollLeft - pageRef.current.offsetLeft - 10;
+
+            if (top < 0 || left < 0) return;
+
+            // This hopefully never breaks, but who knows, no other stable way to solve this.
+            setScreenshotRect(() => [
+                top, left, top, left
+            ]);
+
+            pageRef.current.addEventListener('mousemove', mouseMoveListener);
+        };
+
+        const mouseMoveListener = (e: MouseEvent) => {
+            const top = e.pageY + pageRef.current.parentElement.scrollTop - pageRef.current.offsetTop - 10;
+            const left = e.pageX + pageRef.current.parentElement.scrollLeft - pageRef.current.offsetLeft - 10;
+
+            if (top < 0 || left < 0) return;
+
+            setScreenshotRect((cur) => [
+                cur[0],
+                cur[1],
+                top,
+                left,
+            ]);
+        };
+
+        const mouseUpListener = () => {
+            pageRef.current.removeEventListener('mousemove', mouseMoveListener);
+
+            // Way to get (and set) the current screenshot rect.
+            // setScreenshotRect works synchronously
+            setScreenshotRect((cur) => {
+                hiddenCanvas.current.width = Math.abs(cur[3] - cur[1]);
+                hiddenCanvas.current.height = Math.abs(cur[2] - cur[0]);
+
+                const hiddenCtx = hiddenCanvas.current.getContext('2d');
+
+                hiddenCtx.drawImage(
+                    canvasRef.current,
+                    Math.min(cur[1], cur[3]),
+                    Math.min(cur[0], cur[2]),
+                    Math.abs(cur[3] - cur[1]),
+                    Math.abs(cur[2] - cur[0]),
+                    0,
+                    0,
+                    Math.abs(cur[3] - cur[1]),
+                    Math.abs(cur[2] - cur[0])
+                );
+
+                return [0, 0, 0, 0];
+            });
+
+            // Callback with now drawn image
+            screenshotCallback(hiddenCanvas.current.toDataURL());
+        };
+
+        pageRef.current.addEventListener('mousedown', mouseDownListener);
+        pageRef.current.addEventListener('mouseup', mouseUpListener);
+
+        return () => {
+            pageRef.current.removeEventListener('mousedown', mouseDownListener);
+            pageRef.current.removeEventListener('mousemove', mouseMoveListener);
+            pageRef.current.removeEventListener('mouseup', mouseUpListener);
+        };
+
+    }, [screenshot]);
+
+    return (
+        <div data-id={page.pageNumber - 1} ref={pageRef} hidden={hidden} className="page" style={{
+            width: viewport.width,
+            height: viewport.height
+        }}>
+            <canvas hidden ref={hiddenCanvas} />
+            <canvas  className="canvasWrapper" width={viewport.width} height={viewport.height} ref={canvasRef} />
+            <div hidden={!screenshot || Math.abs(screenshotRect[2] - screenshotRect[0]) < 5 || Math.abs(screenshotRect[3] - screenshotRect[1]) < 5}
+                 className={classes.reset} ref={screenshotLayerRef} style={{
+                top: Math.min(screenshotRect[0], screenshotRect[2]),
+                left: Math.min(screenshotRect[1], screenshotRect[3]),
+                height: Math.abs(screenshotRect[2] - screenshotRect[0]),
+                width: Math.abs(screenshotRect[3] - screenshotRect[1])
+            }}/>
+
+            {/* Hidden class in necessary to retain selection information correctly */}
+            <div hidden={screenshot} className={screenshot ? classes.hidden : 'textLayer'} ref={textLayerRef} />
+        </div>
+    );
+
+}));
