@@ -15,13 +15,15 @@ type Note = {
     quote: string;
 };
 
-interface HighlightExampleProps {
+interface PdfViewerProps {
     fileUrl: string;
     notes: Note[];
     notesCallback: (notes: Note[]) => void;
+    screenshot: boolean;
+    setScreenshotCallback: (img: string) => null;
 }
 
-const PdfViewer: React.FC<HighlightExampleProps> = ({ fileUrl, notes, notesCallback }) => {
+const PdfViewer: React.FC<PdfViewerProps> = ({ fileUrl, notes, notesCallback }) => {
     const [message, setMessage] = React.useState('');
     const notesContainerRef = React.useRef<HTMLDivElement | null>(null);
     let noteId = notes.length;
