@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { ReactElement } from 'react';
+import { version } from 'pdfjs-dist';
 import { Button, DocumentLoadEvent, PdfJs, Position, PrimaryButton, Tooltip, Viewer, Worker } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin, ToolbarProps } from '@react-pdf-viewer/default-layout';
-import { HighlightArea, highlightPlugin, MessageIcon, RenderHighlightContentProps, RenderHighlightTargetProps, RenderHighlightsProps } from '@react-pdf-viewer/highlight';
+import { HighlightArea, highlightPlugin, MessageIcon } from '@react-pdf-viewer/highlight';
+import { RenderHighlightContentProps, RenderHighlightTargetProps, RenderHighlightsProps } from '@react-pdf-viewer/highlight';
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 
@@ -17,11 +19,9 @@ interface HighlightExampleProps {
     fileUrl: string;
     notes: Note[];
     notesCallback: (notes: Note[]) => void;
-    screenshot: boolean;
-    setScreenshotCallback: (img: string) => null;
 }
 
-const HighlightExample: React.FC<HighlightExampleProps> = ({ fileUrl, notes, notesCallback }) => {
+const PdfViewer: React.FC<HighlightExampleProps> = ({ fileUrl, notes, notesCallback }) => {
     const [message, setMessage] = React.useState('');
     const notesContainerRef = React.useRef<HTMLDivElement | null>(null);
     let noteId = notes.length;
@@ -109,7 +109,7 @@ const HighlightExample: React.FC<HighlightExampleProps> = ({ fileUrl, notes, not
     };
 
     const jumpToNote = (note: Note) => {
-        activateTab(3);
+        activateTab(1);
         const notesContainer = notesContainerRef.current;
         if (noteEles.has(note.id) && notesContainer) {
             notesContainer.scrollTop = noteEles.get(note.id).getBoundingClientRect().top;
@@ -235,8 +235,7 @@ const HighlightExample: React.FC<HighlightExampleProps> = ({ fileUrl, notes, not
 
     const defaultLayoutPluginInstance = defaultLayoutPlugin({
         sidebarTabs: defaultTabs => [
-            defaultTabs[1] // Bookmarks tab
-
+            defaultTabs[1]            // Bookmarks tab
         ].concat({
             content: sidebarNotes,
             icon: <MessageIcon />,
@@ -244,11 +243,9 @@ const HighlightExample: React.FC<HighlightExampleProps> = ({ fileUrl, notes, not
         }),
         renderToolbar
     });
-
     const { activateTab } = defaultLayoutPluginInstance;
-
     return (
-        <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.js">
+        <Worker workerUrl={`https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${version}/pdf.worker.min.js`}>
             <Viewer
                 fileUrl={fileUrl}
                 plugins={[
@@ -261,5 +258,5 @@ const HighlightExample: React.FC<HighlightExampleProps> = ({ fileUrl, notes, not
     );
 };
 
-export default HighlightExample;
+export default PdfViewer;
 export type { Note };
