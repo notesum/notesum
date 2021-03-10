@@ -4,7 +4,7 @@ import Editor from 'draft-js-plugins-editor';
 import createImagePlugin from 'draft-js-image-plugin';
 import { EditorState, RichUtils, convertFromRaw, convertToRaw } from 'draft-js';
 import 'draft-js/dist/Draft.css';
-import { Button, ButtonGroup, Grid, Box, Dialog, AppBar, TextField, IconButton, Toolbar, Switch, Tooltip } from '@material-ui/core';
+import { Button, ButtonGroup, Grid, Box, Dialog, AppBar, TextField, IconButton, Toolbar, /*Switch,*/ Tooltip } from '@material-ui/core';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import FormatBoldIcon from '@material-ui/icons/FormatBold';
 import FormatItalicIcon from '@material-ui/icons/FormatItalic';
@@ -16,7 +16,7 @@ import TextFormatIcon from '@material-ui/icons/TextFormat';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import FullscreenIcon from '@material-ui/icons/Fullscreen';
-import CameraAltIcon from '@material-ui/icons/CameraAlt';
+// import CameraAltIcon from '@material-ui/icons/CameraAlt';
 import SaveIcon from '@material-ui/icons/Save';
 
 import { AppState } from '../../redux/reducers';
@@ -56,7 +56,7 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId, 
     const [name, setName] = useState('Unnamed');
     const [fullscreenOpen, setFullscreenOpen] = useState(false);
     const [saveToggle, setSaveToggle] = useState(false);
-    const [highlightToggle, setHighlightToggle] = useState(true);
+    // const [highlightToggle, setHighlightToggle] = useState(true);
 
     // All the plugins for draft.js
     const imagePlugin = createImagePlugin();
@@ -73,7 +73,7 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId, 
         if ( length > 0 && notes[length - 1].quote) {
             copyPasteText = notes[length - 1].quote;
         }
-        if (highlightToggle && copyPasteText !== ''){
+        if (copyPasteText !== ''){
             setEditorState((prevState) => insertNewBlock(prevState, copyPasteText, style));
         }
     },[notes]);
@@ -171,21 +171,21 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId, 
     const toolbar = (
         <AppBar color="transparent" position="static" style={{ overflow: 'auto' }}>
             <Toolbar variant="dense">
-                <Tooltip title="Highlight to Editor from PDF" placement="top">
-                    <Switch
-                        checked={highlightToggle}
-                        onChange={() => { setHighlightToggle(!highlightToggle); }}
-                        name="Highlight"
-                        color="primary"
-                        inputProps={{ 'aria-label': 'secondary checkbox' }} />
-                </Tooltip>
+                {/*<Tooltip title="Highlight to Editor from PDF" placement="top">*/}
+                    {/*<Switch*/}
+                    {/*    checked={highlightToggle}*/}
+                    {/*    onChange={() => { setHighlightToggle(!highlightToggle); }}*/}
+                    {/*    name="Highlight"*/}
+                    {/*    color="primary"*/}
+                    {/*    inputProps={{ 'aria-label': 'secondary checkbox' }} />*/}
+                {/*</Tooltip>*/}
                 <Tooltip title="Highlight Text Types" placement="top">
                     <ToggleButtonGroup exclusive value={style} onChange={toggleStyle} size="small">
                         <ToggleButton value="header-two"> <TextFieldsIcon /> </ToggleButton>
                         <ToggleButton value="header-three"> <TextFieldsIcon fontSize="small" /> </ToggleButton>
                         <ToggleButton value="unstyled"> <TextFormatIcon /> </ToggleButton>
                         <ToggleButton value="unordered-list-item"> <FormatListBulletedIcon /> </ToggleButton>
-                        <ToggleButton value="img"> <CameraAltIcon /> </ToggleButton>
+                        {/*<ToggleButton value="img"> <CameraAltIcon /> </ToggleButton>*/}
                     </ToggleButtonGroup>
                 </Tooltip>
                 <ButtonGroup style={{
