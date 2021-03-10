@@ -1,12 +1,14 @@
 import * as React from 'react';
 import { ReactElement } from 'react';
-import { version } from 'pdfjs-dist';
-import { Button, DocumentLoadEvent, PdfJs, Position, PrimaryButton, Tooltip, Viewer, Worker } from '@react-pdf-viewer/core';
+import { GlobalWorkerOptions, version} from 'pdfjs-dist';
+import { Button, DocumentLoadEvent, PdfJs, Position, PrimaryButton, Tooltip, Viewer } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin, ToolbarProps } from '@react-pdf-viewer/default-layout';
 import { HighlightArea, highlightPlugin, MessageIcon } from '@react-pdf-viewer/highlight';
 import { RenderHighlightContentProps, RenderHighlightTargetProps, RenderHighlightsProps } from '@react-pdf-viewer/highlight';
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
+
+GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${version}/pdf.worker.min.js`;
 
 type Note = {
     id: number;
@@ -235,16 +237,14 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileUrl, notes, notesCallback }) 
     });
     const { activateTab } = defaultLayoutPluginInstance;
     return (
-        <Worker workerUrl={`https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${version}/pdf.worker.min.js`}>
-            <Viewer
-                fileUrl={fileUrl}
-                plugins={[
-                    highlightPluginInstance,
-                    defaultLayoutPluginInstance,
-                ]}
-                onDocumentLoad={handleDocumentLoad}
-            />
-        </Worker>
+        <Viewer
+            fileUrl={fileUrl}
+            plugins={[
+                highlightPluginInstance,
+                defaultLayoutPluginInstance,
+            ]}
+            onDocumentLoad={handleDocumentLoad}
+        />
     );
 };
 
