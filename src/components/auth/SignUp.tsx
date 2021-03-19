@@ -32,6 +32,13 @@ export default function SignUp() {
     // Enter submits
     function downHandler({ key }) {
         if (key === 'Enter') {
+            
+            //workaround to prevent empty datafields on enter
+            name = document.querySelector("#nameSignUp").value;
+            email = document.querySelector("#emailSignUp").value;
+            password = document.querySelector("#passwordSignUp").value;
+            passwordConf = document.querySelector("#passwordConfSignUp").value;
+            
             handleSubmit();
         }
     }
@@ -58,16 +65,16 @@ export default function SignUp() {
     const form = (
         <form className={classes.root} noValidate autoComplete="off">
             <div>
-                <TextField onChange={(event) => setName(event.target.value)} label="Name" />
+                <TextField id="nameSignUp" onChange={(event) => setName(event.target.value)} label="Name" />
             </div>
             <div>
-                <TextField onChange={(event) => setEmail(event.target.value)} label="Email" />
+                <TextField id="emailSignUp" onChange={(event) => setEmail(event.target.value)} label="Email" />
             </div>
             <div>
-                <TextField type="password" onChange={(event) => setPassword(event.target.value)} label="Password" />
+                <TextField type="password" id="passwordSignUp" onChange={(event) => setPassword(event.target.value)} label="Password" />
             </div>
             <div>
-                <TextField type="password" onChange={(event) => setPasswordConf(event.target.value)} label="Password Repeat" />
+                <TextField type="password" id="passwordConfSignUp" onChange={(event) => setPasswordConf(event.target.value)} label="Password Repeat" />
             </div>
         </form>
     );
