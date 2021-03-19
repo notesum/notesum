@@ -38,8 +38,8 @@ export default function Login({ buttonCallback }: LogInProps) {
         if (key === 'Enter') {
             
             //workaround to prevent empty datafields on enter
-            email = document.querySelector("#email").value;
-            password = document.querySelector("#password").value;
+            email = document.querySelector("#emailLogin").value;
+            password = document.querySelector("#passwordLogin").value;
             
             handleSubmit();
         }
@@ -72,10 +72,10 @@ export default function Login({ buttonCallback }: LogInProps) {
                 <Grid item>
                     <form className={classes.root} noValidate autoComplete="off">
                         <div>
-                            <TextField type="text" onChange={(event) => setEmail(event.target.value)} label="Email" />
+                            <TextField type="text" id="emailLogin" onChange={(event) => setEmail(event.target.value)} label="Email" />
                         </div>
                         <div>
-                            <TextField type="password" onChange={(event) => setPassword(event.target.value)} label="Password" />
+                            <TextField type="password" id="passwordLogin" onChange={(event) => setPassword(event.target.value)} label="Password" />
                         </div>
                     </form>
                 </Grid>
