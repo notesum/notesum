@@ -36,6 +36,11 @@ export default function Login({ buttonCallback }: LogInProps) {
     // Enter submits
     function downHandler({ key }: KeyboardEvent) {
         if (key === 'Enter') {
+            
+            //workaround to prevent empty datafields on enter
+            email = document.querySelector("#email").value;
+            password = document.querySelector("#password").value;
+            
             handleSubmit();
         }
     }
