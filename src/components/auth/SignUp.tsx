@@ -25,7 +25,7 @@ export default function SignUp() {
     let email = '';
     let password = '';
     let passwordConf = '';
-    
+
     const [didntMatch, setDidntMatch] = useState(false);
 
     const dispatch = useDispatch();
