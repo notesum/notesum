@@ -21,10 +21,10 @@ export default function SignUp() {
     const classes = useStyles();
 
     // Form data
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [passwordConf, setPasswordConf] = useState('');
+    let [name, setName] = useState('');
+    let [email, setEmail] = useState('');
+    let [password, setPassword] = useState('');
+    let [passwordConf, setPasswordConf] = useState('');
     const [didntMatch, setDidntMatch] = useState(false);
 
     const dispatch = useDispatch();
@@ -32,6 +32,12 @@ export default function SignUp() {
     // Enter submits
     function downHandler({ key }) {
         if (key === 'Enter') {
+
+            name = (document.getElementById('nameSignUp') as HTMLInputElement).value;
+            email = (document.getElementById('emailSignUp') as HTMLInputElement).value;
+            password = (document.getElementById('passwordSignUp') as HTMLInputElement).value;
+            passwordConf = (document.getElementById('passwordConfSignUp') as HTMLInputElement).value;
+
             handleSubmit();
         }
     }
@@ -58,16 +64,16 @@ export default function SignUp() {
     const form = (
         <form className={classes.root} noValidate autoComplete="off">
             <div>
-                <TextField onChange={(event) => setName(event.target.value)} label="Name" />
+                <TextField id="nameSignUp" onChange={(event) => setName(event.target.value)} label="Name" />
             </div>
             <div>
-                <TextField onChange={(event) => setEmail(event.target.value)} label="Email" />
+                <TextField id="emailSignUp" onChange={(event) => setEmail(event.target.value)} label="Email" />
             </div>
             <div>
-                <TextField type="password" onChange={(event) => setPassword(event.target.value)} label="Password" />
+                <TextField id="passwordSignUp" type="password" onChange={(event) => setPassword(event.target.value)} label="Password" />
             </div>
             <div>
-                <TextField type="password" onChange={(event) => setPasswordConf(event.target.value)} label="Password Repeat" />
+                <TextField id="passwordConfSignUp" type="password" onChange={(event) => setPasswordConf(event.target.value)} label="Password Repeat" />
             </div>
         </form>
     );
@@ -82,7 +88,7 @@ export default function SignUp() {
                     {form}
                 </Grid>
                 <Grid item style={{ marginTop: '10px' }}>
-                    <Button target="_blank" href="/terms" variant="text"><Typography variant="subtitle2">by siging up
+                    <Button target="_blank" href="/terms" variant="text"><Typography variant="subtitle2">by signing up
                         in you accept the terms and conditions</Typography></Button>
                 </Grid>
                 {didntMatch &&

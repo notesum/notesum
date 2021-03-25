@@ -24,8 +24,8 @@ type LogInProps = {
 export default function Login({ buttonCallback }: LogInProps) {
     const classes = useStyles();
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    let [email, setEmail] = useState('');
+    let [password, setPassword] = useState('');
 
     const dispatch = useDispatch();
 
@@ -36,6 +36,10 @@ export default function Login({ buttonCallback }: LogInProps) {
     // Enter submits
     function downHandler({ key }: KeyboardEvent) {
         if (key === 'Enter') {
+
+            email = (document.getElementById('emailLogin') as HTMLInputElement).value;
+            password = (document.getElementById('passwordLogin') as HTMLInputElement).value;
+
             handleSubmit();
         }
     }
@@ -67,10 +71,10 @@ export default function Login({ buttonCallback }: LogInProps) {
                 <Grid item>
                     <form className={classes.root} noValidate autoComplete="off">
                         <div>
-                            <TextField type="text" onChange={(event) => setEmail(event.target.value)} label="Email" />
+                            <TextField id="emailLogin" type="text" onChange={(event) => setEmail(event.target.value)} label="Email" />
                         </div>
                         <div>
-                            <TextField type="password" onChange={(event) => setPassword(event.target.value)} label="Password" />
+                            <TextField id="passwordLogin" type="password" onChange={(event) => setPassword(event.target.value)} label="Password" />
                         </div>
                     </form>
                 </Grid>
