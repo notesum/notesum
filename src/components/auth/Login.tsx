@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
@@ -24,8 +24,8 @@ type LogInProps = {
 export default function Login({ buttonCallback }: LogInProps) {
     const classes = useStyles();
 
-    let [email, setEmail] = useState('');
-    let [password, setPassword] = useState('');
+    let email = '';
+    let password = '';
 
     const dispatch = useDispatch();
 
@@ -71,10 +71,10 @@ export default function Login({ buttonCallback }: LogInProps) {
                 <Grid item>
                     <form className={classes.root} noValidate autoComplete="off">
                         <div>
-                            <TextField id="emailLogin" type="text" onChange={(event) => setEmail(event.target.value)} label="Email" />
+                            <TextField id="emailLogin" type="text" onChange={(event) => email = event.target.value} label="Email" />
                         </div>
                         <div>
-                            <TextField id="passwordLogin" type="password" onChange={(event) => setPassword(event.target.value)} label="Password" />
+                            <TextField id="passwordLogin" type="password" onChange={(event) => password = event.target.value} label="Password" />
                         </div>
                     </form>
                 </Grid>

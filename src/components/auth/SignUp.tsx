@@ -21,10 +21,11 @@ export default function SignUp() {
     const classes = useStyles();
 
     // Form data
-    let [name, setName] = useState('');
-    let [email, setEmail] = useState('');
-    let [password, setPassword] = useState('');
-    let [passwordConf, setPasswordConf] = useState('');
+    let name = '';
+    let email = '';
+    let password = '';
+    let passwordConf = '';
+    
     const [didntMatch, setDidntMatch] = useState(false);
 
     const dispatch = useDispatch();
@@ -64,16 +65,16 @@ export default function SignUp() {
     const form = (
         <form className={classes.root} noValidate autoComplete="off">
             <div>
-                <TextField id="nameSignUp" onChange={(event) => setName(event.target.value)} label="Name" />
+                <TextField id="nameSignUp" onChange={(event) => name = event.target.value} label="Name" />
             </div>
             <div>
-                <TextField id="emailSignUp" onChange={(event) => setEmail(event.target.value)} label="Email" />
+                <TextField id="emailSignUp" onChange={(event) => email = event.target.value} label="Email" />
             </div>
             <div>
-                <TextField id="passwordSignUp" type="password" onChange={(event) => setPassword(event.target.value)} label="Password" />
+                <TextField id="passwordSignUp" type="password" onChange={(event) => password = event.target.value} label="Password" />
             </div>
             <div>
-                <TextField id="passwordConfSignUp" type="password" onChange={(event) => setPasswordConf(event.target.value)} label="Password Repeat" />
+                <TextField id="passwordConfSignUp" type="password" onChange={(event) => passwordConf = event.target.value} label="Password Repeat" />
             </div>
         </form>
     );
