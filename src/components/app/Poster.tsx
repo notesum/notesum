@@ -65,7 +65,7 @@ export default function Poster() {
                     <Fade>
                         <Box my={7}>
                             <Typography variant="h3" align="center" color="textPrimary" style={{ fontWeight: 'bold' }}>
-                                NoteSum
+                                CosmoNote
                             </Typography>
                             <Typography variant="h5" align="center" color="textPrimary" gutterBottom>
                                 A Productivity Application
@@ -198,7 +198,7 @@ export default function Poster() {
                                                     </Grid>
                                                     <Grid item style={{ marginTop: '10px' }}>
                                                         <Button target="_blank" href="/terms"><Typography variant="subtitle2">
-                                                            by signing up you accept the terms and conditions</Typography></Button>
+                                                            By signing up you accept our terms and condition</Typography></Button>
                                                     </Grid>
                                                     <Grid item style={{ marginTop: '10px' }}>
                                                         <Button variant="contained" color="primary">Log In</Button>
@@ -223,7 +223,7 @@ export default function Poster() {
                                     </Box>
                                     <Box m={4}>
                                         <Typography variant="body1" style={{ lineHeight: '1.5', fontSize: 'large' }}>
-                                            NoteSum gives you the ability to make a personal account where your information is kept,
+                                            CosmoNote gives you the ability to make a personal account where your information is kept,
                                             secret and secure. We make sure only you have access to your data and we also make certain that
                                             your data will not be lost.
                                         </Typography>
@@ -266,7 +266,7 @@ export default function Poster() {
                                 <Grid item xs={7}>
                                     <Box m={4}>
                                         <Typography variant="h5" style={{ fontWeight: 'bold' }}>
-                                            Upload your book or classnotes to NoteSum and structure them
+                                            Upload your book or classnotes to CosmoNote and structure them
                                         </Typography>
                                     </Box>
                                     <Box m={4}>
@@ -378,7 +378,7 @@ export default function Poster() {
                                     </Box>
                                     <Box m={4}>
                                         <Typography variant="body1" style={{ lineHeight: '1.5', fontSize: 'large' }}>
-                                            If you have finished your summary, NoteSum gives you the ability to download the entire summary
+                                            If you have finished your summary, CosmoNote gives you the ability to download the entire summary
                                             to a file format of your choosing. This can be a Word document, a PDF or if you like living
                                             the dangerous life, you can even make it an HTML document.
                                         </Typography>
