@@ -16,10 +16,11 @@ export default function About() {
                         How it will save your time and organize your material
                 </Typography>
                     <Typography variant="h6" align="center" color="textSecondary" paragraph>
-                        NoteSum is a PDF summarization tool that gives you full control of what you want to gather.
-                        Extract hightlighted information automatically into a new file which is downloadable as a word file.
-                        Upload any PDF you want to your personal vault and start summarizing. Annotate and comment
-                        freely in the output window on the right site.
+                        CosmoNote is a PDF summarization tool that gives you full control of what you want to gather. Extract highlighted information
+                        automatically into a new file, which is downloadable as a word file. Upload any PDF to your personal storage and start summarizing.
+                        Annotate and comment freely in the output window on the right site.
+                        Easy as that!
+
                     </Typography>
                     <Typography variant="h6" align="center" color="textSecondary" paragraph>
                         Easy as that!
