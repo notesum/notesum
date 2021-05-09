@@ -9,6 +9,9 @@ export default function Terms() {
         <div>
             <Box my={7}>
                 <Container>
+                    <Typography component="h1" variant="h4" align="center" color="textPrimary" style={{ fontWeight: 'bold' }} gutterBottom>
+                        It is amazing that you want to try the beta version of CosmoNote!
+                    </Typography>
                     <Typography component="h1" variant="h5" align="center" color="textPrimary" style={{ fontWeight: 'bold', marginBottom: '30px' }}>
                         Before you access the beta, please read the following terms and conditions carefully:
                     </Typography>
