@@ -1,0 +1,4 @@
+This is a Brave Rewards publisher verification file.
+
+Domain: cosmonote.space
+Token: d63c35e94f55d1da631d9c03c542307eab3dc2458578fdbfefb87b7d5bcbbe8f
