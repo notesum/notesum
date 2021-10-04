@@ -48,6 +48,50 @@ export function loadFiles() {
 
 }
 
+export function createFileVistor(projectId: string, pdf: File) {
+    return (dispatch: Dispatch<FilesActionsTypes | ProjectActionTypes | RedirectActionTypes>, getState) => {
+        (async () => {
+
+            const formData = new FormData();
+            formData.append('project_id', projectId);
+            formData.append('file', pdf);
+
+            const requestOptions = {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${getState().auth.token}`
+                },
+                body: formData
+            };
+
+            const result = await fetch(`${BASE_URL}/files_upload`, requestOptions);
+            const json = (await result.json());
+
+            if (!('data' in json)) {
+                return;
+            }
+
+            dispatch({
+                type: NEW_FILE,
+                payload: {
+                    id: json.data.id,
+                    title: json.data.title,
+                    pdf: json.data.pdf
+                }
+            });
+
+            dispatch(addFileToProject(projectId, json.data.id));
+            dispatch({
+                type: REDIRECT,
+                payload: `/project/${projectId}/${json.data.id}`
+            });
+            dispatch(setLastOpenFile(projectId, json.data.id));
+
+        })();
+    };
+}
+
 export function createFile(projectId: string, pdf: File) {
     return (dispatch: Dispatch<FilesActionsTypes | ProjectActionTypes | RedirectActionTypes>, getState) => {
         (async () => {

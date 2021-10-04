@@ -25,7 +25,12 @@ const useStyles = makeStyles({
     },
     But: {
         marginTop: '2vh',
-    }
+    },
+    But1: {
+        marginTop: '2vh',
+        textAlign: 'center',
+    },
+
 });
 
 type AppProps = {
@@ -40,7 +45,7 @@ function App({loginCallback}: AppProps) {
     // If someone is not logged in and the page is reloaded, show the dialog
     React.useEffect(() => {
         if(!isLoggedIn) {
-            loginCallback(true);
+            //loginCallback(true);
         }
     }, [isLoggedIn]);
 
@@ -55,6 +60,10 @@ function App({loginCallback}: AppProps) {
                         <Typography variant="h5" align="center" color="textPrimary" gutterBottom>
                             From Unstructured Information To Complete Knowledge
                         </Typography>
+                        <Box textAlign='center'>
+                        <Button className={classes.But1} variant="contained" size="large" color="primary" href="/new-project">Try Now</Button>
+                        </Box>
+                        
                     </Box>
                 </Grid>
                 <Grid item>

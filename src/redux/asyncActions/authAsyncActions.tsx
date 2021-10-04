@@ -1,6 +1,8 @@
 import { Dispatch } from 'react';
 
 import { AuthActionTypes } from '../types/authTypes';
+import { REDIRECT } from '../types/redirectTypes';
+
 import * as a from '../actions/authActions';
 import { updateFileList } from '../actions/filesActions';
 import { updateProjectsList } from '../actions/projectActions';
@@ -48,6 +50,10 @@ export function logout() {
     return (dispatch, getState) => {
         const token = getState().auth.token;
         dispatch(a.userLogoutStarted());
+        dispatch(a.userLogoutSuccess());
+        dispatch(updateFileList({}));
+        dispatch(updateProjectsList({}));
+        dispatch(a.setUserLoginId(''));
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' , 'Authorization': `Bearer ${token}`},
@@ -65,6 +71,11 @@ export function logout() {
                     dispatch(a.userLogoutSuccess());
                     dispatch(updateFileList({}));
                     dispatch(updateProjectsList({}));
+                    dispatch(a.setUserLoginId(''));
+                    dispatch({
+                        type: REDIRECT,
+                        payload: `/`
+                    });
                 }
             })
             .catch((err)=> {
@@ -125,6 +136,7 @@ export function register(name:string,email:string,password:string) {
                 if (statusCode) throw new Error(data.errors);
                 else {
                     dispatch(a.userSignupSuccess(data.access_token));
+                    dispatch(a.setUserLoginId(data.user_id));
                 }
             })
             .catch((err)=> {
