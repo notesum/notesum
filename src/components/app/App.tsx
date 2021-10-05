@@ -2,11 +2,12 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Box, Grid, Card, CardMedia, CardContent, makeStyles } from '@material-ui/core';
-import { useSelector } from 'react-redux';
+import { useSelector ,useDispatch} from 'react-redux';
 
 import { AppState } from '../../redux/reducers';
 import higlight from '../../resources/higlight.jpg';
 import work from '../../resources/work.jpg';
+import { deleteEmptyProject } from '../../redux/asyncActions/projectAsyncActions';
 
 import './App.css';
 
@@ -41,6 +42,11 @@ function App({loginCallback}: AppProps) {
     const classes = useStyles();
 
     const isLoggedIn = useSelector((state: AppState) => state.auth.isLoggedIn);
+    const dispatch = useDispatch();
+    React.useEffect(()=>{
+        dispatch(deleteEmptyProject());
+        
+    },[]);
 
     // If someone is not logged in and the page is reloaded, show the dialog
     React.useEffect(() => {
@@ -61,7 +67,11 @@ function App({loginCallback}: AppProps) {
                             From Unstructured Information To Complete Knowledge
                         </Typography>
                         <Box textAlign='center'>
-                        <Button className={classes.But1} variant="contained" size="large" color="primary" href="/new-project">Try Now</Button>
+                            { isLoggedIn ? <Button className={classes.But1} variant="contained" size="large" color="primary" href="/projects">Try Now</Button> 
+                            : <Button className={classes.But1} variant="contained" size="large" color="primary" href="/new-project">Try Now</Button>
+
+                            }
+                        
                         </Box>
                         
                     </Box>
@@ -118,7 +128,12 @@ function App({loginCallback}: AppProps) {
                                         knowledge when you need it. Click on the Try It Out button to join us on our journey to
                                         create a great and helpful application!
                                 </Typography>
-                                    <Button className={classes.But} variant="contained" color="primary" href="/projects">Try Now</Button>
+                                { 
+                                   isLoggedIn ?   <Button className={classes.But} variant="contained" color="primary" href="/projects">Try Now</Button>
+                                   : <Button className={classes.But} variant="contained" color="primary" href="/new-project">Try Now</Button>
+
+                                }
+                                    
                                 </CardContent>
                             </Card>
                         </Grid>

@@ -20,8 +20,8 @@ import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
 import SaveIcon from '@material-ui/icons/Save';
 import {
-    Box, Button, Dialog, DialogContent, DialogTitle, Drawer, IconButton, List,
-    ListItem, ListItemText, ListSubheader, InputBase, makeStyles, Toolbar, CircularProgress, DialogContentText, DialogActions
+     DialogContent, DialogTitle, Drawer, List,
+    ListItem, ListItemText, ListSubheader, InputBase, makeStyles, CircularProgress, DialogContentText, DialogActions
 } from '@material-ui/core';
 import { AppState } from '../../redux/reducers';
 import { updateEditor } from '../../redux/actions/filesActions';
@@ -73,6 +73,8 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
     const [name, setName] = useState('Unnamed');
     const [fullscreenOpen, setFullscreenOpen] = useState(false);
     const [saveToggle, setSaveToggle] = useState(false);
+    const [saveToggleOnLeave, setSaveToggleOnLeave] = useState(false);
+    const [saveDownload, setDownloadToggle] = useState(false);
     const [saveToggleFile, setSaveToggleFile] = useState(false);
     const [showSignUp, setShowSignUp] = useState(false);
     const [isNewProjectOpen, setNewProjectOpen] = useState(false);
@@ -102,6 +104,18 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
             setEditorState((prevState) => insertNewBlock(prevState, exactText, style));
         }
     }, [style, highlightToggle]);
+
+    useEffect(()=>{
+        if(!isLoggedIn){
+            window.addEventListener('beforeunload', (event) => {
+                setSaveToggleOnLeave(true);
+                // Cancel the event as stated by the standard.
+                event.preventDefault();
+                // Chrome requires returnValue to be set.
+                event.returnValue = '';
+            });
+        }
+    })
 
     
 
@@ -225,10 +239,9 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
         </DialogTitle>
         <DialogContent>
             <DialogContentText id="alert-dialog-description">
-                It enables you to continue to work your summaries and 
-                upload multiple PDFs to summarize. It also enables 
-                Auto-Save so that no progress will be lost if you
-                leave this site.
+            Signing up enables you to continue your work and upload multiple PDFs 
+            to summarize. It also enables Auto-save, so that no progress 
+            will be lost if you leave CosmoNote
             </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -238,8 +251,47 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
             </Button>
         </DialogActions>
     </Dialog>
-
     );
+
+
+    const benefitsDialogsOnLeave = (
+        
+        <Dialog onClose={() => setSaveToggleOnLeave(false)} aria-labelledby="customized-dialog-title" open={saveToggleOnLeave}>
+        <DialogTitle id="alert-dialog-title">
+            Do You Want To Sign Up?
+        </DialogTitle>
+        <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+            Signing up enables you to continue your work and upload multiple PDFs 
+            to summarize. It also enables Auto-save, so that no progress 
+            will be lost if you leave CosmoNote
+            </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+            <Button onClick={() =>{ setSaveToggleOnLeave(false),setDownloadToggle(true)}}>No</Button>
+            <Button onClick={() => {setSaveToggleOnLeave(false),setShowSignUp(true)}}>
+                Sign Up
+            </Button>
+        </DialogActions>
+    </Dialog>
+    );
+
+    const downloadDialogs = (
+        
+        <Dialog onClose={() => setDownloadToggle(false)} aria-labelledby="customized-dialog-title" open={saveDownload}>
+        <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+                Remember to download your file as all progress 
+                will be lost if you close this site.
+            </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+            <Button onClick={() =>{ setDownloadToggle(false),setSaveToggleFile(true)}}>OK</Button>
+        </DialogActions>
+    </Dialog>
+    );
+
+
     const signUpDialogs = (
         
         <Dialog onClose={() => setShowSignUp(false)} aria-labelledby="customized-dialog-title" open={showSignUp}>
@@ -347,6 +399,8 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
             {benefitsDialogs}
             {signUpDialogs}
             {SetProjectName}
+            {downloadDialogs}
+            {benefitsDialogsOnLeave}
         </>
     );
 }

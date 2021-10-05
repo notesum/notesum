@@ -37,7 +37,32 @@ export function loadProjects() {
 }
 
 
+export function deleteEmptyProject(name: string,user_id: BigInteger,project_id: BigInteger) {
+    return (dispatch: Dispatch<ProjectActionTypes | RedirectActionTypes>, getState) => {
+        (async () => {
+            
+            const requestOptions = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${getState().auth.token}`
+                },
+                body: JSON.stringify({
+                    name,user_id,project_id
+                })
+            };
 
+            const result = await fetch(`${BASE_URL}/delete_project`, requestOptions);
+            // const json: {data: {id: string, name: string}} | {message: string} = (await result.json());
+
+            // if (!('data' in json)) return;
+
+            
+            
+        })();
+    };
+}
 export function updateProjectName(name: string,user_id: BigInteger,project_id: BigInteger) {
     return (dispatch: Dispatch<ProjectActionTypes | RedirectActionTypes>, getState) => {
         (async () => {
