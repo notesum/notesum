@@ -3,18 +3,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import {
     Box, Button, Dialog, DialogContent, DialogTitle, Drawer, IconButton, List,
-    ListItem, ListItemText, ListSubheader, InputBase, makeStyles, Toolbar, CircularProgress, DialogContentText, DialogActions
+    ListItem, ListItemText, ListSubheader, InputBase, makeStyles, Toolbar, CircularProgress,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
-import { Project } from '../../redux/types/projectTypes';
+import { Project, } from '../../redux/types/projectTypes';
 import { Files } from '../../redux/types/filesTypes';
 import { createFile, createFileVistor,loadFiles, saveFile } from '../../redux/asyncActions/fileAsyncActions';
 import { BASE_URL } from '../../redux/asyncActions/ServerSettings';
-import { setLastOpenFile } from '../../redux/actions/projectActions';
+import { setLastOpenFile,deleteProject } from '../../redux/actions/projectActions';
 import { loadProjects } from '../../redux/asyncActions/projectAsyncActions';
 import Error from '../Error';
+import { AppState } from '../../redux/reducers';
 
 import EmptyProject from './EmptyProject';
 import DocumentView from './DocumentView';
@@ -129,26 +130,7 @@ export default function Project() {
                     <EmptyProject addFile={addProjectFile} />
                 </DialogContent>
             </Dialog>
-{/* 
-            <Dialog onClose={() => setBenefitModalOpen(false)} aria-labelledby="customized-dialog-title" open={isBenefitModalOpen}>
-                <DialogTitle id="alert-dialog-title">
-                    Do You Want To Sign Up?
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                        It enables you to continue to work your summaries and 
-                        upload multiple PDFs to summarize. It also enables 
-                        Auto-Save so that no progress will be lost if you
-                        leave this site.
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={() => setBenefitModalOpen(false)}>No</Button>
-                    <Button >
-                        Sign Up
-                    </Button>
-                </DialogActions>
-            </Dialog> */}
+
 
             <Box flexDirection="column" display="flex" height="100%">
                 <Box m={0} bgcolor="#2f3d88">

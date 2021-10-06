@@ -20,8 +20,7 @@ import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
 import SaveIcon from '@material-ui/icons/Save';
 import {
-     DialogContent, DialogTitle, Drawer, List,
-    ListItem, ListItemText, ListSubheader, InputBase, makeStyles, CircularProgress, DialogContentText, DialogActions
+     DialogContent, DialogTitle, DialogContentText, DialogActions
 } from '@material-ui/core';
 import { AppState } from '../../redux/reducers';
 import { updateEditor } from '../../redux/actions/filesActions';
@@ -348,9 +347,9 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
                         <SaveIcon fontSize="small" />
                     </IconButton>
                 </Tooltip>
-                <IconButton onClick={() => { setFullscreenOpen(true); }}>
+                {/* <IconButton onClick={() => { setFullscreenOpen(true); }}>
                     <FullscreenIcon fontSize="small" />
-                </IconButton>
+                </IconButton> */}
             </Toolbar>
         </AppBar>
     );

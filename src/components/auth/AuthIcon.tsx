@@ -2,9 +2,11 @@ import React from 'react';
 import { Button, Dialog, Grid, Typography, Box, CircularProgress } from '@material-ui/core';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { useSelector, useDispatch } from 'react-redux';
+import { deleteProject } from '../../redux/actions/projectActions';
 
 import { AppState } from '../../redux/reducers';
 import { getUserInfo, logout } from '../../redux/asyncActions/authAsyncActions';
+import { REDIRECT } from '../../redux/types/redirectTypes';
 
 import Login from './Login';
 import SignUp from './SignUp';
@@ -16,6 +18,8 @@ type AuthProps = {
 };
 
 export default function AuthIcon({openProp}: AuthProps) {
+    
+    const projects = useSelector((state: AppState) => state.projects);
 
     // Force open the dialog without a user click
     React.useEffect(()=> {
@@ -43,8 +47,16 @@ export default function AuthIcon({openProp}: AuthProps) {
     const [signDialog, setSignDialog] = React.useState(false);
 
     function logOut() {
+        dispatch({
+            type: REDIRECT,
+            payload: `/`
+        });
         dispatch(logout());
-    }
+        setTimeout(()=>{
+            Object.keys(projects).map((uuid) =>dispatch(deleteProject(uuid)))
+
+        },5000)
+            }
 
     // Should the error banner be displayed
     function isError() {
