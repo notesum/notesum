@@ -120,7 +120,10 @@ export default function Project() {
                     })}
                 </List>
                 <Button onClick={() => setAddFilesModalOpen(true)}>Add new files</Button>
-                <Button href="/projects"> <ArrowBackIcon fontSize="small" color="primary" />Back to Projects</Button>
+                {
+                    isLoggedIn && <Button href="/projects"> <ArrowBackIcon fontSize="small" color="primary" />Back to Projects</Button> 
+                }
+                
 
             </Drawer>
 
