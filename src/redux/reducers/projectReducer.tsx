@@ -30,7 +30,7 @@ const projectReducer = (state = initialState, action: ProjectActionTypes): Proje
             };
 
         case DELETE_PROJECT:
-            console.log("data in here are findong",state[action.payload.id],"state here is ",state,"action here is action",action);
+            //console.log("data in here are findong",state[action.payload.id],"state here is ",state,"action here is action",action);
             
             const updatedState = {
                 ...state,

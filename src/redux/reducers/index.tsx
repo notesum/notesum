@@ -20,7 +20,7 @@ const appReducer = combineReducers({
 
 const rootReducer = (state, action) => {
     if (action.type === t.USER_LOGOUT_SUCCESS) {
-        console.log("shwing state value here at state",state);
+        //console.log("shwing state value here at state",state);
         
         // for all keys defined in your persistConfig(s)
         // storage.removeItem('persist:root')
