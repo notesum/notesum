@@ -16,32 +16,33 @@ import TextFieldsIcon from '@material-ui/icons/TextFields';
 import TextFormatIcon from '@material-ui/icons/TextFormat';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
-import FullscreenIcon from '@material-ui/icons/Fullscreen';
+// import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
 import SaveIcon from '@material-ui/icons/Save';
 import {
      DialogContent, DialogTitle, DialogContentText, DialogActions
 } from '@material-ui/core';
-import { AppState } from '../../redux/reducers';
+
 import { updateEditor } from '../../redux/actions/filesActions';
+import { AppState } from '../../redux/reducers';
 import { saveFile } from '../../redux/asyncActions/fileAsyncActions';
 import { updateProjectName } from '../../redux/asyncActions/projectAsyncActions';
-
-import './Editor.css';
-import { insertNewBlock, getSelectionParentElement, insertImageUtil, hotKey } from './EditorUtils';
+import { Note } from '../pdf/PdfViewer';
+import {insertImageUtil, getSelectionParentElement, hotKey, insertNewBlock} from './EditorUtils';
 import downloadState from './Download';
 import SignUp from '../auth/SignUp';
 import { Project } from '../../redux/types/projectTypes';
-
+import './Editor.css';
 
 type EditorProps = {
     img: string
     screenshotCallback: (b: boolean) => void
     dragging: boolean,
-    fileId: string
+    fileId: string,
+    notes: Note[];
 };
 
-export default function TextEditor({ img, screenshotCallback, dragging, fileId }: EditorProps) {
+export default function TextEditor({ img, screenshotCallback, dragging, fileId, notes }: EditorProps) {
 
     const { isLoggedIn } = useSelector((state:AppState)=>state.auth);
     let { id } = useSelector((state:AppState)=>state.auth);
@@ -52,8 +53,8 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
 
     const project: Project = useSelector((state: any) => state.projects[id]);
 
-    
-    
+
+
     const content = useSelector((state: AppState) => state.files[fileId].summary);
     const file = useSelector((state: AppState) => state.files[fileId]);
     const dispatch = useDispatch();
@@ -80,12 +81,10 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
     const [newProjectName, setNewProjectName] = useState(project.name);
 
     const newProject = (name: string) => {
-        
-        dispatch(updateProjectName(name,user_id,project_id));
+        dispatch(updateProjectName(name, user_id, project_id));
     };
 
 
-    
 
     const [highlightToggle, setHighlightToggle] = useState(true);
     let prevSelection = null;
@@ -114,32 +113,33 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
                 event.returnValue = '';
             });
         }
-    })
+    });
 
-    
+
 
     useEffect(() => {
-        if(isLoggedIn && project.name=='UNNAMED PROJECT' ){
+        if(isLoggedIn && project.name === 'UNNAMED PROJECT' ){
             setShowSignUp(false);
             setNewProjectOpen(true);
         }
-        
+
     },[project,isLoggedIn]);
 
     // If there is a new image insert it to the editor
     useEffect(() => {
-        
         setEditorState((prevState) => insertImageUtil(prevState, img));
     }, [img,isLoggedIn]);
 
-    // Listen to mouseup for highlight behaviour
     useEffect(() => {
-        editor.current.focus();
-        window.addEventListener('mouseup', handleEditor);
-        return () => {
-            window.removeEventListener('mouseup', handleEditor);
-        };
-    }, [style]);
+        let copyPasteText = '';
+        const length = notes.length;
+        if ( length > 0 && notes[length - 1].quote) {
+            copyPasteText = notes[length - 1].quote;
+        }
+        if (copyPasteText !== ''){
+            setEditorState((prevState) => insertNewBlock(prevState, copyPasteText, style));
+        }
+    },[notes]);
 
     const editor = useRef(null);
 
@@ -231,15 +231,15 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
     );
 
     const benefitsDialogs = (
-        
-        <Dialog onClose={() => setSaveToggle(false)} aria-labelledby="customized-dialog-title" open={saveToggle}>
+
+    <Dialog onClose={() => setSaveToggle(false)} aria-labelledby="customized-dialog-title" open={saveToggle}>
         <DialogTitle id="alert-dialog-title">
             Do You Want To Sign Up?
         </DialogTitle>
         <DialogContent>
             <DialogContentText id="alert-dialog-description">
-            Signing up enables you to continue your work and upload multiple PDFs 
-            to summarize. It also enables Auto-save, so that no progress 
+            Signing up enables you to continue your work and upload multiple PDFs
+            to summarize. It also enables Auto-save, so that no progress
             will be lost if you leave CosmoNote
             </DialogContentText>
         </DialogContent>
@@ -254,15 +254,15 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
 
 
     const benefitsDialogsOnLeave = (
-        
-        <Dialog onClose={() => setSaveToggleOnLeave(false)} aria-labelledby="customized-dialog-title" open={saveToggleOnLeave}>
+
+    <Dialog onClose={() => setSaveToggleOnLeave(false)} aria-labelledby="customized-dialog-title" open={saveToggleOnLeave}>
         <DialogTitle id="alert-dialog-title">
             Do You Want To Sign Up?
         </DialogTitle>
         <DialogContent>
             <DialogContentText id="alert-dialog-description">
-            Signing up enables you to continue your work and upload multiple PDFs 
-            to summarize. It also enables Auto-save, so that no progress 
+            Signing up enables you to continue your work and upload multiple PDFs
+            to summarize. It also enables Auto-save, so that no progress
             will be lost if you leave CosmoNote
             </DialogContentText>
         </DialogContent>
@@ -276,12 +276,12 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
     );
 
     const downloadDialogs = (
-        
+
         <Dialog onClose={() => setDownloadToggle(false)} aria-labelledby="customized-dialog-title" open={saveDownload}>
         <DialogContent>
             <DialogContentText id="alert-dialog-description">
-                Remember to download your file as all progress 
-                will be lost if you close this site.
+                Remember to download your file as all progress
+will be lost if you close this site.
             </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -292,14 +292,13 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
 
 
     const signUpDialogs = (
-        
         <Dialog onClose={() => setShowSignUp(false)} aria-labelledby="customized-dialog-title" open={showSignUp}>
             <SignUp/>
         </Dialog>
 
     );
 
-    
+
 
     // The toolbar with all the buttons
     const toolbar = (
@@ -334,14 +333,14 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
                 <Tooltip title="Download" placement="top">
                     { isLoggedIn ? <IconButton onClick={() => { setSaveToggleFile(true); }} style={{ marginLeft: 'auto' }}>
                         <SaveAltIcon fontSize="small" />
-                    </IconButton> 
+                    </IconButton>
                     : <IconButton onClick={() => { setSaveToggle(true); }} style={{ marginLeft: 'auto' }}>
                         <SaveAltIcon fontSize="small" />
                     </IconButton>
 
                     }
-                    
-                </Tooltip>
+
+                    </Tooltip>
                 <Tooltip title={file.needsSave ? 'Save work to cloud' : 'Work already saved to cloud'} placement="top">
                     <IconButton onClick={() => dispatch(saveFile(fileId))} style={file.needsSave ? { color: '#000' } : {}}>
                         <SaveIcon fontSize="small" />

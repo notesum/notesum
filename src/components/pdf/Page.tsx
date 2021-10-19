@@ -39,7 +39,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 export default React.memo(React.forwardRef(({ page, scale, width, hidden, isVisible, screenshot, screenshotCallback }: PageProps,
-                                 pageRef: MutableRefObject<HTMLDivElement>) => {
+                                            pageRef: MutableRefObject<HTMLDivElement>) => {
 
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const textLayerRef = useRef<HTMLDivElement>(null);
