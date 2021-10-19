@@ -33,7 +33,7 @@
         "@types/react-router-dom": "^5.1.5",
         "@types/uuid": "^8.3.0",
         "docx": "^5.3.0",
-        "dotenv": "^8.2.0",
+        "dotenv": "^9.0.0",
         "draft-js": "^0.11.0",
         "draft-js-image-plugin": "^2.0.7",
         "draft-js-plugins-editor": "^3.0.0",
@@ -57,14 +57,25 @@
     "devDependencies": {
         "parcel-bundler": "^1.12.4",
         "tslint": "^6.1.2",
-        "tslint-react": "^5.0.0"
+        "tslint-react": "^5.0.0",
+        "parcel-plugin-static-files-copy": "^2.6.0"
     },
     "scripts": {
         "clean": "rimraf dist",
         "lint": "tslint -c tslint.json -p tsconfig.json",
         "build": "yarn run clean && yarn run lint && yarn run build:parcel",
         "build:parcel": "parcel build public/index.html --public-url / --no-source-maps",
-        "dev": "parcel public/index.html"
+        "dev": "parcel public/index.html",
+        "preview": "git rev-parse --abbrev-ref HEAD | xargs -I {} bash -c 'firebase hosting:channel:deploy {}'",
+        "live": "git rev-parse --abbrev-ref HEAD | xargs -I {} bash -c 'firebase hosting:clone notesum-front:{} notesum-front:live'"
+    },
+    "staticFiles": {
+        "staticPath": [
+            {
+                "staticPath": "public/.well-known",
+                "staticOutDir": ".well-known"
+            }
+         ]
     },
     "eslintConfig": {
         "extends": "react-app"

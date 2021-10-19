@@ -13,13 +13,13 @@ export default function About() {
             <Box my={7}>
                 <Container>
                     <Typography component="h1" variant="h4" align="center" color="textPrimary" style={{ fontWeight: 'bold' }} gutterBottom>
-                        How it will save your time and organize your material
+                        How it will save your time and organize your material!
                 </Typography>
                     <Typography variant="h6" align="center" color="textSecondary" paragraph>
-                        NoteSum is a PDF summarization tool that gives you full control of what you want to gather.
-                        Extract hightlighted information automatically into a new file which is downloadable as a word file.
-                        Upload any PDF you want to your personal vault and start summarizing. Annotate and comment
-                        freely in the output window on the right site.
+                        CosmoNote is a PDF summarization tool that gives you full control of what you want to gather. Extract highlighted information
+                        automatically into a new file, which is downloadable as a word file. Upload any PDF to your personal storage and start summarizing.
+                        Annotate and comment freely in the output window on the right side.
+
                     </Typography>
                     <Typography variant="h6" align="center" color="textSecondary" paragraph>
                         Easy as that!

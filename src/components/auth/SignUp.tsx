@@ -82,8 +82,9 @@ export default function SignUp() {
                     {form}
                 </Grid>
                 <Grid item style={{ marginTop: '10px' }}>
-                    <Button target="_blank" href="/terms" variant="text"><Typography variant="subtitle2">by siging up
-                        in you accept the terms and conditions</Typography></Button>
+                    <Button target="_blank" href="/terms" variant="text"><Typography variant="subtitle2">
+                        By signing up you accept our terms and condition
+                    </Typography></Button>
                 </Grid>
                 {didntMatch &&
                     <Grid item>

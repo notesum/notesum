@@ -50,7 +50,7 @@ function App({loginCallback}: AppProps) {
                 <Grid item>
                     <Box my={7}>
                         <Typography variant="h3" align="center" color="textPrimary" style={{ fontWeight: 'bold' }}>
-                            Welcome to the NoteSum beta test!
+                            Welcome to the CosmoNote beta test!
                         </Typography>
                         <Typography variant="h5" align="center" color="textPrimary" gutterBottom>
                             From Unstructured Information To Complete Knowledge
@@ -67,9 +67,10 @@ function App({loginCallback}: AppProps) {
                                         Our Goal
                                 </Typography>
                                     <Typography variant="h6" color="textPrimary" gutterBottom>
-                                        We believe that time is one of the most valuable assets one can have and it is a real challenge to spend it wisely.
-                                        With NoteSum you can create your summary simultaneously while reading your material and have it organised and ready
-                                        to be further processed.
+                                        We believe that time is one of the most valuable assets one can have
+                                        and that it is a real challenge to spend it wisely. With CosmoNote you
+                                        can create your summary simultaneously while reading your material and
+                                        have it organized and ready to be further processed.
                                 </Typography>
                                     <Button className={classes.But} variant="contained" color="primary" href="/about">How It Works</Button>
                                 </CardContent>
@@ -104,10 +105,9 @@ function App({loginCallback}: AppProps) {
                                         Beta Testing
                                 </Typography>
                                     <Typography variant="h6" color="textPrimary" gutterBottom>
-                                        We are working towards a collaborative learning-network that will save your time and
-                                        help you to aquire the right knowledge in time.
-                                        The NoteSum Beta has started!  Click on the Try It Out button to join us
-                                        on our journey to create a great and helpful application!
+                                        We are working towards a tool that saves your time and helps you to acquire the right
+                                        knowledge when you need it. Click on the Try It Out button to join us on our journey to
+                                        create a great and helpful application!
                                 </Typography>
                                     <Button className={classes.But} variant="contained" color="primary" href="/projects">Try Now</Button>
                                 </CardContent>
@@ -129,10 +129,10 @@ function App({loginCallback}: AppProps) {
                             <Card elevation={3} className={classes.Card}>
                                 <CardContent className={classes.Content}>
                                     <Typography variant="h6" color="textPrimary" gutterBottom>
-                                        Currently we are based in the Incubase on the University of Twente campus. You can reach us at the address below
+                                        Currently, we are based in the Incubase on the University of Twente campus. You can reach us at the address below
                                     </Typography>
                                     <Typography variant="h6" color="textPrimary" gutterBottom>
-                                        Email: info.notesum@gmail.com
+                                        Email: info.cosmonote@gmail.com
                                         </Typography>
                                     <Typography variant="h6" color="textPrimary" gutterBottom>
                                         De Hems 10
