@@ -10,12 +10,15 @@ import 'regenerator-runtime/runtime';
 import PrivateRoute from '../Routes/PrivateRoute';
 import { AppState } from '../redux/reducers';
 import { RedirectActionTypes, REDIRECTED } from '../redux/types/redirectTypes';
+import { createFileVistor } from '../redux/asyncActions/fileAsyncActions';
+import { createNewProjectVistior } from '../redux/asyncActions/projectAsyncActions';
 
 import App from './app/App';
 import About from './app/About';
 import AuthIcon from './auth/AuthIcon';
 import Project from './project/Project';
 import ProjectOverview from './project_overview/ProjectOverview';
+import EmptyProject from './project/EmptyProject';
 import Error from './Error';
 import Terms from './app/Terms';
 import Poster from './app/Poster';
@@ -28,6 +31,11 @@ export default function Root() {
     const history = useHistory();
     const dispatch = useDispatch<Dispatch<RedirectActionTypes>>();
     const redirect = useSelector((state: AppState) => state.redirect);
+    const addProjectFile = (pdf: File) => {
+    dispatch(createNewProjectVistior('UNNAMED PROJECT',(id)=>{
+        dispatch(createFileVistor(id, pdf));
+    }));     
+    };
     useEffect(() => {
         if (redirect.url) {
             dispatch({
@@ -78,6 +86,10 @@ export default function Root() {
                     <PrivateRoute path="/projects">
                         <ProjectOverview />
                     </PrivateRoute>
+                    <Route path="/new-project">
+                        <EmptyProject addFile={addProjectFile} />
+                    </Route>
+
                     <PrivateRoute exact path="/project/:id/:urlFileId?" children={<Project />} />
                     <Route path="*">
                         <Error />

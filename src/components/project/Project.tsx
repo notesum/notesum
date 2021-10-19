@@ -3,18 +3,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import {
     Box, Button, Dialog, DialogContent, DialogTitle, Drawer, IconButton, List,
-    ListItem, ListItemText, ListSubheader, InputBase, makeStyles, Toolbar, CircularProgress
+    ListItem, ListItemText, ListSubheader, InputBase, makeStyles, Toolbar, CircularProgress,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
-import { Project } from '../../redux/types/projectTypes';
+import { Project, } from '../../redux/types/projectTypes';
 import { Files } from '../../redux/types/filesTypes';
-import { createFile, loadFiles, saveFile } from '../../redux/asyncActions/fileAsyncActions';
+import { createFile, createFileVistor,loadFiles, saveFile } from '../../redux/asyncActions/fileAsyncActions';
 import { BASE_URL } from '../../redux/asyncActions/ServerSettings';
-import { setLastOpenFile } from '../../redux/actions/projectActions';
+import { setLastOpenFile,deleteProject } from '../../redux/actions/projectActions';
 import { loadProjects } from '../../redux/asyncActions/projectAsyncActions';
 import Error from '../Error';
+import { AppState } from '../../redux/reducers';
 
 import EmptyProject from './EmptyProject';
 import DocumentView from './DocumentView';
@@ -33,6 +34,7 @@ const useStyles = makeStyles(() => ({
 
 export default function Project() {
 
+    const { isLoggedIn } = useSelector((state:AppState)=>state.auth);
     const { id, urlFileId } = useParams<{ id: string, urlFileId?: string }>();
 
     const project: Project = useSelector((state: any) => state.projects[id]);
@@ -49,8 +51,11 @@ export default function Project() {
 
     // Update project & files list
     useEffect(() => {
-        dispatch(loadProjects());
-        dispatch(loadFiles());
+        if(isLoggedIn){
+            dispatch(loadProjects());
+            dispatch(loadFiles());
+        }
+        
     }, []);
 
     const currentFile = urlFileId;
@@ -64,7 +69,10 @@ export default function Project() {
     // On unmount, save file
     useEffect(() => {
         return () => {
-            if (currentFile) dispatch(saveFile(currentFile));
+            if(isLoggedIn){
+                if (currentFile) dispatch(saveFile(currentFile));
+            }
+            
         };
     }, [currentFile]);
 
@@ -77,11 +85,18 @@ export default function Project() {
     }, [currentFile]);
 
     const addProjectFile = (pdf: File) => {
-        dispatch(createFile(id, pdf));
+        if(isLoggedIn){
+            dispatch(createFile(id, pdf));
+        }else{
+            dispatch(createFileVistor(id, pdf));
+        }
+        
+        
     };
 
     const [isFileDrawerOpen, setFileDrawerOpen] = useState(false);
     const [isAddFilesModalOpen, setAddFilesModalOpen] = useState(false);
+    // const [isBenefitModalOpen, setBenefitModalOpen] = useState(true);
 
     const classes = useStyles();
 
@@ -105,7 +120,10 @@ export default function Project() {
                     })}
                 </List>
                 <Button onClick={() => setAddFilesModalOpen(true)}>Add new files</Button>
-                <Button href="/projects"> <ArrowBackIcon fontSize="small" color="primary" />Back to Projects</Button>
+                {
+                    isLoggedIn && <Button href="/projects"> <ArrowBackIcon fontSize="small" color="primary" />Back to Projects</Button> 
+                }
+                
 
             </Drawer>
 
@@ -115,6 +133,7 @@ export default function Project() {
                     <EmptyProject addFile={addProjectFile} />
                 </DialogContent>
             </Dialog>
+
 
             <Box flexDirection="column" display="flex" height="100%">
                 <Box m={0} bgcolor="#2f3d88">
@@ -130,7 +149,10 @@ export default function Project() {
                 <Box flexGrow={1} style={{
                     minHeight: '0'
                 }}>
-                    {currentFile && currentFile in files ?
+
+                    {isLoggedIn ?
+
+                    currentFile && currentFile in files ?
                     <>
                         <DocumentView pdf={`${BASE_URL}${files[currentFile].pdf}?token=${authToken}`} fileId={currentFile} />
                     </> : (currentFile || project.files.length > 0 ?
@@ -146,7 +168,12 @@ export default function Project() {
                     </> :
                     <>
                         <EmptyProject addFile={addProjectFile} />
-                    </>)}
+                    </>)
+                    :
+                    <DocumentView pdf={`${BASE_URL}${files[currentFile].pdf}`} fileId={currentFile} />
+
+                    }
+
                 </Box>
             </Box>
         </>
