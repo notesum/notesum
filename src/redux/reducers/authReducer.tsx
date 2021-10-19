@@ -14,6 +14,7 @@ const initialState: t.AuthState = {
     token: null,
     errors: [],
     user: guest,
+    id:'',
 };
 
 const authReducer = ( state = initialState, action: t.AuthActionTypes) => {
@@ -39,6 +40,12 @@ const authReducer = ( state = initialState, action: t.AuthActionTypes) => {
                 isLoggedIn: true,
                 token: action.payload,
             };
+            case t.USER_LOGIN_ID:
+                return {
+                    ...state,
+                    id:action.payload,
+                };
+            
         case t.USER_LOGOUT_STARTED:
             return {
                 ...state,

@@ -1,4 +1,4 @@
-import { ProjectActionTypes, ADD_PROJECT_FILE, UPDATE_PROJECT_LIST, ProjectsState, SET_OPEN_PROJECT_FILE } from '../types/projectTypes';
+import { ProjectActionTypes, ADD_PROJECT_FILE, UPDATE_PROJECT_LIST, ProjectsState, SET_OPEN_PROJECT_FILE, DELETE_PROJECT } from '../types/projectTypes';
 
 export function updateProjectsList(projects: ProjectsState): ProjectActionTypes {
     return {
@@ -23,6 +23,15 @@ export function setLastOpenFile(id: string, fileId: string): ProjectActionTypes 
         payload: {
             id,
             fileId
+        }
+    };
+}
+
+export function deleteProject(id: string): ProjectActionTypes {
+    return {
+        type: DELETE_PROJECT,
+        payload:{
+            id
         }
     };
 }

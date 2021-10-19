@@ -20,6 +20,14 @@ export function userLoginSuccess(token:string): t.AuthActionTypes {
     };
 }
 
+export function setUserLoginId(ID:string): t.AuthActionTypes {
+    return {
+        type: t.USER_LOGIN_ID,
+        payload: ID,
+    };
+}
+
+
 export function userLogoutStarted(): t.AuthActionTypes {
     return {
         type: t.USER_LOGOUT_STARTED,
