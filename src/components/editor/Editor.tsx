@@ -28,11 +28,12 @@ import { AppState } from '../../redux/reducers';
 import { saveFile } from '../../redux/asyncActions/fileAsyncActions';
 import { updateProjectName } from '../../redux/asyncActions/projectAsyncActions';
 import { Note } from '../pdf/PdfViewer';
-import {insertImageUtil, getSelectionParentElement, hotKey, insertNewBlock} from './EditorUtils';
-import downloadState from './Download';
 import SignUp from '../auth/SignUp';
 import { Project } from '../../redux/types/projectTypes';
+
+import downloadState from './Download';
 import './Editor.css';
+import {insertImageUtil, getSelectionParentElement, hotKey, insertNewBlock} from './EditorUtils';
 
 type EditorProps = {
     img: string
@@ -46,10 +47,10 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId, 
 
     const { isLoggedIn } = useSelector((state:AppState)=>state.auth);
     let { id } = useSelector((state:AppState)=>state.auth);
-    const user_id=id;
+    const userId = id;
 
     let { id } = useParams<{ id: string}>();
-    const project_id=id;
+    const projectId=id;
 
     const project: Project = useSelector((state: any) => state.projects[id]);
 
@@ -81,7 +82,7 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId, 
     const [newProjectName, setNewProjectName] = useState(project.name);
 
     const newProject = (name: string) => {
-        dispatch(updateProjectName(name, user_id, project_id));
+        dispatch(updateProjectName(name, userId, projectId));
     };
 
 
@@ -244,8 +245,8 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId, 
             </DialogContentText>
         </DialogContent>
         <DialogActions>
-            <Button onClick={() =>{ setSaveToggle(false),setSaveToggleFile(true)}}>No</Button>
-            <Button onClick={() => {setSaveToggle(false),setShowSignUp(true)}}>
+            <Button onClick={() =>{ setSaveToggle(false),setSaveToggleFile(true);}}>No</Button>
+            <Button onClick={() => {setSaveToggle(false),setShowSignUp(true);}}>
                 Sign Up
             </Button>
         </DialogActions>
@@ -267,8 +268,8 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId, 
             </DialogContentText>
         </DialogContent>
         <DialogActions>
-            <Button onClick={() =>{ setSaveToggleOnLeave(false),setDownloadToggle(true)}}>No</Button>
-            <Button onClick={() => {setSaveToggleOnLeave(false),setShowSignUp(true)}}>
+            <Button onClick={() =>{ setSaveToggleOnLeave(false),setDownloadToggle(true);}}>No</Button>
+            <Button onClick={() => {setSaveToggleOnLeave(false),setShowSignUp(true);}}>
                 Sign Up
             </Button>
         </DialogActions>
@@ -285,7 +286,10 @@ will be lost if you close this site.
             </DialogContentText>
         </DialogContent>
         <DialogActions>
-            <Button onClick={() =>{ setDownloadToggle(false),setSaveToggleFile(true)}}>OK</Button>
+            <Button onClick={() =>{ setDownloadToggle(false);
+                                    setSaveToggleFile(true);
+                                   }
+                            }>OK</Button>
         </DialogActions>
     </Dialog>
     );
