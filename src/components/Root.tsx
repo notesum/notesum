@@ -32,9 +32,9 @@ export default function Root() {
     const dispatch = useDispatch<Dispatch<RedirectActionTypes>>();
     const redirect = useSelector((state: AppState) => state.redirect);
     const addProjectFile = (pdf: File) => {
-    dispatch(createNewProjectVistior('UNNAMED PROJECT',(id)=>{
-        dispatch(createFileVistor(id, pdf));
-    }));     
+        dispatch(createNewProjectVistior('UNNAMED PROJECT', (id) => {
+            dispatch(createFileVistor(id, pdf));
+        }));
     };
     useEffect(() => {
         if (redirect.url) {
