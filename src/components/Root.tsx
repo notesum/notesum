@@ -22,6 +22,8 @@ import EmptyProject from './project/EmptyProject';
 import Error from './Error';
 import Terms from './app/Terms';
 import Poster from './app/Poster';
+import Header from './app/Header';
+import Footer from './app/Footer';
 
 export default function Root() {
     const { isLoggedIn } = useSelector((state: AppState) => state.auth);
@@ -46,8 +48,9 @@ export default function Root() {
     }, [redirect, history]);
 
     return (
-        <Box flexDirection="column" display="flex" height="100%" >
-            <AppBar position="static">
+        <Box flexDirection="column" display="flex" position="relative">
+            <Header />
+            {/* <AppBar position="static">
                 <Toolbar variant="dense">
                     <Link to="/"><IconButton><HomeIcon style={{ color: '#fff' }} /></IconButton ></Link>
                     <Link to="/about"><IconButton><InfoIcon style={{ color: '#fff' }} /></IconButton></Link>
@@ -63,7 +66,7 @@ export default function Root() {
                         variant="text"
                         style={{ color: 'white' }}><Typography variant="subtitle2" style={{ color: 'white' }}>Terms and Conditions</Typography></Button>
                 </Toolbar>
-            </AppBar>
+            </AppBar> */}
 
             {/* This sizes the main content area to fill up the remaining space */}
             <Box flexGrow={1} style={{
@@ -95,7 +98,10 @@ export default function Root() {
                         <Error />
                     </Route>
                 </Switch>
+
             </Box>
+            <Footer />
         </Box>
+
     );
 }
