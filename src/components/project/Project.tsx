@@ -119,9 +119,10 @@ export default function Project() {
   // const [isBenefitModalOpen, setBenefitModalOpen] = useState(true);
 
   const classes = useStyles();
+  console.log(currentFile, project.files);
 
   return (
-    <>
+    <div className="stars_bg" style={{ paddingTop: 100 }}>
       <Drawer
         anchor="left"
         open={isFileDrawerOpen}
@@ -181,12 +182,7 @@ export default function Project() {
         </DialogContent>
       </Dialog>
 
-      <Box
-        flexDirection="column"
-        display="flex"
-        height="100%"
-        className="stars_bg"
-      >
+      <Box flexDirection="column" display="flex" height="100%">
         <Box m={0} bgcolor="#2f3d88">
           <Toolbar variant="dense" style={{ padding: 0 }}>
             <IconButton onClick={() => setFileDrawerOpen(true)}>
@@ -242,6 +238,6 @@ export default function Project() {
           )}
         </Box>
       </Box>
-    </>
+    </div>
   );
 }
