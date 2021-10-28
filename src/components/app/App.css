@@ -19,7 +19,7 @@ body {
 
 /* navbar styles */
 
-header {
+.header {
   background: rgba(0, 0, 0, 0.5);
   height: 100px;
   display: flex;
@@ -386,7 +386,6 @@ footer .footer-container a {
 }
 
 footer {
-  margin-top: -77px;
   background: rgba(0, 0, 0, 0.5);
   position: relative;
   z-index: 1;

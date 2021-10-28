@@ -43,7 +43,7 @@ export default function EmptyProject({
 
   return (
     <div
-      className="projectUploadScreen stars_bg_poster"
+      className="projectUploadScreen custom_spacing"
       onDrop={dragEvent}
       onDragOver={(e) => {
         e.preventDefault();

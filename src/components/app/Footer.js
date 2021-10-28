@@ -1,22 +1,39 @@
 import React from "react";
 import { Container } from "@material-ui/core";
-import { Link } from "react-router-dom";
-const Header = () => {
+import { Link, useLocation } from "react-router-dom";
+import background from "../../resources/background.jpg";
+
+const Footer = () => {
+  const location = useLocation();
   return (
-    <footer>
-      <Container>
-        <div className="footer-container">
-          <div>
-            <Link to="/terms" target="_blank">
-              Terms and Conditions
-            </Link>
-            <Link to="">Contact Us</Link>
+    <footer
+      style={
+        location.pathname == "/" || location.pathname == "/about"
+          ? { marginTop: -77 }
+          : {}
+      }
+    >
+      <div
+        style={
+          location.pathname.includes("/project/")
+            ? { backgroundImage: `url(${background})` }
+            : {}
+        }
+      >
+        <Container>
+          <div className="footer-container">
+            <div>
+              <Link to="/terms" target="_blank">
+                Terms and Conditions
+              </Link>
+              <Link to="">Contact Us</Link>
+            </div>
+            <p>Copyright © 2021 CosmoNote U.G. All rights reserved. Germany</p>
           </div>
-          <p>Copyright © 2021 CosmoNote U.G. All rights reserved. Germany</p>
-        </div>
-      </Container>
+        </Container>
+      </div>
     </footer>
   );
 };
 
-export default Header;
+export default Footer;

@@ -6,11 +6,20 @@ import info from "../../resources/info.svg";
 import user from "../../resources/user.svg";
 
 import AuthIcon from "../auth/AuthIcon";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import background from "../../resources/background.jpg";
 
 const Header = () => {
+  const location = useLocation();
   return (
-    <header>
+    <header
+      className="header"
+      style={
+        location.pathname.includes("/project/")
+          ? { position: "static", backgroundImage: `url(${background})` }
+          : {}
+      }
+    >
       <Container>
         <div className="header-inner">
           <div className="logo">

@@ -119,10 +119,9 @@ export default function Project() {
   // const [isBenefitModalOpen, setBenefitModalOpen] = useState(true);
 
   const classes = useStyles();
-  console.log(currentFile, project.files);
 
   return (
-    <div className="stars_bg" style={{ paddingTop: 100 }}>
+    <div>
       <Drawer
         anchor="left"
         open={isFileDrawerOpen}

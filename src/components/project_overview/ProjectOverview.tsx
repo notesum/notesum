@@ -42,7 +42,7 @@ export default React.memo(() => {
   const [newProjectName, setNewProjectName] = useState("");
 
   return (
-    <div className="stars_bg_poster">
+    <>
       <Dialog
         fullWidth={true}
         maxWidth="sm"
@@ -79,8 +79,8 @@ export default React.memo(() => {
         </Box>
       </Dialog>
 
-      <Box my={7}>
-        <Container fixed>
+      <Box my={7} style={{ minHeight: "70vh" }}>
+        <Container fixed style={{ marginTop: 120 }}>
           <Typography
             variant="h3"
             align="center"
@@ -105,7 +105,7 @@ export default React.memo(() => {
           </Box>
         </Container>
       </Box>
-    </div>
+    </>
   );
 });
 
