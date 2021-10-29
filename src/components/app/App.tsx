@@ -44,10 +44,12 @@ function App({ loginCallback }: AppProps) {
                 full control of what you want to gather
               </h3>
             </div>
-
-            <a href="" className="banner-cta">
+            { isLoggedIn ? <a href="/projects" className="banner-cta">
               How it Works
-            </a>
+            </a> : <a href="/new-project" className="banner-cta">
+              How it Works
+            </a> }
+            
           </div>
         </Container>
         <div className="video-slider-sec">
@@ -78,7 +80,8 @@ function App({ loginCallback }: AppProps) {
               reading your material and have it organized and ready to be
               further processed.
             </p>
-            <Link to="/new-project"> Just Try It </Link>
+            { isLoggedIn ? <Link to="/projects"> Just Try It </Link> : <Link to="/new-project"> Just Try It </Link>}
+            
           </Container>
         </div>
         <div className="contact-sec">
