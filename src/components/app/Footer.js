@@ -28,7 +28,7 @@ const Footer = () => {
               </Link>
               <Link to="">Contact Us</Link>
             </div>
-            <p>Copyright © 2021 CosmoNote U.G. All rights reserved. Germany</p>
+            <p>Copyright © 2021 CosmoNote </p>
           </div>
         </Container>
       </div>

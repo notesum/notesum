@@ -40,15 +40,12 @@ function App({ loginCallback }: AppProps) {
             <h2>From Unstructured Information to complete Knowledge</h2>
             <div className="banner-bottom-text-wrapper">
               <h3 className="banner-footer-txt">
-                Cosmonote is a easy in use PDF summarization tool that gives you
-                full control of what you want to gather
+              CosmoNote is an easy to use PDF summarization tool that gives you full control over the information you want to collect
               </h3>
             </div>
-            { isLoggedIn ? <a href="/projects" className="banner-cta">
+            <a href="/about" className="banner-cta">
               How it Works
-            </a> : <a href="/new-project" className="banner-cta">
-              How it Works
-            </a> }
+            </a>
             
           </div>
         </Container>
@@ -56,10 +53,7 @@ function App({ loginCallback }: AppProps) {
           <Container>
             <h3>How it will save you time and organize your material</h3>
             <p>
-              CosmoNote extract highlighted information automatically into a new
-              file, which is downloadable as a word file. Upload any PDF to your
-              personal storage and start summarizing. Annotate and comment
-              freely in the output window on the right side.
+            Upload a PDF and highlight the information you think is important. The marked text is then automatically copied into a new, editable, and downloadable file.
               <span>Easy as that!</span>
             </p>
             <Carousel />
@@ -80,7 +74,7 @@ function App({ loginCallback }: AppProps) {
               reading your material and have it organized and ready to be
               further processed.
             </p>
-            { isLoggedIn ? <Link to="/projects"> Just Try It </Link> : <Link to="/new-project"> Just Try It </Link>}
+            { isLoggedIn ? <Link to="/projects"> Try It </Link> : <Link to="/new-project"> Try It </Link>}
             
           </Container>
         </div>
