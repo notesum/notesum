@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Button } from "@material-ui/core";
-import Logo from "../../resources/logo-new.svg";
+import Logo from "../../resources/frame.png";
+import LogoText from "../../resources/CosmoNote.svg";
 import feedback from "../../resources/feedback.svg";
 import info from "../../resources/info.svg";
 import user from "../../resources/user.svg";
@@ -20,11 +21,16 @@ const Header = () => {
           : {}
       }
     >
-      <Container>
+      <Container style={{ maxWidth: 1678, width: "80%" }}>
         <div className="header-inner">
           <div className="logo">
-            <Link to="/">
-              <img src={Logo} alt="cosmonote" />
+            <Link to="/" style={{ display: "flex", alignItems: "center" }}>
+              <img
+                src={Logo}
+                alt="cosmonote"
+                style={{ maxWidth: 60, marginRight: 20 }}
+              />
+              <img src={LogoText} alt="cosmonote" />
             </Link>
           </div>
           <div className="nav__bar">

@@ -200,7 +200,7 @@ export default function Project() {
         <Box
           flexGrow={1}
           style={{
-            minHeight: "0",
+            height: "82vh",
           }}
         >
           {isLoggedIn ? (
