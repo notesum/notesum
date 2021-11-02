@@ -52,7 +52,7 @@ export default function About() {
           alignItems="center"
         >
           <Grid item>
-            <Button variant="contained" color="primary" href="/projects">
+            <Button variant="contained" color="primary" href="/new-project">
               Try It!
             </Button>
           </Grid>
