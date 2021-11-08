@@ -14,6 +14,11 @@ import {
   AppBar,
   Toolbar,
   Typography,
+  DialogContent,
+  DialogTitle, 
+  DialogContentText, 
+  DialogActions,
+  Dialog,
 } from "@material-ui/core";
 import PictureAsPdfIcon from "@material-ui/icons/PictureAsPdf";
 import HomeIcon from "@material-ui/icons/Home";
@@ -25,6 +30,9 @@ import { AppState } from "../redux/reducers";
 import { RedirectActionTypes, REDIRECTED } from "../redux/types/redirectTypes";
 import { createFileVistor } from "../redux/asyncActions/fileAsyncActions";
 import { createNewProjectVistior } from "../redux/asyncActions/projectAsyncActions";
+import {isMobile} from 'react-device-detect';
+
+
 
 import App from "./app/App";
 import About from "./app/About";
@@ -64,6 +72,7 @@ export default function Root(props) {
 
   return (
     <Box flexDirection="column" display="flex" position="relative">
+      { }
       <Header />
       {/* <AppBar position="static">
                 <Toolbar variant="dense">
@@ -91,6 +100,21 @@ export default function Root(props) {
           overflowX: "hidden",
         }}
       >
+        
+
+
+
+        { isMobile ? <Dialog onClose={} aria-labelledby="customized-dialog-title" open={true}>
+    <DialogTitle id="alert-dialog-title">
+       Alert
+    </DialogTitle>
+    <DialogContent>
+        <DialogContentText id="alert-dialog-description">
+        COSMONOTE is a Desktop Web Application and its not for Mobile. Please Switch to Desktop Mode.
+        </DialogContentText>
+    </DialogContent>
+    
+</Dialog> :
         <Switch>
           <Route exact path="/">
             <App loginCallback={setMakeLogIn} />
@@ -120,6 +144,7 @@ export default function Root(props) {
             <Error />
           </Route>
         </Switch>
+        }
       </Box>
       <Footer />
     </Box>
