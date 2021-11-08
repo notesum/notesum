@@ -106,11 +106,11 @@ export default function Root(props) {
 
         { isMobile ? <Dialog onClose={} aria-labelledby="customized-dialog-title" open={true}>
     <DialogTitle id="alert-dialog-title">
-       Alert
+    <b>Welcome!</b>
     </DialogTitle>
     <DialogContent>
         <DialogContentText id="alert-dialog-description">
-        COSMONOTE is a Desktop Web Application and its not for Mobile. Please Switch to Desktop Mode.
+        CosmoNote is a Desktop Web Application and is currently not working on mobile devices. Please visit us on a PC.
         </DialogContentText>
     </DialogContent>
     
