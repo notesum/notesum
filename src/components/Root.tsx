@@ -15,8 +15,8 @@ import {
   Toolbar,
   Typography,
   DialogContent,
-  DialogTitle, 
-  DialogContentText, 
+  DialogTitle,
+  DialogContentText,
   DialogActions,
   Dialog,
 } from "@material-ui/core";
@@ -30,7 +30,7 @@ import { AppState } from "../redux/reducers";
 import { RedirectActionTypes, REDIRECTED } from "../redux/types/redirectTypes";
 import { createFileVistor } from "../redux/asyncActions/fileAsyncActions";
 import { createNewProjectVistior } from "../redux/asyncActions/projectAsyncActions";
-import {isMobile} from 'react-device-detect';
+import { isMobile } from 'react-device-detect';
 
 
 
@@ -100,50 +100,50 @@ export default function Root(props) {
           overflowX: "hidden",
         }}
       >
-        
 
 
 
-        { isMobile ? <Dialog onClose={} aria-labelledby="customized-dialog-title" open={true}>
-    <DialogTitle id="alert-dialog-title">
-       Alert
-    </DialogTitle>
-    <DialogContent>
-        <DialogContentText id="alert-dialog-description">
-        COSMONOTE is a Desktop Web Application and its not for Mobile. Please Switch to Desktop Mode.
-        </DialogContentText>
-    </DialogContent>
-    
-</Dialog> :
-        <Switch>
-          <Route exact path="/">
-            <App loginCallback={setMakeLogIn} />
-          </Route>
-          <Route path="/about">
-            <About />
-          </Route>
-          <Route path="/poster">
-            <Poster />
-          </Route>
-          <Route path="/terms">
-            <Terms />
-          </Route>
-          <PrivateRoute path="/projects">
-            <ProjectOverview />
-          </PrivateRoute>
-          <Route path="/new-project">
-            <EmptyProject addFile={addProjectFile} />
-          </Route>
 
-          <PrivateRoute
-            exact
-            path="/project/:id/:urlFileId?"
-            children={<Project />}
-          />
-          <Route path="*">
-            <Error />
-          </Route>
-        </Switch>
+        {isMobile ? <Dialog onClose={ } aria-labelledby="customized-dialog-title" open={true}>
+          <DialogTitle id="alert-dialog-title">
+            Welcome!
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              CosmoNote is a Desktop Web Application and currently not working on mobile devices. Please visit us on a PC
+            </DialogContentText>
+          </DialogContent>
+
+        </Dialog> :
+          <Switch>
+            <Route exact path="/">
+              <App loginCallback={setMakeLogIn} />
+            </Route>
+            <Route path="/about">
+              <About />
+            </Route>
+            <Route path="/poster">
+              <Poster />
+            </Route>
+            <Route path="/terms">
+              <Terms />
+            </Route>
+            <PrivateRoute path="/projects">
+              <ProjectOverview />
+            </PrivateRoute>
+            <Route path="/new-project">
+              <EmptyProject addFile={addProjectFile} />
+            </Route>
+
+            <PrivateRoute
+              exact
+              path="/project/:id/:urlFileId?"
+              children={<Project />}
+            />
+            <Route path="*">
+              <Error />
+            </Route>
+          </Switch>
         }
       </Box>
       <Footer />
