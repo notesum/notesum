@@ -417,3 +417,26 @@ footer p {
   overflow-x: hidden;
   min-height: 100vh;
 }
+.nav__bar a{display: block;text-align: center;}
+
+.nav__bar a img {
+  margin: 0 auto;
+  margin-bottom: 5px;
+}
+.nav__bar a p,.nav__bar button p{
+  color: #fff;
+  display: block;
+  font-size: 12px;
+  text-transform: capitalize;
+  font-weight: 500;
+}
+
+.nav__bar a{
+  text-decoration: none;
+
+}
+
+.MuiButton-label{
+  display: block !important;
+  text-align: center;
+}

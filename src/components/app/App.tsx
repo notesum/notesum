@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { AppState } from "../../redux/reducers";
 import { deleteEmptyProject } from "../../redux/asyncActions/projectAsyncActions";
 import Carousel from "./slider";
-import goalImage from "../../resources/goal-icon.svg";
+import goalImage from "../../resources/frame.png";
 import Email_img from "../../resources/email-image.svg";
 import mapicon from "../../resources/map-pin.svg";
 
@@ -100,14 +100,14 @@ function App({ loginCallback }: AppProps) {
                   </p>
                 </div>
               </Grid>
-              <Grid item md={6} style={{ marginLeft: "auto" }}>
+              {/* <Grid item md={6} style={{ marginLeft: "auto" }}>
                 <form className="ct-form">
                   <input type="text" placeholder="First Name" />
                   <input type="email" placeholder="Email" />
                   <textarea placeholder="Your message"></textarea>
                   <button>Send</button>
                 </form>
-              </Grid>
+              </Grid> */}
             </Grid>
           </Container>
         </div>

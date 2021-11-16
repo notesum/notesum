@@ -41,11 +41,13 @@ const Header = () => {
                   href="https://docs.google.com/forms/d/e/1FAIpQLScK9dZrpjcqcL4SGUc_bcwpAxWYSAH62hYPfdcK_v-2z0PRow/viewform"
                 >
                   <img src={feedback} alt="" />
+                  <p>Feedback</p>
                 </Button>
               </li>
               <li>
                 <Link to="/about">
                   <img src={info} alt="" />
+                  <p>Information</p>
                 </Link>
               </li>
               <li>

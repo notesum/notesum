@@ -105,6 +105,7 @@ export default function AuthIcon({ openProp }: AuthProps) {
     return (
         <div>
             <Button onMouseDown={() => setDialogOpen(true)}><img src={user} alt="" />
+            <p>Profile</p>
                 {/* <Typography variant="body1" style={{ color: 'white', paddingLeft: '5px' }}>{username}</Typography> */}
             </Button>
             <Dialog open={dialogOpen} onClose={closeDialog}>
