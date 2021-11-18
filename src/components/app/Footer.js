@@ -26,7 +26,7 @@ const Footer = () => {
               <Link to="/terms" target="_blank">
                 Terms and Conditions
               </Link>
-              <Link to="">Contact Us</Link>
+              <Link to="/#contact-section" target="_blank">Contact Us</Link>
             </div>
             <p>Copyright © 2021 CosmoNote </p>
           </div>

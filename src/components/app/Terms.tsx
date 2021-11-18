@@ -89,13 +89,13 @@ export default function Terms() {
             UNDERSTOOD, AND ACCEPTED THE TERMS AND CONDITIONS OF THIS
             AGREEMENT.”
           </Typography>
-          <Typography variant="h6" paragraph>
+          {/* <Typography variant="h6" paragraph>
             You will be automatically redirected to test the app after clicking
             "Accept".
           </Typography>
           <Button variant="contained" color="primary" href="/projects">
             Accept
-          </Button>
+          </Button> */}
         </Container>
       </Box>
     </div>

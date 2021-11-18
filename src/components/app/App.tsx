@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { AppState } from "../../redux/reducers";
 import { deleteEmptyProject } from "../../redux/asyncActions/projectAsyncActions";
 import Carousel from "./slider";
-import goalImage from "../../resources/goal-icon.svg";
+import goalImage from "../../resources/frame.png";
 import Email_img from "../../resources/email-image.svg";
 import mapicon from "../../resources/map-pin.svg";
 
@@ -40,20 +40,20 @@ function App({ loginCallback }: AppProps) {
             <h2>From Unstructured Information to complete Knowledge</h2>
             <div className="banner-bottom-text-wrapper">
               <h3 className="banner-footer-txt">
-              CosmoNote is an easy to use PDF summarization tool that gives you full control over the information you want to collect
+                CosmoNote is an easy to use PDF summarization tool that gives you full control over the information you want to collect
               </h3>
             </div>
             <a href="/about" className="banner-cta">
               How it Works
             </a>
-            
+
           </div>
         </Container>
         <div className="video-slider-sec">
           <Container>
             <h3>How it will save you time and organize your material</h3>
             <p>
-            Upload a PDF and highlight the information you think is important. The marked text is then automatically copied into a new, editable, and downloadable file.
+              Upload a PDF and highlight the information you think is important. The marked text is then automatically copied into a new, editable, and downloadable file.
               <span>Easy as that!</span>
             </p>
             <Carousel />
@@ -74,11 +74,11 @@ function App({ loginCallback }: AppProps) {
               reading your material and have it organized and ready to be
               further processed.
             </p>
-            { isLoggedIn ? <Link to="/projects"> Try It </Link> : <Link to="/new-project"> Try It </Link>}
-            
+            {isLoggedIn ? <Link to="/projects"> Try It </Link> : <Link to="/new-project"> Try It </Link>}
+
           </Container>
         </div>
-        <div className="contact-sec">
+        <div className="contact-sec" id="contact-section">
           <Container>
             <h3>Contact Us</h3>
             <Grid container spacing={8} className="ct-inner">
@@ -100,14 +100,14 @@ function App({ loginCallback }: AppProps) {
                   </p>
                 </div>
               </Grid>
-              <Grid item md={6} style={{ marginLeft: "auto" }}>
+              {/* <Grid item md={6} style={{ marginLeft: "auto" }}>
                 <form className="ct-form">
                   <input type="text" placeholder="First Name" />
                   <input type="email" placeholder="Email" />
                   <textarea placeholder="Your message"></textarea>
                   <button>Send</button>
                 </form>
-              </Grid>
+              </Grid> */}
             </Grid>
           </Container>
         </div>

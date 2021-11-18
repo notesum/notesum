@@ -146,7 +146,8 @@ export default function Root(props) {
           </Switch>
         }
       </Box>
-      <Footer />
+      {location.pathname.includes("/project/") ? null : <Footer />}
+
     </Box>
   );
 }

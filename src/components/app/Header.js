@@ -7,8 +7,12 @@ import info from "../../resources/info.svg";
 import user from "../../resources/user.svg";
 
 import AuthIcon from "../auth/AuthIcon";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, has } from "react-router-dom";
 import background from "../../resources/background.jpg";
+import Terms from "../../resources/terms.png";
+import Contact from "../../resources/open.png";
+import { HashLink } from 'react-router-hash-link';
+
 
 const Header = () => {
   const location = useLocation();
@@ -38,14 +42,16 @@ const Header = () => {
               <li>
                 <Button
                   target="_blank"
-                  href="https://docs.google.com/forms/d/e/1FAIpQLScK9dZrpjcqcL4SGUc_bcwpAxWYSAH62hYPfdcK_v-2z0PRow/viewform"
+                  href="https://docs.google.com/forms/d/e/1FAIpQLScBYJsVfzZAcBAGlYNIvgiOnQE4yI-vaJEo66T7oMW9-lXD5w/viewform"
                 >
                   <img src={feedback} alt="" />
+                  <p>Feedback</p>
                 </Button>
               </li>
               <li>
                 <Link to="/about">
                   <img src={info} alt="" />
+                  <p>Information</p>
                 </Link>
               </li>
               <li>
@@ -54,6 +60,22 @@ const Header = () => {
                 </a> */}
                 <AuthIcon />
               </li>
+
+              {location.pathname.includes("/project/") ?
+                <>
+                  <li>
+                    <Link to="/terms" target="_blank">
+                      <img src={Terms} style={{ maxWidth: 32, filter: "invert(1)" }} alt="" />
+                      <p>Terms and Conditions</p></Link>
+                  </li>
+                  <li>
+                    <HashLink smooth to="/#contact-section" target="_blank">
+                      <img src={Contact} alt="" style={{ maxWidth: 32, filter: "invert(1)" }} />
+                      <p>Contact</p></HashLink>
+                  </li>
+                </> : null
+              }
+
             </ul>
           </div>
         </div>
