@@ -94,16 +94,6 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId, 
     const imagePlugin = createImagePlugin();
     const plugins = [imagePlugin];
 
-    // Called everytime there is a higlight
-    const handleEditor = useCallback(() => {
-        if (window.getSelection().toString().length && window.getSelection().toString() !== prevSelection && highlightToggle &&
-            (getSelectionParentElement().className === 'page' || getSelectionParentElement().className === 'textLayer')) {
-            const exactText = window.getSelection().toString();
-            prevSelection = exactText;
-            setEditorState((prevState) => insertNewBlock(prevState, exactText, style));
-        }
-    }, [style, highlightToggle]);
-
     useEffect(() => {
         if (!isLoggedIn) {
             window.addEventListener('beforeunload', (event) => {
@@ -132,13 +122,15 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId, 
     }, [img, isLoggedIn]);
 
     useEffect(() => {
-        let copyPasteText = '';
-        const length = notes.length;
-        if (length > 0 && notes[length - 1].quote) {
-            copyPasteText = notes[length - 1].quote;
-        }
-        if (copyPasteText !== '') {
-            setEditorState((prevState) => insertNewBlock(prevState, copyPasteText, style));
+        if(highlightToggle){
+            let copyPasteText = '';
+            const length = notes.length;
+            if (length > 0 && notes[length - 1].quote) {
+                copyPasteText = notes[length - 1].quote;
+            }
+            if (copyPasteText !== '') {
+                setEditorState((prevState) => insertNewBlock(prevState, copyPasteText, style));
+            }
         }
     }, [notes]);
 
