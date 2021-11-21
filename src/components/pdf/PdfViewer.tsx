@@ -26,7 +26,6 @@ interface PdfViewerProps {
 }
 
 const PdfViewer: React.FC<PdfViewerProps> = ({ fileUrl, notes, notesCallback }) => {
-    const notesContainerRef = React.useRef<HTMLDivElement | null>(null);
     let noteId = notes.length;
 
     const noteEles: Map<number, HTMLElement> = new Map();
@@ -54,14 +53,6 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileUrl, notes, notesCallback }) 
         );
     };
 
-    const jumpToNote = (note: Note) => {
-        activateTab(1);
-        const notesContainer = notesContainerRef.current;
-        if (noteEles.has(note.id) && notesContainer) {
-            notesContainer.scrollTop = noteEles.get(note.id).getBoundingClientRect().top;
-        }
-    };
-
     const renderHighlights = (props: RenderHighlightsProps) => (
         <div>
             {
@@ -79,7 +70,6 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileUrl, notes, notesCallback }) 
                                                 opacity: 0.4,
                                             }, props.getCssProperties(area, props.rotation))
                                         }
-                                        onClick={() => jumpToNote(note)}
                                     />
                                 ))
                         }
@@ -138,7 +128,6 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileUrl, notes, notesCallback }) 
         ],
         renderToolbar
     });
-    const { activateTab } = defaultLayoutPluginInstance;
     return (
         <Viewer
             fileUrl={fileUrl}
