@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { ReactElement } from 'react';
+import {ReactElement} from 'react';
 import { GlobalWorkerOptions, version} from 'pdfjs-dist';
-import { Button, DocumentLoadEvent, PdfJs, Position, PrimaryButton, Tooltip, Viewer } from '@react-pdf-viewer/core';
+import { DocumentLoadEvent, PdfJs, Viewer } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin, ToolbarProps } from '@react-pdf-viewer/default-layout';
-import { HighlightArea, highlightPlugin, MessageIcon } from '@react-pdf-viewer/highlight';
-import { RenderHighlightContentProps, RenderHighlightTargetProps, RenderHighlightsProps } from '@react-pdf-viewer/highlight';
+import { HighlightArea, highlightPlugin } from '@react-pdf-viewer/highlight';
+import { RenderHighlightTargetProps, RenderHighlightsProps } from '@react-pdf-viewer/highlight';
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 
@@ -26,7 +26,6 @@ interface PdfViewerProps {
 }
 
 const PdfViewer: React.FC<PdfViewerProps> = ({ fileUrl, notes, notesCallback }) => {
-    const [message, setMessage] = React.useState('');
     const notesContainerRef = React.useRef<HTMLDivElement | null>(null);
     let noteId = notes.length;
 
@@ -41,74 +40,17 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileUrl, notes, notesCallback }) 
         }
     };
 
-    const renderHighlightTarget = (props: RenderHighlightTargetProps) => (
-        <div
-            style={{
-                background: '#eee',
-                display: 'flex',
-                position: 'absolute',
-                left: `${props.selectionRegion.left}%`,
-                top: `${props.selectionRegion.top + props.selectionRegion.height}%`,
-                transform: 'translate(0, 8px)',
-            }}
-        >
-            <Tooltip
-                position={Position.TopCenter}
-                target={<Button onClick={props.toggle}><MessageIcon /></Button>}
-                content={() => <div style={{ width: '100px' }}>Add a note</div>}
-                offset={{ left: 0, top: -8 }}
-            />
-        </div>
-    );
-
-    const renderHighlightContent = (props: RenderHighlightContentProps) => {
-        const addNote = () => {
-            if (message !== '') {
-                const note: Note = {
-                    id: ++noteId,
-                    content: message,
-                    highlightAreas: props.highlightAreas,
-                    quote: props.selectedText,
-                };
-                notesCallback(notes.concat([note]));
-                props.cancel();
-            }
+    const renderHighlightTarget = (props: RenderHighlightTargetProps) => {
+        const note: Note = {
+            id: ++noteId,
+            content: '',
+            highlightAreas: props.highlightAreas,
+            quote: props.selectedText,
         };
-
+        notesCallback(notes.concat([note]));
+        props.cancel();
         return (
-            <div
-                style={{
-                    background: '#fff',
-                    border: '1px solid rgba(0, 0, 0, .3)',
-                    borderRadius: '2px',
-                    padding: '8px',
-                    position: 'absolute',
-                    left: `${props.selectionRegion.left}%`,
-                    top: `${props.selectionRegion.top + props.selectionRegion.height}%`,
-                    zIndex: 1,
-                }}
-            >
-                <div>
-                    <textarea
-                        rows={3}
-                        style={{
-                            border: '1px solid rgba(0, 0, 0, .3)',
-                        }}
-                        onChange={e => setMessage(e.target.value)}
-                    />
-                </div>
-                <div
-                    style={{
-                        display: 'flex',
-                        marginTop: '8px',
-                    }}
-                >
-                    <div style={{ marginRight: '8px' }}>
-                        <PrimaryButton onClick={addNote}>Add</PrimaryButton>
-                    </div>
-                    <Button onClick={props.cancel}>Cancel</Button>
-                </div>
-            </div>
+           <div/>
         );
     };
 
@@ -149,49 +91,14 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileUrl, notes, notesCallback }) 
 
     const highlightPluginInstance = highlightPlugin({
         renderHighlightTarget,
-        renderHighlightContent,
-        renderHighlights,
+        renderHighlights
     });
-
-    const { jumpToHighlightArea } = highlightPluginInstance;
 
     React.useEffect(() => {
         return () => {
             noteEles.clear();
         };
     }, []);
-
-    const sidebarNotes = (
-        <div
-            ref={notesContainerRef}
-            style={{
-                overflow: 'auto',
-                width: '100%',
-            }}
-        >
-            {notes.length === 0 && <div style={{ textAlign: 'center' }}>There is no note</div>}
-            {
-                notes.map(note => {
-                    return (
-                        <div
-                            key={note.id}
-                            style={{
-                                borderBottom: '1px solid rgba(0, 0, 0, .3)',
-                                cursor: 'pointer',
-                                padding: '8px',
-                            }}
-                            onClick={() => jumpToHighlightArea(note.highlightAreas[0])}
-                            ref={(ref): void => {
-                                noteEles.set(note.id, ref as HTMLElement);
-                            }}
-                        >
-                            {note.content}
-                        </div>
-                    );
-                })
-            }
-        </div>
-    );
 
     const renderToolbar = (Toolbar: ((props: ToolbarProps) => ReactElement)) => (
         <Toolbar>
@@ -228,11 +135,7 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileUrl, notes, notesCallback }) 
     const defaultLayoutPluginInstance = defaultLayoutPlugin({
         sidebarTabs: defaultTabs => [
             defaultTabs[1]            // Bookmarks tab
-        ].concat({
-            content: sidebarNotes,
-            icon: <MessageIcon />,
-            title: <>Notes</>,
-        }),
+        ],
         renderToolbar
     });
     const { activateTab } = defaultLayoutPluginInstance;
