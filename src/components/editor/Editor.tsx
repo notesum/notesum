@@ -315,7 +315,7 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId, 
                         <ToggleButton value="header-three"> <TextFieldsIcon fontSize="small" /> </ToggleButton>
                         <ToggleButton value="unstyled"> <TextFormatIcon /> </ToggleButton>
                         <ToggleButton value="unordered-list-item"> <FormatListBulletedIcon /> </ToggleButton>
-                        <ToggleButton value="img"> <CameraAltIcon /> </ToggleButton>
+                        {/*<ToggleButton value="img"> <CameraAltIcon /> </ToggleButton>*/}
                     </ToggleButtonGroup>
                 </Tooltip>
                 <ButtonGroup style={{
