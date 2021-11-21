@@ -30,6 +30,7 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileUrl, notes, notesCallback }) 
 
     const noteEles: Map<number, HTMLElement> = new Map();
     const [currentDoc, setCurrentDoc] = React.useState<PdfJs.PdfDocument | null>(null);
+    const [numPages, setNumPages] = React.useState<number>(0);
 
     const handleDocumentLoad = (e: DocumentLoadEvent) => {
         setCurrentDoc(e.doc);
@@ -37,6 +38,7 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileUrl, notes, notesCallback }) 
             // User opens new document
             notesCallback([]);
         }
+        setNumPages(e.doc.numPages);
     };
 
     const renderHighlightTarget = (props: RenderHighlightTargetProps) => {
@@ -94,7 +96,7 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileUrl, notes, notesCallback }) 
         <Toolbar>
             {
                 (slots) => {
-                    const { CurrentPageInput, NumberOfPages, Zoom, ZoomIn, ZoomOut } = slots;
+                    const { CurrentPageInput, Zoom, ZoomIn, ZoomOut } = slots;
                     return (
                         <div
                             style={{
@@ -102,8 +104,12 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileUrl, notes, notesCallback }) 
                                 display: 'flex',
                             }}
                         >
-                            <div style={{ padding: '0px 2px' }}>
-                                <CurrentPageInput /> / <NumberOfPages />
+                            <div style={{ padding: '0px 10px',
+                                          width: '10%'}}>
+                                <CurrentPageInput />
+                            </div>
+                            <div>
+                                / { numPages }
                             </div>
                             <div style={{ padding: '0px 2px',
                                           marginLeft: 'auto'}}>
