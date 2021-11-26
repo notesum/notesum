@@ -27,3 +27,4 @@ This project uses React on Typescript with Parcel as a packager, to learn more a
 - [React documentation](https://reactjs.org/)
 - [Parcel](https://parceljs.org/)
 - [TypeScript](https://www.typescriptlang.org/)
+- [Lint](https://palantir.github.io/tslint/)
