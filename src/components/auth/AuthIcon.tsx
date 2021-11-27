@@ -12,18 +12,21 @@ import Login from './Login';
 import SignUp from './SignUp';
 
 
+import user from "../../resources/user.svg";
+
+
 type AuthProps = {
     // Force open the dialog without a user click
     openProp: boolean
 };
 
-export default function AuthIcon({openProp}: AuthProps) {
-    
+export default function AuthIcon({ openProp }: AuthProps) {
+
     const projects = useSelector((state: AppState) => state.projects);
 
     // Force open the dialog without a user click
-    React.useEffect(()=> {
-        if(openProp) {
+    React.useEffect(() => {
+        if (openProp) {
             setDialogOpen(() => true);
         }
 
@@ -38,7 +41,7 @@ export default function AuthIcon({openProp}: AuthProps) {
 
     // Get user information if the login status changes
     React.useEffect(() => {
-        if(isLoggedIn) {
+        if (isLoggedIn) {
             dispatch(getUserInfo());
         }
     }, [isLoggedIn]);
@@ -52,15 +55,15 @@ export default function AuthIcon({openProp}: AuthProps) {
             payload: `/`
         });
         dispatch(logout());
-        setTimeout(()=>{
-            Object.keys(projects).map((uuid) =>dispatch(deleteProject(uuid)))
+        setTimeout(() => {
+            Object.keys(projects).map((uuid) => dispatch(deleteProject(uuid)))
 
-        },5000)
-            }
+        }, 5000)
+    }
 
     // Should the error banner be displayed
     function isError() {
-        if(error === null) {
+        if (error === null) {
             return false;
         }
         return error.length > 0;
@@ -101,8 +104,9 @@ export default function AuthIcon({openProp}: AuthProps) {
 
     return (
         <div>
-            <Button onMouseDown={() => setDialogOpen(true)}> <AccountCircleIcon style={{ color: 'white' }} />
-                <Typography variant="body1" style={{ color: 'white', paddingLeft: '5px' }}>{username}</Typography>
+            <Button onMouseDown={() => setDialogOpen(true)}><img src={user} alt="" />
+            <p>Profile</p>
+                {/* <Typography variant="body1" style={{ color: 'white', paddingLeft: '5px' }}>{username}</Typography> */}
             </Button>
             <Dialog open={dialogOpen} onClose={closeDialog}>
                 <div>
