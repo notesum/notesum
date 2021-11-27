@@ -65,17 +65,12 @@ function processBlock(block, contentState, output): void {
         );
     } else if (block.getType() === 'atomic' || block.getType() === 'img') {
         console.log('image');
-        
+
 
         try {
             const data = contentState.getEntity(block.getEntityAt(0)).getData().src.toString();
             const s = new Image();
             s.src = data;
-            // output.content.push(
-            //     {
-            //         image: data, width: s.width, height: s.height
-            //     }
-            // );
         } catch (e) {
             console.log(`Image saving might have gone bad\n ${e.message}`);
 
