@@ -20,7 +20,7 @@ import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
 import SaveIcon from '@material-ui/icons/Save';
 import {
-     DialogContent, DialogTitle, DialogContentText, DialogActions
+    DialogContent, DialogTitle, DialogContentText, DialogActions
 } from '@material-ui/core';
 
 import { updateEditor } from '../../redux/actions/filesActions';
@@ -33,7 +33,7 @@ import { Project } from '../../redux/types/projectTypes';
 
 import downloadState from './Download';
 import './Editor.css';
-import {insertImageUtil, getSelectionParentElement, hotKey, insertNewBlock} from './EditorUtils';
+import { insertImageUtil, getSelectionParentElement, hotKey, insertNewBlock } from './EditorUtils';
 
 type EditorProps = {
     img: string
@@ -45,12 +45,12 @@ type EditorProps = {
 
 export default function TextEditor({ img, screenshotCallback, dragging, fileId, notes }: EditorProps) {
 
-    const { isLoggedIn } = useSelector((state:AppState)=>state.auth);
-    let { id } = useSelector((state:AppState)=>state.auth);
+    const { isLoggedIn } = useSelector((state: AppState) => state.auth);
+    let { id } = useSelector((state: AppState) => state.auth);
     const userId = id;
 
-    let { id } = useParams<{ id: string}>();
-    const projectId=id;
+    let { id } = useParams<{ id: string }>();
+    const projectId = id;
 
     const project: Project = useSelector((state: any) => state.projects[id]);
 
@@ -94,18 +94,8 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId, 
     const imagePlugin = createImagePlugin();
     const plugins = [imagePlugin];
 
-    // Called everytime there is a higlight
-    const handleEditor = useCallback(() => {
-        if (window.getSelection().toString().length && window.getSelection().toString() !== prevSelection && highlightToggle &&
-            (getSelectionParentElement().className === 'page' || getSelectionParentElement().className === 'textLayer')) {
-            const exactText = window.getSelection().toString();
-            prevSelection = exactText;
-            setEditorState((prevState) => insertNewBlock(prevState, exactText, style));
-        }
-    }, [style, highlightToggle]);
-
-    useEffect(()=>{
-        if(!isLoggedIn){
+    useEffect(() => {
+        if (!isLoggedIn) {
             window.addEventListener('beforeunload', (event) => {
                 setSaveToggleOnLeave(true);
                 // Cancel the event as stated by the standard.
@@ -119,28 +109,30 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId, 
 
 
     useEffect(() => {
-        if(isLoggedIn && project.name === 'UNNAMED PROJECT' ){
+        if (isLoggedIn && project.name === 'UNNAMED PROJECT') {
             setShowSignUp(false);
             setNewProjectOpen(true);
         }
 
-    },[project,isLoggedIn]);
+    }, [project, isLoggedIn]);
 
     // If there is a new image insert it to the editor
     useEffect(() => {
         setEditorState((prevState) => insertImageUtil(prevState, img));
-    }, [img,isLoggedIn]);
+    }, [img, isLoggedIn]);
 
     useEffect(() => {
-        let copyPasteText = '';
-        const length = notes.length;
-        if ( length > 0 && notes[length - 1].quote) {
-            copyPasteText = notes[length - 1].quote;
+        if(highlightToggle){
+            let copyPasteText = '';
+            const length = notes.length;
+            if (length > 0 && notes[length - 1].quote) {
+                copyPasteText = notes[length - 1].quote;
+            }
+            if (copyPasteText !== '') {
+                setEditorState((prevState) => insertNewBlock(prevState, copyPasteText, style));
+            }
         }
-        if (copyPasteText !== ''){
-            setEditorState((prevState) => insertNewBlock(prevState, copyPasteText, style));
-        }
-    },[notes]);
+    }, [notes]);
 
     const editor = useRef(null);
 
@@ -233,71 +225,72 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId, 
 
     const benefitsDialogs = (
 
-    <Dialog onClose={() => setSaveToggle(false)} aria-labelledby="customized-dialog-title" open={saveToggle}>
-        <DialogTitle id="alert-dialog-title">
-            Do You Want To Sign Up?
-        </DialogTitle>
-        <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-            Signing up enables you to continue your work and upload multiple PDFs
-            to summarize. It also enables Auto-save, so that no progress
-            will be lost if you leave CosmoNote
-            </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-            <Button onClick={() =>{ setSaveToggle(false),setSaveToggleFile(true);}}>No</Button>
-            <Button onClick={() => {setSaveToggle(false),setShowSignUp(true);}}>
-                Sign Up
-            </Button>
-        </DialogActions>
-    </Dialog>
+        <Dialog onClose={() => setSaveToggle(false)} aria-labelledby="customized-dialog-title" open={saveToggle}>
+            <DialogTitle id="alert-dialog-title">
+                Do You Want To Sign Up?
+            </DialogTitle>
+            <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                    Signing up enables you to continue your work and upload multiple PDFs
+                    to summarize. It also enables Auto-save, so that no progress
+                    will be lost if you leave CosmoNote
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={() => { setSaveToggle(false), setSaveToggleFile(true); }}>Just Download</Button>
+                <Button onClick={() => { setSaveToggle(false), setShowSignUp(true); }}>
+                    Sign Up
+                </Button>
+            </DialogActions>
+        </Dialog>
     );
 
 
     const benefitsDialogsOnLeave = (
 
-    <Dialog onClose={() => setSaveToggleOnLeave(false)} aria-labelledby="customized-dialog-title" open={saveToggleOnLeave}>
-        <DialogTitle id="alert-dialog-title">
-            Do You Want To Sign Up?
-        </DialogTitle>
-        <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-            Signing up enables you to continue your work and upload multiple PDFs
-            to summarize. It also enables Auto-save, so that no progress
-            will be lost if you leave CosmoNote
-            </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-            <Button onClick={() =>{ setSaveToggleOnLeave(false),setDownloadToggle(true);}}>No</Button>
-            <Button onClick={() => {setSaveToggleOnLeave(false),setShowSignUp(true);}}>
-                Sign Up
-            </Button>
-        </DialogActions>
-    </Dialog>
+        <Dialog onClose={() => setSaveToggleOnLeave(false)} aria-labelledby="customized-dialog-title" open={saveToggleOnLeave}>
+            <DialogTitle id="alert-dialog-title">
+                Do You Want To Sign Up?
+            </DialogTitle>
+            <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                    Signing up enables you to continue your work and upload multiple PDFs
+                    to summarize. It also enables Auto-save, so that no progress
+                    will be lost if you leave CosmoNote
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={() => { setSaveToggleOnLeave(false), setDownloadToggle(true); }}>No</Button>
+                <Button onClick={() => { setSaveToggleOnLeave(false), setShowSignUp(true); }}>
+                    Sign Up
+                </Button>
+            </DialogActions>
+        </Dialog>
     );
 
     const downloadDialogs = (
 
         <Dialog onClose={() => setDownloadToggle(false)} aria-labelledby="customized-dialog-title" open={saveDownload}>
-        <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-                Remember to download your file as all progress
-will be lost if you close this site.
-            </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-            <Button onClick={() =>{ setDownloadToggle(false);
-                                    setSaveToggleFile(true);
-                                   }
-                            }>OK</Button>
-        </DialogActions>
-    </Dialog>
+            <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                    Remember to download your file as all progress
+                    will be lost if you close this site.
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={() => {
+                    setDownloadToggle(false);
+                    setSaveToggleFile(true);
+                }
+                }>OK</Button>
+            </DialogActions>
+        </Dialog>
     );
 
 
     const signUpDialogs = (
         <Dialog onClose={() => setShowSignUp(false)} aria-labelledby="customized-dialog-title" open={showSignUp}>
-            <SignUp/>
+            <SignUp />
         </Dialog>
 
     );
@@ -322,7 +315,7 @@ will be lost if you close this site.
                         <ToggleButton value="header-three"> <TextFieldsIcon fontSize="small" /> </ToggleButton>
                         <ToggleButton value="unstyled"> <TextFormatIcon /> </ToggleButton>
                         <ToggleButton value="unordered-list-item"> <FormatListBulletedIcon /> </ToggleButton>
-                        <ToggleButton value="img"> <CameraAltIcon /> </ToggleButton>
+                        {/*<ToggleButton value="img"> <CameraAltIcon /> </ToggleButton>*/}
                     </ToggleButtonGroup>
                 </Tooltip>
                 <ButtonGroup style={{
@@ -335,16 +328,16 @@ will be lost if you close this site.
                     <Button onMouseDown={() => formatText('CODE')} className="editorButton"><CodeIcon fontSize="small" /></Button>
                 </ButtonGroup>
                 <Tooltip title="Download" placement="top">
-                    { isLoggedIn ? <IconButton onClick={() => { setSaveToggleFile(true); }} style={{ marginLeft: 'auto' }}>
+                    {isLoggedIn ? <IconButton onClick={() => { setSaveToggleFile(true); }} style={{ marginLeft: 'auto' }}>
                         <SaveAltIcon fontSize="small" />
                     </IconButton>
-                    : <IconButton onClick={() => { setSaveToggle(true); }} style={{ marginLeft: 'auto' }}>
-                        <SaveAltIcon fontSize="small" />
-                    </IconButton>
+                        : <IconButton onClick={() => { setSaveToggle(true); }} style={{ marginLeft: 'auto' }}>
+                            <SaveAltIcon fontSize="small" />
+                        </IconButton>
 
                     }
 
-                    </Tooltip>
+                </Tooltip>
                 <Tooltip title={file.needsSave ? 'Save work to cloud' : 'Work already saved to cloud'} placement="top">
                     <IconButton onClick={() => dispatch(saveFile(fileId))} style={file.needsSave ? { color: '#000' } : {}}>
                         <SaveIcon fontSize="small" />
@@ -366,13 +359,13 @@ will be lost if you close this site.
         </Dialog>
     );
 
-    const SetProjectName= (
+    const SetProjectName = (
         <Dialog fullWidth={true} maxWidth="sm" open={isNewProjectOpen} onClose={() => setNewProjectOpen(false)}>
             <Box m={1}>
                 <DialogTitle>Set Project Name</DialogTitle>
                 <DialogContent>
                     <Box style={{ display: 'flex' }} m={0}>
-                        <TextField label="Project name" value={newProjectName}  onChange={e => { setNewProjectName(e.target.value); }} />
+                        <TextField label="Project name" value={newProjectName} onChange={e => { setNewProjectName(e.target.value); }} />
                         <DialogActions disableSpacing={true} style={{ marginLeft: 'auto' }}>
                             <Button variant="contained" color="primary"
                                 onClick={() => { newProject(newProjectName); setNewProjectOpen(false); }}>Update</Button>
