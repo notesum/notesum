@@ -75,7 +75,7 @@ export default function DocumentView({ pdf, fileId }: DocumentViewProps) {
                 width: `${pdfPercentage}%`,
                 height: '100%'
             }}>
-                <PdfViewer fileUrl={pdf} notes={notes} notesCallback={setNotes} screenshot={screenshot} setScreenshotCallback={setCallback}/>
+                <PdfViewer fileId={fileId} fileUrl={pdf} notes={notes} notesCallback={setNotes} screenshot={screenshot} setScreenshotCallback={setCallback}/>
             </Box>
 
             <div

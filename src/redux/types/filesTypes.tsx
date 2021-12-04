@@ -33,11 +33,21 @@ export interface IFileEditorSave {
     };
 }
 
+export const ADD_NOTE_FILE = 'ADD_NOTE_FILE';
+export interface IAddNoteFileAction {
+    readonly type: typeof ADD_NOTE_FILE;
+    payload: {
+        noteId: number,
+        fileId: string
+    };
+}
+
 export type FilesActionsTypes =
     | INewFileAction
     | IUpdateEditorState
     | IUpdateFileList
-    | IFileEditorSave;
+    | IFileEditorSave
+    | IAddNoteFileAction;
 
 export interface ProjectFile {
     id: string;

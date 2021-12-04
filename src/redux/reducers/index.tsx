@@ -8,6 +8,7 @@ import filesReducer from './filesReducer';
 import redirectReducer from './redirectReducer';
 import storage from 'redux-persist/lib/storage';
 import * as t from './../types/authTypes';
+import noteReducer from './noteReducer';
 
 const appReducer = combineReducers({
     editor: editorReducer,
