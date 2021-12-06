@@ -30,6 +30,7 @@ import { updateProjectName } from '../../redux/asyncActions/projectAsyncActions'
 import { Note } from '../pdf/PdfViewer';
 import SignUp from '../auth/SignUp';
 import { Project } from '../../redux/types/projectTypes';
+import {Notes} from '../../redux/types/noteType';
 
 import downloadState from './Download';
 import './Editor.css';
@@ -40,7 +41,7 @@ type EditorProps = {
     screenshotCallback: (b: boolean) => void
     dragging: boolean,
     fileId: string,
-    notes: Note[];
+    notes: Notes;
 };
 
 export default function TextEditor({ img, screenshotCallback, dragging, fileId, notes }: EditorProps) {
@@ -124,9 +125,10 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId, 
     useEffect(() => {
         if(highlightToggle){
             let copyPasteText = '';
-            const length = notes.length;
-            if (length > 0 && notes[length - 1].quote) {
-                copyPasteText = notes[length - 1].quote;
+            const length = Object.keys(notes).length;
+            const lastNote = notes[Object.keys(notes)[length - 1]];
+            if (length > 0 && lastNote.quote) {
+                copyPasteText = lastNote.quote;
             }
             if (copyPasteText !== '') {
                 setEditorState((prevState) => insertNewBlock(prevState, copyPasteText, style));

@@ -16,7 +16,8 @@ const appReducer = combineReducers({
     auth: authReducer,
     projects: projectReducer,
     files: filesReducer,
-    redirect: redirectReducer
+    redirect: redirectReducer,
+    notes: noteReducer
 });
 
 const rootReducer = (state, action) => {

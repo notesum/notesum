@@ -1,8 +1,9 @@
 import { Dispatch } from 'react';
 
-import { NEW_NOTE, Note, NoteActionsTypes } from '../types/noteType';
+import {NEW_NOTE, Note, NoteActionsTypes, Notes} from '../types/noteType';
 import { FilesActionsTypes } from '../types/filesTypes';
 import { addNoteToFile } from '../actions/filesActions';
+import { updateNotesList } from '../actions/noteActions';
 
 import { BASE_URL } from './ServerSettings';
 
@@ -33,6 +34,33 @@ export function createNote(fileId: string, note: Note){
             });
 
             dispatch(addNoteToFile(json.data.id, fileId));
+        })();
+    };
+}
+
+export function loadNotes(fileId: string) {
+    return (dispatch: Dispatch<NoteActionsTypes>, getState) => {
+        (async () => {
+            const requestOptions = {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${getState().auth.token}`
+                }
+            };
+
+            const result = await fetch(`${BASE_URL}/files/${fileId}/notes`, requestOptions);
+
+            const notes: Notes = (await result.json()).data.reduce((obj: Notes, item) => {
+                return {
+                    ...obj,
+                    [item.id]: item
+                };
+            }, {});
+            console.log('Load notes:');
+            dispatch(updateNotesList(notes));
+
         })();
     };
 }

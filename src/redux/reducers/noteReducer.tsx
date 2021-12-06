@@ -2,7 +2,7 @@ import {NEW_NOTE, NoteActionsTypes, Notes} from '../types/noteType';
 
 const initialState: Notes = {};
 
-const noteReducer = (state = initialState, action: NoteActionsTypes) => {
+const noteReducer = (state = initialState, action: NoteActionsTypes): Notes => {
     switch (action.type) {
         case NEW_NOTE:
             return {
@@ -14,6 +14,8 @@ const noteReducer = (state = initialState, action: NoteActionsTypes) => {
                     quote: action.payload.quote
                 }
             };
+        default:
+            return state;
     }
 };
 

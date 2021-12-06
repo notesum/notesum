@@ -1,8 +1,11 @@
 import React, { useRef, useEffect, useState } from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import { Box } from '@material-ui/core';
 
-import PdfViewer, { Note } from '../pdf/PdfViewer';
+import PdfViewer from '../pdf/PdfViewer';
 import TextEditor from '../editor/Editor';
+import {Notes} from '../../redux/types/noteType';
+import {loadNotes} from '../../redux/asyncActions/noteAsyncActions';
 
 import './DocumentView.css';
 
@@ -12,11 +15,12 @@ type DocumentViewProps = {
 };
 
 export default function DocumentView({ pdf, fileId }: DocumentViewProps) {
-
+    console.log('DocumentView fileId', fileId);
     const [screenshot, setScreenshot] = useState(false);
     const [image, setImage] = useState('');
-    const [notes, setNotes] = useState<Note[]>([]);
+    const notes: Notes = useSelector((state: any) => state.notes);
 
+    const dispatch = useDispatch();
 
     const setCallback = (img: string) => {
         setImage(img);
@@ -69,13 +73,18 @@ export default function DocumentView({ pdf, fileId }: DocumentViewProps) {
         };
     }, [dragging]);
 
+    useEffect(() => {
+        dispatch(loadNotes(fileId));
+        console.log(notes);
+    },[]);
+
     return (
         <Box flexDirection="row" display="flex" height="100%" {...{ ref: mainViewRef }}>
             <Box flexGrow={1} style={{
                 width: `${pdfPercentage}%`,
                 height: '100%'
             }}>
-                <PdfViewer fileId={fileId} fileUrl={pdf} notes={notes} notesCallback={setNotes} screenshot={screenshot} setScreenshotCallback={setCallback}/>
+                <PdfViewer fileId={fileId} fileUrl={pdf} notes={notes} screenshot={screenshot} setScreenshotCallback={setCallback}/>
             </Box>
 
             <div

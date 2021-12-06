@@ -6,8 +6,15 @@ export interface INewNoteAction {
     payload: Note;
 }
 
+export const UPDATE_NOTES_LIST = 'UPDATE_NOTES_LIST';
+export interface IUpdateNotesList {
+    readonly type: typeof UPDATE_NOTES_LIST;
+    payload: Notes;
+}
+
 export type NoteActionsTypes =
-    INewNoteAction;
+    | INewNoteAction
+    | IUpdateNotesList ;
 
 export interface Note {
     id: number;
