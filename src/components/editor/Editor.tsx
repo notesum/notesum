@@ -41,7 +41,7 @@ type EditorProps = {
     screenshotCallback: (b: boolean) => void
     dragging: boolean,
     fileId: string,
-    notes: Notes;
+    notes: Note[];
 };
 
 export default function TextEditor({ img, screenshotCallback, dragging, fileId, notes }: EditorProps) {
@@ -125,10 +125,9 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId, 
     useEffect(() => {
         if(highlightToggle){
             let copyPasteText = '';
-            const length = Object.keys(notes).length;
-            const lastNote = notes[Object.keys(notes)[length - 1]];
-            if (length > 0 && lastNote.quote) {
-                copyPasteText = lastNote.quote;
+            const length = notes.length;
+            if (length > 0 && notes[length - 1].quote) {
+                copyPasteText = notes[length - 1].quote;
             }
             if (copyPasteText !== '') {
                 setEditorState((prevState) => insertNewBlock(prevState, copyPasteText, style));

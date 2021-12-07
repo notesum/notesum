@@ -1,7 +1,9 @@
 import { ContentState, convertToRaw } from 'draft-js';
 
-import { FilesActionsTypes, Files, NEW_FILE, UPDATE_FILE_EDITOR_STATE,
-    UPDATE_FILE_LIST, FILE_EDITOR_SAVE } from '../types/filesTypes';
+import {
+    FilesActionsTypes, Files, NEW_FILE, UPDATE_FILE_EDITOR_STATE,
+    UPDATE_FILE_LIST, FILE_EDITOR_SAVE, ADD_NOTE_FILE
+} from '../types/filesTypes';
 
 const initialState: Files = {};
 
@@ -28,6 +30,7 @@ const filesReducer = (state = initialState, action: FilesActionsTypes): Files =>
                     id: action.payload.id,
                     title: action.payload.title,
                     summary: convertToRaw(ContentState.createFromText('')),
+                    notes: [],
                     currentPage: 0,
                     pdf: action.payload.pdf
                 }
@@ -53,6 +56,17 @@ const filesReducer = (state = initialState, action: FilesActionsTypes): Files =>
                     lastSavedSummary: state[action.payload.id].summary
                 }
             };
+
+        case ADD_NOTE_FILE:
+            const State = {
+                ...state,
+                [action.payload.fileId]: {
+                    ...state[action.payload.fileId],
+                    notes: [...state[action.payload.fileId].notes, action.payload.noteId]
+                }
+            };
+            console.log('FilesReducer', State);
+            return State;
 
         default:
             return state;

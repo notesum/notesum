@@ -55,6 +55,7 @@ export interface ProjectFile {
     summary: RawDraftContentState;
     currentPage: number;
     pdf: string; // url
+    notes: number[];
     needsSave?: boolean;
     lastSavedSummary?: RawDraftContentState;
 }

@@ -4,8 +4,8 @@ import { Box } from '@material-ui/core';
 
 import PdfViewer from '../pdf/PdfViewer';
 import TextEditor from '../editor/Editor';
-import {Notes} from '../../redux/types/noteType';
-import {loadNotes} from '../../redux/asyncActions/noteAsyncActions';
+import { Note, Notes } from '../../redux/types/noteType';
+import { Files } from '../../redux/types/filesTypes';
 
 import './DocumentView.css';
 
@@ -15,12 +15,12 @@ type DocumentViewProps = {
 };
 
 export default function DocumentView({ pdf, fileId }: DocumentViewProps) {
-    console.log('DocumentView fileId', fileId);
     const [screenshot, setScreenshot] = useState(false);
     const [image, setImage] = useState('');
-    const notes: Notes = useSelector((state: any) => state.notes);
 
-    const dispatch = useDispatch();
+    const files: Files = useSelector((state: any) => state.files);
+    const notesState: Notes = useSelector((state: any) => state.notes);
+    const [notes, setNotes] = useState<Note[]>([]);
 
     const setCallback = (img: string) => {
         setImage(img);
@@ -74,8 +74,11 @@ export default function DocumentView({ pdf, fileId }: DocumentViewProps) {
     }, [dragging]);
 
     useEffect(() => {
-        dispatch(loadNotes(fileId));
-        console.log(notes);
+        const notesArray: Note[] = [];
+        files[fileId].notes.forEach((noteId) => {
+            notesArray.push(notesState[noteId]);
+        });
+        setNotes(notesArray);
     },[]);
 
     return (
@@ -84,7 +87,7 @@ export default function DocumentView({ pdf, fileId }: DocumentViewProps) {
                 width: `${pdfPercentage}%`,
                 height: '100%'
             }}>
-                <PdfViewer fileId={fileId} fileUrl={pdf} notes={notes} screenshot={screenshot} setScreenshotCallback={setCallback}/>
+                <PdfViewer fileId={fileId} fileUrl={pdf} notes={notes} notesCallback={setNotes} screenshot={screenshot} setScreenshotCallback={setCallback}/>
             </Box>
 
             <div

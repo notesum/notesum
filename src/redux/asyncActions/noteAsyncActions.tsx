@@ -58,7 +58,6 @@ export function loadNotes(fileId: string) {
                     [item.id]: item
                 };
             }, {});
-            console.log('Load notes:');
             dispatch(updateNotesList(notes));
 
         })();
