@@ -1,7 +1,10 @@
-import { ProjectActionTypes, ProjectsState, NEW_PROJECT, UPDATE_PROJECT_NAME, ADD_PROJECT_FILE,
-    REMOVE_PROJECT_FILE, DELETE_PROJECT, UPDATE_PROJECT_LIST, SET_OPEN_PROJECT_FILE } from '../types/projectTypes';
+import {
+    ProjectActionTypes, ProjectsState, NEW_PROJECT, UPDATE_PROJECT_NAME, ADD_PROJECT_FILE,
+    REMOVE_PROJECT_FILE, DELETE_PROJECT, UPDATE_PROJECT_LIST, SET_OPEN_PROJECT_FILE
+} from '../types/projectTypes';
 
-const initialState: ProjectsState = {};
+const initialState: ProjectsState = {
+};
 
 const projectReducer = (state = initialState, action: ProjectActionTypes): ProjectsState => {
     switch (action.type) {
@@ -31,7 +34,7 @@ const projectReducer = (state = initialState, action: ProjectActionTypes): Proje
 
         case DELETE_PROJECT:
             //console.log("data in here are findong",state[action.payload.id],"state here is ",state,"action here is action",action);
-            
+
             const updatedState = {
                 ...state,
             };

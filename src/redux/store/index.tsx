@@ -11,7 +11,9 @@ const config = {
     key: 'root',
     storage,
     migrate: migrations,
-    version: 0
+    version: 0,
+    blacklist: ['ui']
+
 };
 
 const persisted = persistReducer(config, rootReducer);
@@ -19,7 +21,7 @@ const middleWareEnhancer = applyMiddleware(thunkMiddleware);
 const composedEnhancers = composeWithDevTools(middleWareEnhancer);
 
 export default () => {
-    const store = createStore(persisted,composedEnhancers);
+    const store = createStore(persisted, composedEnhancers);
     const persistor = persistStore(store);
-    return{store,persistor};
+    return { store, persistor };
 };

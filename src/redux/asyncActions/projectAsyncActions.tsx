@@ -1,8 +1,10 @@
 import { Dispatch } from 'react';
 
-import { UPDATE_PROJECT_NAME,NEW_PROJECT, ProjectActionTypes, ProjectsState } from '../types/projectTypes';
+import { UPDATE_PROJECT_NAME, NEW_PROJECT, ProjectActionTypes, ProjectsState } from '../types/projectTypes';
 import { updateProjectsList } from '../actions/projectActions';
 import { REDIRECT, RedirectActionTypes } from '../types/redirectTypes';
+import { SHOW_LOADER, HIDE_LOADER } from '../types/uiTypes';
+
 
 import { BASE_URL } from './ServerSettings';
 
@@ -37,10 +39,10 @@ export function loadProjects() {
 }
 
 
-export function deleteEmptyProject(name: string,user_id: BigInteger,project_id: BigInteger) {
+export function deleteEmptyProject(name: string, user_id: BigInteger, project_id: BigInteger) {
     return (dispatch: Dispatch<ProjectActionTypes | RedirectActionTypes>, getState) => {
         (async () => {
-            
+
             const requestOptions = {
                 method: 'POST',
                 headers: {
@@ -49,7 +51,7 @@ export function deleteEmptyProject(name: string,user_id: BigInteger,project_id: 
                     'Authorization': `Bearer ${getState().auth.token}`
                 },
                 body: JSON.stringify({
-                    name,user_id,project_id
+                    name, user_id, project_id
                 })
             };
 
@@ -58,15 +60,15 @@ export function deleteEmptyProject(name: string,user_id: BigInteger,project_id: 
 
             // if (!('data' in json)) return;
 
-            
-            
+
+
         })();
     };
 }
-export function updateProjectName(name: string,user_id: BigInteger,project_id: BigInteger) {
+export function updateProjectName(name: string, user_id: BigInteger, project_id: BigInteger) {
     return (dispatch: Dispatch<ProjectActionTypes | RedirectActionTypes>, getState) => {
         (async () => {
-            
+
             const requestOptions = {
                 method: 'POST',
                 headers: {
@@ -75,12 +77,12 @@ export function updateProjectName(name: string,user_id: BigInteger,project_id: B
                     'Authorization': `Bearer ${getState().auth.token}`
                 },
                 body: JSON.stringify({
-                    name,user_id,project_id
+                    name, user_id, project_id
                 })
             };
 
             const result = await fetch(`${BASE_URL}/update_name`, requestOptions);
-            const json: {data: {id: string, name: string}} | {message: string} = (await result.json());
+            const json: { data: { id: string, name: string } } | { message: string } = (await result.json());
 
             if (!('data' in json)) return;
 
@@ -91,7 +93,7 @@ export function updateProjectName(name: string,user_id: BigInteger,project_id: B
                     name: json.data.name
                 }
             });
-            
+
         })();
     };
 }
@@ -112,7 +114,7 @@ export function createNewProject(name: string) {
             };
 
             const result = await fetch(`${BASE_URL}/projects`, requestOptions);
-            const json: {data: {id: string, name: string}} | {message: string} = (await result.json());
+            const json: { data: { id: string, name: string } } | { message: string } = (await result.json());
 
             if (!('data' in json)) return;
 
@@ -134,34 +136,55 @@ export function createNewProject(name: string) {
 
 
 
-export function createNewProjectVistior(name: string,id) {
-    return (dispatch: Dispatch<ProjectActionTypes | RedirectActionTypes>, getState) => {
+export function createNewProjectVistior(name: string, id) {
+    return (dispatch: Dispatch<ProjectActionTypes | RedirectActionTypes | any>, getState) => {
         (async () => {
-            const requestOptions = {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    'Authorization': `Bearer ${getState().auth.token}`
-                },
-                body: JSON.stringify({
-                    name
-                })
-            };
+            try {
+                dispatch({
+                    type: SHOW_LOADER
+                });
+                const requestOptions = {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'Authorization': `Bearer ${getState().auth.token}`
+                    },
+                    body: JSON.stringify({
+                        name
+                    })
+                };
+                const result = await fetch(`${BASE_URL}/projects_visitor`, requestOptions);
 
-            const result = await fetch(`${BASE_URL}/projects_visitor`, requestOptions);
-            const json: {data: {id: string, name: string}} | {message: string} = (await result.json());
+                const json: { data: { id: string, name: string } } | { message: string } = (await result.json());
 
-            if (!('data' in json)) return;
 
-            dispatch({
-                type: NEW_PROJECT,
-                payload: {
-                    id: json.data.id,
-                    name: json.data.name
+                if (!('data' in json)) {
+                    dispatch({
+                        type: HIDE_LOADER
+                    });
+                    return;
                 }
-            });
-            id(json.data.id)
+                dispatch({
+                    type: NEW_PROJECT,
+                    payload: {
+                        id: json.data.id,
+                        name: json.data.name
+                    }
+                });
+
+                id(json.data.id)
+                setTimeout(() => {
+                    dispatch({
+                        type: HIDE_LOADER
+                    });
+                }, 4000)
+            } catch (error) {
+                dispatch({
+                    type: HIDE_LOADER
+                });
+            }
+
         })();
     };
 }

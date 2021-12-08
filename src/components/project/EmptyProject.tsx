@@ -3,12 +3,16 @@ import { Paper } from "@material-ui/core";
 import BackupIcon from "@material-ui/icons/Backup";
 
 import "./EmptyProject.css";
+import { useDispatch, useSelector } from "react-redux";
+
 
 export default function EmptyProject({
   addFile,
 }: {
   addFile: (file: File) => void;
 }) {
+  const loader = useSelector((state: any) => state.ui.loading);
+
   const dragEvent = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
 
@@ -40,7 +44,21 @@ export default function EmptyProject({
   const [isDropping, setIsDropping] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
   const fileInputRef = useRef(null);
+  if (loader) {
+    return (
+      <div
+        className="projectUploadScreen custom_spacing d-flex">
+        <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
 
+        <Paper
+          className="projectUploadDialog padding_top"
+        >
+          <p>One moment please</p>
+          <i style={{ color: "grey" }}>your file is being uploaded</i>
+        </Paper>
+      </div>
+    )
+  }
   return (
     <div
       className="projectUploadScreen custom_spacing"
