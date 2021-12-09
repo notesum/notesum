@@ -4,7 +4,9 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Box, Button, Grid, Typography, Checkbox, Link } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { register } from '../../redux/asyncActions/authAsyncActions';
-import { Close } from '@material-ui/icons'
+import { Close, Check } from '@material-ui/icons'
+
+
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
@@ -31,6 +33,8 @@ export default function SignUp() {
     const [lowerCase, setlowerCase] = useState(false)
     const [upperCase, setupperCase] = useState(false)
     const [symbol, setSymbol] = useState(false)
+    const [validation, setValidation] = useState(false)
+
 
 
 
@@ -54,34 +58,61 @@ export default function SignUp() {
 
     // Submit the user if the passwords match
     function handleSubmit() {
-        if (password === passwordConf) {
-            setDidntMatch(false);
-            dispatch(register(name, email, password));
-        } else {
-            setDidntMatch(true);
+        if (validation) {
+            if (password === passwordConf) {
+                setDidntMatch(false);
+                dispatch(register(name, email, password));
+            } else {
+                setDidntMatch(true);
+            }
         }
     }
+    const passValidation = () => {
+        const passValid = passNumber && lowerCase && upperCase && symbol
+        return (
+            <div className="pass-validation">
+                <div>
+                    <Typography variant="body2" className={`flex-align color-error ${leastcharacter ? "success" : ""}`}>
+                        {leastcharacter ? <Check fontSize={"small"} className="success" /> : <Close fontSize={"small"} className="color-error" />} At least 8 characters long
+                    </Typography>
+                    <Typography variant="body2" className={`flex-align color-error ${passValid ? "success" : ""}`}>
+                        {passValid ? <Check fontSize={"small"} className="success" /> : <Close fontSize={"small"} className="color-error" />} Should contain:
+                    </Typography>
+                    <Typography variant="body2" className={`left-space flex-align color-error ${passNumber ? "success" : ""}`}>
+                        {passNumber ? <Check fontSize={"small"} className="success" /> : <Close fontSize={"small"} className="color-error" />}Numbers (i.e., 0-9)
+                    </Typography>
+                    <Typography variant="body2" className={`left-space flex-align color-error ${lowerCase ? "success" : ""}`}>
+                        {lowerCase ? <Check fontSize={"small"} className="success" /> : <Close fontSize={"small"} className="color-error" />}Lower case letters (a-z)
+                    </Typography>
+                    <Typography variant="body2" className={`left-space flex-align color-error ${upperCase ? "success" : ""}`} >
+                        {upperCase ? <Check fontSize={"small"} className="success" /> : <Close fontSize={"small"} className="color-error" />}Upper case letters (A-Z)
+                    </Typography>
+                    <Typography variant="body2" className={`left-space flex-align color-error ${symbol ? "success" : ""}`} >
+                        {symbol ? <Check fontSize={"small"} className="success" /> : <Close fontSize={"small"} className="color-error" />}{"At least one symbol (~, !, @, #, $, %, ^, &, *, (, ), -, _, =, +, [, ], {, }, /, ;, :, “, ,, ‘, <, >, |, ?,‘)"}
+                    </Typography>
+                </div>
+            </div>
+        )
+    }
 
-    const handlePassChange = (event) => {
-        const { value } = event.target
+    const inpuFocus = () => {
+        setValidation(true)
+        handlePassChange(password)
+    }
+
+    const handlePassChange = (value) => {
+        setPassword(value)
         var format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
-        if (value.length > 7) setleastCharacter(true)
-        if (/\d/.test(value)) console.log("passed", /\d/.test(value))
-        if (/[a-z]/.test(value)) setlowerCase(true)
-        if (/[A-Z]/.test(value)) setupperCase(true)
-        if (format.test(value)) setSymbol(true)
-        else {
-            setleastCharacter(false)
-            setpassNumber(false)
-            setlowerCase(false)
-            setupperCase(false)
-            setSymbol(false)
-        }
+        if (value && value.length > 7) { setleastCharacter(true) } else { setleastCharacter(false) }
+        if (value && /\d+/g.test(value)) { setpassNumber(true) } else { setpassNumber(false) }
+        if (value && /[a-z]/.test(value)) { setlowerCase(true) } else { setlowerCase(false) }
+        if (value && /[A-Z]/.test(value)) { setupperCase(true) } else { setupperCase(false) }
+        if (value && format.test(value)) { setSymbol(true) } else { setSymbol(false) }
 
     }
 
     // Sign up form
-    const form = (
+    const form = () => (
         <form className={classes.root} noValidate autoComplete="off">
             <div>
                 <TextField onChange={(event) => setName(event.target.value)} label="Username" />
@@ -90,29 +121,9 @@ export default function SignUp() {
                 <TextField onChange={(event) => setEmail(event.target.value)} label="Email" />
             </div>
             <div>
-                <TextField type="password" onChange={(event) => handlePassChange(event)} label="Password" />
-                <div className="pass-validation">
-                    <div>
-                        <Typography variant="body2" className={"flex-align color-error" + leastcharacter && "success"}>
-                            <Close fontSize={"small"} className="color-error" /> At least 8 characters long
-                        </Typography>
-                        <Typography variant="body2" className={"color-error"}>
-                            <Close fontSize={"small"} className="color-error" /> Should contain:
-                        </Typography>
-                        <Typography variant="body2" className={"left-space flex-align color-error" + passNumber && "success"}>
-                            <Close fontSize={"small"} className="color-error" /> Numbers (i.e., 0-9)
-                        </Typography>
-                        <Typography variant="body2" className={"left-space flex-align color-error" + lowerCase && "success"}>
-                            <Close fontSize={"small"} className="color-error" /> Lower case letters (a-z)
-                        </Typography>
-                        <Typography variant="body2" className={"left-space flex-align color-error" + upperCase && "success"} >
-                            <Close fontSize={"small"} className="color-error" /> Upper case letters (A-Z)
-                        </Typography>
-                        <Typography variant="body2" className={"left-space flex-align color-error" + symbol && "success"} >
-                            <Close fontSize={"small"} className="color-error" /> {"At least one symbol (~, !, @, #, $, %, ^, &, *, (, ), -, _, =, +, [, ], {, }, /, ;, :, “, ,, ‘, <, >, |, ?,‘)"}
-                        </Typography>
-                    </div>
-                </div>
+                <TextField type="password" autoComplete={"false"} onFocus={() => inpuFocus()} onChange={(event) => handlePassChange(event.target.value)} label="Password" />
+                {validation && passValidation()}
+
             </div>
             <div>
                 <TextField type="password" onChange={(event) => setPasswordConf(event.target.value)} label="Password Repeat" />
@@ -127,7 +138,7 @@ export default function SignUp() {
                     <Typography variant="h4">Sign Up</Typography>
                 </Grid>
                 <Grid item>
-                    {form}
+                    {form()}
                 </Grid>
                 <Grid item style={{ marginTop: '10px', width: "100%", display: "flex", alignItems: "center" }}>
                     <Checkbox value={consent} onChange={() => setConsent(true)} />
