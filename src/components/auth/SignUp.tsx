@@ -33,10 +33,12 @@ export default function SignUp() {
     const [lowerCase, setlowerCase] = useState(false)
     const [upperCase, setupperCase] = useState(false)
     const [symbol, setSymbol] = useState(false)
-    const [validation, setValidation] = useState(false)
+    const [Showvalidation, setShowValidation] = useState(false)
+    const [Formvalidated, setFormValdated] = useState(false)
 
-
-
+    useEffect(() => {
+        FormValidation()
+    }, [consent, password])
 
 
     const dispatch = useDispatch();
@@ -58,7 +60,7 @@ export default function SignUp() {
 
     // Submit the user if the passwords match
     function handleSubmit() {
-        if (validation) {
+        if (Formvalidated) {
             if (password === passwordConf) {
                 setDidntMatch(false);
                 dispatch(register(name, email, password));
@@ -96,7 +98,7 @@ export default function SignUp() {
     }
 
     const inpuFocus = () => {
-        setValidation(true)
+        setShowValidation(true)
         handlePassChange(password)
     }
 
@@ -108,6 +110,16 @@ export default function SignUp() {
         if (value && /[a-z]/.test(value)) { setlowerCase(true) } else { setlowerCase(false) }
         if (value && /[A-Z]/.test(value)) { setupperCase(true) } else { setupperCase(false) }
         if (value && format.test(value)) { setSymbol(true) } else { setSymbol(false) }
+    }
+
+    const FormValidation = () => {
+        const passValid = passNumber && lowerCase && upperCase && symbol
+        console.log(passValid && consent)
+        if (passValid && consent) {
+            setFormValdated(true)
+        } else {
+            setFormValdated(false)
+        }
 
     }
 
@@ -122,7 +134,7 @@ export default function SignUp() {
             </div>
             <div>
                 <TextField type="password" autoComplete={"false"} onFocus={() => inpuFocus()} onChange={(event) => handlePassChange(event.target.value)} label="Password" />
-                {validation && passValidation()}
+                {Showvalidation && passValidation()}
 
             </div>
             <div>
@@ -130,7 +142,6 @@ export default function SignUp() {
             </div>
         </form>
     );
-    const isvalid = name.length && email.length && password.length && passwordConf.length
     return (
         <Box id="bg-white" m={3} >
             <Grid container spacing={0} direction="column" alignItems="center" justify="center">
@@ -141,7 +152,7 @@ export default function SignUp() {
                     {form()}
                 </Grid>
                 <Grid item style={{ marginTop: '10px', width: "100%", display: "flex", alignItems: "center" }}>
-                    <Checkbox value={consent} onChange={() => setConsent(true)} />
+                    <Checkbox value={consent} onChange={() => { setConsent(!consent), FormValidation() }} />
                     <Typography variant="subtitle2">
                         By signing up you accept our <Link href="/terms" target="_blank">terms and condition</Link>
                     </Typography>
@@ -152,7 +163,7 @@ export default function SignUp() {
                     </Grid>
                 }
                 <Grid item style={{ marginTop: '10px' }}>
-                    <Button variant="contained" disabled={!isvalid} color="primary" onMouseDown={() => handleSubmit()}>Sign Up!</Button>
+                    <Button variant="contained" disabled={(Formvalidated) ? false : true} color="primary" onMouseDown={() => handleSubmit()}>Sign Up!</Button>
                 </Grid>
             </Grid >
         </Box>
