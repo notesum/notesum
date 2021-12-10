@@ -82,8 +82,7 @@ export default function Project() {
   useEffect(() => {
     if (!currentFile && project.files.length > 0) {
       history.push(
-        `/project/${id}/${
-          project.lastOpenFile ? project.lastOpenFile : project.files[0]
+        `/project/${id}/${project.lastOpenFile ? project.lastOpenFile : project.files[0]
         }`
       );
     }
@@ -182,7 +181,7 @@ export default function Project() {
       </Dialog>
 
       <Box flexDirection="column" display="flex" height="100%">
-        <Box m={0} bgcolor="#2f3d88">
+        <Box m={0} bgcolor="#0b214a">
           <Toolbar variant="dense" style={{ padding: 0 }}>
             <IconButton onClick={() => setFileDrawerOpen(true)}>
               <MenuIcon style={{ color: "#fff" }} />
