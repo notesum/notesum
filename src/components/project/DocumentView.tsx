@@ -1,11 +1,12 @@
 import React, { useRef, useEffect, useState } from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+// import { useSelector } from 'react-redux';
 import { Box } from '@material-ui/core';
 
 import PdfViewer from '../pdf/PdfViewer';
 import TextEditor from '../editor/Editor';
-import { Note, Notes } from '../../redux/types/noteType';
-import { Files } from '../../redux/types/filesTypes';
+import useNotes from '../../hooks/useNotes';
+// import { Note, Notes } from '../../redux/types/noteType';
+// import { Files } from '../../redux/types/filesTypes';
 
 import './DocumentView.css';
 
@@ -18,9 +19,8 @@ export default function DocumentView({ pdf, fileId }: DocumentViewProps) {
     const [screenshot, setScreenshot] = useState(false);
     const [image, setImage] = useState('');
 
-    const files: Files = useSelector((state: any) => state.files);
-    const notesState: Notes = useSelector((state: any) => state.notes);
-    const [notes, setNotes] = useState<Note[]>([]);
+    // const files: Files = useSelector((state: any) => state.files);
+    // const notesState: Notes = useSelector((state: any) => state.notes);
 
     const setCallback = (img: string) => {
         setImage(img);
@@ -73,13 +73,11 @@ export default function DocumentView({ pdf, fileId }: DocumentViewProps) {
         };
     }, [dragging]);
 
-    useEffect(() => {
-        const notesArray: Note[] = [];
-        files[fileId].notes.forEach((noteId) => {
-            notesArray.push(notesState[noteId]);
-        });
-        setNotes(notesArray);
-    },[]);
+    // useEffect(() => {
+    //     files[fileId].notes.forEach((noteId) => {
+    //         notesArray.push(notesState[noteId]);
+    //     });
+    // },[]);
 
     return (
         <Box flexDirection="row" display="flex" height="100%" {...{ ref: mainViewRef }}>
@@ -87,7 +85,7 @@ export default function DocumentView({ pdf, fileId }: DocumentViewProps) {
                 width: `${pdfPercentage}%`,
                 height: '100%'
             }}>
-                <PdfViewer fileId={fileId} fileUrl={pdf} notes={notes} notesCallback={setNotes} screenshot={screenshot} setScreenshotCallback={setCallback}/>
+                <PdfViewer fileId={fileId} fileUrl={pdf} screenshot={screenshot} setScreenshotCallback={setCallback}/>
             </Box>
 
             <div
@@ -99,7 +97,7 @@ export default function DocumentView({ pdf, fileId }: DocumentViewProps) {
                 overflow: 'hidden',
                 height: '100%'
             }}>
-                <TextEditor key={fileId} fileId={fileId} notes={notes} screenshotCallback={setScreenshot} img={image} dragging={dragging} />
+                <TextEditor key={fileId} fileId={fileId} screenshotCallback={setScreenshot} img={image} dragging={dragging} />
             </Box>
         </Box>
     );

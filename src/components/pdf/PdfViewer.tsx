@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ReactElement} from 'react';
+import {ReactElement, useEffect} from 'react';
 import { GlobalWorkerOptions, version} from 'pdfjs-dist';
 import { DocumentLoadEvent, PdfJs, Viewer } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin, ToolbarProps } from '@react-pdf-viewer/default-layout';
@@ -9,26 +9,29 @@ import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 import {useDispatch, useSelector} from 'react-redux';
 
-import { AppState } from '../../redux/reducers';
-import { Note, Notes } from '../../redux/types/noteType';
+// import { AppState } from '../../redux/reducers';
+import {Note, Notes} from '../../redux/types/noteType';
 import { createNote } from '../../redux/asyncActions/noteAsyncActions';
+import { extractedNotes } from '../../utils/NotesUtils';
+import {Files} from '../../redux/types/filesTypes';
 
 GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${version}/pdf.worker.min.js`;
 
 interface PdfViewerProps {
     fileId: string;
     fileUrl: string;
-    notes: Note[];
-    notesCallback: (notes: Note[]) => void;
     screenshot: boolean;
     setScreenshotCallback: (img: string) => null;
 }
 
-const PdfViewer: React.FC<PdfViewerProps> = ({ fileId, fileUrl, notes, notesCallback}) => {
+const PdfViewer: React.FC<PdfViewerProps> = ({ fileId, fileUrl}) => {
+
+    const filesState: Files = useSelector((state: any) => state.files);
+    const notesState: Notes = useSelector((state: any) => state.notes);
 
     const [currentDoc, setCurrentDoc] = React.useState<PdfJs.PdfDocument | null>(null);
     const [numPages, setNumPages] = React.useState<number>(0);
-    const { isLoggedIn } = useSelector((state: AppState) => state.auth);
+    // const { isLoggedIn } = useSelector((state: AppState) => state.auth);
     const dispatch = useDispatch();
 
     const handleDocumentLoad = (e: DocumentLoadEvent) => {
@@ -46,10 +49,7 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileId, fileUrl, notes, notesCall
             highlightAreas: props.highlightAreas,
             quote: props.selectedText,
         };
-        notesCallback(notes.concat(note));
-        if(isLoggedIn){
-            dispatch(createNote(fileId, note));
-        }
+        dispatch(createNote(fileId, note));
         props.cancel();
         return (
            <div/>
@@ -59,8 +59,9 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileId, fileUrl, notes, notesCall
     const renderHighlights = (props: RenderHighlightsProps) => (
         <div>
             {
-                notes.map(note => (
-                    <React.Fragment key={note.id}>
+                extractedNotes(filesState, notesState, fileId).map(note => {
+                    console.log('Note:', note);
+                    return (<React.Fragment key={note.id}>
                         {
                             note.highlightAreas
                                 .filter(area => area.pageIndex === props.pageIndex)
@@ -76,8 +77,8 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileId, fileUrl, notes, notesCall
                                     />
                                 ))
                         }
-                    </React.Fragment>
-                ))
+                    </React.Fragment>);
+                })
             }
         </div>
     );

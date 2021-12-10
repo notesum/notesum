@@ -20,11 +20,12 @@ const filesReducer = (state = initialState, action: FilesActionsTypes): Files =>
                     ...action.payload[fileId]
                 };
             }
+            console.log('UPDATE_FILE_LIST', newState);
 
             return newState;
 
         case NEW_FILE:
-            return {
+            const State = {
                 ...state,
                 [action.payload.id]: {
                     id: action.payload.id,
@@ -35,9 +36,11 @@ const filesReducer = (state = initialState, action: FilesActionsTypes): Files =>
                     pdf: action.payload.pdf
                 }
             };
+            console.log('NEW_FILE', State);
+            return State;
 
         case UPDATE_FILE_EDITOR_STATE:
-            return {
+            const State2 = {
                 ...state,
                 [action.payload.id]: {
                     ...state[action.payload.id],
@@ -46,9 +49,11 @@ const filesReducer = (state = initialState, action: FilesActionsTypes): Files =>
                     lastSavedSummary: !state[action.payload.id].needsSave ? state[action.payload.id].summary : state[action.payload.id].lastSavedSummary
                 }
             };
+            console.log('UPDATE_FILE_EDITOR_STATE', State2);
+            return State2;
 
         case FILE_EDITOR_SAVE:
-            return {
+            const State3 = {
                 ...state,
                 [action.payload.id]: {
                     ...state[action.payload.id],
@@ -56,17 +61,19 @@ const filesReducer = (state = initialState, action: FilesActionsTypes): Files =>
                     lastSavedSummary: state[action.payload.id].summary
                 }
             };
+            console.log('FILE_EDITOR_SAVE', State3);
+            return State3;
 
         case ADD_NOTE_FILE:
-            const State = {
+            const State4 = {
                 ...state,
                 [action.payload.fileId]: {
                     ...state[action.payload.fileId],
                     notes: [...state[action.payload.fileId].notes, action.payload.noteId]
                 }
             };
-            console.log('FilesReducer', State);
-            return State;
+            console.log('ADD_NOTE_FILE', State4);
+            return State4;
 
         default:
             return state;

@@ -34,17 +34,21 @@ import {Notes} from '../../redux/types/noteType';
 
 import downloadState from './Download';
 import './Editor.css';
-import { insertImageUtil, getSelectionParentElement, hotKey, insertNewBlock } from './EditorUtils';
+import { insertImageUtil, getSelectionParentElement, hotKey, insertNewBlock } from '../../utils/EditorUtils';
+import {Files} from '../../redux/types/filesTypes';
+import {extractedNotes} from '../../utils/NotesUtils';
 
 type EditorProps = {
     img: string
     screenshotCallback: (b: boolean) => void
     dragging: boolean,
     fileId: string,
-    notes: Note[];
 };
 
-export default function TextEditor({ img, screenshotCallback, dragging, fileId, notes }: EditorProps) {
+export default function TextEditor({ img, screenshotCallback, dragging, fileId}: EditorProps) {
+
+    const filesState: Files = useSelector((state: any) => state.files);
+    const notesState: Notes = useSelector((state: any) => state.notes);
 
     const { isLoggedIn } = useSelector((state: AppState) => state.auth);
     let { id } = useSelector((state: AppState) => state.auth);
@@ -66,6 +70,7 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId, 
 
     // Update redux with the editor changes
     useEffect(() => {
+        // console.log('Update Editor');
         dispatch(updateEditor(fileId, convertToRaw(editorState.getCurrentContent())));
     }, [editorState]);
 
@@ -123,17 +128,20 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId, 
     }, [img, isLoggedIn]);
 
     useEffect(() => {
+        const notes = extractedNotes(filesState, notesState, fileId);
         if(highlightToggle){
             let copyPasteText = '';
             const length = notes.length;
             if (length > 0 && notes[length - 1].quote) {
                 copyPasteText = notes[length - 1].quote;
             }
+            console.log(notes);
             if (copyPasteText !== '') {
+                console.log('Set Editor state');
                 setEditorState((prevState) => insertNewBlock(prevState, copyPasteText, style));
             }
         }
-    }, [notes]);
+    }, [notesState]);
 
     const editor = useRef(null);
 

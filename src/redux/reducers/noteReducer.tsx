@@ -14,7 +14,6 @@ const noteReducer = (state = initialState, action: NoteActionsTypes): Notes => {
                     ...action.payload[noteId]
                 };
             }
-            console.log('Note reducer payload', action.payload);
             return newState;
 
         case NEW_NOTE:
