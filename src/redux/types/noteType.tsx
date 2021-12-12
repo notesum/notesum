@@ -18,6 +18,7 @@ export type NoteActionsTypes =
 
 export interface Note {
     id: number;
+    fileId: number;
     content: string;
     highlightAreas: HighlightArea[];
     quote: string;

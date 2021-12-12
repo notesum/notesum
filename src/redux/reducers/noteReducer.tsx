@@ -21,6 +21,7 @@ const noteReducer = (state = initialState, action: NoteActionsTypes): Notes => {
                 ...state,
                 [action.payload.id]: {
                     id: action.payload.id,
+                    fileId: action.payload.fileId,
                     content: action.payload.content,
                     highlightAreas: action.payload.highlightAreas,
                     quote: action.payload.quote

@@ -128,20 +128,20 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId}:
     }, [img, isLoggedIn]);
 
     useEffect(() => {
-        const notes = extractedNotes(filesState, notesState, fileId);
+        const notes: Note[] = extractedNotes(filesState, notesState, fileId);
+        console.log('NotesState', notesState);
+        console.log('Notes', notes);
         if(highlightToggle){
             let copyPasteText = '';
             const length = notes.length;
             if (length > 0 && notes[length - 1].quote) {
                 copyPasteText = notes[length - 1].quote;
             }
-            console.log(notes);
             if (copyPasteText !== '') {
-                console.log('Set Editor state');
                 setEditorState((prevState) => insertNewBlock(prevState, copyPasteText, style));
             }
         }
-    }, [notesState]);
+    }, [notesState, fileId]);
 
     const editor = useRef(null);
 

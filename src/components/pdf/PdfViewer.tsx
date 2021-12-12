@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ReactElement, useEffect} from 'react';
+import {ReactElement, useEffect, useState} from 'react';
 import { GlobalWorkerOptions, version} from 'pdfjs-dist';
 import { DocumentLoadEvent, PdfJs, Viewer } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin, ToolbarProps } from '@react-pdf-viewer/default-layout';
@@ -24,10 +24,15 @@ interface PdfViewerProps {
     setScreenshotCallback: (img: string) => null;
 }
 
+// let notesId: number = -1;
+
 const PdfViewer: React.FC<PdfViewerProps> = ({ fileId, fileUrl}) => {
 
     const filesState: Files = useSelector((state: any) => state.files);
     const notesState: Notes = useSelector((state: any) => state.notes);
+    const [notesId, setNotesId] = useState<number>(0);
+
+    const fileID = Number(fileId);
 
     const [currentDoc, setCurrentDoc] = React.useState<PdfJs.PdfDocument | null>(null);
     const [numPages, setNumPages] = React.useState<number>(0);
@@ -44,12 +49,15 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileId, fileUrl}) => {
 
     const renderHighlightTarget = (props: RenderHighlightTargetProps) => {
         const note: Note = {
-            id: -1,
+            id: notesId,
+            fileId: fileID,
             content: '',
             highlightAreas: props.highlightAreas,
             quote: props.selectedText,
         };
-        dispatch(createNote(fileId, note));
+        setNotesId(notesId - 1);
+        console.log('Note', note);
+        dispatch(createNote(fileID, note));
         props.cancel();
         return (
            <div/>
@@ -59,8 +67,7 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileId, fileUrl}) => {
     const renderHighlights = (props: RenderHighlightsProps) => (
         <div>
             {
-                extractedNotes(filesState, notesState, fileId).map(note => {
-                    console.log('Note:', note);
+                extractedNotes(filesState, notesState, fileID).map(note => {
                     return (<React.Fragment key={note.id}>
                         {
                             note.highlightAreas

@@ -38,7 +38,7 @@ export interface IAddNoteFileAction {
     readonly type: typeof ADD_NOTE_FILE;
     payload: {
         noteId: number,
-        fileId: string
+        fileId: number
     };
 }
 

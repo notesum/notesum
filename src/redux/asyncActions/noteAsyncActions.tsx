@@ -8,7 +8,7 @@ import { updateNotesList } from '../actions/noteActions';
 import { BASE_URL } from './ServerSettings';
 
 
-export function createNote(fileId: string, note: Note){
+export function createNote(fileId: number, note: Note){
     return (dispatch: Dispatch<NoteActionsTypes | FilesActionsTypes>, getState) => {
         (async () => {
             if(getState().auth.isLoggedIn){
@@ -22,7 +22,7 @@ export function createNote(fileId: string, note: Note){
                     body: JSON.stringify(note),
                     redirect: 'follow' as const
                 };
-                const result = await fetch(`${BASE_URL}/files/${fileId}/notes`, requestOptions);
+                const result = await fetch(`${BASE_URL}/notes`, requestOptions);
                 const json = (await result.json());
 
                 if(!('data' in json)){
@@ -39,13 +39,12 @@ export function createNote(fileId: string, note: Note){
                     payload: note
                 });
                 dispatch(addNoteToFile(note.id, fileId));
-                dispatch(updateEditor(fileId, note.quote));
             }
         })();
     };
 }
 
-export function loadNotes(fileId: string) {
+export function loadNotes() {
     return (dispatch: Dispatch<NoteActionsTypes>, getState) => {
         (async () => {
             const requestOptions = {
@@ -56,14 +55,21 @@ export function loadNotes(fileId: string) {
                     'Authorization': `Bearer ${getState().auth.token}`
                 }
             };
-            const result = await fetch(`${BASE_URL}/files/${fileId}/notes`, requestOptions);
+            const result = await fetch(`${BASE_URL}/notes`, requestOptions);
 
-            const notes: Notes = (await result.json()).data.reduce((obj: Notes, item) => {
+            const json = (await result.json());
+
+            if(!('data' in json)){
+                return;
+            }
+
+            const notes: Notes = json.data.reduce((obj: Notes, item) => {
                 return {
                     ...obj,
                     [item.id]: item
                 };
             }, {});
+            console.log('Notes', notes);
             dispatch(updateNotesList(notes));
 
         })();

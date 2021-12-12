@@ -19,7 +19,7 @@ export function updateEditor(id: string, content: RawDraftContentState): FilesAc
     };
 }
 
-export function addNoteToFile(noteId: number, fileId: string): FilesActionsTypes {
+export function addNoteToFile(noteId: number, fileId: number): FilesActionsTypes {
     return {
         type: ADD_NOTE_FILE,
         payload: {

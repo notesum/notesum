@@ -73,10 +73,13 @@ export default function Project() {
 
   // Update project & files list
   useEffect(() => {
+    console.log(
+        id, urlFileId
+    );
     if (isLoggedIn) {
       dispatch(loadProjects());
       dispatch(loadFiles());
-      dispatch(loadNotes(urlFileId));
+      dispatch(loadNotes());
     }
   }, []);
 
