@@ -12,9 +12,16 @@ export interface IUpdateNotesList {
     payload: Notes;
 }
 
+export const DELETE_NOTE = 'DELETE_NOTE';
+export interface IDeleteNote {
+    readonly type: typeof DELETE_NOTE;
+    payload: number;
+}
+
 export type NoteActionsTypes =
     | INewNoteAction
-    | IUpdateNotesList ;
+    | IUpdateNotesList
+    | IDeleteNote;
 
 export interface Note {
     id: number;

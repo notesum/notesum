@@ -55,8 +55,8 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileId, fileUrl}) => {
             highlightAreas: props.highlightAreas,
             quote: props.selectedText,
         };
-        setNotesId(notesId - 1);
         dispatch(createNote(fileID, note));
+        setNotesId(notesId - 1);
         props.cancel();
         return (
            <div/>

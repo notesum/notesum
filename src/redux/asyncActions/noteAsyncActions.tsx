@@ -2,8 +2,8 @@ import { Dispatch } from 'react';
 
 import {NEW_NOTE, Note, NoteActionsTypes, Notes} from '../types/noteType';
 import { FilesActionsTypes } from '../types/filesTypes';
-import {addNoteToFile, updateEditor} from '../actions/filesActions';
-import { updateNotesList } from '../actions/noteActions';
+import {addNoteToFile, removeNoteFromFile, updateEditor} from '../actions/filesActions';
+import {deleteNote, updateNotesList} from '../actions/noteActions';
 
 import { BASE_URL } from './ServerSettings';
 

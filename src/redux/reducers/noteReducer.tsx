@@ -1,4 +1,4 @@
-import {NEW_NOTE, NoteActionsTypes, Notes, UPDATE_NOTES_LIST} from '../types/noteType';
+import {DELETE_NOTE, NEW_NOTE, NoteActionsTypes, Notes, UPDATE_NOTES_LIST} from '../types/noteType';
 
 const initialState: Notes = {};
 
@@ -27,6 +27,12 @@ const noteReducer = (state = initialState, action: NoteActionsTypes): Notes => {
                     quote: action.payload.quote
                 }
             };
+
+        case DELETE_NOTE:
+            const currentState = {...state};
+            delete currentState[action.payload];
+            return currentState;
+
         default:
             return state;
     }

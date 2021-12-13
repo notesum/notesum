@@ -1,8 +1,14 @@
-import { ContentState, convertToRaw } from 'draft-js';
+import {ContentState, convertToRaw} from 'draft-js';
 
 import {
-    FilesActionsTypes, Files, NEW_FILE, UPDATE_FILE_EDITOR_STATE,
-    UPDATE_FILE_LIST, FILE_EDITOR_SAVE, ADD_NOTE_FILE
+    ADD_NOTE_FILE,
+    FILE_EDITOR_SAVE,
+    Files,
+    FilesActionsTypes,
+    NEW_FILE,
+    REMOVE_NOTE_FILE,
+    UPDATE_FILE_EDITOR_STATE,
+    UPDATE_FILE_LIST
 } from '../types/filesTypes';
 
 const initialState: Files = {};
@@ -74,6 +80,17 @@ const filesReducer = (state = initialState, action: FilesActionsTypes): Files =>
             };
             console.log('ADD_NOTE_FILE', State4);
             return State4;
+
+        case REMOVE_NOTE_FILE:
+            const currentState = {
+                ...state,
+                [action.payload.fileId]: {
+                    ...state[action.payload.fileId],
+                    notes: [...state[action.payload.fileId].notes.filter(noteId => noteId !== action.payload.noteId)]
+                }
+            };
+            console.log('REMOVE_NOTE_FILE', currentState);
+            return currentState;
 
         default:
             return state;

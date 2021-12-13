@@ -42,12 +42,22 @@ export interface IAddNoteFileAction {
     };
 }
 
+export const REMOVE_NOTE_FILE = 'REMOVE_NOTE_FILE';
+export interface IRemoveNoteFile {
+    readonly type: typeof REMOVE_NOTE_FILE;
+    payload: {
+        noteId: number,
+        fileId: number
+    };
+}
+
 export type FilesActionsTypes =
     | INewFileAction
     | IUpdateEditorState
     | IUpdateFileList
     | IFileEditorSave
-    | IAddNoteFileAction;
+    | IAddNoteFileAction
+    | IRemoveNoteFile;
 
 export interface ProjectFile {
     id: string;
