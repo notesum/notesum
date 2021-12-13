@@ -12,7 +12,7 @@ import {useDispatch, useSelector} from 'react-redux';
 // import { AppState } from '../../redux/reducers';
 import {Note, Notes} from '../../redux/types/noteType';
 import { createNote } from '../../redux/asyncActions/noteAsyncActions';
-import { extractedNotes } from '../../utils/NotesUtils';
+import { extractNotes } from '../../utils/NotesUtils';
 import {Files} from '../../redux/types/filesTypes';
 
 GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${version}/pdf.worker.min.js`;
@@ -56,7 +56,6 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileId, fileUrl}) => {
             quote: props.selectedText,
         };
         setNotesId(notesId - 1);
-        console.log('Note', note);
         dispatch(createNote(fileID, note));
         props.cancel();
         return (
@@ -67,7 +66,7 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileId, fileUrl}) => {
     const renderHighlights = (props: RenderHighlightsProps) => (
         <div>
             {
-                extractedNotes(filesState, notesState, fileID).map(note => {
+                extractNotes(filesState, notesState, fileID).map(note => {
                     return (<React.Fragment key={note.id}>
                         {
                             note.highlightAreas
