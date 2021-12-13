@@ -157,7 +157,6 @@ export function saveFile(fileId: string) {
             const result = await fetch(`${BASE_URL}/files/${fileId}`, requestOptions);
 
             if (result.status !== 200) return;
-
             dispatch({
                 type: FILE_EDITOR_SAVE,
                 payload: {

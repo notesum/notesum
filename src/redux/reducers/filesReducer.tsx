@@ -26,7 +26,6 @@ const filesReducer = (state = initialState, action: FilesActionsTypes): Files =>
                     ...action.payload[fileId]
                 };
             }
-            console.log('UPDATE_FILE_LIST', newState);
 
             return newState;
 
@@ -42,7 +41,6 @@ const filesReducer = (state = initialState, action: FilesActionsTypes): Files =>
                     pdf: action.payload.pdf
                 }
             };
-            console.log('NEW_FILE', State);
             return State;
 
         case UPDATE_FILE_EDITOR_STATE:
@@ -55,7 +53,6 @@ const filesReducer = (state = initialState, action: FilesActionsTypes): Files =>
                     lastSavedSummary: !state[action.payload.id].needsSave ? state[action.payload.id].summary : state[action.payload.id].lastSavedSummary
                 }
             };
-            console.log('UPDATE_FILE_EDITOR_STATE', State2);
             return State2;
 
         case FILE_EDITOR_SAVE:
@@ -67,7 +64,6 @@ const filesReducer = (state = initialState, action: FilesActionsTypes): Files =>
                     lastSavedSummary: state[action.payload.id].summary
                 }
             };
-            console.log('FILE_EDITOR_SAVE', State3);
             return State3;
 
         case ADD_NOTE_FILE:
@@ -78,7 +74,6 @@ const filesReducer = (state = initialState, action: FilesActionsTypes): Files =>
                     notes: [...state[action.payload.fileId].notes, action.payload.noteId]
                 }
             };
-            console.log('ADD_NOTE_FILE', State4);
             return State4;
 
         case REMOVE_NOTE_FILE:
@@ -89,7 +84,6 @@ const filesReducer = (state = initialState, action: FilesActionsTypes): Files =>
                     notes: [...state[action.payload.fileId].notes.filter(noteId => noteId !== action.payload.noteId)]
                 }
             };
-            console.log('REMOVE_NOTE_FILE', currentState);
             return currentState;
 
         default:

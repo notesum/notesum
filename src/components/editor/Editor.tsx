@@ -71,7 +71,6 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId}:
 
     // Update redux with the editor changes
     useEffect(() => {
-        // console.log('Update Editor');
         dispatch(updateEditor(fileId, convertToRaw(editorState.getCurrentContent())));
     }, [editorState]);
 
@@ -124,16 +123,14 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId}:
     }, [project, isLoggedIn]);
 
     // If there is a new image insert it to the editor
-    useEffect(() => {
-        setEditorState((prevState) => insertImageUtil(prevState, img));
-    }, [img, isLoggedIn]);
+    // useEffect(() => {
+    //     setEditorState((prevState) => insertImageUtil(prevState, img));
+    // }, [img, isLoggedIn]);
 
     const [notesLength, setNotesLength] = useState<number>(extractNotes(filesState, notesState, fileID).length);
 
     useEffect(() => {
         const notes: Note[] = extractNotes(filesState, notesState, fileID);
-        console.log('NotesState', notesState);
-        console.log('Notes', notes);
         if(highlightToggle){
             let copyPasteText = '';
             const length = notes.length;
@@ -141,7 +138,7 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId}:
                 copyPasteText = notes[length - 1].quote;
                 setNotesLength(length);
             }
-            if (copyPasteText !== '') {
+            if (copyPasteText !== '' && copyPasteText.match(/^ *$/) == null) {
                 setEditorState((prevState) => insertNewBlock(prevState, copyPasteText, style));
             }
         }

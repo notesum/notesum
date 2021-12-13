@@ -194,7 +194,6 @@ export default function Project() {
               value={project.name}
               className={classes.name}
               onChange={(e) => {
-                console.log(e.target.value);
               }}
             />
           </Toolbar>

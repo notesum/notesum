@@ -22,17 +22,19 @@ export function createNote(fileId: number, note: Note){
                     body: JSON.stringify(note),
                     redirect: 'follow' as const
                 };
+
+                dispatch({
+                    type: NEW_NOTE,
+                    payload: note
+                });
+                dispatch(addNoteToFile(note.id, fileId));
+
                 const result = await fetch(`${BASE_URL}/notes`, requestOptions);
                 const json = (await result.json());
 
                 if(!('data' in json)){
                     return;
                 }
-                dispatch({
-                    type: NEW_NOTE,
-                    payload: json.data
-                });
-                dispatch(addNoteToFile(json.data.id, fileId));
             } else {
                 dispatch({
                     type: NEW_NOTE,
@@ -69,7 +71,6 @@ export function loadNotes() {
                     [item.id]: item
                 };
             }, {});
-            console.log('Notes', notes);
             dispatch(updateNotesList(notes));
 
         })();
