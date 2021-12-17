@@ -19,9 +19,6 @@ export default function DocumentView({ pdf, fileId }: DocumentViewProps) {
     const [screenshot, setScreenshot] = useState(false);
     const [image, setImage] = useState('');
 
-    // const files: Files = useSelector((state: any) => state.files);
-    // const notesState: Notes = useSelector((state: any) => state.notes);
-
     const setCallback = (img: string) => {
         setImage(img);
         return null;
@@ -72,12 +69,6 @@ export default function DocumentView({ pdf, fileId }: DocumentViewProps) {
             window.removeEventListener('mousemove', animateResize);
         };
     }, [dragging]);
-
-    // useEffect(() => {
-    //     files[fileId].notes.forEach((noteId) => {
-    //         notesArray.push(notesState[noteId]);
-    //     });
-    // },[]);
 
     return (
         <Box flexDirection="row" display="flex" height="100%" {...{ ref: mainViewRef }}>

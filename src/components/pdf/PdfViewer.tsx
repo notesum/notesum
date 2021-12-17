@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ReactElement, useEffect, useState} from 'react';
+import { ReactElement } from 'react';
 import { GlobalWorkerOptions, version} from 'pdfjs-dist';
 import { DocumentLoadEvent, PdfJs, Viewer } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin, ToolbarProps } from '@react-pdf-viewer/default-layout';
@@ -9,7 +9,6 @@ import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 import {useDispatch, useSelector} from 'react-redux';
 
-// import { AppState } from '../../redux/reducers';
 import {Note, Notes} from '../../redux/types/noteType';
 import { createNote } from '../../redux/asyncActions/noteAsyncActions';
 import { extractNotes } from '../../utils/NotesUtils';
@@ -30,7 +29,6 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileId, fileUrl}) => {
 
     const filesState: Files = useSelector((state: any) => state.files);
     const notesState: Notes = useSelector((state: any) => state.notes);
-    const [notesId, setNotesId] = useState<number>(0);
 
     const fileID = Number(fileId);
 
@@ -48,15 +46,17 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileId, fileUrl}) => {
     };
 
     const renderHighlightTarget = (props: RenderHighlightTargetProps) => {
+        const notesIds = extractNotes(filesState, notesState, fileID).map(n => n.id);
+        const noteId = notesIds.length === 0 ? 0 : 1 + Math.max(...notesIds);
+        console.log('NoteID', noteId);
         const note: Note = {
-            id: notesId,
+            id: noteId,
             fileId: fileID,
             content: '',
             highlightAreas: props.highlightAreas,
             quote: props.selectedText,
         };
         dispatch(createNote(fileID, note));
-        setNotesId(notesId - 1);
         props.cancel();
         return (
            <div/>
