@@ -1,6 +1,6 @@
-import { RawDraftContentState } from 'draft-js';
+import {RawDraftContentState} from 'draft-js';
 
-import { Files, FilesActionsTypes, UPDATE_FILE_EDITOR_STATE, UPDATE_FILE_LIST } from '../types/filesTypes';
+import {ADD_NOTE_FILE, Files, FilesActionsTypes, REMOVE_NOTE_FILE, UPDATE_FILE_EDITOR_STATE, UPDATE_FILE_LIST} from '../types/filesTypes';
 
 export function updateFileList(files: Files): FilesActionsTypes {
     return {
@@ -16,5 +16,25 @@ export function updateEditor(id: string, content: RawDraftContentState): FilesAc
             id,
             summary: content
         },
+    };
+}
+
+export function addNoteToFile(noteId: number, fileId: number): FilesActionsTypes {
+    return {
+        type: ADD_NOTE_FILE,
+        payload: {
+            noteId,
+            fileId
+        }
+    };
+}
+
+export function removeNoteFromFile(noteId: number, fileId: number): FilesActionsTypes{
+    return {
+        type: REMOVE_NOTE_FILE,
+        payload: {
+            noteId,
+            fileId
+        }
     };
 }

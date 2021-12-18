@@ -1,7 +1,15 @@
-import { ContentState, convertToRaw } from 'draft-js';
+import {ContentState, convertToRaw} from 'draft-js';
 
-import { FilesActionsTypes, Files, NEW_FILE, UPDATE_FILE_EDITOR_STATE,
-    UPDATE_FILE_LIST, FILE_EDITOR_SAVE } from '../types/filesTypes';
+import {
+    ADD_NOTE_FILE,
+    FILE_EDITOR_SAVE,
+    Files,
+    FilesActionsTypes,
+    NEW_FILE,
+    REMOVE_NOTE_FILE,
+    UPDATE_FILE_EDITOR_STATE,
+    UPDATE_FILE_LIST
+} from '../types/filesTypes';
 
 const initialState: Files = {};
 
@@ -22,19 +30,21 @@ const filesReducer = (state = initialState, action: FilesActionsTypes): Files =>
             return newState;
 
         case NEW_FILE:
-            return {
+            const State = {
                 ...state,
                 [action.payload.id]: {
                     id: action.payload.id,
                     title: action.payload.title,
                     summary: convertToRaw(ContentState.createFromText('')),
+                    notes: [],
                     currentPage: 0,
                     pdf: action.payload.pdf
                 }
             };
+            return State;
 
         case UPDATE_FILE_EDITOR_STATE:
-            return {
+            const State2 = {
                 ...state,
                 [action.payload.id]: {
                     ...state[action.payload.id],
@@ -43,9 +53,10 @@ const filesReducer = (state = initialState, action: FilesActionsTypes): Files =>
                     lastSavedSummary: !state[action.payload.id].needsSave ? state[action.payload.id].summary : state[action.payload.id].lastSavedSummary
                 }
             };
+            return State2;
 
         case FILE_EDITOR_SAVE:
-            return {
+            const State3 = {
                 ...state,
                 [action.payload.id]: {
                     ...state[action.payload.id],
@@ -53,6 +64,27 @@ const filesReducer = (state = initialState, action: FilesActionsTypes): Files =>
                     lastSavedSummary: state[action.payload.id].summary
                 }
             };
+            return State3;
+
+        case ADD_NOTE_FILE:
+            const State4 = {
+                ...state,
+                [action.payload.fileId]: {
+                    ...state[action.payload.fileId],
+                    notes: [...state[action.payload.fileId].notes, action.payload.noteId]
+                }
+            };
+            return State4;
+
+        case REMOVE_NOTE_FILE:
+            const currentState = {
+                ...state,
+                [action.payload.fileId]: {
+                    ...state[action.payload.fileId],
+                    notes: [...state[action.payload.fileId].notes.filter(noteId => noteId !== action.payload.noteId)]
+                }
+            };
+            return currentState;
 
         default:
             return state;

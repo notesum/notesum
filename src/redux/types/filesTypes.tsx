@@ -33,11 +33,31 @@ export interface IFileEditorSave {
     };
 }
 
+export const ADD_NOTE_FILE = 'ADD_NOTE_FILE';
+export interface IAddNoteFileAction {
+    readonly type: typeof ADD_NOTE_FILE;
+    payload: {
+        noteId: number,
+        fileId: number
+    };
+}
+
+export const REMOVE_NOTE_FILE = 'REMOVE_NOTE_FILE';
+export interface IRemoveNoteFile {
+    readonly type: typeof REMOVE_NOTE_FILE;
+    payload: {
+        noteId: number,
+        fileId: number
+    };
+}
+
 export type FilesActionsTypes =
     | INewFileAction
     | IUpdateEditorState
     | IUpdateFileList
-    | IFileEditorSave;
+    | IFileEditorSave
+    | IAddNoteFileAction
+    | IRemoveNoteFile;
 
 export interface ProjectFile {
     id: string;
@@ -45,6 +65,7 @@ export interface ProjectFile {
     summary: RawDraftContentState;
     currentPage: number;
     pdf: string; // url
+    notes: number[];
     needsSave?: boolean;
     lastSavedSummary?: RawDraftContentState;
 }
