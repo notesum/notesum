@@ -15,7 +15,7 @@ const Footer = () => {
     >
       <div
         style={
-          location.pathname.includes("/project/")
+          location.pathname.includes("/project/") || location.pathname.includes("/new-project")
             ? { backgroundImage: `url(${background})` }
             : {}
         }

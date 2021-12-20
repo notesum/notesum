@@ -20,7 +20,7 @@ const Header = () => {
     <header
       className="header"
       style={
-        location.pathname.includes("/project/")
+        location.pathname.includes("/project/") || location.pathname.includes("/new-project")
           ? { position: "static", backgroundImage: `url(${background})` }
           : {}
       }
@@ -49,7 +49,7 @@ const Header = () => {
                 </Button>
               </li>
               <li>
-                <Link to="/about">
+                <Link to="/about" target="_blank">
                   <img src={info} alt="" />
                   <p>Information</p>
                 </Link>
