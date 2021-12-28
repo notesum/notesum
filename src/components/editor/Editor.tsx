@@ -37,6 +37,7 @@ import './Editor.css';
 import { insertImageUtil, getSelectionParentElement, hotKey, insertNewBlock } from '../../utils/EditorUtils';
 import {Files} from '../../redux/types/filesTypes';
 import {extractNotes} from '../../utils/NotesUtils';
+import { deleteNoteAsync } from '../../redux/asyncActions/noteAsyncActions';
 
 type EditorProps = {
     img: string
@@ -186,11 +187,11 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId}:
 
     // Toggle inline style
     function formatText(nextStyle: string): void {
-        if (nextStyle === 'CODE') {
-            setEditorState(RichUtils.toggleCode(editorState));
-        } else {
-            setEditorState(RichUtils.toggleInlineStyle(editorState, nextStyle));
-        }
+        const notesIds = extractNotes(filesState, notesState, fileID).map(n => n.id);
+        console.log(notesIds);
+        const noteId = notesIds.length === 0 ? 0 : Math.max(...notesIds);
+        dispatch(deleteNoteAsync(noteId, fileID));
+        console.log('Deleted note:', noteId);
     }
 
     // Toggle the style in which we capture highlights. Header, text, image...
