@@ -10,6 +10,7 @@ import uiReducer from './uiReducer';
 
 import storage from 'redux-persist/lib/storage';
 import * as t from './../types/authTypes';
+import noteReducer from './noteReducer';
 
 const appReducer = combineReducers({
     editor: editorReducer,
@@ -18,7 +19,8 @@ const appReducer = combineReducers({
     projects: projectReducer,
     files: filesReducer,
     redirect: redirectReducer,
-    ui: uiReducer
+    ui: uiReducer,
+    notes: noteReducer
 });
 
 const rootReducer = (state, action) => {

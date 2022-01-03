@@ -1,8 +1,12 @@
 import React, { useRef, useEffect, useState } from 'react';
+// import { useSelector } from 'react-redux';
 import { Box } from '@material-ui/core';
 
-import PdfViewer, { Note } from '../pdf/PdfViewer';
+import PdfViewer from '../pdf/PdfViewer';
 import TextEditor from '../editor/Editor';
+import useNotes from '../../hooks/useNotes';
+// import { Note, Notes } from '../../redux/types/noteType';
+// import { Files } from '../../redux/types/filesTypes';
 
 import './DocumentView.css';
 
@@ -12,11 +16,8 @@ type DocumentViewProps = {
 };
 
 export default function DocumentView({ pdf, fileId }: DocumentViewProps) {
-
     const [screenshot, setScreenshot] = useState(false);
     const [image, setImage] = useState('');
-    const [notes, setNotes] = useState<Note[]>([]);
-
 
     const setCallback = (img: string) => {
         setImage(img);
@@ -75,7 +76,7 @@ export default function DocumentView({ pdf, fileId }: DocumentViewProps) {
                 width: `${pdfPercentage}%`,
                 height: '100%'
             }}>
-                <PdfViewer fileUrl={pdf} notes={notes} notesCallback={setNotes} screenshot={screenshot} setScreenshotCallback={setCallback}/>
+                <PdfViewer fileId={fileId} fileUrl={pdf} screenshot={screenshot} setScreenshotCallback={setCallback}/>
             </Box>
 
             <div
@@ -87,7 +88,7 @@ export default function DocumentView({ pdf, fileId }: DocumentViewProps) {
                 overflow: 'hidden',
                 height: '100%'
             }}>
-                <TextEditor key={fileId} fileId={fileId} notes={notes} screenshotCallback={setScreenshot} img={image} dragging={dragging} />
+                <TextEditor key={fileId} fileId={fileId} screenshotCallback={setScreenshot} img={image} dragging={dragging} />
             </Box>
         </Box>
     );

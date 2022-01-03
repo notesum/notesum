@@ -64,7 +64,6 @@ function processBlock(block, contentState, output): void {
             }
         );
     } else if (block.getType() === 'atomic' || block.getType() === 'img') {
-        console.log('image');
 
 
         try {
@@ -72,7 +71,6 @@ function processBlock(block, contentState, output): void {
             const s = new Image();
             s.src = data;
         } catch (e) {
-            console.log(`Image saving might have gone bad\n ${e.message}`);
 
         }
     }

@@ -37,9 +37,11 @@ import {
 import { loadProjects } from "../../redux/asyncActions/projectAsyncActions";
 import Error from "../Error";
 import { AppState } from "../../redux/reducers";
+import {loadNotes} from '../../redux/asyncActions/noteAsyncActions';
 
 import EmptyProject from "./EmptyProject";
 import DocumentView from "./DocumentView";
+
 
 const useStyles = makeStyles(() => ({
   name: {
@@ -74,6 +76,7 @@ export default function Project() {
     if (isLoggedIn) {
       dispatch(loadProjects());
       dispatch(loadFiles());
+      dispatch(loadNotes());
     }
   }, []);
 
@@ -190,7 +193,6 @@ export default function Project() {
               value={project.name}
               className={classes.name}
               onChange={(e) => {
-                console.log(e.target.value);
               }}
             />
           </Toolbar>
