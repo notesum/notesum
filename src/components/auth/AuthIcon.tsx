@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button, Dialog, Grid, Typography, Box, CircularProgress } from '@material-ui/core';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteProject } from '../../redux/actions/projectActions';
 
@@ -104,7 +103,7 @@ export default function AuthIcon({ openProp }: AuthProps) {
 
     return (
         <div>
-            <Button onMouseDown={() => setDialogOpen(true)}><img src={user} alt="" />
+            <Button onMouseDown={() => setDialogOpen(true)}><img src={user} width="32px" height="32px" />
                 <p>Profile</p>
                 {/* <Typography variant="body1" style={{ color: 'white', paddingLeft: '5px' }}>{username}</Typography> */}
             </Button>

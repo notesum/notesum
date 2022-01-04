@@ -13,7 +13,7 @@ function SampleNextArrow(props) {
       style={{ ...style, display: "block" }}
       onClick={onClick}
     >
-      <img src={RightArrow} style={{ maxWidth: 70 }} />
+      <img src={RightArrow} style={{ maxWidth: 70 }} width="70px" />
     </div>
   );
 }
@@ -26,7 +26,7 @@ function SamplePrevArrow(props) {
       style={{ ...style, display: "block" }}
       onClick={onClick}
     >
-      <img src={LeftArrow} style={{ maxWidth: 70 }} />
+      <img src={LeftArrow} style={{ maxWidth: 70 }} width="70px" />
     </div>
   );
 }
@@ -47,28 +47,22 @@ const Carousel = () => {
     beforeChange: (current, next) => setCurrentSlide(next + 1),
   };
   React.useEffect(() => {
-    setSliderLength(ref.current.innerSlider.props.children.length);
+    setSliderLength(ref.current?.innerSlider?.props.children.length);
   }, []);
   return (
     <div className="slider-section">
       <Slider {...settings} ref={ref}>
         <div className="slider-item">
-          <iframe
-            src="https://www.youtube.com/embed/gmFdxuhtJE0"
-            title="YouTube video player"
-            frameBorder="0"
-            allow="accelerometer;gyroscope;"
-            allowFullScreen
-          ></iframe>
+          <iframe src="https://www.youtube-nocookie.com/embed/Ny7KUFpzqm0"
+            loading="lazy"
+            srcDoc="<style>*{padding:0;margin:0;overflow:hidden}html,body{height:100%}img,span{position:absolute;width:100%;top:0;bottom:0;margin:auto}span{height:1.5em;text-align:center;font:48px/1.5 sans-serif;color:white;text-shadow:0 0 0.5em black}</style><a href=https://www.youtube-nocookie.com/embed/Ny7KUFpzqm0><img src=https://img.youtube.com/vi/Ny7KUFpzqm0/sddefault.jpg alt='CosmoNote'><span>▶</span></a>"
+            frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
         </div>
         <div className="slider-item">
-          <iframe
-            src="https://www.youtube.com/embed/gmFdxuhtJE0"
-            title="YouTube video player"
-            frameBorder="0"
-            allow="accelerometer;gyroscope;"
-            allowFullScreen
-          ></iframe>
+          <iframe src="https://www.youtube-nocookie.com/embed/Ny7KUFpzqm0"
+            loading="lazy"
+            srcDoc="<style>*{padding:0;margin:0;overflow:hidden}html,body{height:100%}img,span{position:absolute;width:100%;top:0;bottom:0;margin:auto}span{height:1.5em;text-align:center;font:48px/1.5 sans-serif;color:white;text-shadow:0 0 0.5em black}</style><a href=https://www.youtube-nocookie.com/embed/Ny7KUFpzqm0><img src=https://img.youtube.com/vi/Ny7KUFpzqm0/sddefault.jpg alt='CosmoNote'><span>▶</span></a>"
+            frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
         </div>
       </Slider>
 
