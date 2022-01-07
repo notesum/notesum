@@ -328,7 +328,7 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
                     <Tooltip title="Select main text" placement="top">
                         <ToggleButton value="unstyled"> <TextFormatIcon /> </ToggleButton>
                     </Tooltip>
-                    <Tooltip title="Create Bulletpoints" placement="top">
+                    <Tooltip title="Copy text as a Bullet point" placement="top">
                         <ToggleButton value="unordered-list-item"> <FormatListBulletedIcon /> </ToggleButton>
                     </Tooltip>
                     {/*<ToggleButton value="img"> <CameraAltIcon /> </ToggleButton>*/}
