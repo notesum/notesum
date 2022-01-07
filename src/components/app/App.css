@@ -91,7 +91,7 @@ body {
 }
 
 .homepage {
-  background: url("../../resources/bg.jpeg");
+  background: url("../../resources/background.webp");
   background-size: 100% 100%;
   background-position: center;
   padding-top: 169px;
@@ -266,7 +266,7 @@ body {
 
 .wrapper-two::after {
   content: "";
-  background: url("../../resources/bg.jpeg");
+  background: url("../../resources/background.webp");
   background-size: 100% 280%;
   background-position: center;
   background-repeat: no-repeat;
