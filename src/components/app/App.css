@@ -91,10 +91,11 @@ body {
 }
 
 .homepage {
-  background: url("../../resources/bg.gif");
-  background-size: 100% 100%;
+  background: url("../../resources/background-image.jpeg");
+  background-size: cover;
   background-position: center;
   padding-top: 169px;
+  background-repeat: no-repeat;
 }
 
 .home-banner .banner-cta {
@@ -265,7 +266,7 @@ body {
 
 .wrapper-two::after {
   content: "";
-  background: url(../../resources/bg.gif);
+  background: url("../../resources/background-image.jpeg");
   background-size: 100% 280%;
   background-position: center;
   background-repeat: no-repeat;
