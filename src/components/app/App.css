@@ -92,7 +92,7 @@ body {
 
 .homepage {
   background: url("../../resources/background-image.jpeg");
-  background-size: cover;
+  background-size: 100% 100%;
   background-position: center;
   padding-top: 169px;
   background-repeat: no-repeat;
