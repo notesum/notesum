@@ -43,9 +43,8 @@ function App({ loginCallback }: AppProps) {
                 CosmoNote is an easy to use PDF summarization tool that gives you full control over the information you want to collect
               </h3>
             </div>
-            <a href="/about" className="banner-cta">
-              How it Works
-            </a>
+            {isLoggedIn ? <Link className="banner-cta" to="/projects"> Try It </Link> : <Link className="banner-cta" to="/new-project"> Try It </Link>}
+
 
           </div>
         </Container>
@@ -74,7 +73,9 @@ function App({ loginCallback }: AppProps) {
               reading your material and have it organized and ready to be
               further processed.
             </p>
-            {isLoggedIn ? <Link to="/projects"> Try It </Link> : <Link to="/new-project"> Try It </Link>}
+            <a href="/about" className="banner-cta">
+              How it Works
+            </a>
 
           </Container>
         </div>

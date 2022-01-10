@@ -91,7 +91,7 @@ export default function AuthIcon({ openProp }: AuthProps) {
                     <Typography variant="h5">Something went wrong logging in</Typography>
                 </Grid>
                 <Grid item>
-                    <Typography color="secondary" variant="body2">Your password or username might not have been correct</Typography>
+                    <Typography color="secondary" variant="body2">Your password or Email might not have been correct</Typography>
                 </Grid>
             </Grid>
         </Box>
@@ -105,7 +105,7 @@ export default function AuthIcon({ openProp }: AuthProps) {
     return (
         <div>
             <Button onMouseDown={() => setDialogOpen(true)}><img src={user} alt="" />
-            <p>Profile</p>
+                <p>Profile</p>
                 {/* <Typography variant="body1" style={{ color: 'white', paddingLeft: '5px' }}>{username}</Typography> */}
             </Button>
             <Dialog open={dialogOpen} onClose={closeDialog}>

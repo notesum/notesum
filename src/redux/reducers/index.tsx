@@ -6,6 +6,8 @@ import authReducer from './authReducer';
 import projectReducer from './projectReducer';
 import filesReducer from './filesReducer';
 import redirectReducer from './redirectReducer';
+import uiReducer from './uiReducer';
+
 import storage from 'redux-persist/lib/storage';
 import * as t from './../types/authTypes';
 import noteReducer from './noteReducer';
@@ -17,13 +19,14 @@ const appReducer = combineReducers({
     projects: projectReducer,
     files: filesReducer,
     redirect: redirectReducer,
+    ui: uiReducer,
     notes: noteReducer
 });
 
 const rootReducer = (state, action) => {
     if (action.type === t.USER_LOGOUT_SUCCESS) {
         //console.log("shwing state value here at state",state);
-        
+
         // for all keys defined in your persistConfig(s)
         // storage.removeItem('persist:root')
 

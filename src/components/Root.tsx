@@ -5,6 +5,7 @@ import {
   Route,
   Link,
   useHistory,
+  useLocation
 } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -49,6 +50,7 @@ import Footer from "./app/Footer";
 export default function Root(props) {
   const { isLoggedIn } = useSelector((state: AppState) => state.auth);
   const [makeLogin, setMakeLogIn] = React.useState(false);
+  const location = useLocation();
 
   // Redux redirection
   const history = useHistory();
@@ -71,7 +73,7 @@ export default function Root(props) {
   }, [redirect, history]);
 
   return (
-    <Box flexDirection="column" display="flex" position="relative">
+    <Box flexDirection="column" display="flex" position="relative" style={location.pathname == "/new-project" ? { height: "100%" } : {}}>
       { }
       <Header />
       {/* <AppBar position="static">

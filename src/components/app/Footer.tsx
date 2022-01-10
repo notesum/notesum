@@ -10,12 +10,12 @@ const Footer = () => {
       style={
         location.pathname == "/" || location.pathname == "/about"
           ? { marginTop: -77 }
-          : {}
+          : location.pathname == "/new-project" ? { position: "absolute", bottom: 0, left: 0, width: "100%" } : {}
       }
     >
       <div
         style={
-          location.pathname.includes("/project/")
+          location.pathname.includes("/project/") || location.pathname.includes("/new-project")
             ? { backgroundImage: `url(${background})` }
             : {}
         }
