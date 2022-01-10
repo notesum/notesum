@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ReactElement } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import { GlobalWorkerOptions, version} from 'pdfjs-dist';
 import { DocumentLoadEvent, PdfJs, Viewer } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin, ToolbarProps } from '@react-pdf-viewer/default-layout';
@@ -10,7 +10,7 @@ import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {Note, Notes} from '../../redux/types/noteType';
-import { createNote } from '../../redux/asyncActions/noteAsyncActions';
+import {createNote, deleteNoteAsync} from '../../redux/asyncActions/noteAsyncActions';
 import { extractNotes } from '../../utils/NotesUtils';
 import {Files} from '../../redux/types/filesTypes';
 
@@ -29,6 +29,7 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileId, fileUrl}) => {
 
     const filesState: Files = useSelector((state: any) => state.files);
     const notesState: Notes = useSelector((state: any) => state.notes);
+    const [maxNoteId, setMaxNoteId] = useState<number>(0);
 
     const fileID = Number(fileId);
 
@@ -45,10 +46,19 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileId, fileUrl}) => {
         setNumPages(e.doc.numPages);
     };
 
+    useEffect(() => {
+        const stringKeys = Object.keys(notesState);
+        const toNumbers = arr => arr.map(Number);
+        const numberKeys = toNumbers(stringKeys);
+        const localMax = Math.max(...numberKeys);
+        if(localMax > maxNoteId){
+            setMaxNoteId(Math.max(...numberKeys));
+        }
+    }, [notesState]);
+
     const renderHighlightTarget = (props: RenderHighlightTargetProps) => {
-        const notesIds = extractNotes(filesState, notesState, fileID).map(n => n.id);
-        const noteId = notesIds.length === 0 ? 0 : 1 + Math.max(...notesIds);
-        console.log('NoteID', noteId);
+        const stringKeys = Object.keys(notesState);
+        const noteId = stringKeys.length === 0 ? 0 : 1 + maxNoteId;
         const note: Note = {
             id: noteId,
             fileId: fileID,
@@ -67,23 +77,26 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileId, fileUrl}) => {
         <div>
             {
                 extractNotes(filesState, notesState, fileID).map(note => {
-                    return (<React.Fragment key={note.id}>
-                        {
-                            note.highlightAreas
-                                .filter(area => area.pageIndex === props.pageIndex)
-                                .map((area, idx) => (
-                                    <div
-                                        key={idx}
-                                        style={
-                                            Object.assign({}, {
-                                                background: 'yellow',
-                                                opacity: 0.4,
-                                            }, props.getCssProperties(area, props.rotation))
-                                        }
-                                    />
-                                ))
-                        }
-                    </React.Fragment>);
+                    return (<div key={note.id}
+                                 onClick={() => dispatch(deleteNoteAsync(note.id, fileID))}>
+                        <div>
+                            {
+                                note.highlightAreas
+                                    .filter(area => area.pageIndex === props.pageIndex)
+                                    .map((area, idx) => (
+                                        <div
+                                            key={idx}
+                                            style={
+                                                Object.assign({}, {
+                                                    background: 'yellow',
+                                                    opacity: 0.4,
+                                                }, props.getCssProperties(area, props.rotation))
+                                            }
+                                        />
+                                    ))
+                            }
+                        </div>
+                    </div>);
                 })
             }
         </div>
