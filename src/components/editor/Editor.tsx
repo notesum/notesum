@@ -127,22 +127,29 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId}:
     //     setEditorState((prevState) => insertImageUtil(prevState, img));
     // }, [img, isLoggedIn]);
 
-    const [notesLength, setNotesLength] = useState<number>(extractNotes(filesState, notesState, fileID).length);
+    const [notesStateLength, setNotesStateLength] = useState<number>(Object.keys(notesState).length);
+
+    useEffect(() => {
+        const notes: Note[] = extractNotes(filesState, notesState, fileID);
+        if (notesStateLength !== notes.length){
+            setNotesStateLength(Object.keys(notesState).length);
+        }
+    }, [notesState]);
 
     useEffect(() => {
         const notes: Note[] = extractNotes(filesState, notesState, fileID);
         if(highlightToggle){
             let copyPasteText = '';
-            const length = notes.length;
-            if (length > 0 && notesLength !== length && notes[length - 1].quote) {
-                copyPasteText = notes[length - 1].quote;
-                setNotesLength(length);
+            const objectLength = Object.keys(notesState).length;
+            const notesLength = notes.length;
+            if (notesLength > 0 && objectLength > notesStateLength && notes[notesLength - 1].quote) {
+                copyPasteText = notes[notesLength - 1].quote;
             }
             if (copyPasteText !== '' && copyPasteText.match(/^ *$/) == null) {
                 setEditorState((prevState) => insertNewBlock(prevState, copyPasteText, style));
             }
         }
-    }, [notesState, notesLength, fileId]);
+    }, [notesState, notesStateLength, filesState]);
 
     const editor = useRef(null);
 

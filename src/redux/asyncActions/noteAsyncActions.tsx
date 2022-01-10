@@ -2,8 +2,8 @@ import { Dispatch } from 'react';
 
 import {NEW_NOTE, Note, NoteActionsTypes, Notes} from '../types/noteType';
 import { FilesActionsTypes } from '../types/filesTypes';
-import {addNoteToFile, removeNoteFromFile, updateEditor} from '../actions/filesActions';
-import {deleteNote, updateNotesList} from '../actions/noteActions';
+import { addNoteToFile, removeNoteFromFile } from '../actions/filesActions';
+import { deleteNote, updateNotesList } from '../actions/noteActions';
 
 import { BASE_URL } from './ServerSettings';
 
@@ -72,6 +72,35 @@ export function loadNotes() {
                 };
             }, {});
             dispatch(updateNotesList(notes));
+
+        })();
+    };
+}
+
+export function deleteNoteAsync(noteId: number, fileID: number){
+    return (dispatch: Dispatch<NoteActionsTypes | FilesActionsTypes>, getState) => {
+        (async () => {
+
+            dispatch(deleteNote(noteId));
+            dispatch(removeNoteFromFile(noteId, fileID));
+
+            if(getState().auth.isLoggedIn){
+                const requestOptions = {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'Authorization': `Bearer ${getState().auth.token}`
+                    }
+                };
+                const result = await fetch(`${BASE_URL}/notes/${noteId}`, requestOptions);
+
+                const json = (await result.json());
+
+                if(!('message' in json)){
+                    return;
+                }
+            }
 
         })();
     };
