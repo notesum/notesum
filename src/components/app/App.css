@@ -91,10 +91,11 @@ body {
 }
 
 .homepage {
-  background: url("../../resources/background.gif");
+  background: url("../../resources/background.webp");
   background-size: 100% 100%;
   background-position: center;
   padding-top: 169px;
+  background-repeat: no-repeat;
 }
 
 .home-banner .banner-cta {
@@ -201,6 +202,11 @@ body {
   color: #ffffff;
 }
 
+.slider-section .slick-dots{
+  display: none !important;
+}
+
+
 .MuiBox-root-2 {
   overflow: visible !important;
 }
@@ -260,7 +266,7 @@ body {
 
 .wrapper-two::after {
   content: "";
-  background: url(../../resources/background.gif);
+  background: url("../../resources/background.webp");
   background-size: 100% 280%;
   background-position: center;
   background-repeat: no-repeat;

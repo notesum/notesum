@@ -1,7 +1,5 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import { Box, Grid, Container } from "@material-ui/core";
+import { Grid, Container } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 
 import { AppState } from "../../redux/reducers";
@@ -63,7 +61,7 @@ function App({ loginCallback }: AppProps) {
       <div className="wrapper-two">
         <div className="goal-section">
           <Container>
-            <img src={goalImage} alt="our goal" />
+            <img src={goalImage} alt="our goal" width="100px" height="100px" />
             <h3>Our Goal</h3>
             <p>
               We believe that time is one of the most valuable assets one can
@@ -89,11 +87,11 @@ function App({ loginCallback }: AppProps) {
                   Twente campus. You can reach us at the address below
                 </p>
                 <div className="e-mail">
-                  <img src={Email_img} alt="mail" />
+                  <img src={Email_img} alt="mail" width="30px" height="24px" />
                   <p>info.cosmonote@gmail.com</p>
                 </div>
                 <div className="location">
-                  <img src={mapicon} alt="location" />
+                  <img src={mapicon} alt="location" width="30px" height="36px" />
                   <p>
                     De Hems 10 <br />
                     7522 AN Enschede <br />
