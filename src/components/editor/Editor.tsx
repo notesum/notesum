@@ -16,6 +16,8 @@ import TextFieldsIcon from '@material-ui/icons/TextFields';
 import TextFormatIcon from '@material-ui/icons/TextFormat';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
+// import FullscreenIcon from '@material-ui/icons/Fullscreen';
+import CameraAltIcon from '@material-ui/icons/CameraAlt';
 import SaveIcon from '@material-ui/icons/Save';
 import {
     DialogContent, DialogTitle, DialogContentText, DialogActions
@@ -28,13 +30,13 @@ import { updateProjectName } from '../../redux/asyncActions/projectAsyncActions'
 import { Note } from '../pdf/PdfViewer';
 import SignUp from '../auth/SignUp';
 import { Project } from '../../redux/types/projectTypes';
-import { Notes } from '../../redux/types/noteType';
+import {Notes} from '../../redux/types/noteType';
 
 import downloadState from './Download';
 import './Editor.css';
-import { hotKey, insertNewBlock } from '../../utils/EditorUtils';
-import { Files } from '../../redux/types/filesTypes';
-import { extractNotes } from '../../utils/NotesUtils';
+import { insertImageUtil, getSelectionParentElement, hotKey, insertNewBlock } from '../../utils/EditorUtils';
+import {Files} from '../../redux/types/filesTypes';
+import {extractNotes} from '../../utils/NotesUtils';
 
 type EditorProps = {
     img: string
@@ -43,7 +45,7 @@ type EditorProps = {
     fileId: string,
 };
 
-export default function TextEditor({ img, screenshotCallback, dragging, fileId }: EditorProps) {
+export default function TextEditor({ img, screenshotCallback, dragging, fileId}: EditorProps) {
 
     const filesState: Files = useSelector((state: any) => state.files);
     const notesState: Notes = useSelector((state: any) => state.notes);
@@ -136,7 +138,7 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
 
     useEffect(() => {
         const notes: Note[] = extractNotes(filesState, notesState, fileID);
-        if (highlightToggle) {
+        if(highlightToggle){
             let copyPasteText = '';
             const objectLength = Object.keys(notesState).length;
             const notesLength = notes.length;
@@ -324,40 +326,23 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId }
                         color="primary"
                         inputProps={{ 'aria-label': 'secondary checkbox' }} />
                 </Tooltip>
-
-                <ToggleButtonGroup exclusive value={style} onChange={toggleStyle} size="small">
-                    <Tooltip title="Select a Chapter" placement="top">
+                <Tooltip title="Highlight Text Types" placement="top">
+                    <ToggleButtonGroup exclusive value={style} onChange={toggleStyle} size="small">
                         <ToggleButton value="header-two"> <TextFieldsIcon /> </ToggleButton>
-                    </Tooltip>
-                    <Tooltip title="Select a Headline" placement="top">
                         <ToggleButton value="header-three"> <TextFieldsIcon fontSize="small" /> </ToggleButton>
-                    </Tooltip>
-                    <Tooltip title="Select main text" placement="top">
                         <ToggleButton value="unstyled"> <TextFormatIcon /> </ToggleButton>
-                    </Tooltip>
-                    <Tooltip title="Copy text as a Bullet point" placement="top">
                         <ToggleButton value="unordered-list-item"> <FormatListBulletedIcon /> </ToggleButton>
-                    </Tooltip>
-                    {/*<ToggleButton value="img"> <CameraAltIcon /> </ToggleButton>*/}
-                </ToggleButtonGroup>
+                        {/*<ToggleButton value="img"> <CameraAltIcon /> </ToggleButton>*/}
+                    </ToggleButtonGroup>
+                </Tooltip>
                 <ButtonGroup style={{
                     paddingLeft: 10
                 }}>
-                    <Tooltip title="Bold Text" placement="top">
-                        <Button onMouseDown={() => formatText('BOLD')} className="editorButton"><FormatBoldIcon fontSize="small" /></Button>
-                    </Tooltip>
-                    <Tooltip title="Italic Text" placement="top">
-                        <Button onMouseDown={() => formatText('ITALIC')} className="editorButton"><FormatItalicIcon fontSize="small" /></Button>
-                    </Tooltip>
-                    <Tooltip title="Strike through" placement="top">
-                        <Button onMouseDown={() => formatText('STRIKETHROUGH')} className="editorButton"><FormatStrikethroughIcon fontSize="small" /></Button>
-                    </Tooltip>
-                    <Tooltip title="Underline Text" placement="top">
-                        <Button onMouseDown={() => formatText('UNDERLINE')} className="editorButton"><FormatUnderlinedIcon fontSize="small" /></Button>
-                    </Tooltip>
-                    <Tooltip title="Code Formate" placement="top">
-                        <Button onMouseDown={() => formatText('CODE')} className="editorButton"><CodeIcon fontSize="small" /></Button>
-                    </Tooltip>
+                    <Button onMouseDown={() => formatText('BOLD')} className="editorButton"><FormatBoldIcon fontSize="small" /></Button>
+                    <Button onMouseDown={() => formatText('ITALIC')} className="editorButton"><FormatItalicIcon fontSize="small" /></Button>
+                    <Button onMouseDown={() => formatText('STRIKETHROUGH')} className="editorButton"><FormatStrikethroughIcon fontSize="small" /></Button>
+                    <Button onMouseDown={() => formatText('UNDERLINE')} className="editorButton"><FormatUnderlinedIcon fontSize="small" /></Button>
+                    <Button onMouseDown={() => formatText('CODE')} className="editorButton"><CodeIcon fontSize="small" /></Button>
                 </ButtonGroup>
                 <Tooltip title="Download" placement="top">
                     {isLoggedIn ? <IconButton onClick={() => { setSaveToggleFile(true); }} style={{ marginLeft: 'auto' }}>

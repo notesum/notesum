@@ -1,7 +1,7 @@
 import React from "react";
 import { Container } from "@material-ui/core";
 import { Link, useLocation } from "react-router-dom";
-import background from "../../resources/background.jpeg";
+import background from "../../resources/background.jpg";
 
 const Footer = () => {
   const location = useLocation();

@@ -5,6 +5,8 @@ import { Box, Button, Grid, Typography, Checkbox, Link } from '@material-ui/core
 import { useDispatch } from 'react-redux';
 import { register } from '../../redux/asyncActions/authAsyncActions';
 import { Close, Check } from '@material-ui/icons'
+
+
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
@@ -20,7 +22,7 @@ export default function SignUp() {
     const classes = useStyles();
 
     // Form data
-    // const [name, setName] = useState('');
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordConf, setPasswordConf] = useState('');
@@ -61,7 +63,7 @@ export default function SignUp() {
         if (Formvalidated) {
             if (password === passwordConf) {
                 setDidntMatch(false);
-                dispatch(register(email, password));
+                dispatch(register(name, email, password));
             } else {
                 setDidntMatch(true);
             }
@@ -124,9 +126,9 @@ export default function SignUp() {
     // Sign up form
     const form = () => (
         <form className={classes.root} noValidate autoComplete="off">
-            {/* <div>
+            <div>
                 <TextField onChange={(event) => setName(event.target.value)} label="Username" />
-            </div> */}
+            </div>
             <div>
                 <TextField onChange={(event) => setEmail(event.target.value)} label="Email" />
             </div>
