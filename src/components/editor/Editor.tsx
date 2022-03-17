@@ -34,7 +34,7 @@ import {Notes} from '../../redux/types/noteType';
 
 import downloadState from './Download';
 import './Editor.css';
-import { insertImageUtil, getSelectionParentElement, hotKey, insertNewBlock } from '../../utils/EditorUtils';
+import { insertImageUtil, hotKey, insertNewBlock } from '../../utils/EditorUtils';
 import {Files} from '../../redux/types/filesTypes';
 import {extractNotes} from '../../utils/NotesUtils';
 
@@ -123,9 +123,9 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId}:
     }, [project, isLoggedIn]);
 
     // If there is a new image insert it to the editor
-    // useEffect(() => {
-    //     setEditorState((prevState) => insertImageUtil(prevState, img));
-    // }, [img, isLoggedIn]);
+    useEffect(() => {
+        setEditorState((prevState) => insertImageUtil(prevState, img));
+    }, [img, isLoggedIn]);
 
     const [notesStateLength, setNotesStateLength] = useState<number>(Object.keys(notesState).length);
 
@@ -332,7 +332,7 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId}:
                         <ToggleButton value="header-three"> <TextFieldsIcon fontSize="small" /> </ToggleButton>
                         <ToggleButton value="unstyled"> <TextFormatIcon /> </ToggleButton>
                         <ToggleButton value="unordered-list-item"> <FormatListBulletedIcon /> </ToggleButton>
-                        {/*<ToggleButton value="img"> <CameraAltIcon /> </ToggleButton>*/}
+                        <ToggleButton value="img"> <CameraAltIcon /> </ToggleButton>
                     </ToggleButtonGroup>
                 </Tooltip>
                 <ButtonGroup style={{
