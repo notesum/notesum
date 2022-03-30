@@ -18,6 +18,7 @@ type DocumentViewProps = {
 export default function DocumentView({ pdf, fileId }: DocumentViewProps) {
     const [screenshot, setScreenshot] = useState(false);
     const [image, setImage] = useState('');
+    const [ScrollPosition, setScrollPosition] = useState(0);
 
     const setCallback = (img: string) => {
         setImage(img);
@@ -60,6 +61,10 @@ export default function DocumentView({ pdf, fileId }: DocumentViewProps) {
         }
     };
 
+    const onScrollEvent = (e) =>{
+        setScrollPosition(e.target.scrollTop);
+    };
+
     useEffect(() => {
         window.addEventListener('mouseup', stopDragging);
         window.addEventListener('mousemove', animateResize);
@@ -75,8 +80,9 @@ export default function DocumentView({ pdf, fileId }: DocumentViewProps) {
             <Box flexGrow={1} style={{
                 width: `${pdfPercentage}%`,
                 height: '100%'
-            }}>
-                <PdfViewer fileId={fileId} fileUrl={pdf} screenshot={screenshot} setScreenshotCallback={setCallback}/>
+            }} onScroll={onScrollEvent}>
+                <PdfViewer fileId={fileId} fileUrl={pdf} screenshot={screenshot} setScreenshotCallback={setCallback}
+                           scrollPosition={ScrollPosition}/>
             </Box>
 
             <div

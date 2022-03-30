@@ -39,6 +39,7 @@
         "draft-js-plugins-editor": "^3.0.0",
         "draftjs-to-html": "^0.9.1",
         "file-saver": "^2.0.2",
+        "html2canvas": "^1.4.1",
         "jquery": ">=1.8.0",
         "jspdf": "^2.4.0",
         "pdfjs-dist": "^2.6.347",

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ReactElement, useEffect, useState } from 'react';
+import { ReactElement, useEffect, useState, useRef } from 'react';
 import { GlobalWorkerOptions, version} from 'pdfjs-dist';
 import { DocumentLoadEvent, PdfJs, Viewer } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin, ToolbarProps } from '@react-pdf-viewer/default-layout';
@@ -14,6 +14,8 @@ import {createNote, deleteNoteAsync} from '../../redux/asyncActions/noteAsyncAct
 import { extractNotes } from '../../utils/NotesUtils';
 import {Files} from '../../redux/types/filesTypes';
 
+import SnippingTool from './SnippingTool';
+
 GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${version}/pdf.worker.min.js`;
 
 interface PdfViewerProps {
@@ -21,11 +23,12 @@ interface PdfViewerProps {
     fileUrl: string;
     screenshot: boolean;
     setScreenshotCallback: (img: string) => null;
+    scrollPosition:number;
 }
 
 // let notesId: number = -1;
 
-const PdfViewer: React.FC<PdfViewerProps> = ({ fileId, fileUrl}) => {
+const PdfViewer: React.FC<PdfViewerProps> = ({ fileId, fileUrl, screenshot, setScreenshotCallback,scrollPosition}) => {
 
     const filesState: Files = useSelector((state: any) => state.files);
     const notesState: Notes = useSelector((state: any) => state.notes);
@@ -150,15 +153,24 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileId, fileUrl}) => {
         ],
         renderToolbar
     });
+
+
+    const pdfViewer = useRef<HTMLDivElement>(null);
+
     return (
-        <Viewer
-            fileUrl={fileUrl}
-            plugins={[
-                highlightPluginInstance,
-                defaultLayoutPluginInstance,
-            ]}
-            onDocumentLoad={handleDocumentLoad}
-        />
+        <SnippingTool  screenshot={screenshot} screenshotCallback={setScreenshotCallback} scrollPosition={scrollPosition}
+                       ref={pdfViewer}>
+            <div ref={pdfViewer} style={{position:'relative', height:'100%'}}>
+                <Viewer
+                    fileUrl={fileUrl}
+                    plugins={[
+                        highlightPluginInstance,
+                        defaultLayoutPluginInstance
+                    ]}
+                    onDocumentLoad={handleDocumentLoad}
+                />
+            </div>
+        </SnippingTool>
     );
 };
 
