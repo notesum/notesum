@@ -160,7 +160,7 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileId, fileUrl, screenshot, setS
     return (
         <SnippingTool  screenshot={screenshot} screenshotCallback={setScreenshotCallback} scrollPosition={scrollPosition}
                        ref={pdfViewer}>
-            <div ref={pdfViewer}>
+            <div ref={pdfViewer} style={{position:'relative', height:'100%'}}>
                 <Viewer
                     fileUrl={fileUrl}
                     plugins={[
