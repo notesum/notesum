@@ -74,7 +74,7 @@
         "build": "yarn run clean && yarn run lint && yarn run build:parcel",
         "build:parcel": "parcel build public/index.html --public-url / --no-source-maps",
         "dev": "parcel public/index.html",
-        "preview": "git rev-parse --abbrev-ref HEAD | xargs -I {} bash -c 'firebase hosting:channel:deploy {}'",
+        "preview": "yarn build && git rev-parse --abbrev-ref HEAD | xargs -I {} bash -c 'firebase hosting:channel:deploy {}'",
         "live": "git rev-parse --abbrev-ref HEAD | xargs -I {} bash -c 'firebase hosting:clone notesum-front:{} notesum-front:live'"
     },
     "staticFiles": {
