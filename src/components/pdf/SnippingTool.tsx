@@ -10,7 +10,7 @@ type PageProps = {
     // hidden?: boolean,
     // isVisible: boolean,
     children: | React.ReactChild
-              | React.ReactChild[],
+    | React.ReactChild[],
     screenshot: boolean,
     screenshotCallback?: (img: string) => void,
     scrollPosition: number,
@@ -28,7 +28,7 @@ const useStyles = makeStyles(() => ({
         position: 'absolute',
         overflow: 'hidden',
         border: '2px #000 solid',
-        zIndex:2
+        zIndex: 2
     },
     hidden: {
         position: 'absolute',
@@ -39,8 +39,8 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-export default React.memo(React.forwardRef(({ children, screenshot, screenshotCallback,scrollPosition }: PageProps,
-                                            pageRef: MutableRefObject<HTMLDivElement>) => {
+export default React.memo(React.forwardRef(({ children, screenshot, screenshotCallback, scrollPosition }: PageProps,
+    pageRef: MutableRefObject<HTMLDivElement>) => {
 
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const textLayerRef = useRef<HTMLDivElement>(null);
@@ -62,7 +62,7 @@ export default React.memo(React.forwardRef(({ children, screenshot, screenshotCa
 
     // Screenshots
     const screenshotLayerRef = useRef<HTMLDivElement>(null);
-    const [screenshotRect, setScreenshotRect] = useState([0,0,0,0]);
+    const [screenshotRect, setScreenshotRect] = useState([0, 0, 0, 0]);
     const hiddenCanvas = useRef<HTMLCanvasElement>(null);
 
     useEffect(() => {
@@ -88,7 +88,7 @@ export default React.memo(React.forwardRef(({ children, screenshot, screenshotCa
                 top, left, top, left
             ]);
             ctx.beginPath();
-            ctx.rect(left, top,  left, top);
+            ctx.rect(left, top, left, top);
 
             sToolRef.current.addEventListener('mousemove', mouseMoveListener);
         };
@@ -100,7 +100,6 @@ export default React.memo(React.forwardRef(({ children, screenshot, screenshotCa
             e.stopPropagation();
             let top = e.pageY - 148 + scrollPosition;
             let left = e.pageX;
-            console.log('Move listener',top,left);
 
             if (top < 0 || left < 0) return;
 
@@ -111,14 +110,14 @@ export default React.memo(React.forwardRef(({ children, screenshot, screenshotCa
                 left,
             ]);
             ctx.beginPath();
-            ctx.rect(left, top,  left, top);
+            ctx.rect(left, top, left, top);
         };
 
         const mouseUpListener = (e: MouseEvent) => {
             if (!screenshot) return;
-            e.preventDefault();
-            e.stopPropagation();
-            console.log('Up listener');
+            // e.preventDefault();
+            // e.stopPropagation();
+            // console.log('Up listener', screenshot);
             sToolRef.current.removeEventListener('mousemove', mouseMoveListener);
 
             // Way to get (and set) the current screenshot rect.
@@ -128,30 +127,34 @@ export default React.memo(React.forwardRef(({ children, screenshot, screenshotCa
                 hiddenCanvas.current.width = Math.abs(cur[3] - cur[1]);
                 hiddenCanvas.current.height = Math.abs(cur[2] - cur[0]);
                 const hiddenCtx = hiddenCanvas.current.getContext('2d');
-                console.log( Math.min(cur[1], cur[3]),
-                Math.min(cur[0], cur[2]),
-                Math.abs(cur[3] - cur[1]),
-                Math.abs(cur[2] - cur[0]))
+                let width = Math.abs(cur[3] - cur[1]);
+                let height = Math.abs(cur[2] - cur[0]);
+                let x = Math.min(cur[1], cur[3]);
+                let y = Math.min(cur[0], cur[2]);
+
                 hiddenCtx.drawImage(
                     canvasRef.current,
-                    Math.min(cur[1], cur[3]),
-                    Math.min(cur[0], cur[2]),
-                    Math.abs(cur[3] - cur[1]),
-                    Math.abs(cur[2] - cur[0]),
+                    x,
+                    y,
+                    width,
+                    height,
                     0,
                     0,
-                    Math.abs(cur[3] - cur[1]),
-                    Math.abs(cur[2] - cur[0])
+                    width,
+                    height
                 );
-                html2canvas(document.querySelector('.rpv-default-layout__container'), {
-                    width: Math.abs(cur[3] - cur[1]),
-                    height: Math.abs(cur[2] - cur[0]),
-                    x:  Math.min(cur[1], cur[3]),
-                    y: Math.min(cur[0], cur[2]),
+                if (width != 0 && height != 0 && x != 0 && y != 0) {
+                    html2canvas(document.querySelector('.rpv-default-layout__container'), {
+                        width: width,
+                        height: height,
+                        x: x,
+                        y: y,
                     })
-                    .then(function(screenshot) {
-                        screenshotCallback(screenshot.toDataURL());
-                    });
+                        .then(function (screenshot) {
+                            screenshotCallback(screenshot.toDataURL());
+                        });
+                }
+
 
                 return [0, 0, 0, 0];
             });
@@ -166,7 +169,7 @@ export default React.memo(React.forwardRef(({ children, screenshot, screenshotCa
             sToolRef.current.removeEventListener('mouseup', mouseUpListener);
         };
 
-    }, [screenshot,scrollPosition]);
+    }, [screenshot, scrollPosition]);
 
     return (
         <div style={{
@@ -174,19 +177,19 @@ export default React.memo(React.forwardRef(({ children, screenshot, screenshotCa
             height: '100%'
         }} ref={sToolRef}>
             <canvas hidden ref={hiddenCanvas} />
-            <canvas  className="canvasWrapper" ref={canvasRef} style={{
+            <canvas className="canvasWrapper" ref={canvasRef} style={{
                 width: '100%',
                 height: '100%',
                 position: 'absolute',
             }} />
             <div hidden={!screenshot || Math.abs(screenshotRect[2] - screenshotRect[0]) < 5 || Math.abs(screenshotRect[3] - screenshotRect[1]) < 5}
-                 className={classes.reset} ref={screenshotLayerRef} style={{
-                top: Math.min(screenshotRect[0], screenshotRect[2]),
-                left: Math.min(screenshotRect[1], screenshotRect[3]),
-                height: Math.abs(screenshotRect[2] - screenshotRect[0]),
-                width: Math.abs(screenshotRect[3] - screenshotRect[1])
-            }}/>
-            { children }
+                className={classes.reset} ref={screenshotLayerRef} style={{
+                    top: Math.min(screenshotRect[0], screenshotRect[2]),
+                    left: Math.min(screenshotRect[1], screenshotRect[3]),
+                    height: Math.abs(screenshotRect[2] - screenshotRect[0]),
+                    width: Math.abs(screenshotRect[3] - screenshotRect[1])
+                }} />
+            {children}
             {/* Hidden class in necessary to retain selection information correctly */}
             <div hidden={screenshot} className={screenshot ? classes.hidden : 'textLayer'} ref={textLayerRef} />
         </div>
