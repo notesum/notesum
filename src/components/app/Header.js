@@ -69,6 +69,11 @@ const Header = () => {
                       <p>Terms and Conditions</p></Link>
                   </li>
                   <li>
+                    <Link to="/terms" target="_blank">
+                      <img src={Terms} style={{ maxWidth: 32, filter: "invert(1)" }} alt="" />
+                      <p>Terms and Conditions</p></Link>
+                  </li>
+                  <li>
                     <HashLink smooth to="/#contact-section" target="_blank">
                       <img src={Contact} alt="" style={{ maxWidth: 32, filter: "invert(1)" }} />
                       <p>Contact</p></HashLink>
