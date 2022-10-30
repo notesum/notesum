@@ -1,10 +1,10 @@
 import React, { useState, useRef } from "react";
-import { Paper } from "@material-ui/core";
+import { Link } from "react-router-dom";
+import { Paper, Typography } from "@material-ui/core";
 import BackupIcon from "@material-ui/icons/Backup";
 
 import "./EmptyProject.css";
-import { useDispatch, useSelector } from "react-redux";
-
+import { useSelector } from "react-redux";
 
 export default function EmptyProject({
   addFile,
@@ -69,27 +69,32 @@ export default function EmptyProject({
       }}
       onDragLeave={() => setIsDropping(() => false)}
     >
-      <input
-        hidden
-        type="file"
-        accept=".pdf"
-        ref={fileInputRef}
-        onChange={inputEvent}
-      />
-
-      <Paper
-        onClick={() => fileInputRef.current.click()}
-        elevation={isDropping ? 6 : isHovering ? 4 : 2}
-        className="projectUploadDialog"
-        onMouseOver={() => setIsHovering(true)}
-        onMouseOut={() => setIsHovering(false)}
-      >
-        <BackupIcon
-          style={{ display: "block", fontSize: 120, margin: "0 auto 0 auto" }}
+      <div style={{ textAlign: "center" }}>
+        <Typography variant="h5" color="textPrimary" paragraph>
+          Please do not upload any personal or sensitive documents.<br/>
+          Before uploading a file, ensure that you read and understand our<br/>
+          <Link to="/terms" target="_blank">terms and conditions</Link>.
+        </Typography>
+        <input
+          hidden
+          type="file"
+          accept=".pdf"
+          ref={fileInputRef}
+          onChange={inputEvent}
         />
+        <Paper
+          onClick={() => fileInputRef.current.click()}
+          elevation={isDropping ? 6 : isHovering ? 4 : 2}
+          className="projectUploadDialog"
+          onMouseOver={() => setIsHovering(true)}
+          onMouseOut={() => setIsHovering(false)}
+          style={{ margin: "0 auto" }}
+          >
+        <BackupIcon style={{ display: "block", fontSize: 120, margin: "0 auto" }}/>
         <p>Add a file to the project.</p>
         <i style={{ color: "grey" }}>Supported filetypes: pdf</i>
       </Paper>
+      </div>
     </div>
   );
 }
