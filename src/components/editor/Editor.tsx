@@ -52,13 +52,13 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId}:
     const fileID: number = Number(fileId);
 
     const { isLoggedIn } = useSelector((state: AppState) => state.auth);
-    let { id } = useSelector((state: AppState) => state.auth);
-    const userId = id;
+    let { uid } = useSelector((state: AppState) => state.auth);
+    const userId = uid;
 
-    let { id } = useParams<{ id: string }>();
-    const projectId = id;
+    let { pid } = useParams<{ id: string }>();
+    const projectId = pid;
 
-    const project: Project = useSelector((state: any) => state.projects[id]);
+    const project: Project = useSelector((state: any) => state.projects[pid]);
 
 
 
