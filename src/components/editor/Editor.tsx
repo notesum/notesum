@@ -254,8 +254,8 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId}:
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
-                <Button onClick={() => { setSaveToggle(false), setSaveToggleFile(true); }}>Just Download</Button>
-                <Button onClick={() => { setSaveToggle(false), setShowSignUp(true); }}>
+                <Button onClick={() => { setSaveToggle(false); setSaveToggleFile(true); }}>Just Download</Button>
+                <Button onClick={() => { setSaveToggle(false); setShowSignUp(true); }}>
                     Sign Up
                 </Button>
             </DialogActions>
@@ -277,8 +277,8 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId}:
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
-                <Button onClick={() => { setSaveToggleOnLeave(false), setDownloadToggle(true); }}>No</Button>
-                <Button onClick={() => { setSaveToggleOnLeave(false), setShowSignUp(true); }}>
+                <Button onClick={() => { setSaveToggleOnLeave(false); setDownloadToggle(true); }}>No</Button>
+                <Button onClick={() => { setSaveToggleOnLeave(false); setShowSignUp(true); }}>
                     Sign Up
                 </Button>
             </DialogActions>
