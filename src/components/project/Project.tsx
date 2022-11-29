@@ -21,7 +21,7 @@ import {
 import MenuIcon from "@material-ui/icons/Menu";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
-import { Project } from "../../redux/types/projectTypes";
+//import { Project } from "../../redux/types/projectTypes";
 import { Files } from "../../redux/types/filesTypes";
 import {
   createFile,
@@ -58,18 +58,12 @@ const useStyles = makeStyles(() => ({
 export default function Project() {
   const { isLoggedIn } = useSelector((state: AppState) => state.auth);
   const { id, urlFileId } = useParams<{ id: string; urlFileId?: string }>();
-
   const project: Project = useSelector((state: any) => state.projects[id]);
   const files: Files = useSelector((state: any) => state.files);
-
   const dispatch = useDispatch();
-
   const authToken = useSelector((state: any) => state.auth.token);
-
   const history = useHistory();
 
-  // Project wasn't found, return 404
-  if (!project) return <Error />;
 
   // Update project & files list
   useEffect(() => {
@@ -108,6 +102,7 @@ export default function Project() {
     }
   }, [currentFile]);
 
+
   const addProjectFile = (pdf: File) => {
     if (isLoggedIn) {
       dispatch(createFile(id, pdf));
@@ -119,8 +114,10 @@ export default function Project() {
   const [isFileDrawerOpen, setFileDrawerOpen] = useState(false);
   const [isAddFilesModalOpen, setAddFilesModalOpen] = useState(false);
   // const [isBenefitModalOpen, setBenefitModalOpen] = useState(true);
-
   const classes = useStyles();
+
+  // Project wasn't found, return 404
+  if (!project) return <Error />;
 
   return (
     <div>
