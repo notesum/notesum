@@ -152,7 +152,7 @@ export default function SignUp() {
                     {form()}
                 </Grid>
                 <Grid item style={{ marginTop: '10px', width: "100%", display: "flex", alignItems: "center" }}>
-                    <Checkbox value={consent} onChange={() => { setConsent(!consent), FormValidation() }} />
+                    <Checkbox value={consent} onChange={() => { setConsent(!consent); FormValidation() }} />
                     <Typography variant="subtitle2">
                         By signing up you accept our <Link href="/terms" target="_blank">terms and condition</Link>
                     </Typography>
