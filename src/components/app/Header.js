@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, Button } from "@material-ui/core";
+import Donation from "../../resources/donation.svg";
 import Logo from "../../resources/frame.png";
 import LogoText from "../../resources/CosmoNote.svg";
 import feedback from "../../resources/feedback.svg";
@@ -49,12 +50,6 @@ const Header = () => {
                 </Button>
               </li>
               <li>
-                <Link to="/about" target="_blank">
-                  <img src={info} alt="" />
-                  <p>Information</p>
-                </Link>
-              </li>
-              <li>
                 {/* <a href="#">
                   <img src={user} alt="" />
                 </a> */}
@@ -63,6 +58,15 @@ const Header = () => {
 
               {location.pathname.includes("/project/") ?
                 <>
+                  <li>
+                    <Button
+                        target="_blank"
+                        href="https://www.paypal.com/donate/?hosted_button_id=BTJE5YVKQXVLC"
+                    >
+                      <img src={Donation} style={{ maxWidth: 32, filter: "invert(1)" }} alt="" />
+                      <p>Donate</p>
+                    </Button>
+                  </li>
                   <li>
                     <Link to="/terms" target="_blank">
                       <img src={Terms} style={{ maxWidth: 32, filter: "invert(1)" }} alt="" />
