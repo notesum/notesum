@@ -1,5 +1,8 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# IDEA IDE-s
+.idea
+
 # dependencies
 /node_modules
 /.pnp
@@ -25,7 +28,7 @@ yarn-error.log*
 
 # Parcel
 /dist
-/.cache
+/.parcel-cache
 
 # Odf example that I am working on
 /src/resources/ODFunpacked/*
