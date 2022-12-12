@@ -27,7 +27,6 @@ import { updateEditor } from '../../redux/actions/filesActions';
 import { AppState } from '../../redux/reducers';
 import { saveFile } from '../../redux/asyncActions/fileAsyncActions';
 import { updateProjectName } from '../../redux/asyncActions/projectAsyncActions';
-import { Note } from '../pdf/PdfViewer';
 import SignUp from '../auth/SignUp';
 import { Project } from '../../redux/types/projectTypes';
 import {Notes} from '../../redux/types/noteType';
@@ -52,15 +51,10 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId}:
     const fileID: number = Number(fileId);
 
     const { isLoggedIn } = useSelector((state: AppState) => state.auth);
-    let { uid } = useSelector((state: AppState) => state.auth);
-    const userId = uid;
+    const userState = useSelector((state: AppState) => state.auth);
+    const projectState = useParams<{ id: string }>();
 
-    let { pid } = useParams<{ id: string }>();
-    const projectId = pid;
-
-    const project: Project = useSelector((state: any) => state.projects[pid]);
-
-
+    const project: Project = useSelector((state: any) => state.projects[projectState.id]);
 
     const content = useSelector((state: AppState) => state.files[fileId].summary);
     const file = useSelector((state: AppState) => state.files[fileId]);
@@ -88,13 +82,12 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId}:
     const [newProjectName, setNewProjectName] = useState(project.name);
 
     const newProject = (name: string) => {
-        dispatch(updateProjectName(name, userId, projectId));
+        dispatch(updateProjectName(name, userState.id, projectState.id));
     };
 
 
 
     const [highlightToggle, setHighlightToggle] = useState(true);
-    let prevSelection = null;
 
     // All the plugins for draft.js
     const imagePlugin = createImagePlugin();
