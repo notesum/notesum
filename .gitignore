@@ -12,6 +12,7 @@
 /build
 
 # misc
+/.cache
 .DS_Store
 .env.local
 .env.development.local
@@ -25,7 +26,7 @@ yarn-error.log*
 
 # Parcel
 /dist
-/.cache
+/.parcel-cache
 
 # Odf example that I am working on
 /src/resources/ODFunpacked/*
