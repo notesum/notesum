@@ -106,7 +106,7 @@ export default function Root(props) {
 
 
 
-        {isMobile ? <Dialog onClose={ } aria-labelledby="customized-dialog-title" open={true}>
+        {isMobile ? <Dialog aria-labelledby="customized-dialog-title" open={true}>
           <DialogTitle id="alert-dialog-title">
             Welcome!
           </DialogTitle>

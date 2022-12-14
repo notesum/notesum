@@ -1,14 +1,9 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Redirect, Route, RouteProps } from 'react-router-dom';
-
-import { authReset } from '../redux/actions/authActions';
-import { AppState } from '../redux/reducers';
+import { Route, RouteProps } from 'react-router-dom';
 
 // Can only be accessed when you are logged in
-function PrivateRoute(props: RouteProps) {
-    const { isLoggedIn } = useSelector((state:AppState)=>state.auth);
-    const dispatch = useDispatch();
+export default function PrivateRoute(props: RouteProps) {
+    //const { isLoggedIn } = useSelector((state:AppState)=>state.auth);
+    //const dispatch = useDispatch();
 
     // useEffect(() => {
     //     if (!isLoggedIn) dispatch(authReset());
@@ -30,5 +25,3 @@ function PrivateRoute(props: RouteProps) {
     //     );
     // }
 }
-
-export default PrivateRoute;

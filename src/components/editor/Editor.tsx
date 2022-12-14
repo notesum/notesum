@@ -27,7 +27,6 @@ import { updateEditor } from '../../redux/actions/filesActions';
 import { AppState } from '../../redux/reducers';
 import { saveFile } from '../../redux/asyncActions/fileAsyncActions';
 import { updateProjectName } from '../../redux/asyncActions/projectAsyncActions';
-import { Note } from '../pdf/PdfViewer';
 import SignUp from '../auth/SignUp';
 import { Project } from '../../redux/types/projectTypes';
 import {Notes} from '../../redux/types/noteType';
@@ -52,15 +51,10 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId}:
     const fileID: number = Number(fileId);
 
     const { isLoggedIn } = useSelector((state: AppState) => state.auth);
-    let { id } = useSelector((state: AppState) => state.auth);
-    const userId = id;
+    const userState = useSelector((state: AppState) => state.auth);
+    const projectState = useParams<{ id: string }>();
 
-    let { id } = useParams<{ id: string }>();
-    const projectId = id;
-
-    const project: Project = useSelector((state: any) => state.projects[id]);
-
-
+    const project: Project = useSelector((state: any) => state.projects[projectState.id]);
 
     const content = useSelector((state: AppState) => state.files[fileId].summary);
     const file = useSelector((state: AppState) => state.files[fileId]);
@@ -88,13 +82,12 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId}:
     const [newProjectName, setNewProjectName] = useState(project.name);
 
     const newProject = (name: string) => {
-        dispatch(updateProjectName(name, userId, projectId));
+        dispatch(updateProjectName(name, userState.id, projectState.id));
     };
 
 
 
     const [highlightToggle, setHighlightToggle] = useState(true);
-    let prevSelection = null;
 
     // All the plugins for draft.js
     const imagePlugin = createImagePlugin();
@@ -254,8 +247,8 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId}:
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
-                <Button onClick={() => { setSaveToggle(false), setSaveToggleFile(true); }}>Just Download</Button>
-                <Button onClick={() => { setSaveToggle(false), setShowSignUp(true); }}>
+                <Button onClick={() => { setSaveToggle(false); setSaveToggleFile(true); }}>Just Download</Button>
+                <Button onClick={() => { setSaveToggle(false); setShowSignUp(true); }}>
                     Sign Up
                 </Button>
             </DialogActions>
@@ -277,8 +270,8 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId}:
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
-                <Button onClick={() => { setSaveToggleOnLeave(false), setDownloadToggle(true); }}>No</Button>
-                <Button onClick={() => { setSaveToggleOnLeave(false), setShowSignUp(true); }}>
+                <Button onClick={() => { setSaveToggleOnLeave(false); setDownloadToggle(true); }}>No</Button>
+                <Button onClick={() => { setSaveToggleOnLeave(false); setShowSignUp(true); }}>
                     Sign Up
                 </Button>
             </DialogActions>
