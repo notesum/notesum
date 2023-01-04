@@ -1,28 +1,28 @@
 import React, { useEffect, useState } from 'react';
+import { styled, createMuiTheme } from '@mui/material/styles';
 import { useDispatch } from 'react-redux';
-import TextField from '@material-ui/core/TextField';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { Box, Button, Grid, Typography } from '@material-ui/core';
+import TextField from '@mui/material/TextField';
+import { Box, Button, Grid, Typography } from '@mui/material';
 
 import { login } from '../../redux/asyncActions/authAsyncActions';
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            '& .MuiTextField-root': {
-                margin: theme.spacing(2),
-                width: 400,
-            },
+const classes = { root: `Login-root` };
+const theme = createMuiTheme();
+const StyledBox = styled(Box)(({theme}) => ({
+    [`& .${classes.root}`]: {
+        '& .MuiTextField-root': {
+            margin: theme.spacing(2),
+            width: 400,
         },
-    }),
-);
+    }
+}));
 
 type LogInProps = {
     buttonCallback?: (a: boolean) => void
 };
 
 export default function Login({ buttonCallback }: LogInProps) {
-    const classes = useStyles();
+
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -49,13 +49,13 @@ export default function Login({ buttonCallback }: LogInProps) {
     }, []);
 
     return (
-        <Box m={3}>
+        <StyledBox m={3}>
             <Grid
                 container
                 spacing={0}
                 direction="column"
                 alignItems="center"
-                justify="center"
+                justifyContent="center"
             >
                 <Grid item>
                     <Typography variant="h4">Log In</Typography>
@@ -89,6 +89,6 @@ export default function Login({ buttonCallback }: LogInProps) {
                     <Button onMouseDown={() => buttonCallback(true)} variant="contained" color="primary">Sign Up</Button>
                 </Grid>
             </Grid >
-        </Box>
+        </StyledBox>
     );
 }

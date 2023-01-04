@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { styled } from '@mui/material/styles';
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import {
@@ -14,12 +15,11 @@ import {
   ListItemText,
   ListSubheader,
   InputBase,
-  makeStyles,
   Toolbar,
   CircularProgress,
-} from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 //import { Project } from "../../redux/types/projectTypes";
 import { Files } from "../../redux/types/filesTypes";
@@ -43,16 +43,24 @@ import EmptyProject from "./EmptyProject";
 import DocumentView from "./DocumentView";
 
 
-const useStyles = makeStyles(() => ({
-  name: {
+const PREFIX = 'Project';
+
+const classes = {
+  name: `${PREFIX}-name`,
+  grow: `${PREFIX}-grow`
+};
+
+const Root = styled('div')(() => ({
+  [`& .${classes.name}`]: {
     marginBottom: "-5px",
     width: "auto",
     color: "white",
     fontWeight: "bold",
   },
-  grow: {
+
+  [`& .${classes.grow}`]: {
     flexGrow: 1,
-  },
+  }
 }));
 
 export default function Project() {
@@ -114,13 +122,13 @@ export default function Project() {
   const [isFileDrawerOpen, setFileDrawerOpen] = useState(false);
   const [isAddFilesModalOpen, setAddFilesModalOpen] = useState(false);
   // const [isBenefitModalOpen, setBenefitModalOpen] = useState(true);
-  const classes = useStyles();
+
 
   // Project wasn't found, return 404
   if (!project) return <Error />;
 
   return (
-    <div>
+    <Root>
       <Drawer
         anchor="left"
         open={isFileDrawerOpen}
@@ -183,7 +191,7 @@ export default function Project() {
       <Box flexDirection="column" display="flex" height="100%">
         <Box m={0} bgcolor="#0b214a">
           <Toolbar variant="dense" style={{ padding: 0 }}>
-            <IconButton onClick={() => setFileDrawerOpen(true)}>
+            <IconButton onClick={() => setFileDrawerOpen(true)} size="large">
               <MenuIcon style={{ color: "#fff" }} />
             </IconButton>
             <InputBase
@@ -235,6 +243,6 @@ export default function Project() {
           )}
         </Box>
       </Box>
-    </div>
+    </Root>
   );
 }

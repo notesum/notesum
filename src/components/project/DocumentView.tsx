@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 // import { useSelector } from 'react-redux';
-import { Box } from '@material-ui/core';
+import { Box } from '@mui/material';
 
 import PdfViewer from '../pdf/PdfViewer';
 import TextEditor from '../editor/Editor';

@@ -1,7 +1,30 @@
 import React, { useRef, useEffect, useState, MutableRefObject } from 'react';
-// import { renderTextLayer } from 'pdfjs-dist';
-import { makeStyles } from '@material-ui/core';
+import { styled } from '@mui/material/styles';
 import html2canvas from 'html2canvas';
+
+const PREFIX = 'SnippingTool';
+
+const classes = {
+    reset: `${PREFIX}-reset`,
+    hidden: `${PREFIX}-hidden`
+};
+
+const Root = styled('div')(() => ({
+    [`& .${classes.reset}`]: {
+        position: 'absolute',
+        overflow: 'hidden',
+        border: '2px #000 solid',
+        zIndex: 2
+    },
+
+    [`& .${classes.hidden}`]: {
+        position: 'absolute',
+        overflow: 'hidden',
+        clip: 'rect(0 0 0 0)',
+        height: '1px; width: 1px',
+        margin: '-1px; padding: 0; border: 0'
+    }
+}));
 
 type PageProps = {
     // page: PDFPageProxy
@@ -15,29 +38,6 @@ type PageProps = {
     screenshotCallback?: (img: string) => void,
     scrollPosition: number,
 };
-
-// enum PageState {
-//     NEEDS_RENDER,       // Initial state, signifies that the page is not currently being rendered and that it needs to be
-//     RENDERING,          // Page is currently rendering (the page shouldn't be rendered twice at the same time)
-//     RENDERING_OUTDATED, // Page is currently being rendered but is already outdated
-//     FINISHED            // Page is fully rendered and doesn't need a re-render a.t.m.
-// }
-
-const useStyles = makeStyles(() => ({
-    reset: {
-        position: 'absolute',
-        overflow: 'hidden',
-        border: '2px #000 solid',
-        zIndex: 2
-    },
-    hidden: {
-        position: 'absolute',
-        overflow: 'hidden',
-        clip: 'rect(0 0 0 0)',
-        height: '1px; width: 1px',
-        margin: '-1px; padding: 0; border: 0'
-    }
-}));
 
 export default React.memo(React.forwardRef(({ children, screenshot, screenshotCallback, scrollPosition }: PageProps,
     pageRef: MutableRefObject<HTMLDivElement>) => {
@@ -58,7 +58,7 @@ export default React.memo(React.forwardRef(({ children, screenshot, screenshotCa
     //     scale: scale != null ? scale : (width / page.view[2])
     // });
 
-    const classes = useStyles();
+
 
     // Screenshots
     const screenshotLayerRef = useRef<HTMLDivElement>(null);
@@ -172,7 +172,7 @@ export default React.memo(React.forwardRef(({ children, screenshot, screenshotCa
     }, [screenshot, scrollPosition]);
 
     return (
-        <div style={{
+        <Root style={{
             position: 'relative',
             height: '100%'
         }} ref={sToolRef}>
@@ -192,7 +192,7 @@ export default React.memo(React.forwardRef(({ children, screenshot, screenshotCa
             {children}
             {/* Hidden class in necessary to retain selection information correctly */}
             <div hidden={screenshot} className={screenshot ? classes.hidden : 'textLayer'} ref={textLayerRef} />
-        </div>
+        </Root>
     );
 
 }));
