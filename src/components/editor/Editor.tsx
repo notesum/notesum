@@ -217,16 +217,20 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId}:
                             onChange={(event) => { setName(event.target.value); }} />
                     </Grid>
                     <Grid item xs>
-                        <Button onMouseDown={() => downloadState(editorState, 'pdf', name)}>Save as PDF</Button>
+                        <Button onMouseDown={() => downloadState(editorState, 'pdf', name)}>Save as PDF document</Button>
                     </Grid>
                     <Grid item xs>
-                        <Button onMouseDown={() => downloadState(editorState, 'docx', name)}>Save as Word Document</Button>
+                        <Button onMouseDown={() => downloadState(editorState, 'docx', name)}>Save as Word document</Button>
                     </Grid>
                     <Grid item xs>
                         <Button onMouseDown={() => downloadState(editorState, 'html', name)}>Save as HTML</Button>
                     </Grid>
                     <Grid item xs>
-                        <Button onMouseDown={() => downloadState(editorState, 'txt', name)}>Save as Text Document</Button>
+                        <Button onMouseDown={() => downloadState(editorState, 'md', name)}>Save as Markdown</Button>
+                    </Grid>
+
+                    <Grid item xs>
+                        <Button onMouseDown={() => downloadState(editorState, 'txt', name)}>Save as Plain Text</Button>
                     </Grid>
                 </Grid>
             </Box>
