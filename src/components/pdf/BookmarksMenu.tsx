@@ -1,8 +1,8 @@
 import React, { useRef, useState, RefObject } from 'react';
-import { Menu, IconButton, Collapse, List, ListItem, ListItemText } from '@material-ui/core';
-import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { Menu, IconButton, Collapse, List, ListItem, ListItemText } from '@mui/material';
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 type BookmarkMenuProps = {
     outline: any,
@@ -16,20 +16,22 @@ export default React.memo(({ outline, onNavigate }: BookmarkMenuProps) => {
     const [isOpen, setIsOpen] = useState(false);
     const anchor = useRef(null);
 
-    return (
-        <>
-            <IconButton ref={anchor} aria-haspopup="true" onClick={() => setIsOpen(true)}>
-                <BookmarkBorderIcon />
-            </IconButton>
-            <Menu
-                anchorEl={anchor.current}
-                keepMounted
-                open={isOpen}
-                onClose={() => setIsOpen(false)}>
-                <BookmarkMenuList onNavigate={onNavigate} level={0} outline={outline} />
-            </Menu>
-        </>
-    );
+    return <>
+        <IconButton
+            ref={anchor}
+            aria-haspopup="true"
+            onClick={() => setIsOpen(true)}
+            size="large">
+            <BookmarkBorderIcon />
+        </IconButton>
+        <Menu
+            anchorEl={anchor.current}
+            keepMounted
+            open={isOpen}
+            onClose={() => setIsOpen(false)}>
+            <BookmarkMenuList onNavigate={onNavigate} level={0} outline={outline} />
+        </Menu>
+    </>;
 });
 
 type BookmarkMenuListProps = {

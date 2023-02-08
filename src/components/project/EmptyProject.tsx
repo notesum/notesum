@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { Paper, Typography } from "@material-ui/core";
-import BackupIcon from "@material-ui/icons/Backup";
+import { Paper, Typography } from "@mui/material";
+import BackupIcon from "@mui/icons-material/Backup";
 
 import "./EmptyProject.css";
 import { useSelector } from "react-redux";

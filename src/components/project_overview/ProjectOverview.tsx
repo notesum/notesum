@@ -12,9 +12,9 @@ import {
   List,
   Typography,
   Box,
-} from "@material-ui/core";
-import DescriptionIcon from "@material-ui/icons/Description";
-import AddIcon from "@material-ui/icons/Add";
+} from "@mui/material";
+import DescriptionIcon from "@mui/icons-material/Description";
+import AddIcon from "@mui/icons-material/Add";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
