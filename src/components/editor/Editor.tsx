@@ -213,24 +213,22 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId}:
             <Box m={2} overflow="hidden">
                 <Grid container wrap="wrap" direction="column">
                     <Grid item xs>
-                        <TextField id="filled-helperText" defaultValue={name} label="File Name"
-                            onChange={(event) => { setName(event.target.value); }} />
+                        <TextField id="filled-basic" label="Name" variant="filled" defaultValue={name} onChange={(e) => { setName(e.target.value); }} />
                     </Grid>
                     <Grid item xs>
-                        <Button onMouseDown={() => downloadState(editorState, 'pdf', name)}>Save as PDF document</Button>
+                        <Button onMouseDown={() => downloadState(editorState, 'pdf', name)}>PDF document (.pdf)</Button>
                     </Grid>
                     <Grid item xs>
-                        <Button onMouseDown={() => downloadState(editorState, 'docx', name)}>Save as Word document</Button>
+                        <Button onMouseDown={() => downloadState(editorState, 'docx', name)}>Microsoft Word (.docx)</Button>
                     </Grid>
                     <Grid item xs>
-                        <Button onMouseDown={() => downloadState(editorState, 'html', name)}>Save as HTML</Button>
+                        <Button onMouseDown={() => downloadState(editorState, 'html', name)}>Web page (.html)</Button>
                     </Grid>
                     <Grid item xs>
-                        <Button onMouseDown={() => downloadState(editorState, 'md', name)}>Save as Markdown</Button>
+                        <Button onMouseDown={() => downloadState(editorState, 'md', name)}>Markdown (.md)</Button>
                     </Grid>
-
                     <Grid item xs>
-                        <Button onMouseDown={() => downloadState(editorState, 'txt', name)}>Save as Plain Text</Button>
+                        <Button onMouseDown={() => downloadState(editorState, 'txt', name)}>Plain text (.txt)</Button>
                     </Grid>
                 </Grid>
             </Box>
