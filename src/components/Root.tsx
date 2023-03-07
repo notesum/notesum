@@ -20,10 +20,10 @@ import {
   DialogContentText,
   DialogActions,
   Dialog,
-} from "@material-ui/core";
-import PictureAsPdfIcon from "@material-ui/icons/PictureAsPdf";
-import HomeIcon from "@material-ui/icons/Home";
-import InfoIcon from "@material-ui/icons/Info";
+} from "@mui/material";
+import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
+import HomeIcon from "@mui/icons-material/Home";
+import InfoIcon from "@mui/icons-material/Info";
 import "regenerator-runtime/runtime";
 
 import PrivateRoute from "../Routes/PrivateRoute";

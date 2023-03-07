@@ -1,19 +1,9 @@
 import React, { useState } from "react";
+import { styled } from '@mui/material/styles';
 import Fade from "react-reveal/Fade";
-import {
-  Box,
-  Grid,
-  Card,
-  makeStyles,
-  Typography,
-  Container,
-  TextField,
-  Button,
-  createStyles,
-  Theme,
-} from "@material-ui/core";
+import { Box, Grid, Card, Typography, Container, TextField, Button, Theme } from "@mui/material";
 import { useDispatch } from "react-redux";
-import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 
 import tryMeArrow from "../../resources/poster/try-me.svg";
 import eu from "../../resources/eu-law-summary.png";
@@ -23,24 +13,34 @@ import { NEW_FILE } from "../../redux/types/filesTypes";
 
 import "./Poster.css";
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    Card: {
-      width: "90%",
-      padding: "20px",
-      height: "330px",
+const PREFIX = 'Poster';
+
+const classes = {
+  Card: `${PREFIX}-Card`,
+  root: `${PREFIX}-root`
+};
+
+const StyledContainer = styled(Container)((
+  {
+    theme: Theme
+  }
+) => ({
+  [`& .${classes.Card}`]: {
+    width: "90%",
+    padding: "20px",
+    height: "330px",
+  },
+
+  [`& .${classes.root}`]: {
+    "& .MuiTextField-root": {
+      margin: theme.spacing(2),
+      width: 400,
     },
-    root: {
-      "& .MuiTextField-root": {
-        margin: theme.spacing(2),
-        width: 400,
-      },
-    },
-  })
-);
+  }
+}));
 
 export default function Poster() {
-  const classes = useStyles();
+
 
   const dispatch = useDispatch();
   const [fileId, setFileId] = useState<string>(undefined);
@@ -70,7 +70,7 @@ export default function Poster() {
   };
 
   return (
-    <Container maxWidth="xl" className="stars_bg_poster">
+    <StyledContainer maxWidth="xl" className="stars_bg_poster">
       <Grid
         spacing={7}
         direction="column"
@@ -112,7 +112,7 @@ export default function Poster() {
         <Grid item>
           <Grid
             container
-            justify="center"
+            justifyContent="center"
             alignContent="center"
             alignItems="center"
           >
@@ -212,7 +212,7 @@ export default function Poster() {
           <Fade>
             <Box my={5}>
               <Grid container spacing={7}>
-                <Grid item xs={6} justify="center">
+                <Grid item xs={6} justifyContent="center">
                   <Box mx={7} my={3}>
                     <Card
                       elevation={24}
@@ -227,7 +227,7 @@ export default function Poster() {
                           spacing={0}
                           direction="column"
                           alignItems="center"
-                          justify="center"
+                          justifyContent="center"
                         >
                           <Grid item>
                             <Typography variant="h4">Log In</Typography>
@@ -312,7 +312,7 @@ export default function Poster() {
             </Box>
           </Fade>
         </Grid>
-        <Grid item xs={12} justify="center">
+        <Grid item xs={12} justifyContent="center">
           <div
             style={{
               margin: "0 auto 0 auto",
@@ -357,7 +357,7 @@ export default function Poster() {
                     </Typography>
                   </Box>
                 </Grid>
-                <Grid item xs={5} justify="center">
+                <Grid item xs={5} justifyContent="center">
                   {/* <img src={poster3} style={{ width: '80%' }} /> */}
                   <EmptyProject addFile={onUpload} />
                   <img src={tryMeArrow} alt="Try me!" className="tryMe" />
@@ -366,7 +366,7 @@ export default function Poster() {
             </Box>
           </Fade>
         </Grid>
-        <Grid item xs={12} justify="center">
+        <Grid item xs={12} justifyContent="center">
           <div
             style={{
               margin: "70px auto 0 auto",
@@ -382,7 +382,7 @@ export default function Poster() {
           <Fade>
             <Box my={5}>
               <Grid container spacing={7}>
-                <Grid item xs={5} justify="center">
+                <Grid item xs={5} justifyContent="center">
                   <Box mx={7} my={3}>
                     <img src={eu} style={{ width: "100%" }} />
                   </Box>
@@ -426,7 +426,7 @@ export default function Poster() {
             </Box>
           </Fade>
         </Grid>
-        <Grid item xs={12} justify="center">
+        <Grid item xs={12} justifyContent="center">
           <div
             style={{
               margin: "0 auto 0 auto",
@@ -476,7 +476,7 @@ export default function Poster() {
                     </Typography>
                   </Box>
                 </Grid>
-                <Grid item xs={5} justify="center">
+                <Grid item xs={5} justifyContent="center">
                   <Card
                     elevation={24}
                     style={{
@@ -519,6 +519,6 @@ export default function Poster() {
           </Fade>
         </Grid>
       </Grid>
-    </Container>
+    </StyledContainer>
   );
 }

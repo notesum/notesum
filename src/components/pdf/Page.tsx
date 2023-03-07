@@ -1,8 +1,31 @@
 
 import React, { useRef, useEffect, useState, MutableRefObject } from 'react';
+import { styled } from '@mui/material/styles';
 import { renderTextLayer } from 'pdfjs-dist';
 import { PDFPageProxy } from 'pdfjs-dist/types/display/api';
-import { makeStyles } from '@material-ui/core';
+const PREFIX = 'Page';
+
+const classes = {
+    reset: `${PREFIX}-reset`,
+    hidden: `${PREFIX}-hidden`
+};
+
+const Root = styled('div')(() => ({
+    [`& .${classes.reset}`]: {
+        position: 'absolute',
+        overflow: 'hidden',
+        backgroundColor: 'rgba(0,0,0,0.1)',
+        border: '2px #000 solid'
+    },
+
+    [`& .${classes.hidden}`]: {
+        position: 'absolute',
+        overflow: 'hidden',
+        clip: 'rect(0 0 0 0)',
+        height: '1px; width: 1px',
+        margin: '-1px; padding: 0; border: 0'
+    }
+}));
 
 type PageProps = {
     page: PDFPageProxy
@@ -22,22 +45,6 @@ enum PageState {
     FINISHED            // Page is fully rendered and doesn't need a re-render a.t.m.
 }
 
-const useStyles = makeStyles(() => ({
-    reset: {
-        position: 'absolute',
-        overflow: 'hidden',
-        backgroundColor: 'rgba(0,0,0,0.1)',
-        border: '2px #000 solid'
-    },
-    hidden: {
-        position: 'absolute',
-        overflow: 'hidden',
-        clip: 'rect(0 0 0 0)',
-        height: '1px; width: 1px',
-        margin: '-1px; padding: 0; border: 0'
-    }
-}));
-
 export default React.memo(React.forwardRef(({ page, scale, width, hidden, isVisible, screenshot, screenshotCallback }: PageProps,
                                             pageRef: MutableRefObject<HTMLDivElement>) => {
 
@@ -56,7 +63,7 @@ export default React.memo(React.forwardRef(({ page, scale, width, hidden, isVisi
         scale: scale != null ? scale : (width / page.view[2])
     });
 
-    const classes = useStyles();
+
 
     // Screenshots
     const screenshotLayerRef = useRef<HTMLDivElement>(null);
@@ -185,7 +192,7 @@ export default React.memo(React.forwardRef(({ page, scale, width, hidden, isVisi
     }, [screenshot]);
 
     return (
-        <div data-id={page.pageNumber - 1} ref={pageRef} hidden={hidden} className="page" style={{
+        <Root data-id={page.pageNumber - 1} ref={pageRef} hidden={hidden} className="page" style={{
             width: viewport.width,
             height: viewport.height
         }}>
@@ -201,7 +208,7 @@ export default React.memo(React.forwardRef(({ page, scale, width, hidden, isVisi
 
             {/* Hidden class in necessary to retain selection information correctly */}
             <div hidden={screenshot} className={screenshot ? classes.hidden : 'textLayer'} ref={textLayerRef} />
-        </div>
+        </Root>
     );
 
 }));

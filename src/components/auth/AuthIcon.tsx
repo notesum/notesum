@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button, Dialog, Grid, Typography, Box, CircularProgress } from '@material-ui/core';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { Button, Dialog, Grid, Typography, Box, CircularProgress } from '@mui/material';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteProject } from '../../redux/actions/projectActions';
 
@@ -21,7 +21,6 @@ type AuthProps = {
 };
 
 export default function AuthIcon({ openProp }: AuthProps) {
-
     const projects = useSelector((state: AppState) => state.projects);
 
     // Force open the dialog without a user click
@@ -103,10 +102,11 @@ export default function AuthIcon({ openProp }: AuthProps) {
     };
 
     return (
-        <div>
-            <Button onMouseDown={() => setDialogOpen(true)}><img src={user} alt="" />
-                <p>Profile</p>
-                {/* <Typography variant="body1" style={{ color: 'white', paddingLeft: '5px' }}>{username}</Typography> */}
+        <>
+            <Button onMouseDown={() => setDialogOpen(true)}>
+              <img src={user} alt="" />
+              <p>Profile</p>
+              {/* <Typography variant="body1" style={{ color: 'white', paddingLeft: '5px' }}>{username}</Typography> */}
             </Button>
             <Dialog open={dialogOpen} onClose={closeDialog}>
                 <div>
@@ -118,6 +118,6 @@ export default function AuthIcon({ openProp }: AuthProps) {
                     {isLoggedIn && !loading && actuallyLoggedIn}
                 </div>
             </Dialog>
-        </div>
+        </>
     );
 }

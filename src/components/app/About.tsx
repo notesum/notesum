@@ -1,8 +1,8 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import Container from "@material-ui/core/Container";
-import { Box, Grid } from "@material-ui/core";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { Box, Grid } from "@mui/material";
 
 import example from "../../resources/example.png";
 
@@ -46,7 +46,7 @@ export default function About() {
         <Grid
           container
           spacing={2}
-          justify="center"
+          justifyContent="center"
           direction="column"
           alignContent="center"
           alignItems="center"

@@ -5,23 +5,23 @@ import Editor from 'draft-js-plugins-editor';
 import createImagePlugin from 'draft-js-image-plugin';
 import { EditorState, RichUtils, convertFromRaw, convertToRaw } from 'draft-js';
 import 'draft-js/dist/Draft.css';
-import { Button, ButtonGroup, Grid, Box, Dialog, AppBar, TextField, IconButton, Toolbar, Switch, Tooltip } from '@material-ui/core';
-import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
-import FormatBoldIcon from '@material-ui/icons/FormatBold';
-import FormatItalicIcon from '@material-ui/icons/FormatItalic';
-import FormatUnderlinedIcon from '@material-ui/icons/FormatUnderlined';
-import FormatStrikethroughIcon from '@material-ui/icons/FormatStrikethrough';
-import CodeIcon from '@material-ui/icons/Code';
-import TextFieldsIcon from '@material-ui/icons/TextFields';
-import TextFormatIcon from '@material-ui/icons/TextFormat';
-import SaveAltIcon from '@material-ui/icons/SaveAlt';
-import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
-// import FullscreenIcon from '@material-ui/icons/Fullscreen';
-import CameraAltIcon from '@material-ui/icons/CameraAlt';
-import SaveIcon from '@material-ui/icons/Save';
+import { Button, ButtonGroup, Grid, Box, Dialog, AppBar, TextField, IconButton, Toolbar, Switch, Tooltip } from '@mui/material';
+import { ToggleButton, ToggleButtonGroup } from '@mui/material';
+import FormatBoldIcon from '@mui/icons-material/FormatBold';
+import FormatItalicIcon from '@mui/icons-material/FormatItalic';
+import FormatUnderlinedIcon from '@mui/icons-material/FormatUnderlined';
+import FormatStrikethroughIcon from '@mui/icons-material/FormatStrikethrough';
+import CodeIcon from '@mui/icons-material/Code';
+import TextFieldsIcon from '@mui/icons-material/TextFields';
+import TextFormatIcon from '@mui/icons-material/TextFormat';
+import SaveAltIcon from '@mui/icons-material/SaveAlt';
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+// import FullscreenIcon from '@mui/icons-material/Fullscreen';
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
+import SaveIcon from '@mui/icons-material/Save';
 import {
     DialogContent, DialogTitle, DialogContentText, DialogActions
-} from '@material-ui/core';
+} from '@mui/material';
 
 import { updateEditor } from '../../redux/actions/filesActions';
 import { AppState } from '../../redux/reducers';
@@ -213,24 +213,22 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId}:
             <Box m={2} overflow="hidden">
                 <Grid container wrap="wrap" direction="column">
                     <Grid item xs>
-                        <TextField id="filled-helperText" defaultValue={name} label="File Name"
-                            onChange={(event) => { setName(event.target.value); }} />
+                        <TextField id="filled-basic" label="Name" variant="filled" defaultValue={name} onChange={(e) => { setName(e.target.value); }} />
                     </Grid>
                     <Grid item xs>
-                        <Button onMouseDown={() => downloadState(editorState, 'pdf', name)}>Save as PDF document</Button>
+                        <Button onMouseDown={() => downloadState(editorState, 'pdf', name)}>PDF document (.pdf)</Button>
                     </Grid>
                     <Grid item xs>
-                        <Button onMouseDown={() => downloadState(editorState, 'docx', name)}>Save as Word document</Button>
+                        <Button onMouseDown={() => downloadState(editorState, 'docx', name)}>Microsoft Word (.docx)</Button>
                     </Grid>
                     <Grid item xs>
-                        <Button onMouseDown={() => downloadState(editorState, 'html', name)}>Save as HTML</Button>
+                        <Button onMouseDown={() => downloadState(editorState, 'html', name)}>Web page (.html)</Button>
                     </Grid>
                     <Grid item xs>
-                        <Button onMouseDown={() => downloadState(editorState, 'md', name)}>Save as Markdown</Button>
+                        <Button onMouseDown={() => downloadState(editorState, 'md', name)}>Markdown (.md)</Button>
                     </Grid>
-
                     <Grid item xs>
-                        <Button onMouseDown={() => downloadState(editorState, 'txt', name)}>Save as Plain Text</Button>
+                        <Button onMouseDown={() => downloadState(editorState, 'txt', name)}>Plain text (.txt)</Button>
                     </Grid>
                 </Grid>
             </Box>
@@ -342,10 +340,16 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId}:
                     <Button onMouseDown={() => formatText('CODE')} className="editorButton"><CodeIcon fontSize="small" /></Button>
                 </ButtonGroup>
                 <Tooltip title="Download" placement="top">
-                    {isLoggedIn ? <IconButton onClick={() => { setSaveToggleFile(true); }} style={{ marginLeft: 'auto' }}>
+                    {isLoggedIn ? <IconButton
+                        onClick={() => { setSaveToggleFile(true); }}
+                        style={{ marginLeft: 'auto' }}
+                        size="large">
                         <SaveAltIcon fontSize="small" />
                     </IconButton>
-                        : <IconButton onClick={() => { setSaveToggle(true); }} style={{ marginLeft: 'auto' }}>
+                        : <IconButton
+                        onClick={() => { setSaveToggle(true); }}
+                        style={{ marginLeft: 'auto' }}
+                        size="large">
                             <SaveAltIcon fontSize="small" />
                         </IconButton>
 
@@ -353,7 +357,10 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId}:
 
                 </Tooltip>
                 <Tooltip title={file.needsSave ? 'Save work to cloud' : 'Work already saved to cloud'} placement="top">
-                    <IconButton onClick={() => dispatch(saveFile(fileId))} style={file.needsSave ? { color: '#000' } : {}}>
+                    <IconButton
+                        onClick={() => dispatch(saveFile(fileId))}
+                        style={file.needsSave ? { color: '#000' } : {}}
+                        size="large">
                         <SaveIcon fontSize="small" />
                     </IconButton>
                 </Tooltip>

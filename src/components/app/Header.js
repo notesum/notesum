@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Button } from "@material-ui/core";
+import { Container, Button } from "@mui/material";
 import Donation from "../../resources/donation.svg";
 import Logo from "../../resources/frame.png";
 import LogoText from "../../resources/CosmoNote.svg";
