@@ -1,30 +1,39 @@
-# NoteSum Frontend
-This repository contains the main frontend for the 'NoteSum' project.
+# notesum
 
-## First run
-To run this project locally you need to have [Git](https://git-scm.com/) and [NodeJS](https://nodejs.org/) installed. Please see their respective websites for install instructions.
+![lint](https://github.com/notesum/notesum/workflows/lint/badge.svg)
 
-Currently but probably temporarily this project also has a dependency on Rust. You should make sure `rustup` is installed for `Parcel` to function properly.
+The simplest PDF summarization tool, hosted at [cosmonote.space](https://cosmonote.space).
 
-As package manager we use Yarn which can be installed (after having installed NodeJS) with the following command:
-```bash
-$ npm install --global yarn
+```sh
+gh repo clone notesum/notesum
+cd notesum/notesum
+yarn
+yarn build
 ```
 
-Now the `yarn` command should be available in your shell, if not: please check that your path is set up correctly.
+Several [`yarn`](https://yarnpkg.com/) commands are available
+(see [`package.json`](https://github.com/notesum/notesum/blob/master/package.json)),
+including:
 
-To download and run the repository you can do the following:
-```bash
-$ git clone git@github.com:notesum/notesum.git
-$ cd notesum/
-$ yarn install
-$ yarn dev
+* `build` (build from scratch)
+* `dev` (build and run)
+* `preview` (deploy to preview channel)
+* `live` (merge preview channel into production)
+
+Required dependencies:
+
+* [`node`](https://nodejs.org)
+* [`yarn`](https://yarnpkg.com)
+* [`firebase`](https://firebase.google.com/docs/cli) (dev)
+* [`git`](https://git-scm.com/) and/or [`gh`](https://cli.github.com/) (dev)
+
+[`homebrew`](https://brew.sh/) (MacOS): `git node yarn gh firebase-tools`  
+[`winget`](https://learn.microsoft.com/windows/package-manager/winget) (Windows):
+`Git.Git OpenJS.NodeJS Yarn.Yarn GitHub.cli Google.FirebaseCLI`
+
+Ensure that you have logged into both [`gh`](https://cli.github.com/)
+and [`firebase`](https://firebase.google.com/docs/cli):
+```sh
+gh auth login
+firebase login
 ```
-
-## Technologies
-This project uses React on Typescript with Parcel as a packager, to learn more about these technologies see:
-
-- [React documentation](https://reactjs.org/)
-- [Parcel](https://parceljs.org/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Lint](https://palantir.github.io/tslint/)
