@@ -37,10 +37,10 @@ function App({ loginCallback }: AppProps) {
       <div className="homepage">
         <Container>
           <div className="home-banner">
-            <h2>From Unstructured Information to complete Knowledge</h2>
+            <h2>The Simplest PDF Summarization Tool</h2>
             <div className="banner-bottom-text-wrapper">
               <h3 className="banner-footer-txt">
-                CosmoNote is an easy to use PDF summarization tool that gives you full control over the information you want to collect
+                Highlight what you think is important and get it automatically copied into an editable and downloadable file
               </h3>
             </div>
             {isLoggedIn ? <Link className="banner-cta" to="/projects"> Try It </Link> : <Link className="banner-cta" to="/new-project"> Try It </Link>}
@@ -50,10 +50,10 @@ function App({ loginCallback }: AppProps) {
         </Container>
         <div className="video-slider-sec">
           <Container>
-            <h3>How it will save you time and organize your material</h3>
+            <h3>Extract knowledge instanlty while highlighting</h3>
             <p>
-              Upload a PDF and highlight the information you think is important. The marked text is then automatically copied into a new, editable, and downloadable file.
-              <span>Easy as that!</span>
+              Make your life easier:
+              Save time, meet friends, knit a scarf. You name it!
             </p>
             <Carousel />
           </Container>

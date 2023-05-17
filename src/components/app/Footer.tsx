@@ -28,7 +28,7 @@ const Footer = () => {
               </Link>
               <Link to="/#contact-section" target="_blank">Contact Us</Link>
             </div>
-            <p>Copyright © 2021 CosmoNote </p>
+            <p>Copyright © 2023 CosmoNote </p>
           </div>
         </Container>
       </div>

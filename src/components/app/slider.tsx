@@ -54,16 +54,7 @@ const Carousel = () => {
       <Slider {...settings} ref={ref}>
         <div className="slider-item">
           <iframe
-            src="https://www.youtube.com/embed/gmFdxuhtJE0"
-            title="YouTube video player"
-            frameBorder="0"
-            allow="accelerometer;gyroscope;"
-            allowFullScreen
-          ></iframe>
-        </div>
-        <div className="slider-item">
-          <iframe
-            src="https://www.youtube.com/embed/gmFdxuhtJE0"
+            src="https://www.youtube.com/embed/A4d_RX1d1Hg"
             title="YouTube video player"
             frameBorder="0"
             allow="accelerometer;gyroscope;"
