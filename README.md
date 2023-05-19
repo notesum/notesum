@@ -1,4 +1,4 @@
-# notesum
+# cosmonote
 
 ![lint](https://github.com/notesum/notesum/workflows/lint/badge.svg)
 
@@ -6,9 +6,8 @@ The simplest PDF summarization tool, hosted at [cosmonote.space](https://cosmono
 
 ```sh
 gh repo clone notesum/notesum
-cd notesum/notesum
+cd notesum
 yarn
-yarn build
 ```
 
 Several [`yarn`](https://yarnpkg.com/) commands are available
@@ -27,7 +26,7 @@ Required dependencies:
 * [`firebase`](https://firebase.google.com/docs/cli) (dev)
 * [`git`](https://git-scm.com/) and/or [`gh`](https://cli.github.com/) (dev)
 
-[`homebrew`](https://brew.sh/) (MacOS): `git node yarn gh firebase-tools`  
+[`homebrew`](https://brew.sh/) (MacOS): `git node yarn gh firebase-cli`  
 [`winget`](https://learn.microsoft.com/windows/package-manager/winget) (Windows):
 `Git.Git OpenJS.NodeJS Yarn.Yarn GitHub.cli Google.FirebaseCLI`
 
