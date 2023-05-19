@@ -1,6 +1,6 @@
 # cosmonote
 
-![lint](https://github.com/notesum/notesum/workflows/lint/badge.svg)
+![ci](https://github.com/notesum/notesum/workflows/ci/badge.svg)
 
 The simplest PDF summarization tool, hosted at [cosmonote.space](https://cosmonote.space).
 
