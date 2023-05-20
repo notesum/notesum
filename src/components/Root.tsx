@@ -26,7 +26,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import InfoIcon from "@mui/icons-material/Info";
 import "regenerator-runtime/runtime";
 
-import PrivateRoute from "../Routes/PrivateRoute";
+import PrivateRoute from "../routes/PrivateRoute";
 import { AppState } from "../redux/reducers";
 import { RedirectActionTypes, REDIRECTED } from "../redux/types/redirectTypes";
 import { createFileVistor } from "../redux/asyncActions/fileAsyncActions";
