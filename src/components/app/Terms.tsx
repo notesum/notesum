@@ -43,7 +43,7 @@ export default function Terms() {
             the summaries that you created to any third person party as this may
             pose a copyright infringement to the original author of the PDF you
             want to summarize. CosmoNote is not liable for your infringement of
-            the author's copyright (e.g. by selling a summary to another person/
+            the author&apos;s copyright (e.g. by selling a summary to another person/
             organization), as we only offer a tool to summarize any PDF that you
             own.
           </Typography>

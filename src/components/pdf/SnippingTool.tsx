@@ -78,8 +78,8 @@ export default React.memo(React.forwardRef(({ children, screenshot, screenshotCa
             e.stopPropagation();
             // const top = e.offsetY ;
             // const left = e.offsetX;
-            let top = e.pageY - 148 + scrollPosition;
-            let left = e.pageX;
+            const top = e.pageY - 148 + scrollPosition;
+            const left = e.pageX;
 
             if (top < 0 || left < 0) return;
 
@@ -98,8 +98,8 @@ export default React.memo(React.forwardRef(({ children, screenshot, screenshotCa
 
             e.preventDefault();
             e.stopPropagation();
-            let top = e.pageY - 148 + scrollPosition;
-            let left = e.pageX;
+            const top = e.pageY - 148 + scrollPosition;
+            const left = e.pageX;
 
             if (top < 0 || left < 0) return;
 
@@ -127,10 +127,10 @@ export default React.memo(React.forwardRef(({ children, screenshot, screenshotCa
                 hiddenCanvas.current.width = Math.abs(cur[3] - cur[1]);
                 hiddenCanvas.current.height = Math.abs(cur[2] - cur[0]);
                 const hiddenCtx = hiddenCanvas.current.getContext('2d');
-                let width = Math.abs(cur[3] - cur[1]);
-                let height = Math.abs(cur[2] - cur[0]);
-                let x = Math.min(cur[1], cur[3]);
-                let y = Math.min(cur[0], cur[2]);
+                const width = Math.abs(cur[3] - cur[1]);
+                const height = Math.abs(cur[2] - cur[0]);
+                const x = Math.min(cur[1], cur[3]);
+                const y = Math.min(cur[0], cur[2]);
 
                 hiddenCtx.drawImage(
                     canvasRef.current,

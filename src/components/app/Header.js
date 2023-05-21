@@ -4,16 +4,13 @@ import Donation from "../../resources/donation.svg";
 import Logo from "../../resources/frame.png";
 import LogoText from "../../resources/CosmoNote.svg";
 import feedback from "../../resources/feedback.svg";
-import info from "../../resources/info.svg";
-import user from "../../resources/user.svg";
 
 import AuthIcon from "../auth/AuthIcon";
-import { Link, useLocation, has } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import background from "../../resources/background.jpg";
 import Terms from "../../resources/terms.png";
 import Contact from "../../resources/open.png";
 import { HashLink } from 'react-router-hash-link';
-
 
 const Header = () => {
   const location = useLocation();
@@ -50,14 +47,11 @@ const Header = () => {
                 </Button>
               </li>
               <li>
-                {/* <a href="#">
-                  <img src={user} alt="" />
-                </a> */}
                 <AuthIcon />
               </li>
 
-              {location.pathname.includes("/project/") ?
-                <>
+              {location.pathname.includes("/project/")
+              ? <>
                   <li>
                     <Button
                         target="_blank"
@@ -77,9 +71,9 @@ const Header = () => {
                       <img src={Contact} alt="" style={{ maxWidth: 32, filter: "invert(1)" }} />
                       <p>Contact</p></HashLink>
                   </li>
-                </> : null
+                </>
+              : null
               }
-
             </ul>
           </div>
         </div>
