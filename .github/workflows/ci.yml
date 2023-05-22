@@ -1,20 +1,22 @@
+name: ci
 on:
   push:
-    branches:
-      - '*'
-    tags:
-      - 'v1.*'
-    paths:
-      - '!**/README.md'
-name: ci
+    branches: 'master'
+    paths: '!**/README.md'
 jobs:
   ci:
-    runs-on: ubuntu-latest
+    runs-on: ${{matrix.os}}
+    strategy:
+      matrix:
+        os: [ubuntu-22.04, macos-11, windows-2019]
+        node-version: [14, 16, 18]
+        cache: [yarn]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 18
-          cache: 'yarn'
+          node-version: ${{matrix.node-version}}
+          cache: ${{matrix.cache}}
       - run: yarn
       - run: yarn lint
+      - run: yarn build
