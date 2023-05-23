@@ -23,13 +23,10 @@ export function insertNewBlock(eState: EditorState, t: string, s: string): Edito
     let newBlocks = null;
 
     if (s === 'unordered-list-item') {
-        // @ts-ignore
         newBlocks = [[key1, new ContentBlock({ key: key1, type: s, text: t })],
         [currentBlock.getKey(), currentBlock]];
     } else {
-        // @ts-ignore
         newBlocks = [[key1, new ContentBlock({ key: key1, type: s, text: t })],
-        // @ts-ignore
         [key2, new ContentBlock({ key: key2, type: 'unstyled'})],
         [currentBlock.getKey(), currentBlock]];
     }
@@ -43,7 +40,6 @@ export function insertNewBlock(eState: EditorState, t: string, s: string): Edito
     });
 
     // TODO solve type error
-    // @ts-ignore
     return EditorState.push(eState, newContentState, 'insert-fragment');
 }
 

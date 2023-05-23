@@ -3,8 +3,9 @@ import React, { useRef, useEffect, useState, MutableRefObject } from 'react';
 import { styled } from '@mui/material/styles';
 import { renderTextLayer } from 'pdfjs-dist';
 import { PDFPageProxy } from 'pdfjs-dist/types/display/api';
-const PREFIX = 'Page';
 
+// TODO
+const PREFIX = 'Page';
 const classes = {
     reset: `${PREFIX}-reset`,
     hidden: `${PREFIX}-hidden`
@@ -63,8 +64,6 @@ export default React.memo(React.forwardRef(({ page, scale, width, hidden, isVisi
         scale: scale != null ? scale : (width / page.view[2])
     });
 
-
-
     // Screenshots
     const screenshotLayerRef = useRef<HTMLDivElement>(null);
     const [screenshotRect, setScreenshotRect] = useState([0,0,0,0]);
@@ -78,75 +77,83 @@ export default React.memo(React.forwardRef(({ page, scale, width, hidden, isVisi
     useEffect(() => {
         // Empty text layer when changed
         textLayerRef.current.innerHTML = '';
-        setState((curState) => curState === PageState.RENDERING ? PageState.RENDERING_OUTDATED : PageState.NEEDS_RENDER);
+        setState((state: PageState) =>
+            state === PageState.RENDERING
+                ? PageState.RENDERING_OUTDATED
+                : PageState.NEEDS_RENDER);
     }, [page, scale, width]);
 
     useEffect(() => {
         setTextData(null);
     }, [page]);
 
-    // Main renderer. Should only be ran once after every update
+    // Runs once after every update
     useEffect(() => {
-        if (!isVisible || state !== PageState.NEEDS_RENDER || hidden) return;
-
+        if (!isVisible || hidden || state !== PageState.NEEDS_RENDER)
+            return;
         setState(() => PageState.RENDERING);
 
-        // Render
         (async () => {
-            const PageRenderer = page.render({
+            const render = page.render({
                 canvasContext: ctx,
                 viewport
             }).promise;
 
             const text = textData === null ? await page.getTextContent() : textData;
-            if (textData === null) {
+            if (textData === null)
                 setTextData(text);
-            }
 
-            // Render text content
-            const textRenderer = renderTextLayer({
+            const layer = renderTextLayer({
                 container: textLayerRef.current,
                 viewport,
                 textContent: text,
                 enhanceTextSelection: false
             });
 
-            await Promise.all([PageRenderer, textRenderer]);
-
-            setState((curState) => curState === PageState.RENDERING_OUTDATED ? PageState.NEEDS_RENDER : PageState.FINISHED);
+            await Promise.all([render, layer]);
+            setState((state: PageState) => 
+                state === PageState.RENDERING_OUTDATED
+                    ? PageState.NEEDS_RENDER
+                    : PageState.FINISHED);
         })();
 
     }, [isVisible, state, hidden, ctx]);
 
     useEffect(() => {
-        if (!screenshot) return;
+        if (!screenshot)
+            return;
 
         const mouseDownListener = (e: MouseEvent) => {
+            const {scrollTop, scrollLeft} = pageRef.current.parentElement;
+            const {offsetTop, offsetLeft} = pageRef.current;
 
-            const top = e.pageY + pageRef.current.parentElement.scrollTop - pageRef.current.offsetTop - 10;
-            const left = e.pageX + pageRef.current.parentElement.scrollLeft - pageRef.current.offsetLeft - 10;
+            const top = e.pageY + scrollTop - offsetTop - 10;
+            const left = e.pageX + scrollLeft - offsetLeft - 10;
 
-            if (top < 0 || left < 0) return;
+            if (top < 0 || left < 0)
+                return;
 
-            // This hopefully never breaks, but who knows, no other stable way to solve this.
+            // TODO
+            // This hopefully never breaks, but who knows,
+            // no other stable way to solve this.
             setScreenshotRect(() => [
                 top, left, top, left
             ]);
-
             pageRef.current.addEventListener('mousemove', mouseMoveListener);
         };
 
         const mouseMoveListener = (e: MouseEvent) => {
-            const top = e.pageY + pageRef.current.parentElement.scrollTop - pageRef.current.offsetTop - 10;
-            const left = e.pageX + pageRef.current.parentElement.scrollLeft - pageRef.current.offsetLeft - 10;
+            const {scrollTop, scrollLeft} = pageRef.current.parentElement;
+            const {offsetTop, offsetLeft} = pageRef.current;
 
-            if (top < 0 || left < 0) return;
+            const top = e.pageY + scrollTop - offsetTop - 10;
+            const left = e.pageX + scrollLeft - offsetLeft - 10;
+
+            if (top < 0 || left < 0)
+                return;
 
             setScreenshotRect((cur) => [
-                cur[0],
-                cur[1],
-                top,
-                left,
+                cur[0], cur[1], top, left
             ]);
         };
 
@@ -172,7 +179,6 @@ export default React.memo(React.forwardRef(({ page, scale, width, hidden, isVisi
                     Math.abs(cur[3] - cur[1]),
                     Math.abs(cur[2] - cur[0])
                 );
-
                 return [0, 0, 0, 0];
             });
 

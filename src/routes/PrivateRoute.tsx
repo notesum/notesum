@@ -1,3 +1,4 @@
+import React from 'react';
 import { Route, RouteProps } from 'react-router-dom';
 
 // Can only be accessed when you are logged in

@@ -1,7 +1,5 @@
 import React from "react";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import { Box, Grid, Container } from "@mui/material";
+import { Grid, Container } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 
 import { AppState } from "../../redux/reducers";
@@ -14,18 +12,15 @@ import mapicon from "../../resources/map-pin.svg";
 import "./App.css";
 import { Link } from "react-router-dom";
 
-type AppProps = {
-  loginCallback: any;
-};
-
-function App({ loginCallback }: AppProps) {
+function App() {
   const isLoggedIn = useSelector((state: AppState) => state.auth.isLoggedIn);
   const dispatch = useDispatch();
   React.useEffect(() => {
     dispatch(deleteEmptyProject());
   }, []);
 
-  // If someone is not logged in and the page is reloaded, show the dialog
+  // If someone is not logged in
+  // and the page is reloaded, show the dialog
   React.useEffect(() => {
     if (!isLoggedIn) {
       //loginCallback(true);
@@ -40,12 +35,14 @@ function App({ loginCallback }: AppProps) {
             <h2>The Simplest PDF Summarization Tool</h2>
             <div className="banner-bottom-text-wrapper">
               <h3 className="banner-footer-txt">
-                Highlight what you think is important and get it automatically copied into an editable and downloadable file
+                Highlight what you think is important
+                and get it automatically copied into an
+                editable and downloadable file
               </h3>
             </div>
-            {isLoggedIn ? <Link className="banner-cta" to="/projects"> Try It </Link> : <Link className="banner-cta" to="/new-project"> Try It </Link>}
-
-
+            {isLoggedIn
+              ? <Link className="banner-cta" to="/projects"> Try It </Link>
+              : <Link className="banner-cta" to="/new-project"> Try It </Link>}
           </div>
         </Container>
         <div className="video-slider-sec">
@@ -76,7 +73,6 @@ function App({ loginCallback }: AppProps) {
             <a href="/about" className="banner-cta">
               How it Works
             </a>
-
           </Container>
         </div>
         <div className="contact-sec" id="contact-section">
@@ -101,14 +97,6 @@ function App({ loginCallback }: AppProps) {
                   </p>
                 </div>
               </Grid>
-              {/* <Grid item md={6} style={{ marginLeft: "auto" }}>
-                <form className="ct-form">
-                  <input type="text" placeholder="First Name" />
-                  <input type="email" placeholder="Email" />
-                  <textarea placeholder="Your message"></textarea>
-                  <button>Send</button>
-                </form>
-              </Grid> */}
             </Grid>
           </Container>
         </div>

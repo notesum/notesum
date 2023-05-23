@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import DescriptionIcon from "@mui/icons-material/Description";
 import AddIcon from "@mui/icons-material/Add";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -55,7 +55,7 @@ export default React.memo(() => {
             <Box style={{ display: "flex" }} m={0}>
               <TextField
                 label="Project name"
-                onChange={(e) => {
+                onChange={(e: ChangeEvent<HTMLInputElement>) => {
                   setNewProjectName(e.target.value);
                 }}
               />

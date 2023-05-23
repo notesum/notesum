@@ -14,23 +14,17 @@ import { NEW_FILE } from "../../redux/types/filesTypes";
 import "./Poster.css";
 
 const PREFIX = 'Poster';
-
 const classes = {
   Card: `${PREFIX}-Card`,
   root: `${PREFIX}-root`
 };
 
-const StyledContainer = styled(Container)((
-  {
-    theme: Theme
-  }
-) => ({
+const StyledContainer = styled(Container)(({theme: Theme}) => ({
   [`& .${classes.Card}`]: {
     width: "90%",
     padding: "20px",
     height: "330px",
   },
-
   [`& .${classes.root}`]: {
     "& .MuiTextField-root": {
       margin: theme.spacing(2),
@@ -40,8 +34,6 @@ const StyledContainer = styled(Container)((
 }));
 
 export default function Poster() {
-
-
   const dispatch = useDispatch();
   const [fileId, setFileId] = useState<string>(undefined);
   const [pdf, setPdf] = useState<Uint8Array>(undefined);
@@ -53,9 +45,7 @@ export default function Poster() {
   const onUpload = (file: File) => {
     (async () => {
       const id = "poster-pdf";
-
       setPdf(new Uint8Array(await file.arrayBuffer()));
-
       dispatch({
         type: NEW_FILE,
         payload: {
@@ -64,7 +54,6 @@ export default function Poster() {
           pdf: "",
         },
       });
-
       setFileId(id);
     })();
   };
@@ -267,7 +256,7 @@ export default function Poster() {
 
                           <Grid item style={{ marginTop: "30px" }}>
                             <Typography variant="h6">
-                              Don't have an acount?
+                              Don&apos;t have an acount?
                             </Typography>
                           </Grid>
                           <Grid item style={{ marginTop: "10px" }}>
@@ -358,7 +347,6 @@ export default function Poster() {
                   </Box>
                 </Grid>
                 <Grid item xs={5} justifyContent="center">
-                  {/* <img src={poster3} style={{ width: '80%' }} /> */}
                   <EmptyProject addFile={onUpload} />
                   <img src={tryMeArrow} alt="Try me!" className="tryMe" />
                 </Grid>

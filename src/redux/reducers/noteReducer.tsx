@@ -3,18 +3,19 @@ import {DELETE_NOTE, NEW_NOTE, NoteActionsTypes, Notes, UPDATE_NOTES_LIST} from 
 const initialState: Notes = {};
 
 const noteReducer = (state = initialState, action: NoteActionsTypes): Notes => {
+    let notes: Notes;
     switch (action.type) {
         case UPDATE_NOTES_LIST:
-            const newState = {
-                ...state
-            };
+            notes = {...state};
             for(const noteId of Object.keys(action.payload)) {
-                newState[noteId] = {
-                    ...(noteId in newState ? newState[noteId] : {}),
+                notes[noteId] = {
+                    ...(noteId in notes
+                        ? notes[noteId]
+                        : {}),
                     ...action.payload[noteId]
                 };
             }
-            return newState;
+            return notes;
 
         case NEW_NOTE:
             return {

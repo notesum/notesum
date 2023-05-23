@@ -103,7 +103,7 @@ export default function SignUp() {
 
     const handlePassChange = (value) => {
         setPassword(value)
-        var format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+        const format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
         if (value && value.length > 7) { setleastCharacter(true) } else { setleastCharacter(false) }
         if (value && /\d+/g.test(value)) { setpassNumber(true) } else { setpassNumber(false) }
         if (value && /[a-z]/.test(value)) { setlowerCase(true) } else { setlowerCase(false) }

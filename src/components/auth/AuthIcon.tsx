@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button, Dialog, Grid, Typography, Box, CircularProgress } from '@mui/material';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteProject } from '../../redux/actions/projectActions';
 
@@ -11,9 +10,7 @@ import { REDIRECT } from '../../redux/types/redirectTypes';
 import Login from './Login';
 import SignUp from './SignUp';
 
-
 import user from "../../resources/user.svg";
-
 
 type AuthProps = {
     // Force open the dialog without a user click

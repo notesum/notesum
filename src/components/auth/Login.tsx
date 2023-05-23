@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { styled, createMuiTheme } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import { useDispatch } from 'react-redux';
 import TextField from '@mui/material/TextField';
 import { Box, Button, Grid, Typography } from '@mui/material';
@@ -7,7 +7,6 @@ import { Box, Button, Grid, Typography } from '@mui/material';
 import { login } from '../../redux/asyncActions/authAsyncActions';
 
 const classes = { root: `Login-root` };
-const theme = createMuiTheme();
 const StyledBox = styled(Box)(({theme}) => ({
     [`& .${classes.root}`]: {
         '& .MuiTextField-root': {
@@ -22,8 +21,6 @@ type LogInProps = {
 };
 
 export default function Login({ buttonCallback }: LogInProps) {
-
-
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -83,7 +80,7 @@ export default function Login({ buttonCallback }: LogInProps) {
                 </Grid>
 
                 <Grid item style={{ marginTop: '30px' }}>
-                    <Typography variant="h6">Don't have an acount?</Typography>
+                    <Typography variant="h6">Don&apos;t have an acount?</Typography>
                 </Grid>
                 <Grid item style={{ marginTop: '10px' }}>
                     <Button onMouseDown={() => buttonCallback(true)} variant="contained" color="primary">Sign Up</Button>

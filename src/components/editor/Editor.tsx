@@ -48,7 +48,7 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId}:
 
     const filesState: Files = useSelector((state: any) => state.files);
     const notesState: Notes = useSelector((state: any) => state.notes);
-    const fileID: number = Number(fileId);
+    const fileID = Number(fileId);
 
     const { isLoggedIn } = useSelector((state: AppState) => state.auth);
     const userState = useSelector((state: AppState) => state.auth);
