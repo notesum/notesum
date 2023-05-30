@@ -8,7 +8,7 @@ import example from "../../resources/example.png";
 
 export default function About() {
   return (
-    <div className="homepage stars_bg">
+    <div className="homepage about_page_background">
       <Box my={7}>
         <Container>
           <Typography
@@ -18,7 +18,24 @@ export default function About() {
             style={{ fontWeight: "bold", color: "#fff" }}
             gutterBottom
           >
-            How it will save your time and organize your material!
+           Zeit: Gespart. Effiziens: Erhöht.
+          </Typography>
+          <Typography
+            variant="h6"
+            align="left"
+            color="textSecondary"
+            paragraph
+            style={{ color: "#fff" }}
+          >
+          <p>
+            Mit unserem PDF Zusammenfassungstool wird das Zusammenfassen von wichtigen Informationen zu einem Kinderspiel.
+            Egal, ob du ein Student bist, der viel mit digitalem Text arbeitet, oder jemand, der
+            regelmäßig PDF-Dokumente analysiert – wir haben die perfekte Lösung für dich. 
+            <br></br>
+            Markiertes wird automatisch in eine editierbare und downloadbare Datei kopiert.
+            <br></br>
+            Das Ergebnis? Eine übersichtliche und personalisierte Zusammenfassung, die du direkt herunterladen kannst.
+          </p>
           </Typography>
           <Typography
             variant="h6"
@@ -27,20 +44,6 @@ export default function About() {
             paragraph
             style={{ color: "#fff" }}
           >
-            CosmoNote is a PDF summarization tool that gives you full control of
-            what you want to gather. Extract highlighted information
-            automatically into a new file, which is downloadable as a word file.
-            Upload any PDF to your personal storage and start summarizing.
-            Annotate and comment freely in the output window on the right side.
-          </Typography>
-          <Typography
-            variant="h6"
-            align="center"
-            color="textSecondary"
-            paragraph
-            style={{ color: "#fff" }}
-          >
-            Easy as that!
           </Typography>
         </Container>
         <Grid
@@ -53,7 +56,7 @@ export default function About() {
         >
           <Grid item>
             <Button variant="contained" color="primary" href="/new-project">
-              Try It!
+              PDF Hochladen und Markieren
             </Button>
           </Grid>
           <Grid item>
