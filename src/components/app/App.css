@@ -22,15 +22,15 @@ body {
 
 .header {
   background: rgba(0, 0, 0, 0.5);
-  height: 100px;
+  height: 85px;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #ffffff;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 100;
+  z-index: 300;
+  backdrop-filter: blur(10px);
 }
 
 .header-inner {
@@ -59,39 +59,107 @@ body {
   margin-left: 34px;
 }
 
+.FeedbackInHeaderFontColor {
+  color: rgb(249, 255, 81);
+  text-transform: none;
+  text-shadow: 0 0 10px rgba(249, 255, 81, 0.7);
+}
+
+.laptop-image {
+  position: absolute;
+  top: 12%;
+  left: 25%;
+  transform: translate(-50%, -50%) rotate(-5deg);
+  max-width: 100%;
+  max-height: 100%;
+  width: 27em;
+  height: 27em;
+  z-index: 100;
+}
+ 
+
+.documents-image-top-container {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.documents-image-top {
+  position: absolute;
+  top: 21%;
+  left: 87%;
+  transform: translate(-50%, -50%);
+  max-width: 100%;
+  max-height: 100%;
+  width: 400px;
+  height: 400px;
+}
+
+.documents-image-bottom-container {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.documents-image-bottom {
+  position: absolute;
+  transform: scaleX(-1);
+  top: 52%;
+  left: 10%;
+  transform: translate(-50%, -50%);
+  max-width: 20%;
+  max-height: 20%;
+  width: auto;
+  height: auto;
+}
+
+
 .home-banner h2 {
-  font-weight: 700;
-  font-size: 48px;
-  line-height: 59px;
+  position: absolute;
+  top: 120px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
   text-align: center;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 43px;
   color: #ffffff;
-  text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+  text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.8);
   max-width: 939px;
-  margin: 0 auto 380px;
 }
 
 .home-banner h3 {
+  position: relative;
   font-weight: 600;
-  font-size: 36px;
+  font-size: 25px;
   line-height: 140%;
-  text-align: center;
+  text-align: left;
   color: #ffffff;
-  text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
-  max-width: 1054px;
+  text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.8);
+  max-width: 800px;
   margin: 0 auto;
+  padding-left: 210;
+  z-index: 200;
 }
 
 .home-banner .banner-bottom-text-wrapper {
+  position: relative;
+  bottom: 420px;
   border-radius: 30px;
   padding: 20px 50px;
-  background: url("../../resources/heading-bg.png");
-  background-size: 100% 100%;
-  background-position: center;
   max-width: 1283px;
+  margin-top: 500px;
+  z-index: 200;
 }
 
+
 .homepage {
-  background: url("../../resources/background.gif");
+  background: url("../../resources/alternativeBackground.jpg");
   background-size: 100% 100%;
   background-position: center;
   padding-top: 169px;
@@ -105,13 +173,34 @@ body {
   justify-content: center;
   align-items: center;
   border-radius: 25px;
-  margin: 50px auto 0;
+  margin: 39px auto 0;
   font-weight: 700;
-  font-size: 24px;
+  font-size: 20px;
   line-height: 29px;
+  margin-top: -330px;
   text-align: center;
   color: #ffffff;
-  text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+  text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.8);
+  text-decoration: none;
+  transition: all ease 0.2s;
+}
+
+.home-banner .banner-cta-howItWorks {
+  max-width: 200px;
+  height: 50px;
+  border: 1px solid #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 25px;
+  margin: 39px auto 0;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 29px;
+  margin-top: 330px;
+  text-align: center;
+  color: #ffffff;
+  text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.8);
   text-decoration: none;
   transition: all ease 0.2s;
 }
@@ -124,23 +213,28 @@ body {
 /* video slider sec */
 
 .video-slider-sec h3 {
+  position: relative;
   font-weight: 700;
-  font-size: 48px;
+  font-size: 30px;
   line-height: 59px;
   text-align: center;
   color: #ffffff;
+  text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.8);
   max-width: 1100px;
-  margin: 180px auto 0;
+  margin: 320px auto 0;
+  z-index: 200;
 }
 
 .video-slider-sec p {
+  position: relative;
   font-weight: 300;
-  font-size: 28px;
+  font-size: 25px;
   line-height: 140%;
   text-align: center;
   color: #ffffff;
   max-width: 820px;
-  margin: 50px auto 0;
+  margin: 10px auto 0;
+  z-index: 200;
 }
 
 .video-slider-sec span {
@@ -161,6 +255,7 @@ body {
 
 .video-slider-sec {
   padding-bottom: 499px;
+  margin-top: -220px;
 }
 
 .slider-section .slider-item,
@@ -217,7 +312,7 @@ body {
 
 .goal-section h3 {
   font-weight: 700;
-  font-size: 36px;
+  font-size: 30px;
   line-height: 44px;
   text-align: center;
   color: #ffffff;
@@ -226,12 +321,12 @@ body {
 
 .goal-section p {
   font-weight: 400;
-  font-size: 28px;
+  font-size: 20px;
   line-height: 150%;
-  text-align: center;
+  text-align: left;
   color: #ffffff;
   margin: 40px auto 50px;
-  max-width: 1034px;
+  max-width: 800px;
 }
 
 .goal-section a {
@@ -260,7 +355,7 @@ body {
 
 .wrapper-two::after {
   content: "";
-  background: url(../../resources/background.gif);
+  background: url(../../resources/alternativeBackgroundWrapperTwo.jpg);
   background-size: 100% 280%;
   background-position: center;
   background-repeat: no-repeat;
@@ -273,8 +368,8 @@ body {
 }
 
 .contact-sec {
-  max-width: 1200px;
-  margin: 260px auto 0;
+  max-width: 1034px;
+  margin: 180px auto 0;
   padding-bottom: 250px !important;
 }
 
@@ -284,16 +379,16 @@ body {
 
 .contact-sec h3 {
   font-weight: 700;
-  font-size: 48px;
+  font-size: 30px;
   line-height: 59px;
   text-align: center;
   color: #ffffff;
-  margin-bottom: 100px;
+  margin-bottom: 18px;
 }
 
 .contact-sec p {
   font-weight: 500;
-  font-size: 28px;
+  font-size: 20px;
   line-height: 140%;
   color: #ffffff;
   margin-bottom: 40px;
@@ -306,13 +401,12 @@ body {
 .contact-sec .location p,
 .contact-sec .e-mail p {
   font-weight: 400;
-  font-size: 18px;
+  font-size: 20px;
   line-height: 140%;
   color: #ffffff;
 }
 
 .contact-sec .ct-inner {
-  background: url(../../resources/contact-bg.png);
   background-size: 100% 100%;
   padding: 50px;
   background-color: rgba(0, 0, 0, 0.6);
@@ -377,6 +471,15 @@ body {
   padding-bottom: 10px;
 }
 
+.blue-text {
+  color: rgb(249, 255, 81);
+}
+
+#heart {
+  color: red;
+  font-size: 20;
+}
+
 footer .footer-container a {
   font-weight: 500;
   font-size: 18px;
@@ -407,10 +510,11 @@ footer p {
   color: #ffffff;
 }
 
-.stars_bg {
-  background-image: url(../../resources/stars-bg.jpg);
+.about_page_background {
+  background-image: url(../../resources/alternativeBackground.jpg);
   padding-bottom: 100px;
   overflow-x: hidden;
+  min-height: 250vh;
 }
 
 .stars_bg_poster {

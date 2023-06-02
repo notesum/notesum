@@ -9,7 +9,7 @@ import user from "../../resources/user.svg";
 
 import AuthIcon from "../auth/AuthIcon";
 import { Link, useLocation, has } from "react-router-dom";
-import background from "../../resources/background.jpg";
+import background from "../../resources/alternativeBackground.jpg";
 import Terms from "../../resources/terms.png";
 import Contact from "../../resources/open.png";
 import { HashLink } from 'react-router-hash-link';
@@ -46,7 +46,10 @@ const Header = () => {
                   href="https://docs.google.com/forms/d/e/1FAIpQLScBYJsVfzZAcBAGlYNIvgiOnQE4yI-vaJEo66T7oMW9-lXD5w/viewform"
                 >
                   <img src={feedback} alt="" />
-                  <p>Feedback</p>
+                  <span className ="FeedbackInHeaderFontColor">
+                    Gib uns Feedback!
+                  </span>
+
                 </Button>
               </li>
               <li>

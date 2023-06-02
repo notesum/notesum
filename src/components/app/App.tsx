@@ -10,9 +10,14 @@ import Carousel from "./slider";
 import goalImage from "../../resources/frame.png";
 import Email_img from "../../resources/email-image.svg";
 import mapicon from "../../resources/map-pin.svg";
+import laptop_img from "../../resources/laptop_img.png"
+import documents_img from "../../resources/documents_img.png"
+import documentsInFrontOfLaptop from "../../resources/documentsInFrontOfLaptop.png"
+import documentBlack from "../../resources/documentBlack.png"
 
 import "./App.css";
 import { Link } from "react-router-dom";
+
 
 type AppProps = {
   loginCallback: any;
@@ -36,25 +41,37 @@ function App({ loginCallback }: AppProps) {
     <>
       <div className="homepage">
         <Container>
-          <div className="home-banner">
-            <h2>The Simplest PDF Summarization Tool</h2>
+            <div className="home-banner">
+              <h2>PDFs Zusammenfassen. <br /> Ganz Einfach.</h2>
+
+            <div className="laptop-container">
+              <img className = "laptop-image" src ={laptop_img}/>
+            </div>
+
+            <div className="documents-container">
+              <img className = "documents-image-top" src ={documents_img}/>
+            </div>
+
+
             <div className="banner-bottom-text-wrapper">
               <h3 className="banner-footer-txt">
-                Highlight what you think is important and get it automatically copied into an editable and downloadable file
+              Markiere, was dir wichtig ist, und erhalte automatisch eine editierbare und downloadbare Datei.
               </h3>
             </div>
-            {isLoggedIn ? <Link className="banner-cta" to="/projects"> Try It </Link> : <Link className="banner-cta" to="/new-project"> Try It </Link>}
-
+            {isLoggedIn ? <Link className="banner-cta" to="/projects"> Ausprobieren </Link> : <Link className="banner-cta" to="/new-project"> Ausprobieren </Link>}
 
           </div>
         </Container>
         <div className="video-slider-sec">
           <Container>
-            <h3>Extract knowledge instanlty while highlighting</h3>
+            <h3>Extrahiert Text automatisch während des Markierens</h3>
             <p>
-              Make your life easier:
-              Save time, meet friends, knit a scarf. You name it!
+              Mach dein Leben einfacher:
+              Spare Zeit, triff Freunde, Nähe einen Schal. Du bestimmst!
             </p>
+            <div className="documents-image-container-bottom">
+              <img className = "documents-image-bottom" src ={documents_img}/>
+            </div>
             <Carousel />
           </Container>
         </div>
@@ -64,41 +81,45 @@ function App({ loginCallback }: AppProps) {
         <div className="goal-section">
           <Container>
             <img src={goalImage} alt="our goal" />
-            <h3>Our Goal</h3>
+            <h3>Über uns</h3>
             <p>
-              We believe that time is one of the most valuable assets one can
-              have and that it is a real challenge to spend it wisely. <br />{" "}
-              <br />
-              With CosmoNote you can create your summary simultaneously while
-              reading your material and have it organized and ready to be
-              further processed.
+            Wir verstehen die studentischen Herausforderungen, vor denen du stehst. Wir waren selbst 
+            unzufrieden damit, dass das Zusammenfassen von Text oft in zwei verschiedenen 
+            Umgebungen stattfindet, wie beispielsweise Adobe Reader und Word nebeneinander. 
+            Deshalb haben wir diese Anwendungsarten kombiniert und ein einzigartiges Tool entwickelt, 
+            das dir das Leben erleichtert.
             </p>
-            <a href="/about" className="banner-cta">
-              How it Works
+            {/* 
+            
+            <a href="/about" className="banner-cta-howItWorks">
+              Anleitung
             </a>
+
+            //Not needed for now. Enough Info on Landing Page. Vide Explains how it works.
+            
+            */}
+
 
           </Container>
         </div>
         <div className="contact-sec" id="contact-section">
           <Container>
-            <h3>Contact Us</h3>
+            <h3>Kontakt</h3>
             <Grid container spacing={8} className="ct-inner">
               <Grid item md={6}>
                 <p className="c-info">
-                  Currently, we are based in the Incubase on the University of
-                  Twente campus. You can reach us at the address below
+                  Falls du persönlich mit uns reden willst um Ideen über die Entwicklung von CosmoNote 
+                  auszutauschen, unserem Team beitreten möchtest oder ein anderes Anliegen hast,
+                  schreibe uns gerne eine Email. <br></br>
+                  <span className ="blue-text">
+                    Wir Freuen uns darauf von dir zu höhren und von deinem 
+                    Feedback zu lernen, was wir verbessern können!
+                  </span>
                 </p>
                 <div className="e-mail">
                   <img src={Email_img} alt="mail" />
-                  <p>info.cosmonote@gmail.com</p>
-                </div>
-                <div className="location">
-                  <img src={mapicon} alt="location" />
-                  <p>
-                    De Hems 10 <br />
-                    7522 AN Enschede <br />
-                    The Netherlands
-                  </p>
+                  <p style={{ fontSize: '30px' }}>info.cosmonote@gmail.com</p>
+                  <p style={{ fontSize: '17px' }}>Made with <span id="heart">&#9829;</span> von Studenten der Westfälischen Hochschule, Gelsenkirchen</p>
                 </div>
               </Grid>
               {/* <Grid item md={6} style={{ marginLeft: "auto" }}>

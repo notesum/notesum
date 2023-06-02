@@ -71,9 +71,9 @@ export default function EmptyProject({
     >
       <div style={{ textAlign: "center" }}>
         <Typography variant="h5" color="textPrimary" paragraph>
-          Please do not upload any personal or sensitive documents.<br/>
-          Before uploading a file, ensure that you read and understand our<br/>
-          <Link to="/terms" target="_blank">terms and conditions</Link>.
+        Bitte laden Sie keine persönlichen oder sensiblen Dokumente hoch.<br/>
+        Bevor Sie eine Datei hochladen, stellen Sie bitte sicher, dass Sie unsere<br/>
+          <Link to="/terms" target="_blank">Allgemeinen Geschäftsbedingungen</Link>. gelesen und verstanden haben
         </Typography>
         <input
           hidden
@@ -91,7 +91,7 @@ export default function EmptyProject({
           style={{ margin: "0 auto" }}
           >
         <BackupIcon style={{ display: "block", fontSize: 120, margin: "0 auto" }}/>
-        <p>Add a file to the project.</p>
+        <p>PDF upload.</p>
         <i style={{ color: "grey" }}>Supported filetypes: pdf</i>
       </Paper>
       </div>
