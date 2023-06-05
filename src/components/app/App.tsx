@@ -1,7 +1,7 @@
 import React from "react";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import { Box, Grid, Container } from "@mui/material";
+import CookieConsent, { Cookies } from "react-cookie-consent";
+import ReactGA from "react-ga4";
+import { Grid, Container } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 
 import { AppState } from "../../redux/reducers";
@@ -9,15 +9,25 @@ import { deleteEmptyProject } from "../../redux/asyncActions/projectAsyncActions
 import Carousel from "./slider";
 import goalImage from "../../resources/frame.png";
 import Email_img from "../../resources/email-image.svg";
-import mapicon from "../../resources/map-pin.svg";
 import laptop_img from "../../resources/laptop_img.png"
 import documents_img from "../../resources/documents_img.png"
-import documentsInFrontOfLaptop from "../../resources/documentsInFrontOfLaptop.png"
-import documentBlack from "../../resources/documentBlack.png"
 
 import "./App.css";
 import { Link } from "react-router-dom";
 
+// TODO(fm):
+// migrate to @firebase and env and handle this properly
+// works for now though
+const GA_ID="GGQ8N7C10H"
+
+function handleDeclineCookies() {
+  Cookies.remove(`_ga_${GA_ID}`);
+  Cookies.remove("_ga");
+};
+
+function handleAcceptCookies() {
+  ReactGA.initialize(`G-${GA_ID}`, {gaOptions:{anonymizeIp: true}});
+};
 
 type AppProps = {
   loginCallback: any;
@@ -30,7 +40,6 @@ function App({ loginCallback }: AppProps) {
     dispatch(deleteEmptyProject());
   }, []);
 
-  // If someone is not logged in and the page is reloaded, show the dialog
   React.useEffect(() => {
     if (!isLoggedIn) {
       //loginCallback(true);
@@ -39,6 +48,19 @@ function App({ loginCallback }: AppProps) {
 
   return (
     <>
+      <CookieConsent
+        enableDeclineButton
+        flipButtons
+        buttonText="Akzeptieren"
+        declineButtonText="Ablehnen"
+        onAccept={handleAcceptCookies}
+        onDecline={handleDeclineCookies}
+        >
+          Um nachvollziehen zu können, wie CosmoNote genutzt wird, verwenden wir Google Analytics.
+          Diese Informationen sind für uns von großer Bedeutung
+          um das Besucherverhalten zu verstehen und unsere Anwendung entsprechend zu verbessern.
+          Zu unserem <Link to="/terms" target="_blank" style={{color: "white"}}>Datenschutz</Link>.
+      </CookieConsent>
       <div className="homepage">
         <Container>
             <div className="home-banner">
@@ -89,17 +111,6 @@ function App({ loginCallback }: AppProps) {
             Deshalb haben wir diese Anwendungsarten kombiniert und ein einzigartiges Tool entwickelt, 
             das dir das Leben erleichtert.
             </p>
-            {/* 
-            
-            <a href="/about" className="banner-cta-howItWorks">
-              Anleitung
-            </a>
-
-            //Not needed for now. Enough Info on Landing Page. Vide Explains how it works.
-            
-            */}
-
-
           </Container>
         </div>
         <div className="contact-sec" id="contact-section">
@@ -122,14 +133,6 @@ function App({ loginCallback }: AppProps) {
                   <p style={{ fontSize: '17px' }}>Made with <span id="heart">&#9829;</span> von Studenten der Westfälischen Hochschule, Gelsenkirchen</p>
                 </div>
               </Grid>
-              {/* <Grid item md={6} style={{ marginLeft: "auto" }}>
-                <form className="ct-form">
-                  <input type="text" placeholder="First Name" />
-                  <input type="email" placeholder="Email" />
-                  <textarea placeholder="Your message"></textarea>
-                  <button>Send</button>
-                </form>
-              </Grid> */}
             </Grid>
           </Container>
         </div>
