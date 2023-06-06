@@ -71,7 +71,7 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId}:
     // Current used text style, bold, italic ...
     const [style, setStyle] = useState('unstyled');
     // File name in the editor
-    const [name, setName] = useState('Unnamed');
+    const [name, setName] = useState('Unbenannt');
     const [fullscreenOpen, setFullscreenOpen] = useState(false);
     const [saveToggle, setSaveToggle] = useState(false);
     const [saveToggleOnLeave, setSaveToggleOnLeave] = useState(false);
@@ -259,7 +259,6 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId}:
 
 
     const benefitsDialogsOnLeave = (
-
         <Dialog onClose={() => setSaveToggleOnLeave(false)} aria-labelledby="customized-dialog-title" open={saveToggleOnLeave}>
             <DialogTitle id="alert-dialog-title">
                 Do You Want To Sign Up?
@@ -307,8 +306,6 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId}:
 
     );
 
-
-
     // The toolbar with all the buttons
     const toolbar = (
         <AppBar color="transparent" position="static" style={{ overflow: 'auto' }}>
@@ -339,34 +336,33 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId}:
                     <Button onMouseDown={() => formatText('UNDERLINE')} className="editorButton"><FormatUnderlinedIcon fontSize="small" /></Button>
                     <Button onMouseDown={() => formatText('CODE')} className="editorButton"><CodeIcon fontSize="small" /></Button>
                 </ButtonGroup>
-                <Tooltip title="Download" placement="top">
-                    {isLoggedIn ? <IconButton
-                        onClick={() => { setSaveToggleFile(true); }}
-                        style={{ marginLeft: 'auto' }}
-                        size="large">
-                        <SaveAltIcon fontSize="small" />
-                    </IconButton>
-                        : <IconButton
-                        onClick={() => { setSaveToggle(true); }}
-                        style={{ marginLeft: 'auto' }}
-                        size="large">
-                            <SaveAltIcon fontSize="small" />
+                <Tooltip title="Exportieren" placement="top">
+                    {/*isLoggedIn
+                      ? <IconButton
+                          onClick={() => { setSaveToggleFile(true); }}
+                          style={{ marginLeft: 'auto' }} size="large">
+                          <SaveAltIcon fontSize="small" />
                         </IconButton>
-
-                    }
-
+                      : <IconButton
+                          onClick={() => { setSaveToggle(true); }}
+                          style={{ marginLeft: 'auto' }} size="large">
+                          <SaveAltIcon fontSize="small" />
+                       </IconButton>
+                    */}
+                    <IconButton
+                      onClick={() => { setSaveToggle(true); }}
+                      style={{ marginLeft: 'auto' }} size="large">
+                      <SaveAltIcon fontSize="small" />
+                    </IconButton>
                 </Tooltip>
-                <Tooltip title={file.needsSave ? 'Save work to cloud' : 'Work already saved to cloud'} placement="top">
+                {/*<Tooltip title={file.needsSave ? 'Save work to cloud' : 'Work already saved to cloud'} placement="top">
                     <IconButton
                         onClick={() => dispatch(saveFile(fileId))}
                         style={file.needsSave ? { color: '#000' } : {}}
                         size="large">
                         <SaveIcon fontSize="small" />
                     </IconButton>
-                </Tooltip>
-                {/* <IconButton onClick={() => { setFullscreenOpen(true); }}>
-                    <FullscreenIcon fontSize="small" />
-                </IconButton> */}
+                </Tooltip>*/}
             </Toolbar>
         </AppBar>
     );

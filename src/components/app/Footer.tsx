@@ -9,26 +9,23 @@ const Footer = () => {
     <footer
       style={
         location.pathname == "/" || location.pathname == "/about"
-          ? { marginTop: -77 }
+          ? { marginTop: -80 }
           : location.pathname == "/new-project" ? { position: "absolute", bottom: 0, left: 0, width: "100%" } : {}
       }
     >
       <div
-        style={
-          location.pathname.includes("/project/") || location.pathname.includes("/new-project")
-            ? { backgroundImage: `url(${background})` }
-            : {}
-        }
+        style={{backgroundImage: `url(${background})`}}
       >
         <Container>
           <div className="footer-container">
-            <div>
+            {/*<div>
               <Link to="/terms" target="_blank">
                 AGBs
               </Link>
               <Link to="/#contact-section" target="_blank">Kontakt</Link>
-            </div>
-            <p>Copyright © 2023 CosmoNote </p>
+            </div>*/}
+            <p>Made with <span id="heart">&#9829;</span> von Studenten der Westfälischen Hochschule</p>
+            Copyright © 2023 CosmoNote
           </div>
         </Container>
       </div>
