@@ -53,7 +53,7 @@ export default function EmptyProject({
         <Paper
           className="projectUploadDialog padding_top"
         >
-          <p>One moment please</p>
+          <p>Einen Augenblick..</p>
           <i style={{ color: "grey" }}>your file is being uploaded</i>
         </Paper>
       </div>
@@ -73,7 +73,7 @@ export default function EmptyProject({
         <Typography variant="h5" color="textPrimary" paragraph>
         Bitte laden Sie keine persönlichen oder sensiblen Dokumente hoch.<br/>
         Bevor Sie eine Datei hochladen, stellen Sie bitte sicher, dass Sie unsere<br/>
-          <Link to="/terms" target="_blank">Allgemeinen Geschäftsbedingungen</Link>. gelesen und verstanden haben
+          <Link to="/terms" target="_blank">Allgemeinen Geschäftsbedingungen</Link> gelesen und verstanden haben.
         </Typography>
         <input
           hidden
@@ -91,8 +91,8 @@ export default function EmptyProject({
           style={{ margin: "0 auto" }}
           >
         <BackupIcon style={{ display: "block", fontSize: 120, margin: "0 auto" }}/>
-        <p>PDF upload.</p>
-        <i style={{ color: "grey" }}>Supported filetypes: pdf</i>
+        <p>Datei hochladen</p>
+        <i style={{ color: "grey" }}>Unterstützte Formate: PDF</i>
       </Paper>
       </div>
     </div>

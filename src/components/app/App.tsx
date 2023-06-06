@@ -69,19 +69,15 @@ function App({ loginCallback }: AppProps) {
             <div className="laptop-container">
               <img className = "laptop-image" src ={laptop_img}/>
             </div>
-
             <div className="documents-container">
               <img className = "documents-image-top" src ={documents_img}/>
             </div>
-
-
             <div className="banner-bottom-text-wrapper">
               <h3 className="banner-footer-txt">
-              Markiere, was dir wichtig ist, und erhalte automatisch eine editierbare und downloadbare Datei.
+              Markiere was dir wichtig ist und erhalte automatisch eine editierbare und downloadbare Datei.
               </h3>
             </div>
             {isLoggedIn ? <Link className="banner-cta" to="/projects"> Ausprobieren </Link> : <Link className="banner-cta" to="/new-project"> Ausprobieren </Link>}
-
           </div>
         </Container>
         <div className="video-slider-sec">
@@ -89,7 +85,7 @@ function App({ loginCallback }: AppProps) {
             <h3>Extrahiert Text automatisch während des Markierens</h3>
             <p>
               Mach dein Leben einfacher:
-              Spare Zeit, triff Freunde, Nähe einen Schal. Du bestimmst!
+              Spare Zeit, triff Freunde, strick einen Schal. Du bestimmst!
             </p>
             <div className="documents-image-container-bottom">
               <img className = "documents-image-bottom" src ={documents_img}/>
@@ -98,7 +94,6 @@ function App({ loginCallback }: AppProps) {
           </Container>
         </div>
       </div>
-      {/* goal section */}
       <div className="wrapper-two">
         <div className="goal-section">
           <Container>
@@ -107,33 +102,26 @@ function App({ loginCallback }: AppProps) {
             <p>
             Wir verstehen die studentischen Herausforderungen, vor denen du stehst. Wir waren selbst 
             unzufrieden damit, dass das Zusammenfassen von Text oft in zwei verschiedenen 
-            Umgebungen stattfindet, wie beispielsweise Adobe Reader und Word nebeneinander. 
+            Umgebungen stattfindet, wie etwa Adobe Reader und Word. 
             Deshalb haben wir diese Anwendungsarten kombiniert und ein einzigartiges Tool entwickelt, 
-            das dir das Leben erleichtert.
+            das dir dein Leben erleichtern wird!
             </p>
           </Container>
         </div>
-        <div className="contact-sec" id="contact-section">
+        <div className="goal-section" id="contact-section" style={{paddingBottom: "180px"}}>
           <Container>
             <h3>Kontakt</h3>
-            <Grid container spacing={8} className="ct-inner">
-              <Grid item md={6}>
-                <p className="c-info">
-                  Falls du persönlich mit uns reden willst um Ideen über die Entwicklung von CosmoNote 
-                  auszutauschen, unserem Team beitreten möchtest oder ein anderes Anliegen hast,
-                  schreibe uns gerne eine Email. <br></br>
-                  <span className ="blue-text">
-                    Wir Freuen uns darauf von dir zu höhren und von deinem 
-                    Feedback zu lernen, was wir verbessern können!
-                  </span>
-                </p>
-                <div className="e-mail">
-                  <img src={Email_img} alt="mail" />
-                  <p style={{ fontSize: '30px' }}>info.cosmonote@gmail.com</p>
-                  <p style={{ fontSize: '17px' }}>Made with <span id="heart">&#9829;</span> von Studenten der Westfälischen Hochschule, Gelsenkirchen</p>
-                </div>
-              </Grid>
-            </Grid>
+            <p className="c-info">
+              Falls du persönlich mit uns reden willst um Ideen über die Entwicklung von CosmoNote 
+              auszutauschen, unserem Team beitreten möchtest, oder ein anderes Anliegen hast:
+              Schreibe uns gerne eine Email!
+              </p>
+              <p style={{color: "yellow"}}>
+                Wir freuen uns darauf von dir zu hören und zu erfahren, was wir verbessern können!
+              </p>
+              <div>
+                <a href="mailto:info.cosmonote@gmail.com">📧 info.cosmonote@gmail.com</a>
+              </div>
           </Container>
         </div>
       </div>

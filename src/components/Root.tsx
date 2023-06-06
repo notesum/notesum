@@ -58,7 +58,7 @@ export default function Root(props) {
   const redirect = useSelector((state: AppState) => state.redirect);
   const addProjectFile = (pdf: File) => {
     dispatch(
-      createNewProjectVistior("UNNAMED PROJECT", (id) => {
+      createNewProjectVistior("Unbenannt", (id) => {
         dispatch(createFileVistor(id, pdf));
       })
     );
@@ -76,25 +76,6 @@ export default function Root(props) {
     <Box flexDirection="column" display="flex" position="relative" style={location.pathname == "/new-project" ? { height: "100%" } : {}}>
       { }
       <Header />
-      {/* <AppBar position="static">
-                <Toolbar variant="dense">
-                    <Link to="/"><IconButton><HomeIcon style={{ color: '#fff' }} /></IconButton ></Link>
-                    <Link to="/about"><IconButton><InfoIcon style={{ color: '#fff' }} /></IconButton></Link>
-                    <Link hidden={!isLoggedIn} to="/projects"><IconButton><PictureAsPdfIcon style={{ color: '#fff' }} /></IconButton></Link>
-                    <Box style={{ marginLeft: 'auto' }}>
-                        <AuthIcon openProp={makeLogin} />
-                    </Box>
-                    <Button target="_blank"
-                        href="https://docs.google.com/forms/d/e/1FAIpQLScK9dZrpjcqcL4SGUc_bcwpAxWYSAH62hYPfdcK_v-2z0PRow/viewform"
-                        style={{ color: 'white' }}><Typography variant="body1" style={{ color: 'white' }}>Feedback</Typography></Button>
-                    <Button target="_blank"
-                        href="/terms"
-                        variant="text"
-                        style={{ color: 'white' }}><Typography variant="subtitle2" style={{ color: 'white' }}>Terms and Conditions</Typography></Button>
-                </Toolbar>
-            </AppBar> */}
-
-      {/* This sizes the main content area to fill up the remaining space */}
       <Box
         flexGrow={1}
         style={{
@@ -102,10 +83,6 @@ export default function Root(props) {
           overflowX: "hidden",
         }}
       >
-
-
-
-
         {isMobile ? <Dialog aria-labelledby="customized-dialog-title" open={true}>
           <DialogTitle id="alert-dialog-title">
             Welcome!
@@ -149,7 +126,6 @@ export default function Root(props) {
         }
       </Box>
       {location.pathname.includes("/project/") ? null : <Footer />}
-
     </Box>
   );
 }

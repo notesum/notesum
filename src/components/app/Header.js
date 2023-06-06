@@ -1,19 +1,11 @@
 import React from "react";
 import { Container, Button } from "@mui/material";
-import Donation from "../../resources/donation.svg";
 import Logo from "../../resources/frame.png";
 import LogoText from "../../resources/CosmoNote.svg";
-import feedback from "../../resources/feedback.svg";
-import info from "../../resources/info.svg";
-import user from "../../resources/user.svg";
 
-import AuthIcon from "../auth/AuthIcon";
 import { Link, useLocation, has } from "react-router-dom";
 import background from "../../resources/alternativeBackground.jpg";
-import Terms from "../../resources/terms.png";
-import Contact from "../../resources/open.png";
 import { HashLink } from 'react-router-hash-link';
-
 
 const Header = () => {
   const location = useLocation();
@@ -41,48 +33,26 @@ const Header = () => {
           <div className="nav__bar">
             <ul className="list-unstyled">
               <li>
-                <Button
+                <a
                   target="_blank"
-                  href="https://docs.google.com/forms/d/e/1FAIpQLScBYJsVfzZAcBAGlYNIvgiOnQE4yI-vaJEo66T7oMW9-lXD5w/viewform"
-                >
-                  <img src={feedback} alt="" />
-                  <span className ="FeedbackInHeaderFontColor">
-                    Gib uns Feedback!
-                  </span>
-
-                </Button>
+                  href="https://docs.google.com/forms/d/e/1FAIpQLScBYJsVfzZAcBAGlYNIvgiOnQE4yI-vaJEo66T7oMW9-lXD5w/viewform">
+                  Feedback
+                </a>
               </li>
-              <li>
-                {/* <a href="#">
-                  <img src={user} alt="" />
-                </a> */}
-                <AuthIcon />
-              </li>
-
-              {location.pathname.includes("/project/") ?
-                <>
-                  <li>
-                    <Button
-                        target="_blank"
-                        href="https://www.paypal.com/donate/?hosted_button_id=BTJE5YVKQXVLC"
-                    >
-                      <img src={Donation} style={{ maxWidth: 32, filter: "invert(1)" }} alt="" />
-                      <p>Donate</p>
-                    </Button>
+              {/*<li>{<AuthIcon /></li>*/}
+                <li>
+                    <a
+                      target="_blank"
+                      href="https://www.paypal.com/donate/?hosted_button_id=BTJE5YVKQXVLC">
+                      Spenden
+                    </a>
                   </li>
                   <li>
-                    <Link to="/terms" target="_blank">
-                      <img src={Terms} style={{ maxWidth: 32, filter: "invert(1)" }} alt="" />
-                      <p>Terms and Conditions</p></Link>
+                    <Link to="/terms" target="_blank">AGBs</Link>
                   </li>
                   <li>
-                    <HashLink smooth to="/#contact-section" target="_blank">
-                      <img src={Contact} alt="" style={{ maxWidth: 32, filter: "invert(1)" }} />
-                      <p>Contact</p></HashLink>
+                    <HashLink smooth to="/#contact-section" target="_blank">Kontakt</HashLink>
                   </li>
-                </> : null
-              }
-
             </ul>
           </div>
         </div>
