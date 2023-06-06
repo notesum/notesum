@@ -70,7 +70,7 @@ export default function Poster() {
   };
 
   return (
-    <StyledContainer maxWidth="xl" className="stars_bg_poster">
+    <StyledContainer maxWidth="xl" className="terms">
       <Grid
         spacing={7}
         direction="column"

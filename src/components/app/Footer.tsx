@@ -7,10 +7,7 @@ const Footer = () => {
   const location = useLocation();
   return (
     <footer
-      style={
-        location.pathname == "/" || location.pathname == "/about"
-          ? { marginTop: -80 }
-          : location.pathname == "/new-project" ? { position: "absolute", bottom: 0, left: 0, width: "100%" } : {}
+      style={{ position: "absolute", bottom: 0, left: 0, width: "100%" }
       }
     >
       <div
