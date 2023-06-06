@@ -48,7 +48,7 @@ const Header = () => {
                     </a>
                   </li>
                   <li>
-                    <Link to="/terms" target="_blank">AGBs</Link>
+                    <Link to="/terms" target="_blank">AGB</Link>
                   </li>
                   <li>
                     <HashLink smooth to="/#contact-section" target="_blank">Kontakt</HashLink>

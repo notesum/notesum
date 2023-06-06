@@ -496,10 +496,9 @@ footer p {
   min-height: 250vh;
 }
 
-.stars_bg_poster {
+.terms {
   padding: 100px 0;
-  overflow-x: hidden;
-  min-height: 100vh;
+  min-height: calc(100%);
 }
 .nav__bar a{display: block;text-align: center;}
 
