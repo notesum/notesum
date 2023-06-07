@@ -142,7 +142,7 @@ export default function Project() {
               component="div"
               style={{ fontWeight: "bold" }}
             >
-              Project files
+              Dateien
             </ListSubheader>
           }
           style={{ minWidth: "300px", maxWidth: "500px" }}
