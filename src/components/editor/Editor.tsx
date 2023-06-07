@@ -216,19 +216,19 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId}:
                         <TextField id="filled-basic" label="Name" variant="filled" defaultValue={name} onChange={(e) => { setName(e.target.value); }} />
                     </Grid>
                     <Grid item xs>
-                        <Button onMouseDown={() => downloadState(editorState, 'pdf', name)}>PDF document (.pdf)</Button>
+                        <Button onMouseDown={() => downloadState(editorState, 'pdf', name)}>PDF Dokument (.pdf)</Button>
                     </Grid>
                     <Grid item xs>
                         <Button onMouseDown={() => downloadState(editorState, 'docx', name)}>Microsoft Word (.docx)</Button>
                     </Grid>
                     <Grid item xs>
-                        <Button onMouseDown={() => downloadState(editorState, 'html', name)}>Web page (.html)</Button>
+                        <Button onMouseDown={() => downloadState(editorState, 'html', name)}>Webseite (.html)</Button>
                     </Grid>
                     <Grid item xs>
                         <Button onMouseDown={() => downloadState(editorState, 'md', name)}>Markdown (.md)</Button>
                     </Grid>
                     <Grid item xs>
-                        <Button onMouseDown={() => downloadState(editorState, 'txt', name)}>Plain text (.txt)</Button>
+                        <Button onMouseDown={() => downloadState(editorState, 'txt', name)}>Einfacher Text (.txt)</Button>
                     </Grid>
                 </Grid>
             </Box>
@@ -350,7 +350,7 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId}:
                        </IconButton>
                     */}
                     <IconButton
-                      onClick={() => { setSaveToggle(true); }}
+                      onClick={() => { setSaveToggle(false); setSaveToggleFile(true); }}
                       style={{ marginLeft: 'auto' }} size="large">
                       <SaveAltIcon fontSize="small" />
                     </IconButton>
@@ -408,11 +408,11 @@ export default function TextEditor({ img, screenshotCallback, dragging, fileId}:
             </Box>
             {editorFull}
             {saveDialog}
-            {benefitsDialogs}
-            {signUpDialogs}
+            {/* {benefitsDialogs} */}
+            {/* {signUpDialogs} */}
             {SetProjectName}
             {downloadDialogs}
-            {benefitsDialogsOnLeave}
+            {/* {benefitsDialogsOnLeave} */}
         </>
     );
 }

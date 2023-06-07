@@ -53,8 +53,7 @@ export default function EmptyProject({
         <Paper
           className="projectUploadDialog padding_top"
         >
-          <p>Einen Augenblick..</p>
-          <i style={{ color: "grey" }}>your file is being uploaded</i>
+          <p>Bitte warten</p>
         </Paper>
       </div>
     )
