@@ -3,6 +3,7 @@
 
 html {
   background-color: #fff;
+  overflow-x: hidden;
 }
 
 /* global styles */
